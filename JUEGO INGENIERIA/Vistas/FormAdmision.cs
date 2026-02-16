@@ -14,5 +14,7 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             InitializeComponent();
         }
+
+        
     }
 }

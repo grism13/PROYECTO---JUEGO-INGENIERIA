@@ -28,12 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "FormIntro";
+            pbImagen = new PictureBox();
+            lblTexto = new Label();
+            btnSiguiente = new Button();
+            ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
+            SuspendLayout();
+            // 
+            // pbImagen
+            // 
+            pbImagen.Location = new Point(26, 53);
+            pbImagen.Name = "pbImagen";
+            pbImagen.Size = new Size(675, 536);
+            pbImagen.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbImagen.TabIndex = 0;
+            pbImagen.TabStop = false;
+            // 
+            // lblTexto
+            // 
+            lblTexto.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTexto.Location = new Point(743, 108);
+            lblTexto.Name = "lblTexto";
+            lblTexto.Size = new Size(615, 245);
+            lblTexto.TabIndex = 1;
+            lblTexto.Text = "label1";
+            lblTexto.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // btnSiguiente
+            // 
+            btnSiguiente.Location = new Point(976, 377);
+            btnSiguiente.Name = "btnSiguiente";
+            btnSiguiente.Size = new Size(164, 52);
+            btnSiguiente.TabIndex = 2;
+            btnSiguiente.Text = "Siguiente";
+            btnSiguiente.UseVisualStyleBackColor = true;
+            btnSiguiente.Click += btnSiguiente_Click_1;
+            // 
+            // FormIntro
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1424, 635);
+            Controls.Add(btnSiguiente);
+            Controls.Add(lblTexto);
+            Controls.Add(pbImagen);
+            Name = "FormIntro";
+            Text = "FormIntro";
+            FormClosing += FormIntro_FormClosing;
+            ((System.ComponentModel.ISupportInitialize)pbImagen).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private PictureBox pbImagen;
+        private Label lblTexto;
+        private Button btnSiguiente;
     }
 }
