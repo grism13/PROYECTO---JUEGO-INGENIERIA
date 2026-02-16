@@ -11,6 +11,8 @@ namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
+        // Se crea una variable estatica 
+        public static Jugador JugadorActual;
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,15 @@ namespace JUEGO_INGENIERIA
             registro.ShowDialog();
 
             this.Show();
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            if (JugadorActual != null)
+            {
+                lblNombreJugador.Text = "Jugador; " + JugadorActual.Nombre;
+                lblNivel.Text = "Nivel: " + JugadorActual.Nivel.ToString();
+            }
         }
     }
 }
