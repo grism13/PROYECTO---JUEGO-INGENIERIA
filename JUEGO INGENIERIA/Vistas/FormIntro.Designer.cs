@@ -39,11 +39,11 @@
             // lblTexto
             // 
             lblTexto.BackColor = Color.Transparent;
-            lblTexto.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTexto.Font = new Font("Times New Roman", 10F);
             lblTexto.ForeColor = Color.Black;
-            lblTexto.Location = new Point(818, 204);
+            lblTexto.Location = new Point(935, 16);
             lblTexto.Name = "lblTexto";
-            lblTexto.Size = new Size(538, 201);
+            lblTexto.Size = new Size(615, 822);
             lblTexto.TabIndex = 1;
             lblTexto.Text = "label1";
             lblTexto.TextAlign = ContentAlignment.MiddleCenter;
@@ -54,10 +54,9 @@
             btnSiguiente.Font = new Font("Impact", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSiguiente.ForeColor = Color.White;
             btnSiguiente.Image = Properties.Resources.boton_de_siguiente;
-            btnSiguiente.Location = new Point(955, 495);
-            btnSiguiente.Margin = new Padding(3, 2, 3, 2);
+            btnSiguiente.Location = new Point(1096, 854);
             btnSiguiente.Name = "btnSiguiente";
-            btnSiguiente.Size = new Size(263, 61);
+            btnSiguiente.Size = new Size(301, 81);
             btnSiguiente.TabIndex = 2;
             btnSiguiente.Text = "Siguiente";
             btnSiguiente.UseVisualStyleBackColor = true;
@@ -66,10 +65,9 @@
             // pbImagen
             // 
             pbImagen.Image = Properties.Resources.primera_imagen_de_la_intro;
-            pbImagen.Location = new Point(173, 126);
-            pbImagen.Margin = new Padding(3, 2, 3, 2);
+            pbImagen.Location = new Point(198, 168);
             pbImagen.Name = "pbImagen";
-            pbImagen.Size = new Size(479, 374);
+            pbImagen.Size = new Size(547, 499);
             pbImagen.SizeMode = PictureBoxSizeMode.StretchImage;
             pbImagen.TabIndex = 0;
             pbImagen.TabStop = false;
@@ -79,24 +77,24 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.fondo_tipo_televisor_para_intro;
-            pictureBox1.Location = new Point(-88, 12);
+            pictureBox1.Location = new Point(-101, 16);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1001, 763);
+            pictureBox1.Size = new Size(1144, 1017);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 3;
             pictureBox1.TabStop = false;
             // 
             // FormIntro
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1368, 719);
+            ClientSize = new Size(1563, 959);
             Controls.Add(pbImagen);
             Controls.Add(btnSiguiente);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox1);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "FormIntro";
             Text = "FormIntro";
             FormClosing += FormIntro_FormClosing;
