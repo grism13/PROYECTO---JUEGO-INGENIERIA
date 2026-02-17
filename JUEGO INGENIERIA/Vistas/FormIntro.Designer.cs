@@ -39,11 +39,11 @@
             // lblTexto
             // 
             lblTexto.BackColor = Color.Transparent;
-            lblTexto.Font = new Font("Times New Roman", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblTexto.Font = new Font("Times New Roman", 10F);
             lblTexto.ForeColor = Color.Black;
-            lblTexto.Location = new Point(853, 207);
+            lblTexto.Location = new Point(800, 151);
             lblTexto.Name = "lblTexto";
-            lblTexto.Size = new Size(446, 243);
+            lblTexto.Size = new Size(538, 233);
             lblTexto.TabIndex = 1;
             lblTexto.Text = "label1";
             lblTexto.TextAlign = ContentAlignment.MiddleCenter;
@@ -55,7 +55,7 @@
             btnSiguiente.Font = new Font("Impact", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnSiguiente.ForeColor = Color.White;
             btnSiguiente.Image = Properties.Resources.boton_de_siguiente;
-            btnSiguiente.Location = new Point(950, 506);
+            btnSiguiente.Location = new Point(948, 534);
             btnSiguiente.Margin = new Padding(3, 2, 3, 2);
             btnSiguiente.Name = "btnSiguiente";
             btnSiguiente.Size = new Size(263, 61);
@@ -92,7 +92,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1368, 719);
+            ClientSize = new Size(1383, 680);
             Controls.Add(pbImagen);
             Controls.Add(btnSiguiente);
             Controls.Add(lblTexto);

@@ -67,7 +67,7 @@ namespace JUEGO_INGENIERIA.Vistas
             imagenes.Add("segunda imagen de la intro (1).png");
 
             // Escena 3
-            textos.Add("Capítulo 1: Los Herederos de la Voluntad\r\n\"La leyenda de Flavio quedó grabada en los muros de la UNIMAR. Se decía que aquel que siguiera sus pasos obtendría el poder de crear mundos con solo teclear. Años después, en las soleadas tierras de Margarita, tres jóvenes escucharon el llamado. No eran héroes... todavía. Eran soñadores.\r\n\r\nGris, la estratega, quien veía en la ingeniería el orden que el mundo necesitaba.\r\nRoand, el audaz, dispuesto a enfrentar cualquier algoritmo que se le cruzara.\r\nY Eliezer (tú), el visionario práctico, quien entendía que para construir el futuro, primero había que entender cómo funcionaban las cosas por dentro.");
+            textos.Add("Capítulo 1: Los Herederos de la Voluntad\r\n\"La leyenda de Flavio quedó grabada en los muros de la UNIMAR. Se decía que aquel que siguiera sus pasos obtendría el poder de crear mundos con solo teclear. Años después, en las soleadas tierras de Margarita, tres jóvenes escucharon el llamado. No eran héroes... todavía. Eran soñadores.\r\n\r\nGris, la estratega, quien veía en la ingeniería el orden que el mundo necesitaba.\r\nRoand, el audaz, dispuesto a enfrentar cualquier algoritmo que se le cruzara.\r\nY Eliezer, el visionario práctico, quien entendía que para construir el futuro, primero había que entender cómo funcionaban las cosas por dentro.");
             imagenes.Add("tercera imagen de la intro (1).png");
 
             // Escenea 4
