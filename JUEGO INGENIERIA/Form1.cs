@@ -12,19 +12,27 @@ namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
-        // --- VARIABLES DE MOVIMIENTO (Tuyas) ---
+        // --- VARIABLES DE MOVIMIENTO ---
         bool goArriba, goAbajo, goIzquierda, goDerecha;
         int velocidad = 5;
 
-        // --- VARIABLES DE DATOS (Tuyas) ---
+        // --- VARIABLES DE DATOS ---
         public static Jugador? JugadorActual;
 
-        // --- VARIABLES NUEVAS PARA ANIMACIÓN (Agregadas) ---
+        // --- VARIABLES PARA ANIMACIÓN ---
         List<Image> animAbajo = new List<Image>();
         List<Image> animArriba = new List<Image>();
         List<Image> animIzquierda = new List<Image>();
         List<Image> animDerecha = new List<Image>();
+
+        // --- ÁLBUMES DE DIAGONALES ---
+        List<Image> animArribaDerecha = new List<Image>();
+        List<Image> animArribaIzquierda = new List<Image>();
+        List<Image> animAbajoDerecha = new List<Image>();
+        List<Image> animAbajoIzquierda = new List<Image>();
+
         int frameActual = 0;
+        int contadorLentitud = 0; // Lo moví aquí arriba para que sea global
 
         public Form1()
         {
@@ -32,7 +40,6 @@ namespace JUEGO_INGENIERIA
         }
 
         // --- TU CÓDIGO IMPORTANTE: INTRO Y REGISTRO ---
-        // Esto NO se ha tocado, sigue abriendo tus ventanas al inicio
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.Hide();
@@ -43,8 +50,6 @@ namespace JUEGO_INGENIERIA
             registro.ShowDialog();
 
             this.Show();
-
-            // Truco: Aseguramos que el foco vuelva al mapa para poder movernos
             this.Focus();
         }
 
@@ -58,14 +63,13 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-        // --- NUEVO: CARGA DE IMÁGENES ---
-        // Necesitamos esto para llenar los álbumes.
-        // SI ESTO NO SE EJECUTA, dale doble clic al fondo del Formulario en diseño.
+        // --- CARGA DE IMÁGENES ---
         private void Form1_Load(object sender, EventArgs e)
         {
             // Abajo (Frente)
             animAbajo.Add(Resources.gris_frente1);
             animAbajo.Add(Resources.gris_frente2);
+            animAbajo.Add(Resources.gris_frente3);
 
             // Arriba (Espalda)
             animArriba.Add(Resources.gris_espalda1);
@@ -82,10 +86,31 @@ namespace JUEGO_INGENIERIA
             animIzquierda.Add(Resources.gris_ladoizquiedo2);
             animIzquierda.Add(Resources.gris_ladoizquiedo3);
 
+            // DIAGONALES (Tus nuevas cargas)
+            // Arriba + Derecha
+            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda1);
+            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda2);
+            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda3);
+
+            // Arriba + Izquierda
+            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda1);
+            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda2);
+            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda3);
+
+            // Abajo + Derecha
+            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente1);
+            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente2);
+            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente3);
+
+            // Abajo + Izquierda
+            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente1);
+            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente2);
+            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
+
             pbPersonaje.Image = Resources.gris_frente2; // Imagen inicial
         }
 
-        // --- TECLAS (Igual que antes) ---
+        // --- TECLAS ---
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up) goArriba = true;
@@ -102,63 +127,125 @@ namespace JUEGO_INGENIERIA
             if (e.KeyCode == Keys.Right) goDerecha = false;
         }
 
-        // --- MOVIMIENTO CON ANIMACIÓN (Mejorado) ---
+        // --- EL CAMBIO MAGISTRAL AQUÍ (Lógica corregida) ---
         private void tmrMovimiento_Tick(object sender, EventArgs e)
         {
+            // Definimos dos velocidades locales
+            int vNormal = 5;
+            int vDiag = 3; // Más lento para diagonales (evita el efecto turbo)
+
             bool seMueve = false;
 
-            // Movimiento Vertical
-            if (goArriba == true && pbPersonaje.Top > 0)
+            // --- 1. PRIORIDAD: DIAGONALES ---
+            // Revisamos primero si hay DOS teclas presionadas
+
+            // ARRIBA + DERECHA
+            if (goArriba && goDerecha)
             {
-                pbPersonaje.Top -= velocidad;
-                Animar(animArriba); // <--- AGREGADO
-                seMueve = true;
+                if (pbPersonaje.Top > 0 && pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
+                {
+                    pbPersonaje.Top -= vDiag;
+                    pbPersonaje.Left += vDiag;
+                    Animar(animArribaDerecha); // ¡Usa tu lista diagonal!
+                    seMueve = true;
+                }
             }
-            if (goAbajo == true && pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height)
+            // ARRIBA + IZQUIERDA
+            else if (goArriba && goIzquierda)
             {
-                pbPersonaje.Top += velocidad;
-                Animar(animAbajo); // <--- AGREGADO
-                seMueve = true;
+                if (pbPersonaje.Top > 0 && pbPersonaje.Left > 0)
+                {
+                    pbPersonaje.Top -= vDiag;
+                    pbPersonaje.Left -= vDiag;
+                    Animar(animArribaIzquierda);
+                    seMueve = true;
+                }
+            }
+            // ABAJO + DERECHA
+            else if (goAbajo && goDerecha)
+            {
+                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height &&
+                    pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
+                {
+                    pbPersonaje.Top += vDiag;
+                    pbPersonaje.Left += vDiag;
+                    Animar(animAbajoDerecha);
+                    seMueve = true;
+                }
+            }
+            // ABAJO + IZQUIERDA
+            else if (goAbajo && goIzquierda)
+            {
+                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height && pbPersonaje.Left > 0)
+                {
+                    pbPersonaje.Top += vDiag;
+                    pbPersonaje.Left -= vDiag;
+                    Animar(animAbajoIzquierda);
+                    seMueve = true;
+                }
             }
 
-            // Movimiento Horizontal
-            if (goIzquierda == true && pbPersonaje.Left > 0)
+            // --- 2. SECUNDARIO: CARDINALES (Una sola tecla) ---
+
+            else if (goArriba)
             {
-                pbPersonaje.Left -= velocidad;
-                Animar(animIzquierda); // <--- AGREGADO
-                seMueve = true;
+                if (pbPersonaje.Top > 0)
+                {
+                    pbPersonaje.Top -= vNormal;
+                    Animar(animArriba);
+                    seMueve = true;
+                }
             }
-            if (goDerecha == true && pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
+            else if (goAbajo)
             {
-                pbPersonaje.Left += velocidad;
-                Animar(animDerecha); // <--- AGREGADO
-                seMueve = true;
+                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height)
+                {
+                    pbPersonaje.Top += vNormal;
+                    Animar(animAbajo);
+                    seMueve = true;
+                }
+            }
+            else if (goIzquierda)
+            {
+                if (pbPersonaje.Left > 0)
+                {
+                    pbPersonaje.Left -= vNormal;
+                    Animar(animIzquierda);
+                    seMueve = true;
+                }
+            }
+            else if (goDerecha)
+            {
+                if (pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
+                {
+                    pbPersonaje.Left += vNormal;
+                    Animar(animDerecha);
+                    seMueve = true;
+                }
             }
 
-            // Si se detiene, reseteamos la animación
+            // --- 3. RESETEO ---
             if (seMueve == false)
             {
                 frameActual = 0;
+                contadorLentitud = 10; // Truco: esto hace que al arrancar no tenga retraso la primera vez
             }
         }
 
-        int contadorLentitud = 0;
-
-        // --- FUNCIÓN DE ANIMAR (Nueva) ---
+        // --- FUNCIÓN DE ANIMAR ---
         private void Animar(List<Image> animacion)
         {
             if (animacion.Count > 0)
             {
                 contadorLentitud++;
 
-                // Solo cambiamos la imagen cada 4 o 5 ciclos del reloj (ajusta este número)
-                if (contadorLentitud > 4)
+                // Ajusta este > 4 si quieres que vaya más lento o más rápido
+                if (contadorLentitud > 3)
                 {
                     frameActual++;
                     if (frameActual >= animacion.Count) frameActual = 0;
                     pbPersonaje.Image = animacion[frameActual];
-
-                    contadorLentitud = 0; // Reiniciamos el contador
+                    contadorLentitud = 0;
                 }
             }
         }
