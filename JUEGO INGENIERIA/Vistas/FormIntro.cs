@@ -99,6 +99,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (posicion > 4)
             {
+                System.Media.SoundPlayer sonidoCaja = new System.Media.SoundPlayer(Properties.Resources.SONIDO_DE_CAJA_COBRANDO);
+                sonidoCaja.Play();
+
                 this.Close();
             }
 
