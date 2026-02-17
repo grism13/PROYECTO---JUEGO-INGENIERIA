@@ -73,6 +73,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap boton_de_siguiente1 {
+            get {
+                object obj = ResourceManager.GetObject("boton de siguiente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondo_tipo_televisor_para_intro {
             get {
                 object obj = ResourceManager.GetObject("fondo tipo televisor para intro", resourceCulture);

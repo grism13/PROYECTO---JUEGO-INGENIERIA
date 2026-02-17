@@ -46,10 +46,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 // Se la aplicamos a los controles de tu diseño
                 lblTexto.Font = fuentePokemonTexto;
+                btnSiguiente.Font = fuentePokemonBoton;
 
-                // NOTA: Asumiendo que tu botón se llama btnSiguiente en el diseño
-                // Si tiene otro nombre, cámbialo aquí.
-                // btnSiguiente.Font = fuentePokemonBoton; 
+              
             }
             else
             {
