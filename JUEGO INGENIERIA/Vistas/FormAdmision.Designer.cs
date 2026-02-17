@@ -158,7 +158,7 @@
             btnCrear.FlatStyle = FlatStyle.Flat;
             btnCrear.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrear.ForeColor = Color.White;
-            btnCrear.Location = new Point(892, 521);
+            btnCrear.Location = new Point(880, 514);
             btnCrear.Margin = new Padding(3, 2, 3, 2);
             btnCrear.Name = "btnCrear";
             btnCrear.Size = new Size(181, 41);

@@ -11,13 +11,15 @@ namespace JUEGO_INGENIERIA.Vistas
         public string Nombre { get; set; }
         public string IdJugador { get; set; }
         public int Nivel { get;set; }
+        public int Billetera { get; set; }
 
         // Aqui e arma como tal los datos del jugador 
         public Jugador(string nombreRecibido)
         {
             Nombre = nombreRecibido;
             Nivel = 1;
-           
+            Billetera = 500;
+
 
             // Aquí está la magia para acortar el ID a 6 caracteres
             IdJugador = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
