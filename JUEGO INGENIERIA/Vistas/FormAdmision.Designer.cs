@@ -57,7 +57,7 @@
             registratetxt.FlatStyle = FlatStyle.Flat;
             registratetxt.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             registratetxt.Image = Properties.Resources.fondo_imagen_para_registro__1_;
-            registratetxt.Location = new Point(838, 425);
+            registratetxt.Location = new Point(914, 485);
             registratetxt.Name = "registratetxt";
             registratetxt.Size = new Size(270, 27);
             registratetxt.TabIndex = 0;
@@ -146,7 +146,7 @@
             txtNombre.BorderStyle = BorderStyle.FixedSingle;
             txtNombre.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNombre.ForeColor = Color.Black;
-            txtNombre.Location = new Point(865, 454);
+            txtNombre.Location = new Point(950, 514);
             txtNombre.Margin = new Padding(3, 2, 3, 2);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(223, 33);
@@ -158,7 +158,7 @@
             btnCrear.FlatStyle = FlatStyle.Flat;
             btnCrear.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrear.ForeColor = Color.White;
-            btnCrear.Location = new Point(880, 514);
+            btnCrear.Location = new Point(965, 574);
             btnCrear.Margin = new Padding(3, 2, 3, 2);
             btnCrear.Name = "btnCrear";
             btnCrear.Size = new Size(181, 41);
@@ -211,7 +211,7 @@
             // pictureBox4
             // 
             pictureBox4.Image = Properties.Resources.fondo_imagen_para_registro__1_;
-            pictureBox4.Location = new Point(742, 265);
+            pictureBox4.Location = new Point(827, 325);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(458, 439);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
@@ -223,7 +223,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1367, 686);
+            ClientSize = new Size(1444, 881);
             Controls.Add(label1);
             Controls.Add(pictureBox2);
             Controls.Add(btnCrear);
