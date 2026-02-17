@@ -33,12 +33,15 @@ namespace JUEGO_INGENIERIA
 
         int frameActual = 0;
         int contadorLentitud = 0; // Lo moví aquí arriba para que sea global
+        List<Image> ultimaAnimacion = null;
 
         public Form1()
+
         {
             InitializeComponent();
             EsconderMuros();
-
+            this.DoubleBuffered = true;
+            EsconderMuros();
         }
 
         // --- TU CÓDIGO IMPORTANTE: INTRO Y REGISTRO ---
@@ -267,19 +270,33 @@ namespace JUEGO_INGENIERIA
 
 
         // --- FUNCIÓN DE ANIMAR ---
-        private void Animar(List<Image> animacion)
+        private void Animar(List<Image> animacionNueva)
         {
-            if (animacion.Count > 0)
+            if (animacionNueva != ultimaAnimacion)
+            {
+                frameActual = 0;        // Reiniciamos la animación al primer frame
+                contadorLentitud = 10;  // Forzamos que se dibuje inmediatamente
+                ultimaAnimacion = animacionNueva; // Guardamos la nueva como actual
+            }
+
+            if (animacionNueva.Count > 0)
             {
                 contadorLentitud++;
 
-                // Ajusta este > 4 si quieres que vaya más lento o más rápido
-                if (contadorLentitud > 3)
+                if (contadorLentitud > 3) // Ajusta este número si va muy rápido
                 {
+                    // Importante: Asignar la imagen ANTES de incrementar para asegurar que vemos el frame 0
+                    pbPersonaje.Image = animacionNueva[frameActual];
+
                     frameActual++;
-                    if (frameActual >= animacion.Count) frameActual = 0;
-                    pbPersonaje.Image = animacion[frameActual];
+                    if (frameActual >= animacionNueva.Count) frameActual = 0;
+
                     contadorLentitud = 0;
+                }
+                else if (contadorLentitud == 0)
+                {
+                    // Parche de seguridad: Si acabamos de resetear (contador 0), forzamos pintar la imagen
+                    pbPersonaje.Image = animacionNueva[frameActual];
                 }
             }
         }
