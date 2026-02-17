@@ -5,21 +5,64 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;                // Esto es para menejar archivos
-using System.Text.Json;         // Esto para leer los arhivos .json shhh
+using System.IO;                // Esto es para manejar archivos
+using System.Text.Json;         // Esto para leer los archivos .json
+using System.Drawing.Text;      // NUEVO: Para la fuente de Pokémon
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormAdmision : Form
     {
-        //Aqui declaro el molde de la lista que creare (la informacion del usuario) Dios mio
+        // El molde de la lista de usuarios
         List<Jugador> listaDeJugadores = new List<Jugador>();
+
+        // La mochila para nuestra fuente
+        PrivateFontCollection pfc = new PrivateFontCollection();
+
+        // Ruta de guardado
+        string rutaArchivo = "jugadores.json";
+
         public FormAdmision()
         {
             InitializeComponent();
-            CargarDatos();
+            CargarFuente(); // Cargamos la estética primero
+            CargarDatos();  // Luego cargamos los datos guardados
         }
 
+        // --- ESTÉTICA Y DISEÑO ---
+        private void CargarFuente()
+        {
+            string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+
+            if (File.Exists(rutaFuente))
+            {
+                pfc.AddFontFile(rutaFuente);
+
+                Font fuenteTitulos = new Font(pfc.Families[0], 12f);
+                Font fuenteBotones = new Font(pfc.Families[0], 10f);
+                Font fuenteTabla = new Font(pfc.Families[0], 8f);
+
+                label1.Font = fuenteTitulos;
+                label2.Font = fuenteTitulos;
+                txtNombre.Font = fuenteBotones;
+                btnCrear.Font = fuenteBotones;
+                btnEliminar.Font = fuenteBotones;
+                button1.Font = fuenteBotones;
+                registratetxt.Font = fuenteTitulos;
+
+                dvJugadores.DefaultCellStyle.Font = fuenteTabla;
+                dvJugadores.ColumnHeadersDefaultCellStyle.Font = fuenteBotones;
+                
+            }
+            else
+            {
+                MessageBox.Show("Aviso: No se encontró la fuente en la ruta: " + rutaFuente);
+            }
+        }
+
+        
+
+        // --- LÓGICA DE DATOS (CRUD ORIGINAL) ---
         private void btnCrear_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNombre.Text))
@@ -28,30 +71,20 @@ namespace JUEGO_INGENIERIA.Vistas
                 return;
             }
 
-            // Se crea al jugador en si, usando el nombre que coloco el usuario
             Jugador Nuevojugador = new Jugador(txtNombre.Text);
             listaDeJugadores.Add(Nuevojugador);
 
-            // Se actualiza la tabla del DataGridView
             ActualizarTabla();
             txtNombre.Clear();
-
-            // Esta funcion se ejecuta para guardar
             GuardarDatos();
         }
 
         private void ActualizarTabla()
         {
-            // Se refresca poniendo e null :(
             dvJugadores.DataSource = null;
             dvJugadores.DataSource = listaDeJugadores;
         }
 
-        // Aqui se coloca la ruta donde guardare los archivos 
-        string rutaArchivo = "jugadores.json";
-
-
-        // ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬Toda esta parte son configuraciones del .JSON¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         private void GuardarDatos()
         {
             var opciones = new JsonSerializerOptions { WriteIndented = true };
@@ -69,15 +102,10 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-
-        //¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            // Aqui se verifica si el usuario esta seleccionando una de las filas
             if (dvJugadores.SelectedRows.Count > 0)
             {
-                // Aqui solo se configura el mensaje de confirmar para eliminar a un usuario
                 DialogResult respuesta = MessageBox.Show(
                     "Estas seguro que quieres eliminar a este jugador permanentemente",
                     "Confirmar Eliminacion",
@@ -92,7 +120,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     ActualizarTabla();
                     GuardarDatos();
                 }
-
                 else
                 {
                     MessageBox.Show("Operacion cancelada, el jugador no ha sido eliminado");
@@ -105,18 +132,13 @@ namespace JUEGO_INGENIERIA.Vistas
             if (dvJugadores.SelectedRows.Count > 0)
             {
                 Jugador jugadorSeleccionado = (Jugador)dvJugadores.SelectedRows[0].DataBoundItem;
-                Form1.JugadorActual = jugadorSeleccionado;  
-                this.Close(); 
+                Form1.JugadorActual = jugadorSeleccionado;
+                this.Close();
             }
-
             else
             {
                 MessageBox.Show("Por favor selecciona un jugador para continuar");
             }
         }
     }
-
-
-
-
 }

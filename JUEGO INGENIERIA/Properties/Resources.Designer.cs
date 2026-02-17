@@ -83,9 +83,39 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondo_imagen_para_registro {
+            get {
+                object obj = ResourceManager.GetObject("fondo imagen para registro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fondo_imagen_para_registro__1_ {
+            get {
+                object obj = ResourceManager.GetObject("fondo imagen para registro (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondo_tipo_televisor_para_intro {
             get {
                 object obj = ResourceManager.GetObject("fondo tipo televisor para intro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LOGO_DEL_JUEGO {
+            get {
+                object obj = ResourceManager.GetObject("LOGO DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,6 +136,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap segunda_imagen_de_la_intro__1_ {
             get {
                 object obj = ResourceManager.GetObject("segunda imagen de la intro (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap titulo_DEL_JUEGO {
+            get {
+                object obj = ResourceManager.GetObject("titulo DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
