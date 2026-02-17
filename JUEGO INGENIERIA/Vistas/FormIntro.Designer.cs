@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormIntro));
             lblTexto = new Label();
             btnSiguiente = new Button();
             pbImagen = new PictureBox();
@@ -97,6 +98,7 @@
             Controls.Add(btnSiguiente);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormIntro";
             StartPosition = FormStartPosition.CenterScreen;

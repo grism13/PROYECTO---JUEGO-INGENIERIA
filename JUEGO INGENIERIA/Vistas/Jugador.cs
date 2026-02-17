@@ -13,11 +13,14 @@ namespace JUEGO_INGENIERIA.Vistas
         public int Nivel { get;set; }
 
         // Aqui e arma como tal los datos del jugador 
-        public Jugador (string nombreRecibido)
+        public Jugador(string nombreRecibido)
         {
             Nombre = nombreRecibido;
             Nivel = 1;
-            IdJugador = Guid.NewGuid().ToString(); // Estoy generando un ID unico para cada jugador usando Guid
+           
+
+            // Aquí está la magia para acortar el ID a 6 caracteres
+            IdJugador = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
         }
 
         // Se deja vacio para colocarle el .json
