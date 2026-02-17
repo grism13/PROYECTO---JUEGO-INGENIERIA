@@ -244,17 +244,36 @@ namespace JUEGO_INGENIERIA
                     }
                 }
 
+                // aqui es cuando la muñeca toca la puerta de entrada al nivel 1
                 if (x is PictureBox && x.Name == "pbPuertaNivel1")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
-                        tmrMovimiento.Stop();
-                        goArriba = goAbajo = goIzquierda = goDerecha = false;
+                        tmrMovimiento.Stop(); // pausamos el mapa para que el personaje no siga caminando de fondo
+                        goArriba = goAbajo = goIzquierda = goDerecha = false; // Reseteamos las teclas
 
-                        MessageBox.Show("¡Entrando a la clase del profesor Oswald!", "Nivel 1");
+                        // aquí te pregunta si quieres iniciar o no
+                        DialogResult respuesta = MessageBox.Show(
+                            "¿Estás listo para entrar a la clase del profesor Oswald?",
+                            "Entrada al Nivel 1",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question
+                        );
 
-                        FormNivel1 nivel1 = new FormNivel1();
-                        nivel1.Show();
+                        if (respuesta == DialogResult.Yes)
+                        {
+                            // si el jugador dice que si se abre el nivel 1
+                            FormNivel1 nivel1 = new FormNivel1();
+                            nivel1.Show();
+                        }
+                        else
+                        {
+                            // si dice que no lo rebotamos un poquito hacia atrás para sacarlo de la zona verde
+                            pbPersonaje.Left = xAnterior;
+                            pbPersonaje.Top = yAnterior + 20; // Lo empujamos 20 píxeles hacia abajo
+
+                            tmrMovimiento.Start(); // Volvemos a encender el motor del mapa
+                        }
                     }
                 }
             }
