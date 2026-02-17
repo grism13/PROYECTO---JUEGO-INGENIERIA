@@ -101,7 +101,7 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(1060, 193);
+            pbPersonaje.Location = new Point(392, 358);
             pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(82, 102);
@@ -200,7 +200,7 @@
             // 
             // pbPuertaNivel1
             // 
-            pbPuertaNivel1.Location = new Point(144, 435);
+            pbPuertaNivel1.Location = new Point(140, 455);
             pbPuertaNivel1.Name = "pbPuertaNivel1";
             pbPuertaNivel1.Size = new Size(41, 46);
             pbPuertaNivel1.TabIndex = 12;
@@ -221,7 +221,7 @@
             pictureBox10.BackColor = Color.Crimson;
             pictureBox10.Location = new Point(834, 620);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(25, 173);
+            pictureBox10.Size = new Size(25, 261);
             pictureBox10.TabIndex = 14;
             pictureBox10.TabStop = false;
             pictureBox10.Tag = "muro";
@@ -231,7 +231,7 @@
             pictureBox11.BackColor = Color.Crimson;
             pictureBox11.Location = new Point(578, 640);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(25, 187);
+            pictureBox11.Size = new Size(25, 241);
             pictureBox11.TabIndex = 15;
             pictureBox11.TabStop = false;
             pictureBox11.Tag = "muro";
@@ -279,7 +279,7 @@
             // pictureBox16
             // 
             pictureBox16.BackColor = Color.Crimson;
-            pictureBox16.Location = new Point(1025, 574);
+            pictureBox16.Location = new Point(1024, 571);
             pictureBox16.Name = "pictureBox16";
             pictureBox16.Size = new Size(47, 41);
             pictureBox16.TabIndex = 20;
@@ -289,7 +289,7 @@
             // pictureBox17
             // 
             pictureBox17.BackColor = Color.Crimson;
-            pictureBox17.Location = new Point(1322, 400);
+            pictureBox17.Location = new Point(1265, 395);
             pictureBox17.Name = "pictureBox17";
             pictureBox17.Size = new Size(171, 34);
             pictureBox17.TabIndex = 21;
