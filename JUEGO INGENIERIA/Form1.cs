@@ -37,6 +37,8 @@ namespace JUEGO_INGENIERIA
         public Form1()
         {
             InitializeComponent();
+            EsconderMuros();
+
         }
 
         // --- TU CÓDIGO IMPORTANTE: INTRO Y REGISTRO ---
@@ -130,6 +132,9 @@ namespace JUEGO_INGENIERIA
         // --- EL CAMBIO MAGISTRAL AQUÍ (Lógica corregida) ---
         private void tmrMovimiento_Tick(object sender, EventArgs e)
         {
+            //aqui se guarda la posicion para q pueda detectar los muros
+            int xAnterior = pbPersonaje.Left;
+            int yAnterior = pbPersonaje.Top;
             // Definimos dos velocidades locales
             int vNormal = 5;
             int vDiag = 3; // Más lento para diagonales (evita el efecto turbo)
@@ -223,6 +228,33 @@ namespace JUEGO_INGENIERIA
                     seMueve = true;
                 }
             }
+            foreach (Control x in this.Controls)
+            {
+                // Chocar contra los muros (Bloques rojos)
+                if (x is PictureBox && (string)x.Tag == "muro")
+                {
+                    if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        // ¡Pisó el muro! Lo devolvemos a donde estaba al inicio
+                        pbPersonaje.Left = xAnterior;
+                        pbPersonaje.Top = yAnterior;
+                    }
+                }
+
+                if (x is PictureBox && x.Name == "pbPuertaNivel1")
+                {
+                    if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        tmrMovimiento.Stop();
+                        goArriba = goAbajo = goIzquierda = goDerecha = false;
+
+                        MessageBox.Show("¡Entrando a la clase del profesor Oswald!", "Nivel 1");
+
+                        FormNivel1 nivel1 = new FormNivel1();
+                        nivel1.Show();
+                    }
+                }
+            }
 
             // --- 3. RESETEO ---
             if (seMueve == false)
@@ -231,6 +263,8 @@ namespace JUEGO_INGENIERIA
                 contadorLentitud = 10; // Truco: esto hace que al arrancar no tenga retraso la primera vez
             }
         }
+
+
 
         // --- FUNCIÓN DE ANIMAR ---
         private void Animar(List<Image> animacion)
@@ -246,6 +280,18 @@ namespace JUEGO_INGENIERIA
                     if (frameActual >= animacion.Count) frameActual = 0;
                     pbPersonaje.Image = animacion[frameActual];
                     contadorLentitud = 0;
+                }
+            }
+        }
+        // Función para ocultar los bloques de muro al arrancar
+        private void EsconderMuros()
+        {
+            foreach (Control x in this.Controls)
+            {
+                // Oculta todo lo que tenga el Tag "muro" o sea la puerta
+                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1")
+                {
+                    x.BackColor = Color.Transparent;
                 }
             }
         }
