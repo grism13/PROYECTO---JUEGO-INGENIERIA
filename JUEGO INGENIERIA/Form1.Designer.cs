@@ -28,8 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             lblNombreJugador = new Label();
             lblNivel = new Label();
+            tmrMovimiento = new System.Windows.Forms.Timer(components);
+            pbPersonaje = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -50,17 +54,38 @@
             lblNivel.TabIndex = 1;
             lblNivel.Text = "label1";
             // 
+            // tmrMovimiento
+            // 
+            tmrMovimiento.Enabled = true;
+            tmrMovimiento.Interval = 20;
+            tmrMovimiento.Tick += tmrMovimiento_Tick;
+            // 
+            // pbPersonaje
+            // 
+            pbPersonaje.BackColor = Color.Transparent;
+            pbPersonaje.Location = new Point(623, 222);
+            pbPersonaje.Name = "pbPersonaje";
+            pbPersonaje.Size = new Size(160, 200);
+            pbPersonaje.SizeMode = PictureBoxSizeMode.AutoSize;
+            pbPersonaje.TabIndex = 2;
+            pbPersonaje.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1477, 750);
+            Controls.Add(pbPersonaje);
             Controls.Add(lblNivel);
             Controls.Add(lblNombreJugador);
+            DoubleBuffered = true;
+            KeyPreview = true;
             Name = "Form1";
             Text = "Form1";
             Activated += Form1_Activated;
             Shown += Form1_Shown;
+            KeyDown += Form1_KeyDown;
+            ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -69,5 +94,7 @@
 
         private Label lblNombreJugador;
         private Label lblNivel;
+        private System.Windows.Forms.Timer tmrMovimiento;
+        private PictureBox pbPersonaje;
     }
 }
