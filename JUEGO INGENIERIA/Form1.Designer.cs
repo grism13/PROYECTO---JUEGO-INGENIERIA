@@ -63,8 +63,8 @@
             // pbPersonaje
             // 
             pbPersonaje.BackColor = Color.Transparent;
-            pbPersonaje.Image = Properties.Resources._7;
-            pbPersonaje.Location = new Point(469, 156);
+            pbPersonaje.Image = Properties.Resources.gris_ladoizquiedo3;
+            pbPersonaje.Location = new Point(497, 170);
             pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(160, 200);

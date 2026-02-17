@@ -22,7 +22,7 @@ namespace JUEGO_INGENIERIA.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace JUEGO_INGENIERIA.Properties {
         ///   Devuelve la instancia de ResourceManager almacenada en caché utilizada por esta clase.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("JUEGO_INGENIERIA.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace JUEGO_INGENIERIA.Properties {
         ///   búsquedas de recursos mediante esta clase de recurso fuertemente tipado.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,37 +63,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap _2 {
-            get {
-                object obj = ResourceManager.GetObject("2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap _3 {
-            get {
-                object obj = ResourceManager.GetObject("_3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap _7 {
-            get {
-                object obj = ResourceManager.GetObject("7", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap boton_de_siguiente {
+        internal static System.Drawing.Bitmap boton_de_siguiente {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +73,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap boton_de_siguiente1 {
+        internal static System.Drawing.Bitmap boton_de_siguiente1 {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +83,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap fondo_imagen_para_registro {
+        internal static System.Drawing.Bitmap fondo_imagen_para_registro {
             get {
                 object obj = ResourceManager.GetObject("fondo imagen para registro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +93,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap fondo_imagen_para_registro__1_ {
+        internal static System.Drawing.Bitmap fondo_imagen_para_registro__1_ {
             get {
                 object obj = ResourceManager.GetObject("fondo imagen para registro (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +103,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap fondo_tipo_televisor_para_intro {
+        internal static System.Drawing.Bitmap fondo_tipo_televisor_para_intro {
             get {
                 object obj = ResourceManager.GetObject("fondo tipo televisor para intro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +113,237 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap LOGO_DEL_JUEGO {
+        internal static System.Drawing.Bitmap gris_espalda1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_espalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_espalda2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_espalda2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_espalda3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_espalda3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_frente1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_frente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_frente2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_frente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechaespalda1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechaespalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechaespalda2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechaespalda2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechaespalda3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechaespalda3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechafrente1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechafrente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechafrente2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechafrente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaderechafrente3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaderechafrente3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedaespalda1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedaespalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedaespalda2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedaespalda2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedaespalda3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedaespalda3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoderecho1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoderecho1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoderecho2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoderecho2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoderecho3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoderecho3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoizquiedo1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoizquiedo1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoizquiedo2 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoizquiedo2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_ladoizquiedo3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_ladoizquiedo3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LOGO_DEL_JUEGO {
             get {
                 object obj = ResourceManager.GetObject("LOGO DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +353,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap primera_imagen_de_la_intro {
+        internal static System.Drawing.Bitmap primera_imagen_de_la_intro {
             get {
                 object obj = ResourceManager.GetObject("primera imagen de la intro", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +363,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap segunda_imagen_de_la_intro__1_ {
+        internal static System.Drawing.Bitmap segunda_imagen_de_la_intro__1_ {
             get {
                 object obj = ResourceManager.GetObject("segunda imagen de la intro (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +373,7 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap titulo_DEL_JUEGO {
+        internal static System.Drawing.Bitmap titulo_DEL_JUEGO {
             get {
                 object obj = ResourceManager.GetObject("titulo DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
