@@ -33,6 +33,7 @@
             lblNivel = new Label();
             tmrMovimiento = new System.Windows.Forms.Timer(components);
             pbPersonaje = new PictureBox();
+            nivelPersonaje = new Label();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             SuspendLayout();
             // 
@@ -72,6 +73,15 @@
             pbPersonaje.TabIndex = 2;
             pbPersonaje.TabStop = false;
             // 
+            // nivelPersonaje
+            // 
+            nivelPersonaje.AutoSize = true;
+            nivelPersonaje.Location = new Point(1258, 50);
+            nivelPersonaje.Name = "nivelPersonaje";
+            nivelPersonaje.Size = new Size(50, 20);
+            nivelPersonaje.TabIndex = 3;
+            nivelPersonaje.Text = "label1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -100,5 +110,6 @@
         private Label lblNivel;
         private System.Windows.Forms.Timer tmrMovimiento;
         private PictureBox pbPersonaje;
+        private Label nivelPersonaje;
     }
 }
