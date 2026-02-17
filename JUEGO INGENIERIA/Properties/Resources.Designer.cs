@@ -163,6 +163,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gris_frente3 {
+            get {
+                object obj = ResourceManager.GetObject("gris_frente3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gris_inclinadaderechaespalda1 {
             get {
                 object obj = ResourceManager.GetObject("gris_inclinadaderechaespalda1", resourceCulture);

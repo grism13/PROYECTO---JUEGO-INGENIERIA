@@ -40,18 +40,18 @@
             // lblNombreJugador
             // 
             lblNombreJugador.AutoSize = true;
-            lblNombreJugador.Location = new Point(37, 88);
+            lblNombreJugador.Location = new Point(32, 66);
             lblNombreJugador.Name = "lblNombreJugador";
-            lblNombreJugador.Size = new Size(50, 20);
+            lblNombreJugador.Size = new Size(38, 15);
             lblNombreJugador.TabIndex = 0;
             lblNombreJugador.Text = "label1";
             // 
             // lblNivel
             // 
             lblNivel.AutoSize = true;
-            lblNivel.Location = new Point(37, 43);
+            lblNivel.Location = new Point(32, 32);
             lblNivel.Name = "lblNivel";
-            lblNivel.Size = new Size(50, 20);
+            lblNivel.Size = new Size(38, 15);
             lblNivel.TabIndex = 1;
             lblNivel.Text = "label1";
             // 
@@ -64,9 +64,11 @@
             // pbPersonaje
             // 
             pbPersonaje.BackColor = Color.Transparent;
-            pbPersonaje.Location = new Point(679, 233);
+            pbPersonaje.Image = Properties.Resources.gris_frente3;
+            pbPersonaje.Location = new Point(594, 175);
+            pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(152, 188);
+            pbPersonaje.Size = new Size(133, 141);
             pbPersonaje.SizeMode = PictureBoxSizeMode.Zoom;
             pbPersonaje.TabIndex = 2;
             pbPersonaje.TabStop = false;
@@ -82,15 +84,16 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Green;
-            ClientSize = new Size(1445, 749);
+            ClientSize = new Size(1264, 562);
             Controls.Add(pbPersonaje);
             Controls.Add(lblNivel);
             Controls.Add(lblNombreJugador);
             DoubleBuffered = true;
             KeyPreview = true;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             Activated += Form1_Activated;
