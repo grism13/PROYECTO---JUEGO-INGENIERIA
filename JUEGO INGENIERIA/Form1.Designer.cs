@@ -40,18 +40,18 @@
             // lblNombreJugador
             // 
             lblNombreJugador.AutoSize = true;
-            lblNombreJugador.Location = new Point(36, 88);
+            lblNombreJugador.Location = new Point(32, 66);
             lblNombreJugador.Name = "lblNombreJugador";
-            lblNombreJugador.Size = new Size(50, 20);
+            lblNombreJugador.Size = new Size(38, 15);
             lblNombreJugador.TabIndex = 0;
             lblNombreJugador.Text = "label1";
             // 
             // lblNivel
             // 
             lblNivel.AutoSize = true;
-            lblNivel.Location = new Point(36, 43);
+            lblNivel.Location = new Point(32, 32);
             lblNivel.Name = "lblNivel";
-            lblNivel.Size = new Size(50, 20);
+            lblNivel.Size = new Size(38, 15);
             lblNivel.TabIndex = 1;
             lblNivel.Text = "label1";
             // 
@@ -64,7 +64,9 @@
             // pbPersonaje
             // 
             pbPersonaje.BackColor = Color.Transparent;
-            pbPersonaje.Location = new Point(623, 222);
+            pbPersonaje.Image = Properties.Resources._7;
+            pbPersonaje.Location = new Point(469, 156);
+            pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(160, 200);
             pbPersonaje.SizeMode = PictureBoxSizeMode.AutoSize;
@@ -82,15 +84,16 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1477, 750);
-            Controls.Add(nivelPersonaje);
+            BackColor = Color.White;
+            ClientSize = new Size(1264, 562);
             Controls.Add(pbPersonaje);
             Controls.Add(lblNivel);
             Controls.Add(lblNombreJugador);
             DoubleBuffered = true;
             KeyPreview = true;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
             Activated += Form1_Activated;
