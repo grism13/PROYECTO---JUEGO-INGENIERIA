@@ -52,7 +52,6 @@ namespace JUEGO_INGENIERIA
 
         {
             InitializeComponent();
-            EsconderMuros();
             this.DoubleBuffered = true;
             EsconderMuros();
         }
@@ -146,6 +145,11 @@ namespace JUEGO_INGENIERIA
             animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
 
             pbPersonaje.Image = Resources.gris_frente2; // Imagen inicial
+
+            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
+
+            pbPersonaje.Image = Resources.gris_frente2;
+
         }
 
         // --- TECLAS ---
@@ -310,6 +314,9 @@ namespace JUEGO_INGENIERIA
                     }
                 }
             }
+
+           
+
 
             // --- 3. RESETEO ---
             if (seMueve == false)
