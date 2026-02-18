@@ -35,7 +35,7 @@
             // 
             // pbOswald
             // 
-            pbOswald.Location = new Point(0, 258);
+            pbOswald.Location = new Point(469, 134);
             pbOswald.Name = "pbOswald";
             pbOswald.Size = new Size(396, 397);
             pbOswald.SizeMode = PictureBoxSizeMode.Zoom;
