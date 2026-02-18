@@ -7,11 +7,24 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Text;
+using System.IO;
 
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
+        // 1. Creamos una variable para guardar los datos del jugador en esta pantalla
+        private Vistas.Jugador jugadorActual;
+
+        // 2. Modificamos el constructor para que exija un Jugador al abrirse
+        public Form1(Vistas.Jugador jugadorRecibido)
+        {
+            InitializeComponent();
+
+            // Guardamos el jugador que viene de la pantalla de admisión
+            jugadorActual = jugadorRecibido;
+        }
         // --- VARIABLES DE MOVIMIENTO ---
         bool goArriba, goAbajo, goIzquierda, goDerecha;
         int velocidad = 5;
@@ -38,7 +51,6 @@ namespace JUEGO_INGENIERIA
         public Form1()
         {
             InitializeComponent();
-            EsconderMuros();
             this.DoubleBuffered = true;
             EsconderMuros();
         }
@@ -60,18 +72,38 @@ namespace JUEGO_INGENIERIA
         // --- TU CÓDIGO IMPORTANTE: ACTUALIZAR ETIQUETAS ---
         private void Form1_Activated(object sender, EventArgs e)
         {
+            // 1. Buscamos la ruta exacta de tu fuente usando la misma lógica de tus imágenes
+            string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+
+            // 2. Cargamos la fuente en la colección privada
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile(rutaFuente);
+
+            // 3. Creamos el estilo de la fuente (Aquí puedes cambiar el 12f por el tamaño que prefieras)
+            Font fuentePixel = new Font(pfc.Families[0], 10f);
+
+            // 4. Se la asignamos a los textos (Asegúrate de que los nombres de los lbl coincidan con los tuyos)
+            lblNombreJugador.Font = fuentePixel;
+            lblNivel.Font = fuentePixel;
+            lblDinero.Font = fuentePixel;
+
+           
+
             if (JugadorActual != null)
             {
                 lblNombreJugador.Text = "Jugador: " + JugadorActual.Nombre;
                 lblNivel.Text = "Nivel: " + JugadorActual.Nivel.ToString();
+                lblDinero.Text = "Dinero: $" + JugadorActual.Billetera.ToString();
             }
         }
 
         // --- CARGA DE IMÁGENES ---
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Abajo (Frente)
-            animAbajo.Add(Resources.gris_frente1);
+            
+        
+        // Abajo (Frente)
+        animAbajo.Add(Resources.gris_frente1);
             animAbajo.Add(Resources.gris_frente2);
             animAbajo.Add(Resources.gris_frente3);
 
@@ -112,6 +144,11 @@ namespace JUEGO_INGENIERIA
             animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
 
             pbPersonaje.Image = Resources.gris_frente2; // Imagen inicial
+
+            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
+
+            pbPersonaje.Image = Resources.gris_frente2;
+
         }
 
         // --- TECLAS ---
@@ -281,6 +318,9 @@ namespace JUEGO_INGENIERIA
                     }
                 }
             }
+
+           
+
 
             // --- 3. RESETEO ---
             if (seMueve == false)
