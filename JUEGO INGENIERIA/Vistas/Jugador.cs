@@ -18,7 +18,7 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             Nombre = nombreRecibido;
             Nivel = 1;
-            Billetera = 500;
+            Billetera = 1000;
 
 
             // Aquí está la magia para acortar el ID a 6 caracteres
