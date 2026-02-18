@@ -73,15 +73,15 @@
             // 
             pnlEscenario.BackColor = Color.DimGray;
             pnlEscenario.Controls.Add(pbxJugador);
-            pnlEscenario.Location = new Point(368, 3);
+            pnlEscenario.Location = new Point(361, 60);
             pnlEscenario.Name = "pnlEscenario";
-            pnlEscenario.Size = new Size(800, 1000);
+            pnlEscenario.Size = new Size(800, 608);
             pnlEscenario.TabIndex = 2;
             // 
             // pbxJugador
             // 
             pbxJugador.BackColor = Color.Blue;
-            pbxJugador.Location = new Point(265, 861);
+            pbxJugador.Location = new Point(220, 349);
             pbxJugador.Name = "pbxJugador";
             pbxJugador.Size = new Size(70, 70);
             pbxJugador.TabIndex = 0;
@@ -91,7 +91,7 @@
             // 
             lblTiempo.AutoSize = true;
             lblTiempo.BackColor = Color.White;
-            lblTiempo.Location = new Point(1369, 120);
+            lblTiempo.Location = new Point(1187, 184);
             lblTiempo.Name = "lblTiempo";
             lblTiempo.Size = new Size(67, 15);
             lblTiempo.TabIndex = 3;
@@ -101,7 +101,7 @@
             // 
             lblVidas.AutoSize = true;
             lblVidas.BackColor = Color.Red;
-            lblVidas.Location = new Point(1373, 195);
+            lblVidas.Location = new Point(1187, 234);
             lblVidas.Name = "lblVidas";
             lblVidas.Size = new Size(51, 15);
             lblVidas.TabIndex = 4;
@@ -111,7 +111,7 @@
             // 
             lblPuntos.AutoSize = true;
             lblPuntos.BackColor = Color.GreenYellow;
-            lblPuntos.Location = new Point(1382, 246);
+            lblPuntos.Location = new Point(1191, 284);
             lblPuntos.Name = "lblPuntos";
             lblPuntos.Size = new Size(63, 15);
             lblPuntos.TabIndex = 5;
@@ -136,7 +136,7 @@
             // 
             pnlIntro.BackColor = Color.DarkGray;
             pnlIntro.Controls.Add(pictureBox1);
-            pnlIntro.Location = new Point(150, 619);
+            pnlIntro.Location = new Point(146, 523);
             pnlIntro.Name = "pnlIntro";
             pnlIntro.Size = new Size(200, 100);
             pnlIntro.TabIndex = 6;
@@ -153,7 +153,7 @@
             // 
             lblOswaldText.AutoSize = true;
             lblOswaldText.BackColor = Color.DarkGray;
-            lblOswaldText.Location = new Point(163, 743);
+            lblOswaldText.Location = new Point(156, 653);
             lblOswaldText.Name = "lblOswaldText";
             lblOswaldText.Size = new Size(38, 15);
             lblOswaldText.TabIndex = 7;
@@ -170,7 +170,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1460, 920);
+            ClientSize = new Size(1280, 720);
             Controls.Add(lblOswaldText);
             Controls.Add(pnlIntro);
             Controls.Add(lblPuntos);
