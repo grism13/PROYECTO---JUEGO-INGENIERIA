@@ -43,6 +43,7 @@
             pictureBox3 = new PictureBox();
             label1 = new Label();
             pictureBox4 = new PictureBox();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)dvJugadores).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -57,7 +58,7 @@
             registratetxt.FlatStyle = FlatStyle.Flat;
             registratetxt.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             registratetxt.Image = Properties.Resources.fondo_imagen_para_registro__1_;
-            registratetxt.Location = new Point(914, 485);
+            registratetxt.Location = new Point(827, 380);
             registratetxt.Name = "registratetxt";
             registratetxt.Size = new Size(270, 27);
             registratetxt.TabIndex = 0;
@@ -146,7 +147,7 @@
             txtNombre.BorderStyle = BorderStyle.FixedSingle;
             txtNombre.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             txtNombre.ForeColor = Color.Black;
-            txtNombre.Location = new Point(950, 514);
+            txtNombre.Location = new Point(849, 427);
             txtNombre.Margin = new Padding(3, 2, 3, 2);
             txtNombre.Name = "txtNombre";
             txtNombre.Size = new Size(223, 33);
@@ -158,7 +159,7 @@
             btnCrear.FlatStyle = FlatStyle.Flat;
             btnCrear.Font = new Font("Trebuchet MS", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCrear.ForeColor = Color.White;
-            btnCrear.Location = new Point(965, 574);
+            btnCrear.Location = new Point(873, 499);
             btnCrear.Margin = new Padding(3, 2, 3, 2);
             btnCrear.Name = "btnCrear";
             btnCrear.Size = new Size(181, 41);
@@ -181,7 +182,7 @@
             // pictureBox2
             // 
             pictureBox2.Image = Properties.Resources.LOGO_DEL_JUEGO;
-            pictureBox2.Location = new Point(685, 12);
+            pictureBox2.Location = new Point(621, 12);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(194, 230);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -191,7 +192,7 @@
             // pictureBox3
             // 
             pictureBox3.Image = Properties.Resources.titulo_DEL_JUEGO;
-            pictureBox3.Location = new Point(838, -105);
+            pictureBox3.Location = new Point(769, -112);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(465, 495);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
@@ -202,7 +203,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(981, 12);
+            label1.Location = new Point(905, 12);
             label1.Name = "label1";
             label1.Size = new Size(192, 27);
             label1.TabIndex = 12;
@@ -211,19 +212,30 @@
             // pictureBox4
             // 
             pictureBox4.Image = Properties.Resources.fondo_imagen_para_registro__1_;
-            pictureBox4.Location = new Point(827, 325);
+            pictureBox4.Location = new Point(726, 248);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(458, 439);
             pictureBox4.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox4.TabIndex = 13;
             pictureBox4.TabStop = false;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(1121, 218);
+            label3.Name = "label3";
+            label3.Size = new Size(78, 27);
+            label3.TabIndex = 14;
+            label3.Text = ".BETA";
+            // 
             // FormAdmision
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1444, 881);
+            ClientSize = new Size(1264, 681);
+            Controls.Add(label3);
             Controls.Add(label1);
             Controls.Add(pictureBox2);
             Controls.Add(btnCrear);
@@ -240,6 +252,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormAdmision";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "REGISTRO";
             ((System.ComponentModel.ISupportInitialize)dvJugadores).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
@@ -264,5 +277,6 @@
         private PictureBox pictureBox3;
         private Label label1;
         private PictureBox pictureBox4;
+        private Label label3;
     }
 }

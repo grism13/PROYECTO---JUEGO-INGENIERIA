@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             lblNombreJugador = new Label();
             lblNivel = new Label();
             tmrMovimiento = new System.Windows.Forms.Timer(components);
@@ -52,6 +53,19 @@
             pictureBox17 = new PictureBox();
             pictureBox8 = new PictureBox();
             pictureBox13 = new PictureBox();
+            lblDinero = new Label();
+            pictureBox18 = new PictureBox();
+            pictureBox19 = new PictureBox();
+            pictureBox20 = new PictureBox();
+            pictureBox21 = new PictureBox();
+            pictureBox22 = new PictureBox();
+            pictureBox23 = new PictureBox();
+            pictureBox26 = new PictureBox();
+            pictureBox24 = new PictureBox();
+            pictureBox25 = new PictureBox();
+            pictureBox27 = new PictureBox();
+            pictureBox28 = new PictureBox();
+            pictureBox29 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -71,12 +85,27 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox18).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox19).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox20).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox21).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox22).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox23).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox26).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox24).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox25).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox27).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox28).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox29).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
             // 
             lblNombreJugador.AutoSize = true;
-            lblNombreJugador.Location = new Point(37, 88);
+            lblNombreJugador.BackColor = Color.Transparent;
+            lblNombreJugador.ForeColor = Color.Black;
+            lblNombreJugador.Image = Properties.Resources.fondo_imagen_para_registro__1_;
+            lblNombreJugador.Location = new Point(12, 45);
             lblNombreJugador.Name = "lblNombreJugador";
             lblNombreJugador.Size = new Size(50, 20);
             lblNombreJugador.TabIndex = 0;
@@ -85,7 +114,10 @@
             // lblNivel
             // 
             lblNivel.AutoSize = true;
-            lblNivel.Location = new Point(37, 43);
+            lblNivel.BackColor = Color.Transparent;
+            lblNivel.ForeColor = Color.Black;
+            lblNivel.Image = Properties.Resources.fondo_imagen_para_registro__1_;
+            lblNivel.Location = new Point(12, 18);
             lblNivel.Name = "lblNivel";
             lblNivel.Size = new Size(50, 20);
             lblNivel.TabIndex = 1;
@@ -101,9 +133,10 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(1022, 763);
+            pbPersonaje.Location = new Point(560, 355);
+            pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(123, 188);
+            pbPersonaje.Size = new Size(88, 119);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 2;
             pbPersonaje.TabStop = false;
@@ -131,10 +164,9 @@
             // pictureBox2
             // 
             pictureBox2.BackColor = Color.Crimson;
-            pictureBox2.Location = new Point(715, 517);
-            pictureBox2.Margin = new Padding(3, 4, 3, 4);
+            pictureBox2.Location = new Point(407, 210);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(623, 40);
+            pictureBox2.Size = new Size(437, 25);
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             pictureBox2.Tag = "muro";
@@ -164,10 +196,9 @@
             // pictureBox6
             // 
             pictureBox6.BackColor = Color.Crimson;
-            pictureBox6.Location = new Point(86, 199);
-            pictureBox6.Margin = new Padding(3, 4, 3, 4);
+            pictureBox6.Location = new Point(43, 87);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(251, 115);
+            pictureBox6.Size = new Size(208, 86);
             pictureBox6.TabIndex = 8;
             pictureBox6.TabStop = false;
             pictureBox6.Tag = "muro";
@@ -186,8 +217,7 @@
             // pictureBox9
             // 
             pictureBox9.BackColor = Color.Crimson;
-            pictureBox9.Location = new Point(326, 12);
-            pictureBox9.Margin = new Padding(3, 4, 3, 4);
+            pictureBox9.Location = new Point(96, 6);
             pictureBox9.Name = "pictureBox9";
             pictureBox9.Size = new Size(379, 36);
             pictureBox9.TabIndex = 11;
@@ -196,10 +226,9 @@
             // 
             // pbPuertaNivel1
             // 
-            pbPuertaNivel1.Location = new Point(217, 829);
-            pbPuertaNivel1.Margin = new Padding(3, 4, 3, 4);
+            pbPuertaNivel1.Location = new Point(125, 418);
             pbPuertaNivel1.Name = "pbPuertaNivel1";
-            pbPuertaNivel1.Size = new Size(47, 61);
+            pbPuertaNivel1.Size = new Size(56, 16);
             pbPuertaNivel1.TabIndex = 12;
             pbPuertaNivel1.TabStop = false;
             // 
@@ -228,10 +257,9 @@
             // pictureBox12
             // 
             pictureBox12.BackColor = Color.Crimson;
-            pictureBox12.Location = new Point(712, 8);
-            pictureBox12.Margin = new Padding(3, 4, 3, 4);
+            pictureBox12.Location = new Point(407, -83);
             pictureBox12.Name = "pictureBox12";
-            pictureBox12.Size = new Size(27, 563);
+            pictureBox12.Size = new Size(32, 318);
             pictureBox12.TabIndex = 16;
             pictureBox12.TabStop = false;
             pictureBox12.Tag = "muro";
@@ -239,8 +267,7 @@
             // pictureBox14
             // 
             pictureBox14.BackColor = Color.Crimson;
-            pictureBox14.Location = new Point(73, 199);
-            pictureBox14.Margin = new Padding(3, 4, 3, 4);
+            pictureBox14.Location = new Point(43, 149);
             pictureBox14.Name = "pictureBox14";
             pictureBox14.Size = new Size(30, 819);
             pictureBox14.TabIndex = 18;
@@ -250,10 +277,9 @@
             // pictureBox15
             // 
             pictureBox15.BackColor = Color.Crimson;
-            pictureBox15.Location = new Point(98, 653);
-            pictureBox15.Margin = new Padding(3, 4, 3, 4);
+            pictureBox15.Location = new Point(1076, 299);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(245, 101);
+            pictureBox15.Size = new Size(101, 56);
             pictureBox15.TabIndex = 19;
             pictureBox15.TabStop = false;
             pictureBox15.Tag = "muro";
@@ -272,10 +298,9 @@
             // pictureBox5
             // 
             pictureBox5.BackColor = Color.Crimson;
-            pictureBox5.Location = new Point(1288, 47);
-            pictureBox5.Margin = new Padding(3, 4, 3, 4);
+            pictureBox5.Location = new Point(806, -57);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(34, 484);
+            pictureBox5.Size = new Size(38, 292);
             pictureBox5.TabIndex = 23;
             pictureBox5.TabStop = false;
             pictureBox5.Tag = "muro";
@@ -294,8 +319,7 @@
             // pictureBox8
             // 
             pictureBox8.BackColor = Color.Crimson;
-            pictureBox8.Location = new Point(1271, 8);
-            pictureBox8.Margin = new Padding(3, 4, 3, 4);
+            pictureBox8.Location = new Point(791, 6);
             pictureBox8.Name = "pictureBox8";
             pictureBox8.Size = new Size(623, 40);
             pictureBox8.TabIndex = 25;
@@ -305,13 +329,148 @@
             // pictureBox13
             // 
             pictureBox13.BackColor = Color.Crimson;
-            pictureBox13.Location = new Point(309, 8);
-            pictureBox13.Margin = new Padding(3, 4, 3, 4);
+            pictureBox13.Location = new Point(226, 6);
             pictureBox13.Name = "pictureBox13";
             pictureBox13.Size = new Size(29, 221);
             pictureBox13.TabIndex = 26;
             pictureBox13.TabStop = false;
             pictureBox13.Tag = "muro";
+            // 
+            // lblDinero
+            // 
+            lblDinero.AutoSize = true;
+            lblDinero.BackColor = Color.Transparent;
+            lblDinero.ForeColor = Color.Black;
+            lblDinero.Image = Properties.Resources.fondo_imagen_para_registro__1_;
+            lblDinero.Location = new Point(12, 69);
+            lblDinero.Name = "lblDinero";
+            lblDinero.Size = new Size(38, 15);
+            lblDinero.TabIndex = 27;
+            lblDinero.Text = "label1";
+            // 
+            // pictureBox18
+            // 
+            pictureBox18.BackColor = Color.Transparent;
+            pictureBox18.Image = Properties.Resources.fondo_imagen_para_registro__1_;
+            pictureBox18.Location = new Point(-55, -143);
+            pictureBox18.Name = "pictureBox18";
+            pictureBox18.Size = new Size(306, 315);
+            pictureBox18.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox18.TabIndex = 28;
+            pictureBox18.TabStop = false;
+            // 
+            // pictureBox19
+            // 
+            pictureBox19.BackColor = Color.Transparent;
+            pictureBox19.Image = Properties.Resources.nivel_1;
+            pictureBox19.Location = new Point(52, 313);
+            pictureBox19.Name = "pictureBox19";
+            pictureBox19.Size = new Size(166, 78);
+            pictureBox19.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox19.TabIndex = 29;
+            pictureBox19.TabStop = false;
+            pictureBox19.Tag = "";
+            // 
+            // pictureBox20
+            // 
+            pictureBox20.BackColor = Color.Crimson;
+            pictureBox20.Location = new Point(703, 483);
+            pictureBox20.Name = "pictureBox20";
+            pictureBox20.Size = new Size(552, 25);
+            pictureBox20.TabIndex = 30;
+            pictureBox20.TabStop = false;
+            pictureBox20.Tag = "muro";
+            // 
+            // pictureBox21
+            // 
+            pictureBox21.BackColor = Color.Crimson;
+            pictureBox21.Location = new Point(743, 532);
+            pictureBox21.Name = "pictureBox21";
+            pictureBox21.Size = new Size(32, 112);
+            pictureBox21.TabIndex = 31;
+            pictureBox21.TabStop = false;
+            pictureBox21.Tag = "muro";
+            // 
+            // pictureBox22
+            // 
+            pictureBox22.BackColor = Color.Crimson;
+            pictureBox22.Location = new Point(492, 523);
+            pictureBox22.Name = "pictureBox22";
+            pictureBox22.Size = new Size(32, 112);
+            pictureBox22.TabIndex = 32;
+            pictureBox22.TabStop = false;
+            pictureBox22.Tag = "muro";
+            // 
+            // pictureBox23
+            // 
+            pictureBox23.BackColor = Color.Crimson;
+            pictureBox23.Location = new Point(43, 483);
+            pictureBox23.Name = "pictureBox23";
+            pictureBox23.Size = new Size(89, 25);
+            pictureBox23.TabIndex = 33;
+            pictureBox23.TabStop = false;
+            pictureBox23.Tag = "muro";
+            // 
+            // pictureBox26
+            // 
+            pictureBox26.BackColor = Color.Crimson;
+            pictureBox26.Location = new Point(1076, 79);
+            pictureBox26.Name = "pictureBox26";
+            pictureBox26.Size = new Size(129, 40);
+            pictureBox26.TabIndex = 36;
+            pictureBox26.TabStop = false;
+            pictureBox26.Tag = "muro";
+            // 
+            // pictureBox24
+            // 
+            pictureBox24.BackColor = Color.Transparent;
+            pictureBox24.Image = Properties.Resources.LOGO_DEL_JUEGO;
+            pictureBox24.Location = new Point(585, 79);
+            pictureBox24.Name = "pictureBox24";
+            pictureBox24.Size = new Size(89, 78);
+            pictureBox24.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox24.TabIndex = 37;
+            pictureBox24.TabStop = false;
+            // 
+            // pictureBox25
+            // 
+            pictureBox25.BackColor = Color.Crimson;
+            pictureBox25.Location = new Point(75, 339);
+            pictureBox25.Name = "pictureBox25";
+            pictureBox25.Size = new Size(38, 16);
+            pictureBox25.TabIndex = 38;
+            pictureBox25.TabStop = false;
+            pictureBox25.Tag = "muro";
+            // 
+            // pictureBox27
+            // 
+            pictureBox27.BackColor = Color.Crimson;
+            pictureBox27.Location = new Point(143, 339);
+            pictureBox27.Name = "pictureBox27";
+            pictureBox27.Size = new Size(38, 16);
+            pictureBox27.TabIndex = 39;
+            pictureBox27.TabStop = false;
+            pictureBox27.Tag = "muro";
+            // 
+            // pictureBox28
+            // 
+            pictureBox28.BackColor = Color.Crimson;
+            pictureBox28.Location = new Point(338, 492);
+            pictureBox28.Name = "pictureBox28";
+            pictureBox28.Size = new Size(161, 25);
+            pictureBox28.TabIndex = 40;
+            pictureBox28.TabStop = false;
+            pictureBox28.Tag = "muro";
+            // 
+            // pictureBox29
+            // 
+            pictureBox29.BackColor = Color.Crimson;
+            pictureBox29.Location = new Point(242, 546);
+            pictureBox29.Name = "pictureBox29";
+            pictureBox29.Size = new Size(89, 25);
+            pictureBox29.TabIndex = 41;
+            pictureBox29.TabStop = false;
+            pictureBox29.Tag = "muro";
             // 
             // Form1
             // 
@@ -320,33 +479,47 @@
             BackColor = Color.Green;
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(2176, 1334);
-            Controls.Add(pictureBox13);
+            ClientSize = new Size(1264, 681);
+            Controls.Add(pictureBox29);
+            Controls.Add(pictureBox28);
+            Controls.Add(pictureBox24);
+            Controls.Add(pictureBox19);
+            Controls.Add(pbPersonaje);
+            Controls.Add(pictureBox26);
+            Controls.Add(pictureBox23);
+            Controls.Add(pictureBox22);
+            Controls.Add(pictureBox21);
+            Controls.Add(pictureBox20);
+            Controls.Add(lblDinero);
             Controls.Add(pictureBox8);
             Controls.Add(pictureBox17);
             Controls.Add(pictureBox5);
             Controls.Add(pictureBox16);
             Controls.Add(pictureBox15);
-            Controls.Add(pictureBox14);
             Controls.Add(pictureBox12);
             Controls.Add(pictureBox11);
             Controls.Add(pictureBox10);
             Controls.Add(pbPuertaNivel1);
-            Controls.Add(pictureBox9);
             Controls.Add(pictureBox7);
-            Controls.Add(pictureBox6);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(lblNivel);
             Controls.Add(lblNombreJugador);
-            Controls.Add(pbPersonaje);
+            Controls.Add(pictureBox18);
+            Controls.Add(pictureBox6);
+            Controls.Add(pictureBox14);
+            Controls.Add(pictureBox13);
+            Controls.Add(pictureBox9);
+            Controls.Add(pictureBox25);
+            Controls.Add(pictureBox27);
             DoubleBuffered = true;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "Form1";
-            Text = "Form1";
-            WindowState = FormWindowState.Maximized;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "MENU";
             Activated += Form1_Activated;
             Load += Form1_Load;
             Shown += Form1_Shown;
@@ -371,6 +544,18 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox18).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox19).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox20).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox21).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox22).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox23).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox26).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox24).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox25).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox27).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox28).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox29).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -400,5 +585,18 @@
         private PictureBox pictureBox17;
         private PictureBox pictureBox8;
         private PictureBox pictureBox13;
+        private Label lblDinero;
+        private PictureBox pictureBox18;
+        private PictureBox pictureBox19;
+        private PictureBox pictureBox20;
+        private PictureBox pictureBox21;
+        private PictureBox pictureBox22;
+        private PictureBox pictureBox23;
+        private PictureBox pictureBox26;
+        private PictureBox pictureBox24;
+        private PictureBox pictureBox25;
+        private PictureBox pictureBox27;
+        private PictureBox pictureBox28;
+        private PictureBox pictureBox29;
     }
 }
