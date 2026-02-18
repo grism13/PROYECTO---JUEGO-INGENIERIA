@@ -80,7 +80,7 @@ namespace JUEGO_INGENIERIA
             pfc.AddFontFile(rutaFuente);
 
             // 3. Creamos el estilo de la fuente (Aquí puedes cambiar el 12f por el tamaño que prefieras)
-            Font fuentePixel = new Font(pfc.Families[0], 10f);
+            Font fuentePixel = new Font(pfc.Families[0], 9f);
 
             // 4. Se la asignamos a los textos (Asegúrate de que los nombres de los lbl coincidan con los tuyos)
             lblNombreJugador.Font = fuentePixel;
