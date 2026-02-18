@@ -40,8 +40,8 @@
             tmrGenerador = new System.Windows.Forms.Timer(components);
             tmrReloj = new System.Windows.Forms.Timer(components);
             pnlIntro = new Panel();
-            pictureBox1 = new PictureBox();
             lblOswaldText = new Label();
+            pictureBox1 = new PictureBox();
             timerEscritura = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pbOswald).BeginInit();
             pnlEscenario.SuspendLayout();
@@ -52,10 +52,12 @@
             // 
             // pbOswald
             // 
-            pbOswald.Location = new Point(0, 194);
+            pbOswald.BackColor = Color.Transparent;
+            pbOswald.Image = Properties.Resources.oswald_version_narrativa;
+            pbOswald.Location = new Point(-59, -60);
             pbOswald.Margin = new Padding(3, 2, 3, 2);
             pbOswald.Name = "pbOswald";
-            pbOswald.Size = new Size(346, 298);
+            pbOswald.Size = new Size(464, 405);
             pbOswald.SizeMode = PictureBoxSizeMode.Zoom;
             pbOswald.TabIndex = 0;
             pbOswald.TabStop = false;
@@ -71,17 +73,17 @@
             // 
             // pnlEscenario
             // 
-            pnlEscenario.BackColor = Color.DimGray;
+            pnlEscenario.BackColor = Color.Transparent;
             pnlEscenario.Controls.Add(pbxJugador);
-            pnlEscenario.Location = new Point(361, 60);
+            pnlEscenario.Location = new Point(424, 12);
             pnlEscenario.Name = "pnlEscenario";
-            pnlEscenario.Size = new Size(800, 608);
+            pnlEscenario.Size = new Size(377, 696);
             pnlEscenario.TabIndex = 2;
             // 
             // pbxJugador
             // 
             pbxJugador.BackColor = Color.Blue;
-            pbxJugador.Location = new Point(220, 349);
+            pbxJugador.Location = new Point(149, 582);
             pbxJugador.Name = "pbxJugador";
             pbxJugador.Size = new Size(70, 70);
             pbxJugador.TabIndex = 0;
@@ -90,8 +92,9 @@
             // lblTiempo
             // 
             lblTiempo.AutoSize = true;
-            lblTiempo.BackColor = Color.White;
-            lblTiempo.Location = new Point(1187, 184);
+            lblTiempo.BackColor = Color.Transparent;
+            lblTiempo.ForeColor = Color.Black;
+            lblTiempo.Location = new Point(1119, 169);
             lblTiempo.Name = "lblTiempo";
             lblTiempo.Size = new Size(67, 15);
             lblTiempo.TabIndex = 3;
@@ -100,8 +103,9 @@
             // lblVidas
             // 
             lblVidas.AutoSize = true;
-            lblVidas.BackColor = Color.Red;
-            lblVidas.Location = new Point(1187, 234);
+            lblVidas.BackColor = Color.Transparent;
+            lblVidas.ForeColor = Color.FromArgb(255, 128, 128);
+            lblVidas.Location = new Point(1123, 258);
             lblVidas.Name = "lblVidas";
             lblVidas.Size = new Size(51, 15);
             lblVidas.TabIndex = 4;
@@ -110,8 +114,9 @@
             // lblPuntos
             // 
             lblPuntos.AutoSize = true;
-            lblPuntos.BackColor = Color.GreenYellow;
-            lblPuntos.Location = new Point(1191, 284);
+            lblPuntos.BackColor = Color.Transparent;
+            lblPuntos.ForeColor = Color.FromArgb(192, 255, 192);
+            lblPuntos.Location = new Point(1123, 353);
             lblPuntos.Name = "lblPuntos";
             lblPuntos.Size = new Size(63, 15);
             lblPuntos.TabIndex = 5;
@@ -134,31 +139,37 @@
             // 
             // pnlIntro
             // 
-            pnlIntro.BackColor = Color.DarkGray;
+            pnlIntro.BackColor = Color.Transparent;
+            pnlIntro.Controls.Add(lblOswaldText);
             pnlIntro.Controls.Add(pictureBox1);
-            pnlIntro.Location = new Point(146, 523);
+            pnlIntro.Controls.Add(pbOswald);
+            pnlIntro.Location = new Point(33, 413);
             pnlIntro.Name = "pnlIntro";
-            pnlIntro.Size = new Size(200, 100);
+            pnlIntro.Size = new Size(953, 313);
             pnlIntro.TabIndex = 6;
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Location = new Point(71, 35);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(100, 50);
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // lblOswaldText
             // 
             lblOswaldText.AutoSize = true;
-            lblOswaldText.BackColor = Color.DarkGray;
-            lblOswaldText.Location = new Point(156, 653);
+            lblOswaldText.BackColor = Color.FromArgb(192, 192, 255);
+            lblOswaldText.ForeColor = Color.Black;
+            lblOswaldText.Location = new Point(317, 141);
             lblOswaldText.Name = "lblOswaldText";
             lblOswaldText.Size = new Size(38, 15);
             lblOswaldText.TabIndex = 7;
             lblOswaldText.Text = "label2";
             lblOswaldText.Click += lblOswaldText_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Image = Properties.Resources.narrativa;
+            pictureBox1.Location = new Point(263, 85);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(686, 210);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 1;
+            pictureBox1.TabStop = false;
             // 
             // timerEscritura
             // 
@@ -169,28 +180,27 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
+            BackColor = Color.White;
+            BackgroundImage = Properties.Resources.fondonivel1;
             ClientSize = new Size(1280, 720);
-            Controls.Add(lblOswaldText);
             Controls.Add(pnlIntro);
             Controls.Add(lblPuntos);
             Controls.Add(lblVidas);
             Controls.Add(lblTiempo);
             Controls.Add(pnlEscenario);
             Controls.Add(label1);
-            Controls.Add(pbOswald);
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormNivel1";
             Text = "Clase Profesor Oswald";
-            WindowState = FormWindowState.Maximized;
             Load += FormNivel1_Load;
             KeyDown += FormNivel1_KeyDown;
             ((System.ComponentModel.ISupportInitialize)pbOswald).EndInit();
             pnlEscenario.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbxJugador).EndInit();
             pnlIntro.ResumeLayout(false);
+            pnlIntro.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -209,8 +219,8 @@
         private System.Windows.Forms.Timer tmrGenerador;
         private System.Windows.Forms.Timer tmrReloj;
         private Panel pnlIntro;
-        private PictureBox pictureBox1;
         private Label lblOswaldText;
         private System.Windows.Forms.Timer timerEscritura;
+        private PictureBox pictureBox1;
     }
 }

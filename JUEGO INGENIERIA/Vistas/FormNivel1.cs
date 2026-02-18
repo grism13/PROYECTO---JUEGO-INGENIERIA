@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using JUEGO_INGENIERIA.Vistas;
+using System.Drawing.Text;
+using System.IO;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -44,6 +46,17 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormNivel1_Load(object sender, EventArgs e)
         {
+            string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+
+            
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile(rutaFuente);            
+            Font fuentePixel = new Font(pfc.Families[0], 10f);
+            lblOswaldText.Font = fuentePixel;
+            lblTiempo.Font = fuentePixel;
+            lblVidas.Font = fuentePixel;
+            lblPuntos.Font = fuentePixel;
+
             // 1. VALIDACIÓN DE DINERO
             if (jugadorActual.Billetera < 100)
             {
@@ -282,5 +295,7 @@ namespace JUEGO_INGENIERIA.Vistas
                             "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Error);
             this.Close();
         }
+
+        
     }
 }

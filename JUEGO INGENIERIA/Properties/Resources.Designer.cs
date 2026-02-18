@@ -133,6 +133,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondonivel1 {
+            get {
+                object obj = ResourceManager.GetObject("fondonivel1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gris_espalda1 {
             get {
                 object obj = ResourceManager.GetObject("gris_espalda1", resourceCulture);
@@ -392,9 +402,29 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap narrativa {
+            get {
+                object obj = ResourceManager.GetObject("narrativa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap nivel_1 {
             get {
                 object obj = ResourceManager.GetObject("nivel 1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap oswald_version_narrativa {
+            get {
+                object obj = ResourceManager.GetObject("oswald version narrativa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -121,6 +121,9 @@
   <data name="gris_frente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_frente31.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gris_inclinadaderechaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_inclinadaderechaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gris_inclinadaizquiedafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaizquiedafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -148,12 +151,6 @@
   <data name="boton de siguiente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\boton de siguiente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gris_ladoizquiedo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_ladoizquiedo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="gris_inclinadaderechaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_inclinadaderechaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="gris_espalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_espalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -166,8 +163,8 @@
   <data name="gris_inclinadaderechafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaderechafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gris_ladoderecho2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_ladoderecho2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fondonivel1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondonivel1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gris_ladoizquiedo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_ladoizquiedo3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,6 +178,9 @@
   <data name="primera imagen de la intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\primera imagen de la intro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="LOGO DEL JUEGO" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LOGO DEL JUEGO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="fondomapa1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fondomapa1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -192,6 +192,12 @@
   </data>
   <data name="gris_inclinadaizquiedaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaizquiedaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="nivel 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\nivel 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris_inclinadaderechaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_inclinadaderechaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gris_ladoizquiedo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_ladoizquiedo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -214,14 +220,14 @@
   <data name="SONIDO_DE_CAJA_COBRANDO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SONIDO DE CAJA COBRANDO.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="LOGO DEL JUEGO" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LOGO DEL JUEGO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gris_inclinadaderechaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_inclinadaderechaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fondomapa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\fondomapa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gris_inclinadaderechaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_inclinadaderechaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gris_ladoizquiedo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_ladoizquiedo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="gris_espalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_espalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -229,10 +235,13 @@
   <data name="gris_inclinadaizquiedafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaizquiedafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gris_inclinadaderechaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_inclinadaderechaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="oswald version narrativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\oswald version narrativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="nivel 1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\nivel 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="gris_ladoderecho2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_ladoderecho2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="narrativa" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\narrativa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
