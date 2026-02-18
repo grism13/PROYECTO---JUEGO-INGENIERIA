@@ -36,7 +36,6 @@ namespace JUEGO_INGENIERIA
         List<Image> ultimaAnimacion = null;
 
         public Form1()
-
         {
             InitializeComponent();
             EsconderMuros();
@@ -231,6 +230,7 @@ namespace JUEGO_INGENIERIA
                     seMueve = true;
                 }
             }
+
             foreach (Control x in this.Controls)
             {
                 // Chocar contra los muros (Bloques rojos)
@@ -263,14 +263,18 @@ namespace JUEGO_INGENIERIA
                         if (respuesta == DialogResult.Yes)
                         {
                             // si el jugador dice que si se abre el nivel 1
-                            FormNivel1 nivel1 = new FormNivel1();
-                            nivel1.Show();
+                            FormNivel1 nivel1 = new FormNivel1(JugadorActual);
+                            nivel1.ShowDialog(); // Usamos ShowDialog para pausar Form1 hasta que se cierre el nivel
+
+                            // AL CERRAR EL NIVEL 1: Reactivamos el mapa y damos un pasito atrás para evitar el bucle
+                            tmrMovimiento.Start();
+                            pbPersonaje.Top += 40;
                         }
                         else
                         {
                             // si dice que no lo rebotamos un poquito hacia atrás para sacarlo de la zona verde
                             pbPersonaje.Left = xAnterior;
-                            pbPersonaje.Top = yAnterior + 20; // Lo empujamos 20 píxeles hacia abajo
+                            pbPersonaje.Top = yAnterior + 40; // Lo empujamos 40 píxeles hacia abajo
 
                             tmrMovimiento.Start(); // Volvemos a encender el motor del mapa
                         }
@@ -332,6 +336,6 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-        
+
     }
 }
