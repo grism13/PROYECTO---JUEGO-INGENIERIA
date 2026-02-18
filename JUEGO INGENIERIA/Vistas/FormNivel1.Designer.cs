@@ -96,7 +96,7 @@
             lblTiempo.ForeColor = Color.Black;
             lblTiempo.Location = new Point(1119, 169);
             lblTiempo.Name = "lblTiempo";
-            lblTiempo.Size = new Size(67, 15);
+            lblTiempo.Size = new Size(68, 15);
             lblTiempo.TabIndex = 3;
             lblTiempo.Text = "TIEMPO: 30";
             // 
@@ -118,7 +118,7 @@
             lblPuntos.ForeColor = Color.FromArgb(192, 255, 192);
             lblPuntos.Location = new Point(1123, 353);
             lblPuntos.Name = "lblPuntos";
-            lblPuntos.Size = new Size(63, 15);
+            lblPuntos.Size = new Size(64, 15);
             lblPuntos.TabIndex = 5;
             lblPuntos.Text = "PUNTOS: 0";
             // 
@@ -151,7 +151,7 @@
             // lblOswaldText
             // 
             lblOswaldText.AutoSize = true;
-            lblOswaldText.BackColor = Color.FromArgb(192, 192, 255);
+            lblOswaldText.BackColor = Color.White;
             lblOswaldText.ForeColor = Color.Black;
             lblOswaldText.Location = new Point(317, 141);
             lblOswaldText.Name = "lblOswaldText";
