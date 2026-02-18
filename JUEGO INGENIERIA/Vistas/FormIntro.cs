@@ -22,6 +22,8 @@ namespace JUEGO_INGENIERIA.Vistas
         public FormIntro()
         {
             InitializeComponent();
+            System.Media.SoundPlayer sonidoFondoIntro= new System.Media.SoundPlayer(Properties.Resources.intro_juegoINGENERIA__1_);
+            sonidoFondoIntro.Play();
 
             // NUEVO: Llamamos a la función ANTES de cargar los textos para que se aplique de una vez
             CargarFuente();
@@ -99,6 +101,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (posicion > 4)
             {
+                System.Media.SoundPlayer sonidoCaja = new System.Media.SoundPlayer(Properties.Resources.SONIDO_DE_CAJA_COBRANDO);
+                sonidoCaja.Play();
+
                 this.Close();
             }
 

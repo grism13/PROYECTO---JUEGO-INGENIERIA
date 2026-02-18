@@ -42,7 +42,7 @@
             lblTexto.BackColor = Color.Transparent;
             lblTexto.Font = new Font("Times New Roman", 10F);
             lblTexto.ForeColor = Color.Black;
-            lblTexto.Location = new Point(800, 151);
+            lblTexto.Location = new Point(810, 231);
             lblTexto.Name = "lblTexto";
             lblTexto.Size = new Size(538, 233);
             lblTexto.TabIndex = 1;
