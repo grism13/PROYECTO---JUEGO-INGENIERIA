@@ -93,7 +93,7 @@
             lblTiempo.BackColor = Color.White;
             lblTiempo.Location = new Point(1369, 120);
             lblTiempo.Name = "lblTiempo";
-            lblTiempo.Size = new Size(68, 15);
+            lblTiempo.Size = new Size(67, 15);
             lblTiempo.TabIndex = 3;
             lblTiempo.Text = "TIEMPO: 30";
             // 
@@ -113,7 +113,7 @@
             lblPuntos.BackColor = Color.GreenYellow;
             lblPuntos.Location = new Point(1382, 246);
             lblPuntos.Name = "lblPuntos";
-            lblPuntos.Size = new Size(64, 15);
+            lblPuntos.Size = new Size(63, 15);
             lblPuntos.TabIndex = 5;
             lblPuntos.Text = "PUNTOS: 0";
             // 
@@ -170,7 +170,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1920, 1080);
+            ClientSize = new Size(1460, 920);
             Controls.Add(lblOswaldText);
             Controls.Add(pnlIntro);
             Controls.Add(lblPuntos);
