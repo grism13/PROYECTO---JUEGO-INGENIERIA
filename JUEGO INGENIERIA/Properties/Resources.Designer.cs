@@ -63,6 +63,36 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _1vidas {
+            get {
+                object obj = ResourceManager.GetObject("1vidas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _2vidas {
+            get {
+                object obj = ResourceManager.GetObject("2vidas", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _3vidas__1_ {
+            get {
+                object obj = ResourceManager.GetObject("3vidas (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_siguiente {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente", resourceCulture);
@@ -392,9 +422,29 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lobueno {
+            get {
+                object obj = ResourceManager.GetObject("lobueno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LOGO_DEL_JUEGO {
             get {
                 object obj = ResourceManager.GetObject("LOGO DEL JUEGO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lomalo {
+            get {
+                object obj = ResourceManager.GetObject("lomalo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -415,6 +465,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap nivel_1 {
             get {
                 object obj = ResourceManager.GetObject("nivel 1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap oswald_version_mini {
+            get {
+                object obj = ResourceManager.GetObject("oswald version mini", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

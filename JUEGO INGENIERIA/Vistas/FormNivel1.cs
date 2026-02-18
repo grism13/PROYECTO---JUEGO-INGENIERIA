@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using JUEGO_INGENIERIA.Vistas;
 using System.Drawing.Text;
 using System.IO;
+using System.Media;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -51,10 +52,10 @@ namespace JUEGO_INGENIERIA.Vistas
             
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile(rutaFuente);            
-            Font fuentePixel = new Font(pfc.Families[0], 10f);
+            Font fuentePixel = new Font(pfc.Families[0], 11f);
             lblOswaldText.Font = fuentePixel;
             lblTiempo.Font = fuentePixel;
-            lblVidas.Font = fuentePixel;
+            
             lblPuntos.Font = fuentePixel;
 
             // 1. VALIDACIÓN DE DINERO
@@ -68,8 +69,9 @@ namespace JUEGO_INGENIERIA.Vistas
             // 2. CONFIGURACIÓN VISUAL INICIAL
             tiempoRestante = tiempoLimite;
             lblTiempo.Text = "TIEMPO: " + tiempoRestante;
-            lblVidas.Text = "VIDAS: " + vidas;
+            
             lblPuntos.Text = "PUNTOS: " + puntos;
+            ActualizarVidasVisuales();
 
             // 3. MOTORES (Configurados pero NO iniciados)
             tmrGameLoop.Interval = 20;
@@ -86,6 +88,8 @@ namespace JUEGO_INGENIERIA.Vistas
 
             carrilActual = 1;
             ActualizarPosicion();
+
+
 
             // 5. ACTIVAR INTRO DE OSWALD
             pnlIntro.Visible = true;
@@ -185,6 +189,36 @@ namespace JUEGO_INGENIERIA.Vistas
             pbxJugador.Location = new Point(nuevaX, pbxJugador.Location.Y);
         }
 
+        // --- ACTUALIZAR CORAZONES VISUALES ---
+        private void ActualizarVidasVisuales()
+        {
+            // Oculta o muestra los PictureBox 
+            if (vidas == 3)
+            {
+                pbVida1.Visible = false;
+                pbVida2.Visible = false;
+                pbVida3.Visible = true;
+            }
+            else if (vidas == 2)
+            {
+                pbVida1.Visible = false;
+                pbVida2.Visible = true;
+                pbVida3.Visible = false;
+            }
+            else if (vidas == 1)
+            {
+                pbVida1.Visible = true;
+                pbVida2.Visible = false;
+                pbVida3.Visible = false;
+            }
+            else
+            {
+                pbVida1.Visible = false;
+                pbVida2.Visible = false;
+                pbVida3.Visible = false;
+            }
+        }
+
         // --- RELOJ ---
         private void tmrReloj_Tick(object sender, EventArgs e)
         {
@@ -199,11 +233,12 @@ namespace JUEGO_INGENIERIA.Vistas
         }
 
         // --- GENERADOR DE CUBOS ---
+        // --- GENERADOR DE CUBOS (MODIFICADO PARA IMÁGENES) ---
         private void tmrGenerador_Tick(object sender, EventArgs e)
         {
             PictureBox nuevoObjeto = new PictureBox();
             nuevoObjeto.Size = new Size(50, 50);
-            nuevoObjeto.SizeMode = PictureBoxSizeMode.Zoom;
+            nuevoObjeto.SizeMode = PictureBoxSizeMode.Zoom; // Esto ajusta la imagen al tamaño
 
             int r = rnd.Next(0, 3);
             int posX = (r == 0) ? xIzquierda : (r == 1) ? xCentro : xDerecha;
@@ -211,12 +246,18 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (rnd.Next(0, 100) < 60) // 60% BUENO
             {
-                nuevoObjeto.BackColor = Color.Lime;
+                // --- CAMBIO AQUÍ: IMAGEN BUENA ---
+                // Asegúrate de cambiar 'NombreImagenBuena' por el nombre real de tu archivo en Recursos
+                nuevoObjeto.Image = Properties.Resources.lobueno;
+                nuevoObjeto.BackColor = Color.Transparent; // Fondo transparente para que se vea bien
                 nuevoObjeto.Tag = "bueno";
             }
             else // 40% MALO
             {
-                nuevoObjeto.BackColor = Color.Red;
+                // --- CAMBIO AQUÍ: IMAGEN MALA ---
+                // Asegúrate de cambiar 'NombreImagenMala' por el nombre real de tu archivo
+                nuevoObjeto.Image = Properties.Resources.lomalo;
+                nuevoObjeto.BackColor = Color.Transparent;
                 nuevoObjeto.Tag = "malo";
             }
 
@@ -244,11 +285,12 @@ namespace JUEGO_INGENIERIA.Vistas
                     else if (tipo == "malo")
                     {
                         vidas--;
+                        ActualizarVidasVisuales();
                         if (vidas <= 0) { DetenerJuego(); PerderNivel("Sin vidas"); return; }
                     }
 
                     lblPuntos.Text = "PUNTOS: " + puntos;
-                    lblVidas.Text = "VIDAS: " + vidas;
+                    
 
                     EliminarObjeto(obj, i);
                     continue;
