@@ -6,7 +6,6 @@ using JUEGO_INGENIERIA.Vistas;
 using System.IO;
 using System.Drawing.Text;
 
-// IMPORTANTE: Agregamos esto para poder usar tu nueva clase
 using JUEGO_INGENIERIA.Modelos;
 
 namespace JUEGO_INGENIERIA.Vistas
