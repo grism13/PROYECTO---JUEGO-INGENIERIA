@@ -265,4 +265,148 @@
   <data name="musicaOswald" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\musicaOswald.mp3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="eliezer_frente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_frente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_frente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_frente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoizquiedo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoizquierdo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoizquiedo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoizquierdo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoizquiedo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoizquierdo3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoderecho1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoderecho1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoderecho2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoderecho2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_ladoderecho3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_ladoderecho3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaderechaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_inclinadaizquiedaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaizquierdaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_espalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_espalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_espalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_espalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_espalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_espalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer_frente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_frente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_frente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_frente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_frente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_frente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoizquiedo1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoizquierdo1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoizquiedo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoizquierdo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoizquiedo3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoizquierdo3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoderecho1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoderecho1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoderecho2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoderecho2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_ladoderecho3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_ladoderecho3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedafrente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedafrente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaderechaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaderechaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedaespalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedaespalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_inclinadaizquiedaespalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_inclinadaizquiedaespalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_espalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_espalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_espalda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_espalda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_espalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_espalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand_frente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand_frente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -10,42 +10,43 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
 
+
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
-        // 1. Creamos una variable para guardar los datos del jugador en esta pantalla
+       
         private Vistas.Jugador jugadorActual;
 
-        // 2. Modificamos el constructor para que exija un Jugador al abrirse
+       
         public Form1(Vistas.Jugador jugadorRecibido)
         {
             InitializeComponent();
 
-            // Guardamos el jugador que viene de la pantalla de admisión
+            
             jugadorActual = jugadorRecibido;
         }
-        // --- VARIABLES DE MOVIMIENTO ---
+        
         bool goArriba, goAbajo, goIzquierda, goDerecha;
         int velocidad = 5;
 
-        // --- VARIABLES DE DATOS ---
+       
         public static Jugador? JugadorActual;
 
-        // --- VARIABLES PARA ANIMACIÓN ---
+        
         List<Image> animAbajo = new List<Image>();
         List<Image> animArriba = new List<Image>();
         List<Image> animIzquierda = new List<Image>();
         List<Image> animDerecha = new List<Image>();
 
-        // --- ÁLBUMES DE DIAGONALES ---
+        
         List<Image> animArribaDerecha = new List<Image>();
         List<Image> animArribaIzquierda = new List<Image>();
         List<Image> animAbajoDerecha = new List<Image>();
         List<Image> animAbajoIzquierda = new List<Image>();
 
         int frameActual = 0;
-        int contadorLentitud = 0; // Lo moví aquí arriba para que sea global
+        int contadorLentitud = 0; 
         List<Image> ultimaAnimacion = null;
 
         public Form1()
@@ -59,17 +60,24 @@ namespace JUEGO_INGENIERIA
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.Hide();
+
             FormIntro intro = new FormIntro();
             intro.ShowDialog();
 
             FormAdmision registro = new FormAdmision();
             registro.ShowDialog();
 
+            ElegirPersonaje seleccion = new ElegirPersonaje();
+            seleccion.ShowDialog();
+
+            
+            CargarSpritesPersonaje();
+
             this.Show();
             this.Focus();
         }
 
-        // --- TU CÓDIGO IMPORTANTE: ACTUALIZAR ETIQUETAS ---
+        
         private void Form1_Activated(object sender, EventArgs e)
         {
             // 1. Buscamos la ruta exacta de tu fuente usando la misma lógica de tus imágenes
@@ -100,55 +108,68 @@ namespace JUEGO_INGENIERIA
         // --- CARGA DE IMÁGENES ---
         private void Form1_Load(object sender, EventArgs e)
         {
-            
-        
-        // Abajo (Frente)
-        animAbajo.Add(Resources.gris_frente1);
-            animAbajo.Add(Resources.gris_frente2);
-            animAbajo.Add(Resources.gris_frente3);
+
+
+        }
+
+        private void CargarSpritesPersonaje()
+        {
+
+            string p = DatosJuego.PersonajeElegido.ToLower();
+
+            Image CargarSprite(string accion)
+            {
+                return (Image)Properties.Resources.ResourceManager.GetObject($"{p}_{accion}");
+            }
+
+            // 3. ¡Mira lo limpio que queda ahora! Llenamos las listas sin usar ni un solo if:
+
+            // Abajo (Frente)
+            animAbajo.Add(CargarSprite("frente1"));
+            animAbajo.Add(CargarSprite("frente2"));
+            animAbajo.Add(CargarSprite("frente3"));
 
             // Arriba (Espalda)
-            animArriba.Add(Resources.gris_espalda1);
-            animArriba.Add(Resources.gris_espalda2);
-            animArriba.Add(Resources.gris_espalda3);
+            animArriba.Add(CargarSprite("espalda1"));
+            animArriba.Add(CargarSprite("espalda2"));
+            animArriba.Add(CargarSprite("espalda3"));
 
             // Derecha
-            animDerecha.Add(Resources.gris_ladoderecho1);
-            animDerecha.Add(Resources.gris_ladoderecho2);
-            animDerecha.Add(Resources.gris_ladoderecho3);
+            animDerecha.Add(CargarSprite("ladoderecho1"));
+            animDerecha.Add(CargarSprite("ladoderecho2"));
+            animDerecha.Add(CargarSprite("ladoderecho3"));
 
             // Izquierda
-            animIzquierda.Add(Resources.gris_ladoizquiedo1);
-            animIzquierda.Add(Resources.gris_ladoizquiedo2);
-            animIzquierda.Add(Resources.gris_ladoizquiedo3);
+            animIzquierda.Add(CargarSprite("ladoizquiedo1"));
+            animIzquierda.Add(CargarSprite("ladoizquiedo2"));
+            animIzquierda.Add(CargarSprite("ladoizquiedo3"));
 
-            // DIAGONALES (Tus nuevas cargas)
+            // --- DIAGONALES ---
             // Arriba + Derecha
-            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda1);
-            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda2);
-            animArribaDerecha.Add(Resources.gris_inclinadaderechaespalda3);
+            animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda1"));
+            animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda2"));
+            animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda3"));
 
             // Arriba + Izquierda
-            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda1);
-            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda2);
-            animArribaIzquierda.Add(Resources.gris_inclinadaizquiedaespalda3);
+            animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda1"));
+            animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda2"));
+            animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda3"));
 
             // Abajo + Derecha
-            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente1);
-            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente2);
-            animAbajoDerecha.Add(Resources.gris_inclinadaderechafrente3);
+            animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente1"));
+            animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente2"));
+            animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente3"));
 
             // Abajo + Izquierda
-            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente1);
-            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente2);
-            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
+            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente1"));
+            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente2"));
+            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
 
-            pbPersonaje.Image = Resources.gris_frente2; // Imagen inicial
+            pbPersonaje.Image = CargarSprite("frente2"); // Imagen inicial
 
-            animAbajoIzquierda.Add(Resources.gris_inclinadaizquiedafrente3);
+            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
 
-            pbPersonaje.Image = Resources.gris_frente2;
-
+            pbPersonaje.Image = CargarSprite("frente2");
         }
 
         // --- TECLAS ---

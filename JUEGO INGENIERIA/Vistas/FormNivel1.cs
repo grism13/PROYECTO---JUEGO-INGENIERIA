@@ -5,6 +5,8 @@ using System.Windows.Forms;
 using JUEGO_INGENIERIA.Vistas;
 using System.IO;
 using System.Drawing.Text;
+using System.Text.Json; // Para usar el archivo .json de los jugadores
+
 
 using JUEGO_INGENIERIA.Modelos;
 using WMPLib;
@@ -310,13 +312,18 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 MessageBox.Show($"¡Bien hecho!", "Repaso Completado");
             }
+
+            ActualizarDatos(); // Guardamos el progreso en el .json
             this.Close();
+
         }
 
         private void PerderNivel(string motivo)
         {
             jugadorActual.Billetera -= 100;
             MessageBox.Show($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
+
+            ActualizarDatos(); // Guardamos el progreso en el .json
             this.Close();
         }
 
@@ -333,6 +340,34 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 Console.WriteLine("Error de audio: " + ex.Message);
             }
+        }
+
+        // Esto es para actualizar los datos en el .json
+
+        private void ActualizarDatos()
+        {
+            string rutaArchivo = "jugadores.json";
+
+            // Aqui se verifica que el archivo exista para que no haya errores
+            if (!File.Exists(rutaArchivo)) return;
+
+            // Se lee la linea completa de jugadores desde el .json
+            string TextoJson = File.ReadAllText(rutaArchivo);
+            List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
+
+            for (int i = 0; i < listaDeJugadores.Count; i++)
+            {
+                if (listaDeJugadores[i].IdJugador == jugadorActual.IdJugador)
+                {
+                    listaDeJugadores[i].Nivel = jugadorActual.Nivel;
+                    listaDeJugadores[i].Billetera = jugadorActual.Billetera;
+                    break;
+                }
+            }
+
+            var opciones = new JsonSerializerOptions { WriteIndented = true };
+            string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
+            File.WriteAllText(rutaArchivo, nuevoJson);
         }
     }
 }
