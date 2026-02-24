@@ -7,6 +7,8 @@ using System.IO;
 using System.Drawing.Text;
 
 using JUEGO_INGENIERIA.Modelos;
+using WMPLib;
+using System.Media; // <-- NUEVO: Librería para los efectos de sonido rápidos (.wav)
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -15,20 +17,22 @@ namespace JUEGO_INGENIERIA.Vistas
         Jugador jugadorActual;
 
         // --- CONFIGURACIÓN ---
-        int velocidadCaida = 25; // Un poco más rápido porque el dibujo es más fluido
+        int velocidadCaida = 25;
         int tiempoLimite = 30;
 
-        // --- IMÁGENES ---
+        // --- IMÁGENES Y AUDIO ---
         Image lobueno;
         Image lomalo;
+
+        WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+        SoundPlayer sfxBueno = new SoundPlayer(); // <-- REPRODUCTOR EFECTO BUENO
+        SoundPlayer sfxMalo = new SoundPlayer();  // <-- REPRODUCTOR EFECTO MALO
 
         // --- VARIABLES INTERNAS ---
         int xIzquierda, xCentro, xDerecha;
         int carrilActual = 1;
 
-        // --- CAMBIO IMPORTANTE: Usamos tu clase ObjetoJuego, NO PictureBox ---
         List<ObjetoJuego> objetosLogicos = new List<ObjetoJuego>();
-
         Random rnd = new Random();
         int puntos = 0;
         int vidas = 3;
@@ -52,7 +56,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormNivel1_Load(object sender, EventArgs e)
         {
-            // 1. CARGA DE FUENTES (Tu código original)
+            // 1. CARGA DE FUENTES
             string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
             PrivateFontCollection pfc = new PrivateFontCollection();
             try
@@ -63,9 +67,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 lblTiempo.Font = fuentePixel;
                 lblPuntos.Font = fuentePixel;
             }
-            catch { } // Si falla la fuente, no pasa nada
+            catch { }
 
-            // 2. VALIDACIÓN
             if (jugadorActual.Billetera < 100)
             {
                 MessageBox.Show("No tienes los $100 necesarios.", "Sin Fondos");
@@ -73,23 +76,27 @@ namespace JUEGO_INGENIERIA.Vistas
                 return;
             }
 
-            // 3. CONFIGURACIÓN VISUAL
             tiempoRestante = tiempoLimite;
             lblTiempo.Text = "TIEMPO: " + tiempoRestante;
             lblPuntos.Text = "PUNTOS: " + puntos;
             ActualizarVidasVisuales();
 
-            // 4. CARGAR IMÁGENES
             lobueno = Properties.Resources.lobueno;
             lomalo = Properties.Resources.lomalo;
 
-            // 5. MOTORES
+            // --- CARGAR RUTAS DE LOS EFECTOS DE SONIDO (NUEVO) ---
+            try
+            {
+                sfxBueno.SoundLocation = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboBueno.wav");
+                sfxMalo.SoundLocation = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboMalo.wav");
+            }
+            catch { }
+
             tmrGameLoop.Interval = 20;
             tmrGenerador.Interval = 700;
             tmrReloj.Interval = 1000;
             timerEscritura.Interval = 50;
 
-            // 6. CARRILES
             int anchoPista = pnlEscenario.Width;
             int anchoJugador = pbxJugador.Width;
             xIzquierda = (anchoPista / 6) - (anchoJugador / 2);
@@ -98,29 +105,21 @@ namespace JUEGO_INGENIERIA.Vistas
             carrilActual = 1;
             ActualizarPosicion();
 
-            // --- 7. ACTIVAR EL DIBUJADO RÁPIDO (NUEVO) ---
-            // Esto conecta el código de dibujo al panel
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
-
-            // Truco "Double Buffer" para que no parpadee
             typeof(Panel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty |
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
 
-            // 8. INTRO
             pnlIntro.Visible = true;
             pnlIntro.BringToFront();
             lblOswaldText.Text = "";
             timerEscritura.Start();
         }
 
-        // --- ESTE ES EL EVENTO MÁGICO QUE DIBUJA TODO (NUEVO) ---
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
-            // Dibuja cada objeto de la lista directamente en la pantalla
-            // Esto es 100 veces más rápido que usar PictureBox
             foreach (ObjetoJuego obj in objetosLogicos)
             {
                 if (obj.Imagen != null)
@@ -130,20 +129,15 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        // --- GENERADOR (SIN PICTUREBOX) ---
         private void tmrGenerador_Tick(object sender, EventArgs e)
         {
-            // 1. Crear DATOS (Tu clase nueva)
             ObjetoJuego nuevo = new ObjetoJuego();
-
-            // 2. Calcular posición
             int r = rnd.Next(0, 3);
             int posX = (r == 0) ? xIzquierda : (r == 1) ? xCentro : xDerecha;
 
             nuevo.X = posX;
-            nuevo.Y = -70; // Nace arriba
+            nuevo.Y = -70;
 
-            // 3. Asignar imagen y tag
             if (rnd.Next(0, 100) < 60)
             {
                 nuevo.Imagen = lobueno;
@@ -155,29 +149,24 @@ namespace JUEGO_INGENIERIA.Vistas
                 nuevo.Tag = "malo";
             }
 
-            // 4. Guardar en la lista y PEDIR DIBUJO
             objetosLogicos.Add(nuevo);
-
-            // ¡IMPORTANTE! Esto le dice al panel: "Borra lo viejo y pinta lo nuevo"
             pnlEscenario.Invalidate();
         }
 
-        // --- GAME LOOP (MATEMÁTICAS PURAS) ---
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            // Recorremos al revés
             for (int i = objetosLogicos.Count - 1; i >= 0; i--)
             {
                 ObjetoJuego obj = objetosLogicos[i];
-
-                // 1. Mover (Solo cambiamos el número Y)
                 obj.Y += velocidadCaida;
 
-                // 2. Choques (Usamos obj.Area que creaste en tu clase)
                 if (obj.Area.IntersectsWith(pbxJugador.Bounds))
                 {
                     if (obj.Tag == "bueno")
                     {
+                        // --- ¡AQUÍ SUENA EL EFECTO BUENO! ---
+                        try { sfxBueno.Play(); } catch { }
+
                         if (puntos < 20)
                         {
                             puntos++;
@@ -186,27 +175,25 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else if (obj.Tag == "malo")
                     {
+                        // --- ¡AQUÍ SUENA EL EFECTO MALO! ---
+                        try { sfxMalo.Play(); } catch { }
+
                         vidas--;
                         ActualizarVidasVisuales();
                         if (vidas <= 0) { DetenerJuego(); PerderNivel("Sin vidas"); return; }
                     }
 
-                    objetosLogicos.RemoveAt(i); // Lo borramos de la lista
+                    objetosLogicos.RemoveAt(i);
                     continue;
                 }
 
-                // 3. Salir de pantalla
                 if (obj.Y > pnlEscenario.Height)
                 {
                     objetosLogicos.RemoveAt(i);
                 }
             }
-
-            // OBLIGATORIO: Actualizar el dibujo
             pnlEscenario.Invalidate();
         }
-
-        // --- EL RESTO DE TU CÓDIGO (NO CAMBIA MUCHO) ---
 
         private void ActualizarPosicion()
         {
@@ -215,8 +202,6 @@ namespace JUEGO_INGENIERIA.Vistas
             else if (carrilActual == 1) nuevaX = xCentro;
             else if (carrilActual == 2) nuevaX = xDerecha;
             pbxJugador.Location = new Point(nuevaX, pbxJugador.Location.Y);
-
-            // Redibujamos por si acaso el jugador se mueve
             pnlEscenario.Invalidate();
         }
 
@@ -288,6 +273,8 @@ namespace JUEGO_INGENIERIA.Vistas
             tmrGenerador.Start();
             tmrReloj.Start();
             this.Focus();
+
+            ReproducirMusicaFondo();
         }
 
         private void FormNivel1_KeyDown(object sender, KeyEventArgs e)
@@ -309,6 +296,7 @@ namespace JUEGO_INGENIERIA.Vistas
             tmrGameLoop.Stop();
             tmrGenerador.Stop();
             tmrReloj.Stop();
+            reproductorMusica.controls.stop();
         }
 
         private void GanarNivel()
@@ -330,6 +318,21 @@ namespace JUEGO_INGENIERIA.Vistas
             jugadorActual.Billetera -= 100;
             MessageBox.Show($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
             this.Close();
+        }
+
+        private void ReproducirMusicaFondo()
+        {
+            try
+            {
+                string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "musicaOswald.mp3");
+                reproductorMusica.URL = rutaAudio;
+                reproductorMusica.settings.setMode("loop", true);
+                reproductorMusica.controls.play();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error de audio: " + ex.Message);
+            }
         }
     }
 }

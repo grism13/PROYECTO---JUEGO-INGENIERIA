@@ -38,7 +38,7 @@
             pnlEscenario.BackColor = Color.Black;
             pnlEscenario.Location = new Point(1, -3);
             pnlEscenario.Name = "pnlEscenario";
-            pnlEscenario.Size = new Size(844, 543);
+            pnlEscenario.Size = new Size(1268, 694);
             pnlEscenario.TabIndex = 0;
             // 
             // tmrGameLoop
@@ -50,7 +50,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(845, 541);
+            ClientSize = new Size(1264, 681);
             Controls.Add(pnlEscenario);
             KeyPreview = true;
             Name = "FormNivel2";
