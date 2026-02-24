@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
 
+
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
