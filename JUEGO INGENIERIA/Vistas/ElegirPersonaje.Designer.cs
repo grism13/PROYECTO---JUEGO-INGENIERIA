@@ -84,6 +84,7 @@
             ElegirGris.TabIndex = 3;
             ElegirGris.Text = "ELEGIR";
             ElegirGris.UseVisualStyleBackColor = false;
+            ElegirGris.Click += ElegirGris_Click;
             // 
             // ElegirEliezer
             // 
@@ -96,6 +97,7 @@
             ElegirEliezer.TabIndex = 4;
             ElegirEliezer.Text = "ELEGIR";
             ElegirEliezer.UseVisualStyleBackColor = false;
+            ElegirEliezer.Click += ElegirEliezer_Click;
             // 
             // ElegirRoand
             // 
@@ -108,6 +110,7 @@
             ElegirRoand.TabIndex = 5;
             ElegirRoand.Text = "ELEGIR";
             ElegirRoand.UseVisualStyleBackColor = false;
+            ElegirRoand.Click += ElegirRoand_Click;
             // 
             // ElegirPersonaje
             // 
