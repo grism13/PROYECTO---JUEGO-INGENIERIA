@@ -9,44 +9,40 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
-
+using WMPLib;
 
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
-       
         private Vistas.Jugador jugadorActual;
 
-       
+        // --- VARIABLE DE MÚSICA (NUEVO) ---
+        WindowsMediaPlayer musicaFondo = new WindowsMediaPlayer();
+
         public Form1(Vistas.Jugador jugadorRecibido)
         {
             InitializeComponent();
-
-            
             jugadorActual = jugadorRecibido;
         }
-        
+
         bool goArriba, goAbajo, goIzquierda, goDerecha;
         int velocidad = 5;
 
-       
         public static Jugador? JugadorActual;
 
-        
         List<Image> animAbajo = new List<Image>();
         List<Image> animArriba = new List<Image>();
         List<Image> animIzquierda = new List<Image>();
         List<Image> animDerecha = new List<Image>();
 
-        
         List<Image> animArribaDerecha = new List<Image>();
         List<Image> animArribaIzquierda = new List<Image>();
         List<Image> animAbajoDerecha = new List<Image>();
         List<Image> animAbajoIzquierda = new List<Image>();
 
         int frameActual = 0;
-        int contadorLentitud = 0; 
+        int contadorLentitud = 0;
         List<Image> ultimaAnimacion = null;
 
         public Form1()
@@ -70,32 +66,25 @@ namespace JUEGO_INGENIERIA
             ElegirPersonaje seleccion = new ElegirPersonaje();
             seleccion.ShowDialog();
 
-            
             CargarSpritesPersonaje();
 
             this.Show();
             this.Focus();
+
+            // --- INICIAR MÚSICA (NUEVO) ---
+            ReproducirMusicaMapa();
         }
 
-        
         private void Form1_Activated(object sender, EventArgs e)
         {
-            // 1. Buscamos la ruta exacta de tu fuente usando la misma lógica de tus imágenes
             string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
-
-            // 2. Cargamos la fuente en la colección privada
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile(rutaFuente);
-
-            // 3. Creamos el estilo de la fuente (Aquí puedes cambiar el 12f por el tamaño que prefieras)
             Font fuentePixel = new Font(pfc.Families[0], 9f);
 
-            // 4. Se la asignamos a los textos (Asegúrate de que los nombres de los lbl coincidan con los tuyos)
             lblNombreJugador.Font = fuentePixel;
             lblNivel.Font = fuentePixel;
             lblDinero.Font = fuentePixel;
-
-           
 
             if (JugadorActual != null)
             {
@@ -105,16 +94,12 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-        // --- CARGA DE IMÁGENES ---
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
         }
 
         private void CargarSpritesPersonaje()
         {
-
             string p = DatosJuego.PersonajeElegido.ToLower();
 
             Image CargarSprite(string accion)
@@ -122,57 +107,41 @@ namespace JUEGO_INGENIERIA
                 return (Image)Properties.Resources.ResourceManager.GetObject($"{p}_{accion}");
             }
 
-            // 3. ¡Mira lo limpio que queda ahora! Llenamos las listas sin usar ni un solo if:
-
-            // Abajo (Frente)
             animAbajo.Add(CargarSprite("frente1"));
             animAbajo.Add(CargarSprite("frente2"));
             animAbajo.Add(CargarSprite("frente3"));
 
-            // Arriba (Espalda)
             animArriba.Add(CargarSprite("espalda1"));
             animArriba.Add(CargarSprite("espalda2"));
             animArriba.Add(CargarSprite("espalda3"));
 
-            // Derecha
             animDerecha.Add(CargarSprite("ladoderecho1"));
             animDerecha.Add(CargarSprite("ladoderecho2"));
             animDerecha.Add(CargarSprite("ladoderecho3"));
 
-            // Izquierda
             animIzquierda.Add(CargarSprite("ladoizquiedo1"));
             animIzquierda.Add(CargarSprite("ladoizquiedo2"));
             animIzquierda.Add(CargarSprite("ladoizquiedo3"));
 
-            // --- DIAGONALES ---
-            // Arriba + Derecha
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda1"));
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda2"));
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda3"));
 
-            // Arriba + Izquierda
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda1"));
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda2"));
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda3"));
 
-            // Abajo + Derecha
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente1"));
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente2"));
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente3"));
 
-            // Abajo + Izquierda
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente1"));
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente2"));
-            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
-
-            pbPersonaje.Image = CargarSprite("frente2"); // Imagen inicial
-
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
 
             pbPersonaje.Image = CargarSprite("frente2");
         }
 
-        // --- TECLAS ---
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up) goArriba = true;
@@ -189,33 +158,25 @@ namespace JUEGO_INGENIERIA
             if (e.KeyCode == Keys.Right) goDerecha = false;
         }
 
-        // --- EL CAMBIO MAGISTRAL AQUÍ (Lógica corregida) ---
         private void tmrMovimiento_Tick(object sender, EventArgs e)
         {
-            //aqui se guarda la posicion para q pueda detectar los muros
             int xAnterior = pbPersonaje.Left;
             int yAnterior = pbPersonaje.Top;
-            // Definimos dos velocidades locales
             int vNormal = 5;
-            int vDiag = 3; // Más lento para diagonales (evita el efecto turbo)
+            int vDiag = 3;
 
             bool seMueve = false;
 
-            // --- 1. PRIORIDAD: DIAGONALES ---
-            // Revisamos primero si hay DOS teclas presionadas
-
-            // ARRIBA + DERECHA
             if (goArriba && goDerecha)
             {
                 if (pbPersonaje.Top > 0 && pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
                 {
                     pbPersonaje.Top -= vDiag;
                     pbPersonaje.Left += vDiag;
-                    Animar(animArribaDerecha); // ¡Usa tu lista diagonal!
+                    Animar(animArribaDerecha);
                     seMueve = true;
                 }
             }
-            // ARRIBA + IZQUIERDA
             else if (goArriba && goIzquierda)
             {
                 if (pbPersonaje.Top > 0 && pbPersonaje.Left > 0)
@@ -226,7 +187,6 @@ namespace JUEGO_INGENIERIA
                     seMueve = true;
                 }
             }
-            // ABAJO + DERECHA
             else if (goAbajo && goDerecha)
             {
                 if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height &&
@@ -238,7 +198,6 @@ namespace JUEGO_INGENIERIA
                     seMueve = true;
                 }
             }
-            // ABAJO + IZQUIERDA
             else if (goAbajo && goIzquierda)
             {
                 if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height && pbPersonaje.Left > 0)
@@ -249,9 +208,6 @@ namespace JUEGO_INGENIERIA
                     seMueve = true;
                 }
             }
-
-            // --- 2. SECUNDARIO: CARDINALES (Una sola tecla) ---
-
             else if (goArriba)
             {
                 if (pbPersonaje.Top > 0)
@@ -291,26 +247,22 @@ namespace JUEGO_INGENIERIA
 
             foreach (Control x in this.Controls)
             {
-                // Chocar contra los muros (Bloques rojos)
                 if (x is PictureBox && (string)x.Tag == "muro")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
-                        // ¡Pisó el muro! Lo devolvemos a donde estaba al inicio
                         pbPersonaje.Left = xAnterior;
                         pbPersonaje.Top = yAnterior;
                     }
                 }
 
-                // aqui es cuando la muñeca toca la puerta de entrada al nivel 1
                 if (x is PictureBox && x.Name == "pbPuertaNivel1")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
-                        tmrMovimiento.Stop(); // pausamos el mapa para que el personaje no siga caminando de fondo
-                        goArriba = goAbajo = goIzquierda = goDerecha = false; // Reseteamos las teclas
+                        tmrMovimiento.Stop();
+                        goArriba = goAbajo = goIzquierda = goDerecha = false;
 
-                        // aquí te pregunta si quieres iniciar o no
                         DialogResult respuesta = MessageBox.Show(
                             "¿Estás listo para entrar a la clase del profesor Oswald?",
                             "Entrada al Nivel 1",
@@ -320,76 +272,65 @@ namespace JUEGO_INGENIERIA
 
                         if (respuesta == DialogResult.Yes)
                         {
-                            // si el jugador dice que si se abre el nivel 1
-                            FormNivel1 nivel1 = new FormNivel1(JugadorActual);
-                            nivel1.ShowDialog(); // Usamos ShowDialog para pausar Form1 hasta que se cierre el nivel
+                            // --- DETENER MÚSICA DEL MAPA (NUEVO) ---
+                            musicaFondo.controls.stop();
 
-                            // AL CERRAR EL NIVEL 1: Reactivamos el mapa y damos un pasito atrás para evitar el bucle
+                            FormNivel1 nivel1 = new FormNivel1(JugadorActual);
+                            nivel1.ShowDialog();
+
+                            // --- REANUDAR MÚSICA AL VOLVER (NUEVO) ---
+                            ReproducirMusicaMapa();
+
                             tmrMovimiento.Start();
                             pbPersonaje.Top += 40;
                         }
                         else
                         {
-                            // si dice que no lo rebotamos un poquito hacia atrás para sacarlo de la zona verde
                             pbPersonaje.Left = xAnterior;
-                            pbPersonaje.Top = yAnterior + 40; // Lo empujamos 40 píxeles hacia abajo
-
-                            tmrMovimiento.Start(); // Volvemos a encender el motor del mapa
+                            pbPersonaje.Top = yAnterior + 40;
+                            tmrMovimiento.Start();
                         }
                     }
                 }
             }
 
-           
-
-
-            // --- 3. RESETEO ---
             if (seMueve == false)
             {
                 frameActual = 0;
-                contadorLentitud = 10; // Truco: esto hace que al arrancar no tenga retraso la primera vez
+                contadorLentitud = 10;
             }
         }
 
-
-
-        // --- FUNCIÓN DE ANIMAR ---
         private void Animar(List<Image> animacionNueva)
         {
             if (animacionNueva != ultimaAnimacion)
             {
-                frameActual = 0;        // Reiniciamos la animación al primer frame
-                contadorLentitud = 10;  // Forzamos que se dibuje inmediatamente
-                ultimaAnimacion = animacionNueva; // Guardamos la nueva como actual
+                frameActual = 0;
+                contadorLentitud = 10;
+                ultimaAnimacion = animacionNueva;
             }
 
             if (animacionNueva.Count > 0)
             {
                 contadorLentitud++;
-
-                if (contadorLentitud > 3) // Ajusta este número si va muy rápido
+                if (contadorLentitud > 3)
                 {
-                    // Importante: Asignar la imagen ANTES de incrementar para asegurar que vemos el frame 0
                     pbPersonaje.Image = animacionNueva[frameActual];
-
                     frameActual++;
                     if (frameActual >= animacionNueva.Count) frameActual = 0;
-
                     contadorLentitud = 0;
                 }
                 else if (contadorLentitud == 0)
                 {
-                    // Parche de seguridad: Si acabamos de resetear (contador 0), forzamos pintar la imagen
                     pbPersonaje.Image = animacionNueva[frameActual];
                 }
             }
         }
-        // Función para ocultar los bloques de muro al arrancar
+
         private void EsconderMuros()
         {
             foreach (Control x in this.Controls)
             {
-                // Oculta todo lo que tenga el Tag "muro" o sea la puerta
                 if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1")
                 {
                     x.BackColor = Color.Transparent;
@@ -397,6 +338,17 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-
+        // --- MÉTODO DE MÚSICA (NUEVO) ---
+        private void ReproducirMusicaMapa()
+        {
+            try
+            {
+                string ruta = Path.Combine(Application.StartupPath, "Resources", "musica mapa", "musicaMapa.mp3");
+                musicaFondo.URL = ruta;
+                musicaFondo.settings.setMode("loop", true);
+                musicaFondo.controls.play();
+            }
+            catch { }
+        }
     }
 }
