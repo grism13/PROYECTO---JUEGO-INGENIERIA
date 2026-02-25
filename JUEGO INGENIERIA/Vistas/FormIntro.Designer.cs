@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormIntro));
             lblTexto = new Label();
             btnSiguiente = new Button();
+            btnSkip = new Button();
             pbImagen = new PictureBox();
             pictureBox1 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbImagen).BeginInit();
@@ -65,6 +66,22 @@
             btnSiguiente.UseVisualStyleBackColor = true;
             btnSiguiente.Click += btnSiguiente_Click_1;
             // 
+            // btnSkip
+            // 
+            btnSkip.Cursor = Cursors.Hand;
+            btnSkip.FlatStyle = FlatStyle.Flat;
+            btnSkip.Font = new Font("Impact", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnSkip.ForeColor = Color.White;
+            btnSkip.Image = Properties.Resources.boton_de_siguiente;
+            btnSkip.Location = new Point(93, 608);
+            btnSkip.Margin = new Padding(3, 2, 3, 2);
+            btnSkip.Name = "btnSkip";
+            btnSkip.Size = new Size(251, 53);
+            btnSkip.TabIndex = 4;
+            btnSkip.Text = "SALTAR HISTORIA";
+            btnSkip.UseVisualStyleBackColor = true;
+            btnSkip.Click += btnSkip_Click;
+            // 
             // pbImagen
             // 
             pbImagen.Image = Properties.Resources.primera_imagen_de_la_intro;
@@ -96,6 +113,7 @@
             ClientSize = new Size(1264, 681);
             Controls.Add(pbImagen);
             Controls.Add(btnSiguiente);
+            Controls.Add(btnSkip);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -113,6 +131,7 @@
         #endregion
         private Label lblTexto;
         private Button btnSiguiente;
+        private Button btnSkip;
         private PictureBox pbImagen;
         private PictureBox pictureBox1;
     }

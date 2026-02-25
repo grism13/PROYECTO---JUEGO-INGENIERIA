@@ -17,8 +17,11 @@ namespace JUEGO_INGENIERIA
     {
         private Vistas.Jugador jugadorActual;
 
-        // --- VARIABLE DE MÚSICA (NUEVO) ---
+        // --- VARIABLE DE MÚSICA ---
         WindowsMediaPlayer musicaFondo = new WindowsMediaPlayer();
+
+        // --- VARIABLE PARA RECORDAR QUÉ NIVEL SE VA A ABRIR ---
+        int nivelSeleccionado = 0;
 
         public Form1(Vistas.Jugador jugadorRecibido)
         {
@@ -52,7 +55,6 @@ namespace JUEGO_INGENIERIA
             EsconderMuros();
         }
 
-        // --- TU CÓDIGO IMPORTANTE: INTRO Y REGISTRO ---
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.Hide();
@@ -71,7 +73,6 @@ namespace JUEGO_INGENIERIA
             this.Show();
             this.Focus();
 
-            // --- INICIAR MÚSICA (NUEVO) ---
             ReproducirMusicaMapa();
         }
 
@@ -81,10 +82,16 @@ namespace JUEGO_INGENIERIA
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile(rutaFuente);
             Font fuentePixel = new Font(pfc.Families[0], 9f);
+            Font fuentePanel = new Font(pfc.Families[0], 8f);
 
             lblNombreJugador.Font = fuentePixel;
             lblNivel.Font = fuentePixel;
             lblDinero.Font = fuentePixel;
+
+            // FUENTE PARA EL NUEVO PANEL PERSONALIZADO
+            lblPreguntaNivel1.Font = fuentePanel;
+            btnSiNivel1.Font = fuentePanel;
+            btnNoNivel1.Font = fuentePanel;
 
             if (JugadorActual != null)
             {
@@ -144,10 +151,14 @@ namespace JUEGO_INGENIERIA
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up) goArriba = true;
-            if (e.KeyCode == Keys.Down) goAbajo = true;
-            if (e.KeyCode == Keys.Left) goIzquierda = true;
-            if (e.KeyCode == Keys.Right) goDerecha = true;
+            // Solo nos movemos si el cartel no está mostrándose
+            if (!pnlConfirmacionNivel1.Visible)
+            {
+                if (e.KeyCode == Keys.Up) goArriba = true;
+                if (e.KeyCode == Keys.Down) goAbajo = true;
+                if (e.KeyCode == Keys.Left) goIzquierda = true;
+                if (e.KeyCode == Keys.Right) goDerecha = true;
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -256,6 +267,7 @@ namespace JUEGO_INGENIERIA
                     }
                 }
 
+                // --------- COLISIÓN CON LA PUERTA (AQUÍ LLAMAMOS AL PANEL) ---------
                 if (x is PictureBox && x.Name == "pbPuertaNivel1")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
@@ -263,35 +275,33 @@ namespace JUEGO_INGENIERIA
                         tmrMovimiento.Stop();
                         goArriba = goAbajo = goIzquierda = goDerecha = false;
 
-                        DialogResult respuesta = MessageBox.Show(
-                            "¿Estás listo para entrar a la clase del profesor Oswald?",
-                            "Entrada al Nivel 1",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question
-                        );
+                        // Configuramos el texto para el nivel 1
+                        lblPreguntaNivel1.Text = "¿Estás listo para entrar a la clase del profesor Oswald (Nivel 1)?";
+                        nivelSeleccionado = 1;
 
-                        if (respuesta == DialogResult.Yes)
-                        {
-                            // --- DETENER MÚSICA DEL MAPA (NUEVO) ---
-                            musicaFondo.controls.stop();
-
-                            FormNivel1 nivel1 = new FormNivel1(JugadorActual);
-                            nivel1.ShowDialog();
-
-                            // --- REANUDAR MÚSICA AL VOLVER (NUEVO) ---
-                            ReproducirMusicaMapa();
-
-                            tmrMovimiento.Start();
-                            pbPersonaje.Top += 40;
-                        }
-                        else
-                        {
-                            pbPersonaje.Left = xAnterior;
-                            pbPersonaje.Top = yAnterior + 40;
-                            tmrMovimiento.Start();
-                        }
+                        // Mostramos tu bonito panel personalizado
+                        pnlConfirmacionNivel1.Visible = true;
+                        pnlConfirmacionNivel1.BringToFront();
                     }
                 }
+
+                // --- (AQUÍ ABAJO PUEDES AGREGAR MÁS PUERTAS CUANDO HAGAS MÁS NIVELES) ---
+                /* EJEMPLO PARA EL NIVEL 2:
+                if (x is PictureBox && x.Name == "pbPuertaNivel2")
+                {
+                    if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                    {
+                        tmrMovimiento.Stop();
+                        goArriba = goAbajo = goIzquierda = goDerecha = false;
+                        
+                        lblPreguntaNivel1.Text = "¿Te atreves con el Nivel 2?";
+                        nivelSeleccionado = 2; 
+
+                        pnlConfirmacionNivel1.Visible = true;
+                        pnlConfirmacionNivel1.BringToFront();
+                    }
+                }
+                */
             }
 
             if (seMueve == false)
@@ -338,7 +348,6 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-        // --- MÉTODO DE MÚSICA (NUEVO) ---
         private void ReproducirMusicaMapa()
         {
             try
@@ -349,6 +358,40 @@ namespace JUEGO_INGENIERIA
                 musicaFondo.controls.play();
             }
             catch { }
+        }
+
+        // --- LOS EVENTOS DE TUS BOTONES DEL PANEL ---
+        private void btnSiNivel1_Click(object sender, EventArgs e)
+        {
+            pnlConfirmacionNivel1.Visible = false;
+            musicaFondo.controls.stop();
+
+            if (nivelSeleccionado == 1)
+            {
+                FormNivel1 nivel1 = new FormNivel1(JugadorActual);
+                nivel1.ShowDialog();
+            }
+            else if (nivelSeleccionado == 2)
+            {
+                /* Cuando crees el Nivel 2, descomenta estas líneas:
+                FormNivel2 nivel2 = new FormNivel2(JugadorActual);
+                nivel2.ShowDialog();
+                */
+            }
+
+            ReproducirMusicaMapa();
+
+            // Empujar un poquito al jugador hacia abajo para que no se tranque al volver
+            pbPersonaje.Top += 40;
+            tmrMovimiento.Start();
+        }
+
+        private void btnNoNivel1_Click(object sender, EventArgs e)
+        {
+            // Ocultar el panel, rebotar hacia abajo y echar a andar
+            pnlConfirmacionNivel1.Visible = false;
+            pbPersonaje.Top += 40;
+            tmrMovimiento.Start();
         }
     }
 }

@@ -5,12 +5,10 @@ using System.Windows.Forms;
 using JUEGO_INGENIERIA.Vistas;
 using System.IO;
 using System.Drawing.Text;
-using System.Text.Json; // Para usar el archivo .json de los jugadores
-
-
+using System.Text.Json;
 using JUEGO_INGENIERIA.Modelos;
 using WMPLib;
-using System.Media; // <-- NUEVO: Librería para los efectos de sonido rápidos (.wav)
+using System.Media;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -27,8 +25,8 @@ namespace JUEGO_INGENIERIA.Vistas
         Image lomalo;
 
         WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
-        SoundPlayer sfxBueno = new SoundPlayer(); // <-- REPRODUCTOR EFECTO BUENO
-        SoundPlayer sfxMalo = new SoundPlayer();  // <-- REPRODUCTOR EFECTO MALO
+        SoundPlayer sfxBueno = new SoundPlayer();
+        SoundPlayer sfxMalo = new SoundPlayer();
 
         // --- VARIABLES INTERNAS ---
         int xIzquierda, xCentro, xDerecha;
@@ -65,9 +63,12 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 pfc.AddFontFile(rutaFuente);
                 Font fuentePixel = new Font(pfc.Families[0], 11f);
+                Font fuenteBotonPeque = new Font(pfc.Families[0], 8f);
+
                 lblOswaldText.Font = fuentePixel;
                 lblTiempo.Font = fuentePixel;
                 lblPuntos.Font = fuentePixel;
+                btnSkipDialogo.Font = fuenteBotonPeque;
             }
             catch { }
 
@@ -86,7 +87,7 @@ namespace JUEGO_INGENIERIA.Vistas
             lobueno = Properties.Resources.lobueno;
             lomalo = Properties.Resources.lomalo;
 
-            // --- CARGAR RUTAS DE LOS EFECTOS DE SONIDO (NUEVO) ---
+            // --- CARGAR RUTAS DE LOS EFECTOS DE SONIDO ---
             try
             {
                 sfxBueno.SoundLocation = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboBueno.wav");
@@ -117,6 +118,7 @@ namespace JUEGO_INGENIERIA.Vistas
             pnlIntro.Visible = true;
             pnlIntro.BringToFront();
             lblOswaldText.Text = "";
+            btnSkipDialogo.Visible = true; // Aseguramos que el botón aparezca al inicio
             timerEscritura.Start();
         }
 
@@ -166,7 +168,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     if (obj.Tag == "bueno")
                     {
-                        // --- ¡AQUÍ SUENA EL EFECTO BUENO! ---
                         try { sfxBueno.Play(); } catch { }
 
                         if (puntos < 20)
@@ -177,7 +178,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else if (obj.Tag == "malo")
                     {
-                        // --- ¡AQUÍ SUENA EL EFECTO MALO! ---
                         try { sfxMalo.Play(); } catch { }
 
                         vidas--;
@@ -227,6 +227,16 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
+        private void btnSkipDialogo_Click(object sender, EventArgs e)
+        {
+            // Detenemos la animación del texto
+            timerEscritura.Stop();
+
+            // Llamamos directamente a la función que inicia el juego de esquivar
+            EmpezarJuegoReal();
+        }
+
+
         private void timerEscritura_Tick(object sender, EventArgs e)
         {
             string fraseCompleta = discursoOswald[indiceFrase];
@@ -238,16 +248,20 @@ namespace JUEGO_INGENIERIA.Vistas
             else
             {
                 timerEscritura.Stop();
+                btnSkipDialogo.Visible = false; // Se oculta al terminar de escribir la frase por sí solo
             }
         }
 
         private void lblOswaldText_Click(object sender, EventArgs e)
         {
+            // Si la animación de texto sigue corriendo, complétala de una
             if (timerEscritura.Enabled)
             {
                 timerEscritura.Stop();
                 lblOswaldText.Text = discursoOswald[indiceFrase];
+                btnSkipDialogo.Visible = false; // Como acabas de forzar que salga completo, el botón "saltar" se oculta
             }
+            // Si ya terminó de escribirse, salta a la siguiente frase
             else
             {
                 indiceFrase++;
@@ -255,6 +269,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     lblOswaldText.Text = "";
                     indiceLetra = 0;
+                    btnSkipDialogo.Visible = true; // Hace aparecer el botón de nuevo para la próxima frase
                     timerEscritura.Start();
                 }
                 else
@@ -313,9 +328,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 MessageBox.Show($"¡Bien hecho!", "Repaso Completado");
             }
 
-            ActualizarDatos(); // Guardamos el progreso en el .json
+            ActualizarDatos();
             this.Close();
-
         }
 
         private void PerderNivel(string motivo)
@@ -323,7 +337,7 @@ namespace JUEGO_INGENIERIA.Vistas
             jugadorActual.Billetera -= 100;
             MessageBox.Show($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
 
-            ActualizarDatos(); // Guardamos el progreso en el .json
+            ActualizarDatos();
             this.Close();
         }
 
@@ -342,16 +356,12 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        // Esto es para actualizar los datos en el .json
-
         private void ActualizarDatos()
         {
             string rutaArchivo = "jugadores.json";
 
-            // Aqui se verifica que el archivo exista para que no haya errores
             if (!File.Exists(rutaArchivo)) return;
 
-            // Se lee la linea completa de jugadores desde el .json
             string TextoJson = File.ReadAllText(rutaArchivo);
             List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
 
