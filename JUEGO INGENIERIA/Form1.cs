@@ -1,7 +1,7 @@
 ﻿using JUEGO_INGENIERIA.Vistas;
-using JUEGO_INGENIERIA.Properties; // NECESARIO para las imágenes
+using JUEGO_INGENIERIA.Properties;
 using System;
-using System.Collections.Generic; // NECESARIO para las Listas
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -9,54 +9,95 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
-
+using WMPLib;
 
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
-       
         private Vistas.Jugador jugadorActual;
 
-       
+        // --- VARIABLE DE MÚSICA ---
+        WindowsMediaPlayer musicaFondo = new WindowsMediaPlayer();
+
+        // --- VARIABLE PARA RECORDAR QUÉ NIVEL SE VA A ABRIR ---
+        int nivelSeleccionado = 0;
+
         public Form1(Vistas.Jugador jugadorRecibido)
         {
             InitializeComponent();
-
-            
             jugadorActual = jugadorRecibido;
+            ConfigurarGraficos();
         }
-        
+
         bool goArriba, goAbajo, goIzquierda, goDerecha;
         int velocidad = 5;
 
-       
         public static Jugador? JugadorActual;
 
-        
         List<Image> animAbajo = new List<Image>();
         List<Image> animArriba = new List<Image>();
         List<Image> animIzquierda = new List<Image>();
         List<Image> animDerecha = new List<Image>();
 
-        
         List<Image> animArribaDerecha = new List<Image>();
         List<Image> animArribaIzquierda = new List<Image>();
         List<Image> animAbajoDerecha = new List<Image>();
         List<Image> animAbajoIzquierda = new List<Image>();
 
         int frameActual = 0;
-        int contadorLentitud = 0; 
+        int contadorLentitud = 0;
         List<Image> ultimaAnimacion = null;
 
         public Form1()
         {
             InitializeComponent();
+            ConfigurarGraficos();
+        }
+
+        // --- FUNCIÓN QUE ARREGLA EL PROBLEMA DEL FONDO CORTADO ---
+        private void ConfigurarGraficos()
+        {
             this.DoubleBuffered = true;
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+
+            // Ocultamos el PictureBox para que no corte el fondo
+            pbPersonaje.Visible = false;
             EsconderMuros();
         }
 
-        // --- TU CÓDIGO IMPORTANTE: INTRO Y REGISTRO ---
+        // --- DIBUJAMOS EL PERSONAJE DIRECTO EN EL MAPA ---
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+            // 1. DIBUJAMOS AL PERSONAJE PRIMERO
+            if (ultimaAnimacion != null && ultimaAnimacion.Count > 0)
+            {
+                e.Graphics.DrawImage(ultimaAnimacion[frameActual], pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
+            }
+            else if (pbPersonaje.Image != null)
+            {
+                e.Graphics.DrawImage(pbPersonaje.Image, pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
+            }
+            // 2. DIBUJAMOS LA DECORACIÓN AUTOMÁTICAMENTE Y PENSANDO EN EL FUTURO
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox x)
+                {
+                    // REGLAS PARA SABER QUÉ ES UN ÁRBOL O TECHO:
+                    // 1. NO tiene el tag "muro"
+                    // 2. Su nombre EMPIEZA por "pictureBox" (así descartamos puertas que se llamen "pbPuerta1", "Cofre2", etc)
+                    if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
+                    {
+                        if (x.Image != null && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                        {
+                            e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
+                        }
+                    }
+                }
+            }
+        }
+
         private void Form1_Shown(object sender, EventArgs e)
         {
             this.Hide();
@@ -70,32 +111,30 @@ namespace JUEGO_INGENIERIA
             ElegirPersonaje seleccion = new ElegirPersonaje();
             seleccion.ShowDialog();
 
-            
             CargarSpritesPersonaje();
 
             this.Show();
             this.Focus();
+
+            ReproducirMusicaMapa();
         }
 
-        
         private void Form1_Activated(object sender, EventArgs e)
         {
-            // 1. Buscamos la ruta exacta de tu fuente usando la misma lógica de tus imágenes
             string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
-
-            // 2. Cargamos la fuente en la colección privada
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile(rutaFuente);
-
-            // 3. Creamos el estilo de la fuente (Aquí puedes cambiar el 12f por el tamaño que prefieras)
             Font fuentePixel = new Font(pfc.Families[0], 9f);
+            Font fuentePanel = new Font(pfc.Families[0], 8f);
 
-            // 4. Se la asignamos a los textos (Asegúrate de que los nombres de los lbl coincidan con los tuyos)
             lblNombreJugador.Font = fuentePixel;
             lblNivel.Font = fuentePixel;
             lblDinero.Font = fuentePixel;
 
-           
+            // FUENTE PARA EL PANEL PERSONALIZADO
+            lblPreguntaNivel1.Font = fuentePanel;
+            btnSiNivel1.Font = fuentePanel;
+            btnNoNivel1.Font = fuentePanel;
 
             if (JugadorActual != null)
             {
@@ -105,16 +144,12 @@ namespace JUEGO_INGENIERIA
             }
         }
 
-        // --- CARGA DE IMÁGENES ---
         private void Form1_Load(object sender, EventArgs e)
         {
-
-
         }
 
         private void CargarSpritesPersonaje()
         {
-
             string p = DatosJuego.PersonajeElegido.ToLower();
 
             Image CargarSprite(string accion)
@@ -122,63 +157,52 @@ namespace JUEGO_INGENIERIA
                 return (Image)Properties.Resources.ResourceManager.GetObject($"{p}_{accion}");
             }
 
-            // 3. ¡Mira lo limpio que queda ahora! Llenamos las listas sin usar ni un solo if:
-
-            // Abajo (Frente)
             animAbajo.Add(CargarSprite("frente1"));
             animAbajo.Add(CargarSprite("frente2"));
             animAbajo.Add(CargarSprite("frente3"));
 
-            // Arriba (Espalda)
             animArriba.Add(CargarSprite("espalda1"));
             animArriba.Add(CargarSprite("espalda2"));
             animArriba.Add(CargarSprite("espalda3"));
 
-            // Derecha
             animDerecha.Add(CargarSprite("ladoderecho1"));
             animDerecha.Add(CargarSprite("ladoderecho2"));
             animDerecha.Add(CargarSprite("ladoderecho3"));
 
-            // Izquierda
             animIzquierda.Add(CargarSprite("ladoizquiedo1"));
             animIzquierda.Add(CargarSprite("ladoizquiedo2"));
             animIzquierda.Add(CargarSprite("ladoizquiedo3"));
 
-            // --- DIAGONALES ---
-            // Arriba + Derecha
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda1"));
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda2"));
             animArribaDerecha.Add(CargarSprite("inclinadaderechaespalda3"));
 
-            // Arriba + Izquierda
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda1"));
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda2"));
             animArribaIzquierda.Add(CargarSprite("inclinadaizquiedaespalda3"));
 
-            // Abajo + Derecha
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente1"));
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente2"));
             animAbajoDerecha.Add(CargarSprite("inclinadaderechafrente3"));
 
-            // Abajo + Izquierda
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente1"));
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente2"));
             animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
 
-            pbPersonaje.Image = CargarSprite("frente2"); // Imagen inicial
-
-            animAbajoIzquierda.Add(CargarSprite("inclinadaizquiedafrente3"));
-
             pbPersonaje.Image = CargarSprite("frente2");
+            ultimaAnimacion = animAbajo; // Animación por defecto
         }
 
-        // --- TECLAS ---
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Up) goArriba = true;
-            if (e.KeyCode == Keys.Down) goAbajo = true;
-            if (e.KeyCode == Keys.Left) goIzquierda = true;
-            if (e.KeyCode == Keys.Right) goDerecha = true;
+            // Solo nos movemos si el cartel no está mostrándose
+            if (pnlConfirmacionNivel1 != null && !pnlConfirmacionNivel1.Visible)
+            {
+                if (e.KeyCode == Keys.Up) goArriba = true;
+                if (e.KeyCode == Keys.Down) goAbajo = true;
+                if (e.KeyCode == Keys.Left) goIzquierda = true;
+                if (e.KeyCode == Keys.Right) goDerecha = true;
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -189,207 +213,132 @@ namespace JUEGO_INGENIERIA
             if (e.KeyCode == Keys.Right) goDerecha = false;
         }
 
-        // --- EL CAMBIO MAGISTRAL AQUÍ (Lógica corregida) ---
         private void tmrMovimiento_Tick(object sender, EventArgs e)
         {
-            //aqui se guarda la posicion para q pueda detectar los muros
             int xAnterior = pbPersonaje.Left;
             int yAnterior = pbPersonaje.Top;
-            // Definimos dos velocidades locales
             int vNormal = 5;
-            int vDiag = 3; // Más lento para diagonales (evita el efecto turbo)
+            int vDiag = 3;
 
             bool seMueve = false;
 
-            // --- 1. PRIORIDAD: DIAGONALES ---
-            // Revisamos primero si hay DOS teclas presionadas
-
-            // ARRIBA + DERECHA
             if (goArriba && goDerecha)
             {
                 if (pbPersonaje.Top > 0 && pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
                 {
-                    pbPersonaje.Top -= vDiag;
-                    pbPersonaje.Left += vDiag;
-                    Animar(animArribaDerecha); // ¡Usa tu lista diagonal!
-                    seMueve = true;
+                    pbPersonaje.Top -= vDiag; pbPersonaje.Left += vDiag;
+                    Animar(animArribaDerecha); seMueve = true;
                 }
             }
-            // ARRIBA + IZQUIERDA
             else if (goArriba && goIzquierda)
             {
                 if (pbPersonaje.Top > 0 && pbPersonaje.Left > 0)
                 {
-                    pbPersonaje.Top -= vDiag;
-                    pbPersonaje.Left -= vDiag;
-                    Animar(animArribaIzquierda);
-                    seMueve = true;
+                    pbPersonaje.Top -= vDiag; pbPersonaje.Left -= vDiag;
+                    Animar(animArribaIzquierda); seMueve = true;
                 }
             }
-            // ABAJO + DERECHA
             else if (goAbajo && goDerecha)
             {
-                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height &&
-                    pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
+                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height && pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
                 {
-                    pbPersonaje.Top += vDiag;
-                    pbPersonaje.Left += vDiag;
-                    Animar(animAbajoDerecha);
-                    seMueve = true;
+                    pbPersonaje.Top += vDiag; pbPersonaje.Left += vDiag;
+                    Animar(animAbajoDerecha); seMueve = true;
                 }
             }
-            // ABAJO + IZQUIERDA
             else if (goAbajo && goIzquierda)
             {
                 if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height && pbPersonaje.Left > 0)
                 {
-                    pbPersonaje.Top += vDiag;
-                    pbPersonaje.Left -= vDiag;
-                    Animar(animAbajoIzquierda);
-                    seMueve = true;
+                    pbPersonaje.Top += vDiag; pbPersonaje.Left -= vDiag;
+                    Animar(animAbajoIzquierda); seMueve = true;
                 }
             }
-
-            // --- 2. SECUNDARIO: CARDINALES (Una sola tecla) ---
-
             else if (goArriba)
             {
-                if (pbPersonaje.Top > 0)
-                {
-                    pbPersonaje.Top -= vNormal;
-                    Animar(animArriba);
-                    seMueve = true;
-                }
+                if (pbPersonaje.Top > 0) { pbPersonaje.Top -= vNormal; Animar(animArriba); seMueve = true; }
             }
             else if (goAbajo)
             {
-                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height)
-                {
-                    pbPersonaje.Top += vNormal;
-                    Animar(animAbajo);
-                    seMueve = true;
-                }
+                if (pbPersonaje.Top + pbPersonaje.Height < this.ClientSize.Height) { pbPersonaje.Top += vNormal; Animar(animAbajo); seMueve = true; }
             }
             else if (goIzquierda)
             {
-                if (pbPersonaje.Left > 0)
-                {
-                    pbPersonaje.Left -= vNormal;
-                    Animar(animIzquierda);
-                    seMueve = true;
-                }
+                if (pbPersonaje.Left > 0) { pbPersonaje.Left -= vNormal; Animar(animIzquierda); seMueve = true; }
             }
             else if (goDerecha)
             {
-                if (pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width)
-                {
-                    pbPersonaje.Left += vNormal;
-                    Animar(animDerecha);
-                    seMueve = true;
-                }
+                if (pbPersonaje.Left + pbPersonaje.Width < this.ClientSize.Width) { pbPersonaje.Left += vNormal; Animar(animDerecha); seMueve = true; }
             }
 
             foreach (Control x in this.Controls)
             {
-                // Chocar contra los muros (Bloques rojos)
                 if (x is PictureBox && (string)x.Tag == "muro")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
-                        // ¡Pisó el muro! Lo devolvemos a donde estaba al inicio
                         pbPersonaje.Left = xAnterior;
                         pbPersonaje.Top = yAnterior;
                     }
                 }
 
-                // aqui es cuando la muñeca toca la puerta de entrada al nivel 1
                 if (x is PictureBox && x.Name == "pbPuertaNivel1")
                 {
                     if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
-                        tmrMovimiento.Stop(); // pausamos el mapa para que el personaje no siga caminando de fondo
-                        goArriba = goAbajo = goIzquierda = goDerecha = false; // Reseteamos las teclas
+                        tmrMovimiento.Stop();
+                        goArriba = goAbajo = goIzquierda = goDerecha = false;
 
-                        // aquí te pregunta si quieres iniciar o no
-                        DialogResult respuesta = MessageBox.Show(
-                            "¿Estás listo para entrar a la clase del profesor Oswald?",
-                            "Entrada al Nivel 1",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question
-                        );
+                        lblPreguntaNivel1.Text = "¿Estás listo para entrar a la clase del profesor Oswald (Nivel 1)?";
+                        nivelSeleccionado = 1;
 
-                        if (respuesta == DialogResult.Yes)
-                        {
-                            // si el jugador dice que si se abre el nivel 1
-                            FormNivel1 nivel1 = new FormNivel1(JugadorActual);
-                            nivel1.ShowDialog(); // Usamos ShowDialog para pausar Form1 hasta que se cierre el nivel
-
-                            // AL CERRAR EL NIVEL 1: Reactivamos el mapa y damos un pasito atrás para evitar el bucle
-                            tmrMovimiento.Start();
-                            pbPersonaje.Top += 40;
-                        }
-                        else
-                        {
-                            // si dice que no lo rebotamos un poquito hacia atrás para sacarlo de la zona verde
-                            pbPersonaje.Left = xAnterior;
-                            pbPersonaje.Top = yAnterior + 40; // Lo empujamos 40 píxeles hacia abajo
-
-                            tmrMovimiento.Start(); // Volvemos a encender el motor del mapa
-                        }
+                        pnlConfirmacionNivel1.Visible = true;
+                        pnlConfirmacionNivel1.BringToFront();
                     }
                 }
             }
 
-           
-
-
-            // --- 3. RESETEO ---
             if (seMueve == false)
             {
                 frameActual = 0;
-                contadorLentitud = 10; // Truco: esto hace que al arrancar no tenga retraso la primera vez
+                contadorLentitud = 10;
             }
+
+            // OBLIGAMOS AL MAPA A REPINTAR *SOLO* LA ZONA DONDE ESTÁ Y DONDE ESTUVO
+            Rectangle areaAnterior = new Rectangle(xAnterior, yAnterior, pbPersonaje.Width, pbPersonaje.Height);
+            Rectangle areaNueva = new Rectangle(pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
+
+            // Limpiamos la pisada vieja y dibujamos la nueva, ahorrando un 99% de rendimiento
+            this.Invalidate(areaAnterior);
+            this.Invalidate(areaNueva);
+
         }
 
-
-
-        // --- FUNCIÓN DE ANIMAR ---
         private void Animar(List<Image> animacionNueva)
         {
             if (animacionNueva != ultimaAnimacion)
             {
-                frameActual = 0;        // Reiniciamos la animación al primer frame
-                contadorLentitud = 10;  // Forzamos que se dibuje inmediatamente
-                ultimaAnimacion = animacionNueva; // Guardamos la nueva como actual
+                frameActual = 0;
+                contadorLentitud = 10;
+                ultimaAnimacion = animacionNueva;
             }
 
             if (animacionNueva.Count > 0)
             {
                 contadorLentitud++;
-
-                if (contadorLentitud > 3) // Ajusta este número si va muy rápido
+                if (contadorLentitud > 3)
                 {
-                    // Importante: Asignar la imagen ANTES de incrementar para asegurar que vemos el frame 0
-                    pbPersonaje.Image = animacionNueva[frameActual];
-
                     frameActual++;
                     if (frameActual >= animacionNueva.Count) frameActual = 0;
-
                     contadorLentitud = 0;
-                }
-                else if (contadorLentitud == 0)
-                {
-                    // Parche de seguridad: Si acabamos de resetear (contador 0), forzamos pintar la imagen
-                    pbPersonaje.Image = animacionNueva[frameActual];
                 }
             }
         }
-        // Función para ocultar los bloques de muro al arrancar
+
         private void EsconderMuros()
         {
             foreach (Control x in this.Controls)
             {
-                // Oculta todo lo que tenga el Tag "muro" o sea la puerta
                 if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1")
                 {
                     x.BackColor = Color.Transparent;
@@ -397,6 +346,40 @@ namespace JUEGO_INGENIERIA
             }
         }
 
+        private void ReproducirMusicaMapa()
+        {
+            try
+            {
+                string ruta = Path.Combine(Application.StartupPath, "Resources", "musica mapa", "musicaMapa.mp3");
+                musicaFondo.URL = ruta;
+                musicaFondo.settings.setMode("loop", true);
+                musicaFondo.controls.play();
+            }
+            catch { }
+        }
 
+        private void btnSiNivel1_Click(object sender, EventArgs e)
+        {
+            pnlConfirmacionNivel1.Visible = false;
+            musicaFondo.controls.stop();
+
+            if (nivelSeleccionado == 1)
+            {
+                FormNivel1 nivel1 = new FormNivel1(JugadorActual);
+                nivel1.ShowDialog();
+            }
+
+            ReproducirMusicaMapa();
+
+            pbPersonaje.Top += 40;
+            tmrMovimiento.Start();
+        }
+
+        private void btnNoNivel1_Click(object sender, EventArgs e)
+        {
+            pnlConfirmacionNivel1.Visible = false;
+            pbPersonaje.Top += 40;
+            tmrMovimiento.Start();
+        }
     }
 }

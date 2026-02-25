@@ -262,6 +262,9 @@
   <data name="lomalo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lomalo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="musicaOswald" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\musicaOswald.mp3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="eliezer_frente2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\eliezer_frente2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
