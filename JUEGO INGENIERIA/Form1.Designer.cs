@@ -136,7 +136,10 @@
             pictureBox97 = new PictureBox();
             pictureBox98 = new PictureBox();
             pictureBox99 = new PictureBox();
-            pictureBox100 = new PictureBox();
+            pnlConfirmacionNivel1 = new Panel();
+            btnNoNivel1 = new Button();
+            btnSiNivel1 = new Button();
+            lblPreguntaNivel1 = new Label();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -238,7 +241,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox97).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox98).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox100).BeginInit();
+            pnlConfirmacionNivel1.SuspendLayout();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -275,7 +278,7 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(213, 193);
+            pbPersonaje.Location = new Point(207, 256);
             pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(77, 89);
@@ -711,7 +714,7 @@
             pictureBox39.Location = new Point(273, 344);
             pictureBox39.Margin = new Padding(3, 2, 3, 2);
             pictureBox39.Name = "pictureBox39";
-            pictureBox39.Size = new Size(17, 37);
+            pictureBox39.Size = new Size(9, 16);
             pictureBox39.TabIndex = 51;
             pictureBox39.TabStop = false;
             pictureBox39.Tag = "";
@@ -931,7 +934,7 @@
             pictureBox59.Location = new Point(349, 358);
             pictureBox59.Margin = new Padding(3, 2, 3, 2);
             pictureBox59.Name = "pictureBox59";
-            pictureBox59.Size = new Size(52, 23);
+            pictureBox59.Size = new Size(52, 11);
             pictureBox59.TabIndex = 71;
             pictureBox59.TabStop = false;
             pictureBox59.Tag = "";
@@ -975,7 +978,7 @@
             pictureBox63.Location = new Point(221, 339);
             pictureBox63.Margin = new Padding(3, 2, 3, 2);
             pictureBox63.Name = "pictureBox63";
-            pictureBox63.Size = new Size(25, 19);
+            pictureBox63.Size = new Size(25, 8);
             pictureBox63.TabIndex = 75;
             pictureBox63.TabStop = false;
             pictureBox63.Tag = "";
@@ -1082,10 +1085,10 @@
             // pictureBox74
             // 
             pictureBox74.BackColor = Color.Transparent;
-            pictureBox74.Location = new Point(772, 337);
+            pictureBox74.Location = new Point(783, 337);
             pictureBox74.Margin = new Padding(3, 2, 3, 2);
             pictureBox74.Name = "pictureBox74";
-            pictureBox74.Size = new Size(68, 37);
+            pictureBox74.Size = new Size(57, 37);
             pictureBox74.TabIndex = 82;
             pictureBox74.TabStop = false;
             pictureBox74.Tag = "";
@@ -1129,7 +1132,7 @@
             pictureBox78.Location = new Point(858, 338);
             pictureBox78.Margin = new Padding(3, 2, 3, 2);
             pictureBox78.Name = "pictureBox78";
-            pictureBox78.Size = new Size(16, 26);
+            pictureBox78.Size = new Size(16, 8);
             pictureBox78.TabIndex = 94;
             pictureBox78.TabStop = false;
             pictureBox78.Tag = "";
@@ -1162,7 +1165,7 @@
             pictureBox81.Location = new Point(867, 337);
             pictureBox81.Margin = new Padding(3, 2, 3, 2);
             pictureBox81.Name = "pictureBox81";
-            pictureBox81.Size = new Size(24, 27);
+            pictureBox81.Size = new Size(24, 11);
             pictureBox81.TabIndex = 91;
             pictureBox81.TabStop = false;
             pictureBox81.Tag = "";
@@ -1371,7 +1374,7 @@
             pictureBox97.Location = new Point(984, 319);
             pictureBox97.Margin = new Padding(3, 2, 3, 2);
             pictureBox97.Name = "pictureBox97";
-            pictureBox97.Size = new Size(25, 20);
+            pictureBox97.Size = new Size(25, 12);
             pictureBox97.TabIndex = 108;
             pictureBox97.TabStop = false;
             pictureBox97.Tag = "";
@@ -1398,16 +1401,45 @@
             pictureBox99.TabStop = false;
             pictureBox99.Tag = "";
             // 
-            // pictureBox100
+            // pnlConfirmacionNivel1
             // 
-            pictureBox100.BackColor = Color.Transparent;
-            pictureBox100.Location = new Point(256, 356);
-            pictureBox100.Margin = new Padding(3, 2, 3, 2);
-            pictureBox100.Name = "pictureBox100";
-            pictureBox100.Size = new Size(16, 21);
-            pictureBox100.TabIndex = 116;
-            pictureBox100.TabStop = false;
-            pictureBox100.Tag = "";
+            pnlConfirmacionNivel1.BackColor = Color.FromArgb(0, 192, 0);
+            pnlConfirmacionNivel1.Controls.Add(btnNoNivel1);
+            pnlConfirmacionNivel1.Controls.Add(btnSiNivel1);
+            pnlConfirmacionNivel1.Controls.Add(lblPreguntaNivel1);
+            pnlConfirmacionNivel1.Location = new Point(421, 206);
+            pnlConfirmacionNivel1.Name = "pnlConfirmacionNivel1";
+            pnlConfirmacionNivel1.Size = new Size(215, 136);
+            pnlConfirmacionNivel1.TabIndex = 116;
+            pnlConfirmacionNivel1.Visible = false;
+            // 
+            // btnNoNivel1
+            // 
+            btnNoNivel1.Location = new Point(116, 92);
+            btnNoNivel1.Name = "btnNoNivel1";
+            btnNoNivel1.Size = new Size(75, 23);
+            btnNoNivel1.TabIndex = 2;
+            btnNoNivel1.Text = "No";
+            btnNoNivel1.UseVisualStyleBackColor = true;
+            btnNoNivel1.Click += btnNoNivel1_Click;
+            // 
+            // btnSiNivel1
+            // 
+            btnSiNivel1.Location = new Point(31, 92);
+            btnSiNivel1.Name = "btnSiNivel1";
+            btnSiNivel1.Size = new Size(40, 23);
+            btnSiNivel1.TabIndex = 1;
+            btnSiNivel1.Text = "Si";
+            btnSiNivel1.UseVisualStyleBackColor = true;
+            btnSiNivel1.Click += btnSiNivel1_Click;
+            // 
+            // lblPreguntaNivel1
+            // 
+            lblPreguntaNivel1.Location = new Point(25, 27);
+            lblPreguntaNivel1.Name = "lblPreguntaNivel1";
+            lblPreguntaNivel1.Size = new Size(176, 48);
+            lblPreguntaNivel1.TabIndex = 0;
+            lblPreguntaNivel1.Text = "label1";
             // 
             // Form1
             // 
@@ -1417,7 +1449,7 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1106, 511);
-            Controls.Add(pictureBox100);
+            Controls.Add(pnlConfirmacionNivel1);
             Controls.Add(pictureBox99);
             Controls.Add(pictureBox91);
             Controls.Add(pictureBox92);
@@ -1635,7 +1667,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox97).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox98).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox100).EndInit();
+            pnlConfirmacionNivel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1748,6 +1780,9 @@
         private PictureBox pictureBox97;
         private PictureBox pictureBox98;
         private PictureBox pictureBox99;
-        private PictureBox pictureBox100;
+        private Panel pnlConfirmacionNivel1;
+        private Button btnNoNivel1;
+        private Button btnSiNivel1;
+        private Label lblPreguntaNivel1;
     }
 }

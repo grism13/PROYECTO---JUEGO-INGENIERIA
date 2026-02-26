@@ -13,6 +13,8 @@ namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormAdmision : Form
     {
+        bool puedeCerrar = false;
+
         // El molde de la lista de usuarios
         List<Jugador> listaDeJugadores = new List<Jugador>();
 
@@ -133,11 +135,40 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 Jugador jugadorSeleccionado = (Jugador)dvJugadores.SelectedRows[0].DataBoundItem;
                 Form1.JugadorActual = jugadorSeleccionado;
+
+                // ¡LA MAGIA! Abrimos el candado porque le dio a jugar
+                puedeCerrar = true;
+
                 this.Close();
             }
             else
             {
                 MessageBox.Show("Por favor selecciona un jugador para continuar");
+            }
+
+
+
+            if (dvJugadores.SelectedRows.Count > 0)
+            {
+                Jugador jugadorSeleccionado = (Jugador)dvJugadores.SelectedRows[0].DataBoundItem;
+                Form1.JugadorActual = jugadorSeleccionado;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Por favor selecciona un jugador para continuar");
+            }
+        }
+
+        private void FormAdmision_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (puedeCerrar == false)
+            {
+                // Cancelamos la orden de cierre
+                e.Cancel = true;
+
+                // Le avisamos al jugador qué debe hacer
+                MessageBox.Show("¡Debes seleccionar un jugador y presionar jugar para avanzar!", "Acción bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

@@ -2,15 +2,8 @@
 {
     partial class FormNivel1
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,10 +15,6 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
@@ -41,6 +30,7 @@
             tmrReloj = new System.Windows.Forms.Timer(components);
             pnlIntro = new Panel();
             lblOswaldText = new Label();
+            btnSkipDialogo = new Button();
             pictureBox1 = new PictureBox();
             timerEscritura = new System.Windows.Forms.Timer(components);
             pbVida1 = new PictureBox();
@@ -142,6 +132,7 @@
             // 
             pnlIntro.BackColor = Color.Transparent;
             pnlIntro.Controls.Add(lblOswaldText);
+            pnlIntro.Controls.Add(btnSkipDialogo);
             pnlIntro.Controls.Add(pictureBox1);
             pnlIntro.Controls.Add(pbOswald);
             pnlIntro.Location = new Point(43, 400);
@@ -160,6 +151,20 @@
             lblOswaldText.TabIndex = 7;
             lblOswaldText.Text = "label2";
             lblOswaldText.Click += lblOswaldText_Click;
+            // 
+            // btnSkipDialogo
+            // 
+            btnSkipDialogo.BackColor = Color.FromArgb(64, 64, 64);
+            btnSkipDialogo.Cursor = Cursors.Hand;
+            btnSkipDialogo.FlatStyle = FlatStyle.Flat;
+            btnSkipDialogo.ForeColor = Color.White;
+            btnSkipDialogo.Location = new Point(806, 254);
+            btnSkipDialogo.Name = "btnSkipDialogo";
+            btnSkipDialogo.Size = new Size(110, 28);
+            btnSkipDialogo.TabIndex = 8;
+            btnSkipDialogo.Text = "SALTAR >>";
+            btnSkipDialogo.UseVisualStyleBackColor = false;
+            btnSkipDialogo.Click += btnSkipDialogo_Click;
             // 
             // pictureBox1
             // 
@@ -274,6 +279,7 @@
         private Label lblOswaldText;
         private System.Windows.Forms.Timer timerEscritura;
         private PictureBox pictureBox1;
+        private Button btnSkipDialogo;
         private PictureBox pbVida1;
         private PictureBox pbVida3;
         private PictureBox pbVida2;

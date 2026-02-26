@@ -4,16 +4,19 @@
     <Compile Update="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\ElegirPersonaje.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistas\FormAdmision.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Vistas\FormIntro.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Vistas\FormMenuPrincipal.cs">
+    <Compile Update="Vistas\FormNivel1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Vistas\FormNivel1.cs">
+    <Compile Update="Vistas\FormNivel2.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
