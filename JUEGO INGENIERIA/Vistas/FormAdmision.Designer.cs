@@ -58,7 +58,7 @@
             registratetxt.FlatStyle = FlatStyle.Flat;
             registratetxt.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             registratetxt.Image = Properties.Resources.fondo_imagen_para_registro__1_;
-            registratetxt.Location = new Point(827, 380);
+            registratetxt.Location = new Point(818, 377);
             registratetxt.Name = "registratetxt";
             registratetxt.Size = new Size(270, 27);
             registratetxt.TabIndex = 0;

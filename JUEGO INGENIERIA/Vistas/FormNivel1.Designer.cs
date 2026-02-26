@@ -103,10 +103,11 @@
             // 
             lblTiempo.AutoSize = true;
             lblTiempo.BackColor = Color.Transparent;
+            lblTiempo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblTiempo.ForeColor = Color.Black;
-            lblTiempo.Location = new Point(1123, 164);
+            lblTiempo.Location = new Point(1113, 173);
             lblTiempo.Name = "lblTiempo";
-            lblTiempo.Size = new Size(68, 15);
+            lblTiempo.Size = new Size(90, 21);
             lblTiempo.TabIndex = 3;
             lblTiempo.Text = "TIEMPO: 30";
             // 
@@ -114,10 +115,11 @@
             // 
             lblPuntos.AutoSize = true;
             lblPuntos.BackColor = Color.Transparent;
+            lblPuntos.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblPuntos.ForeColor = Color.FromArgb(192, 255, 192);
-            lblPuntos.Location = new Point(1127, 346);
+            lblPuntos.Location = new Point(1117, 346);
             lblPuntos.Name = "lblPuntos";
-            lblPuntos.Size = new Size(64, 15);
+            lblPuntos.Size = new Size(86, 21);
             lblPuntos.TabIndex = 5;
             lblPuntos.Text = "PUNTOS: 0";
             // 
@@ -179,7 +181,7 @@
             // 
             pbVida1.BackColor = Color.Transparent;
             pbVida1.Image = Properties.Resources._1vidas;
-            pbVida1.Location = new Point(1074, 230);
+            pbVida1.Location = new Point(1078, 221);
             pbVida1.Name = "pbVida1";
             pbVida1.Size = new Size(165, 71);
             pbVida1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -190,7 +192,7 @@
             // 
             pbVida3.BackColor = Color.Transparent;
             pbVida3.Image = Properties.Resources._3vidas__1_;
-            pbVida3.Location = new Point(1074, 230);
+            pbVida3.Location = new Point(1078, 221);
             pbVida3.Name = "pbVida3";
             pbVida3.Size = new Size(165, 71);
             pbVida3.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -201,7 +203,7 @@
             // 
             pbVida2.BackColor = Color.Transparent;
             pbVida2.Image = Properties.Resources._2vidas;
-            pbVida2.Location = new Point(1074, 230);
+            pbVida2.Location = new Point(1078, 221);
             pbVida2.Name = "pbVida2";
             pbVida2.Size = new Size(165, 71);
             pbVida2.SizeMode = PictureBoxSizeMode.StretchImage;

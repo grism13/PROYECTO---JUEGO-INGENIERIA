@@ -52,7 +52,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 dvJugadores.DefaultCellStyle.Font = fuenteTabla;
                 dvJugadores.ColumnHeadersDefaultCellStyle.Font = fuenteBotones;
-                
+
             }
             else
             {
@@ -60,7 +60,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        
+
 
         // --- LÓGICA DE DATOS (CRUD ORIGINAL) ---
         private void btnCrear_Click(object sender, EventArgs e)
