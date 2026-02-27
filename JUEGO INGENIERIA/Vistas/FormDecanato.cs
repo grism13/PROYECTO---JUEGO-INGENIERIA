@@ -10,6 +10,11 @@ namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormDecanato : Form
     {
+        Bitmap lienzo;
+        Graphics dibujante;
+        Pen marcador = new Pen(Color.RoyalBlue, 4);
+        bool estaDibujando = false;
+        Point puntoAnterior;
         private FormMovimiento motorMovimiento;
 
         public FormDecanato()
@@ -19,6 +24,11 @@ namespace JUEGO_INGENIERIA.Vistas
             DoubleBuffered = true;
             motorMovimiento = new FormMovimiento(this, pbPersonaje);
             motorMovimiento.Start();
+            lienzo = new Bitmap(pbPizarra.Width, pbPizarra.Height);
+            dibujante = Graphics.FromImage(lienzo);
+            dibujante.Clear(Color.White);
+            pbPizarra.Image = lienzo;
+            pictureBox2.BorderStyle = BorderStyle.Fixed3D;
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -124,6 +134,61 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             MessageBox.Show("toma");
             this.ActiveControl = null;
+        }
+
+        private void pbPizarra_MouseDown(object sender, MouseEventArgs e)
+        {
+            estaDibujando = true;
+            puntoAnterior = e.Location;
+        }
+
+        private void pbPizarra_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (estaDibujando)
+            {
+                dibujante.DrawLine(marcador, puntoAnterior, e.Location);
+                puntoAnterior = e.Location;
+                pbPizarra.Invalidate();
+            }
+        }
+
+        private void pbPizarra_MouseUp(object sender, MouseEventArgs e)
+        {
+            estaDibujando = false;
+
+        }
+
+
+        // Aqui empiezan los marcadores de colores (aqui es el azul)
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            marcador.Color = Color.RoyalBlue;
+            ApagarBordes();
+            pictureBox2.BorderStyle = BorderStyle.Fixed3D;
+        }
+        // Rojo
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            marcador.Color = Color.Firebrick;
+            ApagarBordes(); 
+            pictureBox4.BorderStyle = BorderStyle.Fixed3D;
+        }
+
+        // Amarillo
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            marcador.Color = Color.Gold;
+            ApagarBordes(); 
+            pictureBox3.BorderStyle = BorderStyle.Fixed3D;
+        }
+
+        private void ApagarBordes()
+        {
+            pictureBox2.BorderStyle = BorderStyle.None;
+            pictureBox4.BorderStyle = BorderStyle.None;
+            pictureBox3.BorderStyle = BorderStyle.None;
         }
     }
 }
