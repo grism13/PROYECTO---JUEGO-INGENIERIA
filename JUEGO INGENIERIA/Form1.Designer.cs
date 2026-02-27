@@ -140,6 +140,7 @@
             btnNoNivel1 = new Button();
             btnSiNivel1 = new Button();
             lblPreguntaNivel1 = new Label();
+            pbPuertaNivel5 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -242,6 +243,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox98).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).BeginInit();
             pnlConfirmacionNivel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -1321,7 +1323,7 @@
             pnlConfirmacionNivel1.Controls.Add(btnNoNivel1);
             pnlConfirmacionNivel1.Controls.Add(btnSiNivel1);
             pnlConfirmacionNivel1.Controls.Add(lblPreguntaNivel1);
-            pnlConfirmacionNivel1.Location = new Point(481, 275);
+            pnlConfirmacionNivel1.Location = new Point(508, 288);
             pnlConfirmacionNivel1.Margin = new Padding(3, 4, 3, 4);
             pnlConfirmacionNivel1.Name = "pnlConfirmacionNivel1";
             pnlConfirmacionNivel1.Size = new Size(246, 181);
@@ -1358,6 +1360,15 @@
             lblPreguntaNivel1.TabIndex = 0;
             lblPreguntaNivel1.Text = "label1";
             // 
+            // pbPuertaNivel5
+            // 
+            pbPuertaNivel5.BackColor = Color.Transparent;
+            pbPuertaNivel5.Location = new Point(618, 275);
+            pbPuertaNivel5.Name = "pbPuertaNivel5";
+            pbPuertaNivel5.Size = new Size(30, 10);
+            pbPuertaNivel5.TabIndex = 117;
+            pbPuertaNivel5.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1366,6 +1377,7 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(pbPuertaNivel5);
             Controls.Add(pnlConfirmacionNivel1);
             Controls.Add(pictureBox99);
             Controls.Add(pictureBox91);
@@ -1582,6 +1594,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox98).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).EndInit();
             pnlConfirmacionNivel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1698,5 +1711,6 @@
         private Button btnNoNivel1;
         private Button btnSiNivel1;
         private Label lblPreguntaNivel1;
+        private PictureBox pbPuertaNivel5;
     }
 }

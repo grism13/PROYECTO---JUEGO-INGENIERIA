@@ -353,6 +353,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap flavioCentro {
+            get {
+                object obj = ResourceManager.GetObject("flavioCentro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flavioCentro2 {
+            get {
+                object obj = ResourceManager.GetObject("flavioCentro2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap flavioHablando1 {
             get {
                 object obj = ResourceManager.GetObject("flavioHablando1", resourceCulture);
@@ -396,6 +416,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap flavioTranquilo {
             get {
                 object obj = ResourceManager.GetObject("flavioTranquilo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flavoCentro3 {
+            get {
+                object obj = ResourceManager.GetObject("flavoCentro3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

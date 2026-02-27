@@ -16,6 +16,7 @@ namespace JUEGO_INGENIERIA.Vistas
         bool estaDibujando = false;
         Point puntoAnterior;
         private FormMovimiento motorMovimiento;
+        Random generadorAleatorio = new Random();
 
         public FormDecanato()
         {
@@ -118,23 +119,6 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("hola");
-            this.ActiveControl = null;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("toma");
-            this.ActiveControl = null;
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("toma");
-            this.ActiveControl = null;
-        }
 
         private void pbPizarra_MouseDown(object sender, MouseEventArgs e)
         {
@@ -171,7 +155,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private void pictureBox4_Click(object sender, EventArgs e)
         {
             marcador.Color = Color.Firebrick;
-            ApagarBordes(); 
+            ApagarBordes();
             pictureBox4.BorderStyle = BorderStyle.Fixed3D;
         }
 
@@ -180,7 +164,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             marcador.Color = Color.Gold;
-            ApagarBordes(); 
+            ApagarBordes();
             pictureBox3.BorderStyle = BorderStyle.Fixed3D;
         }
 
@@ -189,6 +173,51 @@ namespace JUEGO_INGENIERIA.Vistas
             pictureBox2.BorderStyle = BorderStyle.None;
             pictureBox4.BorderStyle = BorderStyle.None;
             pictureBox3.BorderStyle = BorderStyle.None;
+        }
+
+        private void x_Click(object sender, EventArgs e)
+        {
+            pbMensaje.Visible = false;
+        }
+
+        private void btnConsejo_Click(object sender, EventArgs e)
+        {
+            pbMensaje.Visible = true;
+            int resultado = generadorAleatorio.Next(1, 7);
+
+            switch (resultado)
+            {
+                case 1:
+                    lblMensaje.Text = "Cambiate de carrera";
+                    break;
+                case 2:
+                    lblMensaje.Text = "Báñate plis :)";
+                    break;
+                case 3:
+                    lblMensaje.Text = "No te rindas eres increible";
+                    break;
+                case 4:
+                    lblMensaje.Text = "Si te sientes mal,\nimaginate como se sentirán los de diseño";
+                    break;
+                case 5:
+                    lblMensaje.Text = "Como dice una persona muy sabia: \nHay que comerse la hamburguesa por partes...";
+                    break;
+                case 6:
+                    lblMensaje.Text = "Descansa un rato, tienes 1 semana sin dormir.\n Por Dios";
+                    break;
+            }
+        }
+
+        private void btnOno_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hola");
+            this.ActiveControl = null;
+        }
+
+        private void btnTrabajo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("hello");
+            this.ActiveControl = null;
         }
     }
 }

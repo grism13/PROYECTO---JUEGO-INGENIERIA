@@ -33,9 +33,9 @@
             pbPersonaje = new PictureBox();
             panelInfo = new FlowLayoutPanel();
             label1 = new Label();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
+            btnConsejo = new Label();
+            btnOno = new Label();
+            btnTrabajo = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             pbZonaActiva = new PictureBox();
             tmrRevisarZonas = new System.Windows.Forms.Timer(components);
@@ -43,6 +43,9 @@
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
+            pbMensaje = new Panel();
+            x = new PictureBox();
+            lblMensaje = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             panelInfo.SuspendLayout();
@@ -51,6 +54,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            pbMensaje.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)x).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -78,10 +83,11 @@
             // panelInfo
             // 
             panelInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelInfo.BackColor = Color.White;
             panelInfo.Controls.Add(label1);
-            panelInfo.Controls.Add(button1);
-            panelInfo.Controls.Add(button2);
-            panelInfo.Controls.Add(button3);
+            panelInfo.Controls.Add(btnConsejo);
+            panelInfo.Controls.Add(btnOno);
+            panelInfo.Controls.Add(btnTrabajo);
             panelInfo.Location = new Point(627, 82);
             panelInfo.Name = "panelInfo";
             panelInfo.Size = new Size(320, 82);
@@ -91,44 +97,51 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(3, 0);
+            label1.Location = new Point(20, 10);
+            label1.Margin = new Padding(20, 10, 3, 0);
             label1.Name = "label1";
             label1.Size = new Size(262, 20);
             label1.TabIndex = 0;
             label1.Text = "Hola futuro ingeniero!! Que necesitas?";
             // 
-            // button1
+            // btnConsejo
             // 
-            button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.Location = new Point(3, 23);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 1;
-            button1.Text = "CONSEJO";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnConsejo.AutoSize = true;
+            btnConsejo.BackColor = Color.CornflowerBlue;
+            btnConsejo.ForeColor = Color.White;
+            btnConsejo.Location = new Point(20, 45);
+            btnConsejo.Margin = new Padding(20, 15, 3, 0);
+            btnConsejo.Name = "btnConsejo";
+            btnConsejo.Size = new Size(72, 20);
+            btnConsejo.TabIndex = 12;
+            btnConsejo.Text = "CONSEJO";
+            btnConsejo.Click += btnConsejo_Click;
             // 
-            // button2
+            // btnOno
             // 
-            button2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button2.Location = new Point(103, 23);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 2;
-            button2.Text = "LEER ONO";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnOno.AutoSize = true;
+            btnOno.BackColor = Color.CornflowerBlue;
+            btnOno.ForeColor = Color.White;
+            btnOno.Location = new Point(115, 45);
+            btnOno.Margin = new Padding(20, 15, 3, 0);
+            btnOno.Name = "btnOno";
+            btnOno.Size = new Size(78, 20);
+            btnOno.TabIndex = 13;
+            btnOno.Text = "LEER ONO";
+            btnOno.Click += btnOno_Click;
             // 
-            // button3
+            // btnTrabajo
             // 
-            button3.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button3.Location = new Point(203, 23);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 3;
-            button3.Text = "TRABAJO";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btnTrabajo.AutoSize = true;
+            btnTrabajo.BackColor = Color.CornflowerBlue;
+            btnTrabajo.ForeColor = Color.White;
+            btnTrabajo.Location = new Point(216, 45);
+            btnTrabajo.Margin = new Padding(20, 15, 3, 0);
+            btnTrabajo.Name = "btnTrabajo";
+            btnTrabajo.Size = new Size(72, 20);
+            btnTrabajo.TabIndex = 14;
+            btnTrabajo.Text = "TRABAJO";
+            btnTrabajo.Click += btnTrabajo_Click;
             // 
             // timer1
             // 
@@ -191,11 +204,43 @@
             pictureBox4.TabStop = false;
             pictureBox4.Click += pictureBox4_Click;
             // 
+            // pbMensaje
+            // 
+            pbMensaje.BackColor = Color.White;
+            pbMensaje.Controls.Add(x);
+            pbMensaje.Controls.Add(lblMensaje);
+            pbMensaje.Location = new Point(627, 82);
+            pbMensaje.Name = "pbMensaje";
+            pbMensaje.Size = new Size(320, 82);
+            pbMensaje.TabIndex = 10;
+            pbMensaje.Visible = false;
+            // 
+            // x
+            // 
+            x.BackColor = Color.Firebrick;
+            x.Location = new Point(293, 0);
+            x.Name = "x";
+            x.Size = new Size(27, 17);
+            x.TabIndex = 11;
+            x.TabStop = false;
+            x.Click += x_Click;
+            // 
+            // lblMensaje
+            // 
+            lblMensaje.AutoSize = true;
+            lblMensaje.Location = new Point(12, 10);
+            lblMensaje.Name = "lblMensaje";
+            lblMensaje.Size = new Size(50, 20);
+            lblMensaje.TabIndex = 0;
+            lblMensaje.Text = "label2";
+            lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1058, 635);
+            Controls.Add(pbMensaje);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
@@ -216,6 +261,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            pbMensaje.ResumeLayout(false);
+            pbMensaje.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)x).EndInit();
             ResumeLayout(false);
         }
 
@@ -225,9 +273,6 @@
         private PictureBox pbPersonaje;
         private FlowLayoutPanel panelInfo;
         private Label label1;
-        private Button button1;
-        private Button button2;
-        private Button button3;
         private System.Windows.Forms.Timer timer1;
         private PictureBox pbZonaActiva;
         private System.Windows.Forms.Timer tmrRevisarZonas;
@@ -235,5 +280,11 @@
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
+        private Panel pbMensaje;
+        private PictureBox x;
+        private Label lblMensaje;
+        private Label btnConsejo;
+        private Label btnOno;
+        private Label btnTrabajo;
     }
 }

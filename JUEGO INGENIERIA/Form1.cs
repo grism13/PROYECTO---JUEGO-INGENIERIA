@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
 using WMPLib;
+using System.Security.Cryptography;
 
 namespace JUEGO_INGENIERIA
 {
@@ -143,6 +144,26 @@ namespace JUEGO_INGENIERIA
 
                 pnlConfirmacionNivel1.Visible = true;
                 pnlConfirmacionNivel1.BringToFront();
+            }
+
+            else if (x.Name == "pbPuertaNivel5")
+            {
+                motorMovimiento.Stop();
+                motorMovimiento.EstaPausado = true;
+                musicaFondo.controls.stop();
+
+                this.Hide();
+                FormDecanato decanato = new FormDecanato();
+                decanato.ShowDialog(); 
+
+                this.Show(); 
+                ReproducirMusicaMapa(); 
+
+                pbPersonaje.Top += 40;
+
+                // Reanudamos el movimiento
+                motorMovimiento.Start();
+                motorMovimiento.EstaPausado = false;
             }
 
         }
