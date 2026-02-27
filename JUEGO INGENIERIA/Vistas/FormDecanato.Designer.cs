@@ -31,23 +31,27 @@
             components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             pbPersonaje = new PictureBox();
-            flowLayoutPanel1 = new FlowLayoutPanel();
+            panelInfo = new FlowLayoutPanel();
             label1 = new Label();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
+            pbZonaActiva = new PictureBox();
+            tmrRevisarZonas = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
-            flowLayoutPanel1.SuspendLayout();
+            panelInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbZonaActiva).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
+            pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.flavioHablando2;
-            pictureBox1.Location = new Point(463, 82);
+            pictureBox1.Location = new Point(473, 82);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(121, 144);
+            pictureBox1.Size = new Size(121, 143);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -63,18 +67,18 @@
             pbPersonaje.TabIndex = 3;
             pbPersonaje.TabStop = false;
             // 
-            // flowLayoutPanel1
+            // panelInfo
             // 
-            flowLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flowLayoutPanel1.Controls.Add(label1);
-            flowLayoutPanel1.Controls.Add(button1);
-            flowLayoutPanel1.Controls.Add(button2);
-            flowLayoutPanel1.Controls.Add(button3);
-            flowLayoutPanel1.Location = new Point(627, 82);
-            flowLayoutPanel1.Name = "flowLayoutPanel1";
-            flowLayoutPanel1.Size = new Size(320, 82);
-            flowLayoutPanel1.TabIndex = 4;
-            flowLayoutPanel1.Visible = false;
+            panelInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelInfo.Controls.Add(label1);
+            panelInfo.Controls.Add(button1);
+            panelInfo.Controls.Add(button2);
+            panelInfo.Controls.Add(button3);
+            panelInfo.Location = new Point(627, 82);
+            panelInfo.Name = "panelInfo";
+            panelInfo.Size = new Size(320, 82);
+            panelInfo.TabIndex = 4;
+            panelInfo.Visible = false;
             // 
             // label1
             // 
@@ -94,6 +98,7 @@
             button1.TabIndex = 1;
             button1.Text = "CONSEJO";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -104,6 +109,7 @@
             button2.TabIndex = 2;
             button2.Text = "LEER ONO";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // button3
             // 
@@ -114,26 +120,45 @@
             button3.TabIndex = 3;
             button3.Text = "TRABAJO";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
             // 
             // timer1
             // 
             timer1.Interval = 400;
             timer1.Tick += timer1_Tick;
             // 
+            // pbZonaActiva
+            // 
+            pbZonaActiva.Location = new Point(446, 222);
+            pbZonaActiva.Name = "pbZonaActiva";
+            pbZonaActiva.Size = new Size(171, 62);
+            pbZonaActiva.TabIndex = 5;
+            pbZonaActiva.TabStop = false;
+            pbZonaActiva.Visible = false;
+            // 
+            // tmrRevisarZonas
+            // 
+            tmrRevisarZonas.Enabled = true;
+            tmrRevisarZonas.Interval = 50;
+            tmrRevisarZonas.Tick += tmrRevisarZonas_Tick;
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1058, 635);
-            Controls.Add(flowLayoutPanel1);
+            Controls.Add(pbZonaActiva);
+            Controls.Add(panelInfo);
             Controls.Add(pbPersonaje);
             Controls.Add(pictureBox1);
+            KeyPreview = true;
             Name = "FormDecanato";
             Text = "FormDecanato";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
-            flowLayoutPanel1.ResumeLayout(false);
-            flowLayoutPanel1.PerformLayout();
+            panelInfo.ResumeLayout(false);
+            panelInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbZonaActiva).EndInit();
             ResumeLayout(false);
         }
 
@@ -141,11 +166,13 @@
 
         private PictureBox pictureBox1;
         private PictureBox pbPersonaje;
-        private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel panelInfo;
         private Label label1;
         private Button button1;
         private Button button2;
         private Button button3;
         private System.Windows.Forms.Timer timer1;
+        private PictureBox pbZonaActiva;
+        private System.Windows.Forms.Timer tmrRevisarZonas;
     }
 }
