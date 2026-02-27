@@ -159,7 +159,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     Rectangle areaBala = new Rectangle(balasJugador[i].X, balasJugador[i].Y, 20, 10);
                     if (areaBala.IntersectsWith(areaBoss))
                     {
-                        vidaBoss -= 100; // MODO PRUEBA
+                        vidaBoss -= 5; // MODO PRUEBA
                         balasJugador.RemoveAt(i);
                         flashBoss = 3;
 
