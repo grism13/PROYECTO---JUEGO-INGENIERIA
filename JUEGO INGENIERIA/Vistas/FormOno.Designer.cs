@@ -50,60 +50,72 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.MediumSeaGreen;
+            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.Image = Properties.Resources.carta;
             pictureBox1.Location = new Point(203, 210);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(113, 142);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
             // 
             // pictureBox2
             // 
-            pictureBox2.BackColor = Color.MediumSeaGreen;
+            pictureBox2.BackColor = Color.Transparent;
+            pictureBox2.Image = Properties.Resources.carta;
             pictureBox2.Location = new Point(368, 210);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(113, 142);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBox2_Click;
             // 
             // pictureBox3
             // 
-            pictureBox3.BackColor = Color.MediumSeaGreen;
+            pictureBox3.BackColor = Color.Transparent;
+            pictureBox3.Image = Properties.Resources.carta;
             pictureBox3.Location = new Point(538, 210);
             pictureBox3.Name = "pictureBox3";
             pictureBox3.Size = new Size(113, 142);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
             pictureBox3.Click += pictureBox3_Click;
             // 
             // pictureBox4
             // 
-            pictureBox4.BackColor = Color.MediumSeaGreen;
+            pictureBox4.BackColor = Color.Transparent;
+            pictureBox4.Image = Properties.Resources.carta;
             pictureBox4.Location = new Point(203, 401);
             pictureBox4.Name = "pictureBox4";
             pictureBox4.Size = new Size(113, 142);
+            pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 3;
             pictureBox4.TabStop = false;
             pictureBox4.Click += pictureBox4_Click;
             // 
             // pictureBox5
             // 
-            pictureBox5.BackColor = Color.MediumSeaGreen;
+            pictureBox5.BackColor = Color.Transparent;
+            pictureBox5.Image = Properties.Resources.carta;
             pictureBox5.Location = new Point(368, 401);
             pictureBox5.Name = "pictureBox5";
             pictureBox5.Size = new Size(113, 142);
+            pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 4;
             pictureBox5.TabStop = false;
             pictureBox5.Click += pictureBox5_Click;
             // 
             // pictureBox6
             // 
-            pictureBox6.BackColor = Color.MediumSeaGreen;
+            pictureBox6.BackColor = Color.Transparent;
+            pictureBox6.Image = Properties.Resources.carta;
             pictureBox6.Location = new Point(538, 401);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(113, 142);
+            pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 5;
             pictureBox6.TabStop = false;
             pictureBox6.Click += pictureBox6_Click;
