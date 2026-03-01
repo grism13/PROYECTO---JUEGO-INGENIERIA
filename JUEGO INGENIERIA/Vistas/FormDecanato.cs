@@ -210,8 +210,8 @@ namespace JUEGO_INGENIERIA.Vistas
         }
         private void btnTrabajo_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("hello");
-            this.ActiveControl = null;
+            FormTrabajo trabajo = new FormTrabajo();
+            trabajo.ShowDialog();
         }
     }
 }
