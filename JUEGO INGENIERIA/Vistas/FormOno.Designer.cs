@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
@@ -35,9 +36,9 @@
             pictureBox5 = new PictureBox();
             pictureBox6 = new PictureBox();
             lblTexto = new Label();
-            btnEnviar = new Button();
             cmbOpcionesNPC = new ComboBox();
             pictureBox7 = new PictureBox();
+            timerAnimacion = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -65,6 +66,7 @@
             pictureBox2.Size = new Size(113, 142);
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBox2_Click;
             // 
             // pictureBox3
             // 
@@ -74,6 +76,7 @@
             pictureBox3.Size = new Size(113, 142);
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
+            pictureBox3.Click += pictureBox3_Click;
             // 
             // pictureBox4
             // 
@@ -83,6 +86,7 @@
             pictureBox4.Size = new Size(113, 142);
             pictureBox4.TabIndex = 3;
             pictureBox4.TabStop = false;
+            pictureBox4.Click += pictureBox4_Click;
             // 
             // pictureBox5
             // 
@@ -92,6 +96,7 @@
             pictureBox5.Size = new Size(113, 142);
             pictureBox5.TabIndex = 4;
             pictureBox5.TabStop = false;
+            pictureBox5.Click += pictureBox5_Click;
             // 
             // pictureBox6
             // 
@@ -101,6 +106,7 @@
             pictureBox6.Size = new Size(113, 142);
             pictureBox6.TabIndex = 5;
             pictureBox6.TabStop = false;
+            pictureBox6.Click += pictureBox6_Click;
             // 
             // lblTexto
             // 
@@ -110,19 +116,6 @@
             lblTexto.Size = new Size(484, 20);
             lblTexto.TabIndex = 6;
             lblTexto.Text = "Cuéntame, futuro ingeniero, ¿qué quieres saber? Selecciona tu pregunta";
-            // 
-            // btnEnviar
-            // 
-            btnEnviar.BackColor = Color.DarkCyan;
-            btnEnviar.Font = new Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEnviar.ForeColor = Color.White;
-            btnEnviar.Location = new Point(392, 142);
-            btnEnviar.Name = "btnEnviar";
-            btnEnviar.Size = new Size(69, 27);
-            btnEnviar.TabIndex = 8;
-            btnEnviar.Text = "ENVIAR";
-            btnEnviar.UseVisualStyleBackColor = false;
-            btnEnviar.Click += btnEnviar_Click;
             // 
             // cmbOpcionesNPC
             // 
@@ -144,6 +137,11 @@
             pictureBox7.TabIndex = 10;
             pictureBox7.TabStop = false;
             // 
+            // timerAnimacion
+            // 
+            timerAnimacion.Interval = 40;
+            timerAnimacion.Tick += timerAnimacion_Tick;
+            // 
             // FormOno
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -151,7 +149,6 @@
             ClientSize = new Size(800, 589);
             Controls.Add(pictureBox7);
             Controls.Add(cmbOpcionesNPC);
-            Controls.Add(btnEnviar);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox5);
@@ -182,8 +179,8 @@
         private PictureBox pictureBox5;
         private PictureBox pictureBox6;
         private Label lblTexto;
-        private Button btnEnviar;
         private ComboBox cmbOpcionesNPC;
         private PictureBox pictureBox7;
+        private System.Windows.Forms.Timer timerAnimacion;
     }
 }
