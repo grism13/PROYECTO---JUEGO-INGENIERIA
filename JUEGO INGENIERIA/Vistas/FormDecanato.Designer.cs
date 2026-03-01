@@ -137,7 +137,7 @@
             pbMensaje.BackColor = Color.White;
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
-            pbMensaje.Location = new Point(627, 82);
+            pbMensaje.Location = new Point(627, 193);
             pbMensaje.Name = "pbMensaje";
             pbMensaje.Size = new Size(320, 82);
             pbMensaje.TabIndex = 10;
