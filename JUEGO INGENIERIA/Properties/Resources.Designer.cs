@@ -111,6 +111,67 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a a
+        ///aaronita
+        ///aarónico
+        ///aba
+        ///ababa
+        ///ababillarse
+        ///ababol
+        ///abacal
+        ///abacalero
+        ///abacero
+        ///abacería
+        ///abacial
+        ///abacora
+        ///abacorar
+        ///abacá
+        ///abad
+        ///abada
+        ///abadejo
+        ///abadengo
+        ///abadernar
+        ///abadesa
+        ///abadiado
+        ///abadiato
+        ///abadí
+        ///abadía
+        ///abajadero
+        ///abajamiento
+        ///abajar
+        ///abajera
+        ///abajeño
+        ///abajo
+        ///abalada
+        ///abalanzar
+        ///abalar
+        ///abalaustrado
+        ///abaldonadamente
+        ///abaldonamiento
+        ///abaldonar
+        ///abaleador
+        ///abaleadura
+        ///abalear
+        ///abaleo
+        ///abalizamiento
+        ///abalizar
+        ///aballar
+        ///aballestar
+        ///abalorio
+        ///abaluartar
+        ///abanador
+        ///abanar
+        ///abancalar
+        ///abanderado
+        ///aban [resto de la cadena truncado]&quot;;.
+        /// </summary>
+        internal static string diccionario {
+            get {
+                return ResourceManager.GetString("diccionario", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap eliezer_espalda1 {
@@ -396,6 +457,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap flavioHablando3 {
             get {
                 object obj = ResourceManager.GetObject("flavioHablando3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flavioMago {
+            get {
+                object obj = ResourceManager.GetObject("flavioMago", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
