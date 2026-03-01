@@ -30,7 +30,6 @@
         {
             components = new System.ComponentModel.Container();
             pictureBox1 = new PictureBox();
-            pbPersonaje = new PictureBox();
             panelInfo = new FlowLayoutPanel();
             label1 = new Label();
             btnConsejo = new Label();
@@ -46,8 +45,8 @@
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
+            pbPersonaje = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             panelInfo.SuspendLayout();
             pbMensaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)x).BeginInit();
@@ -56,6 +55,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -68,17 +68,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
-            // 
-            // pbPersonaje
-            // 
-            pbPersonaje.BackColor = Color.Transparent;
-            pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(506, 504);
-            pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(88, 119);
-            pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
-            pbPersonaje.TabIndex = 3;
-            pbPersonaje.TabStop = false;
             // 
             // panelInfo
             // 
@@ -235,11 +224,23 @@
             pictureBox4.TabStop = false;
             pictureBox4.Click += pictureBox4_Click;
             // 
+            // pbPersonaje
+            // 
+            pbPersonaje.BackColor = Color.Transparent;
+            pbPersonaje.Image = Properties.Resources.gris_frente3;
+            pbPersonaje.Location = new Point(491, 477);
+            pbPersonaje.Name = "pbPersonaje";
+            pbPersonaje.Size = new Size(88, 119);
+            pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbPersonaje.TabIndex = 11;
+            pbPersonaje.TabStop = false;
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1058, 635);
+            Controls.Add(pbPersonaje);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
@@ -247,13 +248,11 @@
             Controls.Add(pbMensaje);
             Controls.Add(pbZonaActiva);
             Controls.Add(panelInfo);
-            Controls.Add(pbPersonaje);
             Controls.Add(pictureBox1);
             KeyPreview = true;
             Name = "FormDecanato";
             Text = "FormDecanato";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             panelInfo.ResumeLayout(false);
             panelInfo.PerformLayout();
             pbMensaje.ResumeLayout(false);
@@ -264,13 +263,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private PictureBox pictureBox1;
-        private PictureBox pbPersonaje;
         private FlowLayoutPanel panelInfo;
         private Label label1;
         private System.Windows.Forms.Timer timer1;
@@ -286,5 +285,6 @@
         private Label btnConsejo;
         private Label btnOno;
         private Label btnTrabajo;
+        private PictureBox pbPersonaje;
     }
 }

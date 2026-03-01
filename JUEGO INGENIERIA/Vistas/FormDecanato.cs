@@ -5,10 +5,12 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-namespace JUEGO_INGENIERIA.Vistas
-{
+namespace JUEGO_INGENIERIA.Vistas;
+using JUEGO_INGENIERIA.Modelos;
+
     public partial class FormDecanato : Form
     {
+        private Jugador jugadorActual;
         Bitmap lienzo;
         Graphics dibujante;
         Pen marcador = new Pen(Color.RoyalBlue, 4);
@@ -22,10 +24,14 @@ namespace JUEGO_INGENIERIA.Vistas
         private Image imgFlavioHablando3;
         private Image imgFlavioTranquilo;
         private Image imgFlavioActual;
-        public FormDecanato()
+        public FormDecanato(Jugador jugadorRecibido)
         {
             InitializeComponent();
-            // Cargar imágenes en memoria una sola vez
+
+            this.jugadorActual = jugadorRecibido;
+
+            imgFlavioHablando1 = Properties.Resources.flavioHablando1;
+        
             imgFlavioHablando1 = Properties.Resources.flavioHablando1;
             imgFlavioHablando2 = Properties.Resources.flavioHablando2;
             imgFlavioHablando3 = Properties.Resources.flavioHablando3;
@@ -34,6 +40,18 @@ namespace JUEGO_INGENIERIA.Vistas
             // Ocultar el control y dibujarlo más eficientemente en OnPaint
             pictureBox1.Visible = false;
             timer1.Start();
+            // Si pbPersonaje falta en el diseñador visual, lo inicializamos
+            if (pbPersonaje == null)
+            {
+                pbPersonaje = new PictureBox();
+                pbPersonaje.Name = "pbPersonaje";
+                pbPersonaje.Size = new Size(88, 119);
+                pbPersonaje.Location = new Point(100, 100);
+                pbPersonaje.BackColor = Color.Transparent;
+                pbPersonaje.Visible = false;
+                this.Controls.Add(pbPersonaje);
+            }
+
             DoubleBuffered = true;
             motorMovimiento = new FormMovimiento(this, pbPersonaje);
             motorMovimiento.Start();
@@ -45,6 +63,11 @@ namespace JUEGO_INGENIERIA.Vistas
         }
         protected override void OnPaint(PaintEventArgs e)
         {
+            // IMPORTANTISIMO: 
+            // Limpiamos el fondo del formulario para que las imagenes anteriores no se queden dibujadas ("no se borran").
+            // Esto evita que dejen un rastro al moverse el NPC o pbPersonaje.
+            e.Graphics.Clear(this.BackColor);
+
             base.OnPaint(e);
             // Configurar el gráficos para evitar distorsión en la imagen
             // NOTA: Usa NearestNeighbor si las imágenes son de tipo Pixel Art, 
@@ -210,8 +233,8 @@ namespace JUEGO_INGENIERIA.Vistas
         }
         private void btnTrabajo_Click(object sender, EventArgs e)
         {
-            FormTrabajo trabajo = new FormTrabajo();
+            FormTrabajo trabajo = new FormTrabajo(jugadorActual);
             trabajo.ShowDialog();
         }
     }
-}
+

@@ -110,7 +110,7 @@
             panel1.Controls.Add(lblTiempo);
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(250, 125);
+            panel1.Size = new Size(143, 125);
             panel1.TabIndex = 10;
             // 
             // lblEntregados
@@ -142,6 +142,7 @@
             // 
             // timer1
             // 
+            timer1.Interval = 1000;
             timer1.Tick += timer1_Tick;
             // 
             // pbGenerador
@@ -158,7 +159,7 @@
             panel2.Controls.Add(lblMesaDestino);
             panel2.Location = new Point(578, 0);
             panel2.Name = "panel2";
-            panel2.Size = new Size(291, 125);
+            panel2.Size = new Size(291, 81);
             panel2.TabIndex = 12;
             // 
             // lblMesaDestino

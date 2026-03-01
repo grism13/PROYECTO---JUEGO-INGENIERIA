@@ -56,7 +56,7 @@ namespace JUEGO_INGENIERIA
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            
+
             // Configuramos alta calidad para que los bordes del personaje no se vean mal
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
@@ -66,7 +66,7 @@ namespace JUEGO_INGENIERIA
             {
                 motorMovimiento.DibujarPersonaje(e.Graphics);
             }
-            
+
             // 2. DIBUJAMOS LA DECORACIÓN AUTOMÁTICAMENTE Y PENSANDO EN EL FUTURO
             foreach (Control control in this.Controls)
             {
@@ -99,6 +99,9 @@ namespace JUEGO_INGENIERIA
 
             ElegirPersonaje seleccion = new ElegirPersonaje();
             seleccion.ShowDialog();
+
+            // Sincronizar el jugador seleccionado con el entorno del juego
+            jugadorActual = Form1.JugadorActual;
 
             motorMovimiento = new FormMovimiento(this, pbPersonaje);
             motorMovimiento.ColisionConObjeto += MotorMovimiento_ColisionConObjeto;
@@ -160,7 +163,20 @@ namespace JUEGO_INGENIERIA
                 musicaFondo.controls.stop();
 
                 this.Hide();
-                FormDecanato decanato = new FormDecanato();
+
+                // --- ESCUDO ANTI-CRASH EN LA RAÍZ ---
+                // Si el jugador está vacío porque saltaste el inicio para hacer pruebas, 
+                // le creamos uno temporal para que no explote el minijuego de trabajo.
+                if (jugadorActual == null)
+                {
+                    jugadorActual = new Vistas.Jugador();
+                    jugadorActual.Billetera = 0;
+                    jugadorActual.Nivel = 1;
+                    jugadorActual.Nombre = "Prueba";
+                }
+
+                // Ahora sí, pasamos al jugador de forma segura al Decanato
+                FormDecanato decanato = new FormDecanato(jugadorActual);
                 decanato.ShowDialog();
 
                 this.Show();
@@ -174,7 +190,6 @@ namespace JUEGO_INGENIERIA
                 motorMovimiento.Start();
                 motorMovimiento.EstaPausado = false;
             }
-
         }
 
         private void EsconderMuros()
