@@ -36,6 +36,9 @@
             btnConsejo = new Label();
             btnOno = new Label();
             btnTrabajo = new Label();
+            pbMensaje = new Panel();
+            x = new PictureBox();
+            lblMensaje = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             pbZonaActiva = new PictureBox();
             tmrRevisarZonas = new System.Windows.Forms.Timer(components);
@@ -43,19 +46,16 @@
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
             pictureBox4 = new PictureBox();
-            pbMensaje = new Panel();
-            x = new PictureBox();
-            lblMensaje = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             panelInfo.SuspendLayout();
+            pbMensaje.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)x).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbZonaActiva).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPizarra).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
-            pbMensaje.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)x).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -73,7 +73,7 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(274, 340);
+            pbPersonaje.Location = new Point(506, 504);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(88, 119);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -143,6 +143,37 @@
             btnTrabajo.Text = "TRABAJO";
             btnTrabajo.Click += btnTrabajo_Click;
             // 
+            // pbMensaje
+            // 
+            pbMensaje.BackColor = Color.White;
+            pbMensaje.Controls.Add(x);
+            pbMensaje.Controls.Add(lblMensaje);
+            pbMensaje.Location = new Point(627, 82);
+            pbMensaje.Name = "pbMensaje";
+            pbMensaje.Size = new Size(320, 82);
+            pbMensaje.TabIndex = 10;
+            pbMensaje.Visible = false;
+            // 
+            // x
+            // 
+            x.BackColor = Color.Firebrick;
+            x.Location = new Point(293, 0);
+            x.Name = "x";
+            x.Size = new Size(27, 17);
+            x.TabIndex = 11;
+            x.TabStop = false;
+            x.Click += x_Click;
+            // 
+            // lblMensaje
+            // 
+            lblMensaje.AutoSize = true;
+            lblMensaje.Location = new Point(12, 10);
+            lblMensaje.Name = "lblMensaje";
+            lblMensaje.Size = new Size(50, 20);
+            lblMensaje.TabIndex = 0;
+            lblMensaje.Text = "label2";
+            lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // timer1
             // 
             timer1.Interval = 400;
@@ -204,47 +235,16 @@
             pictureBox4.TabStop = false;
             pictureBox4.Click += pictureBox4_Click;
             // 
-            // pbMensaje
-            // 
-            pbMensaje.BackColor = Color.White;
-            pbMensaje.Controls.Add(x);
-            pbMensaje.Controls.Add(lblMensaje);
-            pbMensaje.Location = new Point(627, 82);
-            pbMensaje.Name = "pbMensaje";
-            pbMensaje.Size = new Size(320, 82);
-            pbMensaje.TabIndex = 10;
-            pbMensaje.Visible = false;
-            // 
-            // x
-            // 
-            x.BackColor = Color.Firebrick;
-            x.Location = new Point(293, 0);
-            x.Name = "x";
-            x.Size = new Size(27, 17);
-            x.TabIndex = 11;
-            x.TabStop = false;
-            x.Click += x_Click;
-            // 
-            // lblMensaje
-            // 
-            lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(12, 10);
-            lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(50, 20);
-            lblMensaje.TabIndex = 0;
-            lblMensaje.Text = "label2";
-            lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1058, 635);
-            Controls.Add(pbMensaje);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pbPizarra);
+            Controls.Add(pbMensaje);
             Controls.Add(pbZonaActiva);
             Controls.Add(panelInfo);
             Controls.Add(pbPersonaje);
@@ -256,14 +256,14 @@
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             panelInfo.ResumeLayout(false);
             panelInfo.PerformLayout();
+            pbMensaje.ResumeLayout(false);
+            pbMensaje.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)x).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbZonaActiva).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbPizarra).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
-            pbMensaje.ResumeLayout(false);
-            pbMensaje.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)x).EndInit();
             ResumeLayout(false);
         }
 

@@ -56,22 +56,29 @@ namespace JUEGO_INGENIERIA
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
+            
+            // Configuramos alta calidad para que los bordes del personaje no se vean mal
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
             // 1. DIBUJAMOS AL PERSONAJE PRIMERO
             if (motorMovimiento != null)
             {
                 motorMovimiento.DibujarPersonaje(e.Graphics);
             }
+            
             // 2. DIBUJAMOS LA DECORACIÓN AUTOMÁTICAMENTE Y PENSANDO EN EL FUTURO
             foreach (Control control in this.Controls)
             {
-                if (control is PictureBox x)
+                if (control is PictureBox x && x != pbPersonaje)
                 {
                     // REGLAS PARA SABER QUÉ ES UN ÁRBOL O TECHO:
                     // 1. NO tiene el tag "muro"
                     // 2. Su nombre EMPIEZA por "pictureBox" (así descartamos puertas que se llamen "pbPuerta1", "Cofre2", etc)
                     if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
                     {
-                        if (x.Image != null && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                        // Para evitar bajo CUALQUIER circunstancia dibujar la imagen vieja del personaje si accidentalmente coinciden:
+                        if (x.Image != null && x.Image != pbPersonaje.Image && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                         {
                             e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
                         }
