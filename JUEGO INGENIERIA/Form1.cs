@@ -154,12 +154,14 @@ namespace JUEGO_INGENIERIA
 
                 this.Hide();
                 FormDecanato decanato = new FormDecanato();
-                decanato.ShowDialog(); 
+                decanato.ShowDialog();
 
-                this.Show(); 
-                ReproducirMusicaMapa(); 
+                this.Show();
+                ReproducirMusicaMapa();
 
+                this.Invalidate(pbPersonaje.Bounds);
                 pbPersonaje.Top += 40;
+                this.Invalidate(pbPersonaje.Bounds);
 
                 // Reanudamos el movimiento
                 motorMovimiento.Start();
@@ -205,7 +207,12 @@ namespace JUEGO_INGENIERIA
 
             ReproducirMusicaMapa();
 
+            this.Invalidate(pictureBox19.Bounds);
+            this.Invalidate(pnlConfirmacionNivel1.Bounds);
+            this.Invalidate(pbPersonaje.Bounds);
             pbPersonaje.Top += 40;
+            this.Invalidate(pbPersonaje.Bounds);
+
             motorMovimiento.Start();
             motorMovimiento.EstaPausado = false;
         }
@@ -213,7 +220,11 @@ namespace JUEGO_INGENIERIA
         private void btnNoNivel1_Click(object sender, EventArgs e)
         {
             pnlConfirmacionNivel1.Visible = false;
+            this.Invalidate(pictureBox19.Bounds);
+            this.Invalidate(pnlConfirmacionNivel1.Bounds);
+            this.Invalidate(pbPersonaje.Bounds);
             pbPersonaje.Top += 40;
+            this.Invalidate(pbPersonaje.Bounds);
             motorMovimiento.Start();
             motorMovimiento.EstaPausado = false;
         }
