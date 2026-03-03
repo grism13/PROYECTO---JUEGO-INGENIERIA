@@ -25,5 +25,11 @@
     <Compile Update="Vistas\FormNivel2.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\FormOno.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormTrabajo.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
