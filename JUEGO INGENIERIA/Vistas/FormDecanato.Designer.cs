@@ -141,12 +141,14 @@
             // 
             // pbMensaje
             // 
-            pbMensaje.BackColor = Color.White;
+            pbMensaje.BackColor = Color.Transparent;
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
-            pbMensaje.Location = new Point(344, 109);
+            pbMensaje.Controls.Add(pictureBox6);
+            pbMensaje.Location = new Point(297, 47);
+            pbMensaje.Margin = new Padding(3, 2, 3, 2);
             pbMensaje.Name = "pbMensaje";
-            pbMensaje.Size = new Size(245, 83);
+            pbMensaje.Size = new Size(292, 154);
             pbMensaje.TabIndex = 10;
             pbMensaje.Visible = false;
             // 
@@ -163,7 +165,8 @@
             // lblMensaje
             // 
             lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(11, 11);
+            lblMensaje.BackColor = Color.White;
+            lblMensaje.Location = new Point(48, 47);
             lblMensaje.Name = "lblMensaje";
             lblMensaje.Size = new Size(50, 20);
             lblMensaje.TabIndex = 0;
@@ -271,8 +274,7 @@
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = Properties.Resources.nubedetexto;
-            pictureBox6.Location = new Point(297, 60);
-            pictureBox6.Margin = new Padding(3, 4, 3, 4);
+            pictureBox6.Location = new Point(-11, 11);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(343, 191);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
@@ -291,11 +293,10 @@
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pbPizarra);
-            Controls.Add(pbMensaje);
             Controls.Add(pbZonaActiva);
             Controls.Add(panelInfo);
             Controls.Add(pictureBox5);
-            Controls.Add(pictureBox6);
+            Controls.Add(pbMensaje);
             Controls.Add(pictureBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;

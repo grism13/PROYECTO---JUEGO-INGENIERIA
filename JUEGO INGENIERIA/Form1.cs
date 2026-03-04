@@ -250,5 +250,10 @@ namespace JUEGO_INGENIERIA
             motorMovimiento.Start();
             motorMovimiento.EstaPausado = false;
         }
+
+        private void pbPuertaNivel1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
