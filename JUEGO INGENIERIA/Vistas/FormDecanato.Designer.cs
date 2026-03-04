@@ -143,13 +143,14 @@
             // 
             // pbMensaje
             // 
-            pbMensaje.BackColor = Color.White;
+            pbMensaje.BackColor = Color.Transparent;
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
-            pbMensaje.Location = new Point(301, 82);
+            pbMensaje.Controls.Add(pictureBox6);
+            pbMensaje.Location = new Point(297, 47);
             pbMensaje.Margin = new Padding(3, 2, 3, 2);
             pbMensaje.Name = "pbMensaje";
-            pbMensaje.Size = new Size(214, 62);
+            pbMensaje.Size = new Size(292, 154);
             pbMensaje.TabIndex = 10;
             pbMensaje.Visible = false;
             // 
@@ -167,7 +168,8 @@
             // lblMensaje
             // 
             lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(10, 8);
+            lblMensaje.BackColor = Color.White;
+            lblMensaje.Location = new Point(48, 47);
             lblMensaje.Name = "lblMensaje";
             lblMensaje.Size = new Size(38, 15);
             lblMensaje.TabIndex = 0;
@@ -279,7 +281,7 @@
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = Properties.Resources.nubedetexto;
-            pictureBox6.Location = new Point(260, 45);
+            pictureBox6.Location = new Point(-11, 11);
             pictureBox6.Name = "pictureBox6";
             pictureBox6.Size = new Size(300, 143);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
@@ -298,11 +300,10 @@
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pbPizarra);
-            Controls.Add(pbMensaje);
             Controls.Add(pbZonaActiva);
             Controls.Add(panelInfo);
             Controls.Add(pictureBox5);
-            Controls.Add(pictureBox6);
+            Controls.Add(pbMensaje);
             Controls.Add(pictureBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
