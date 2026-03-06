@@ -255,5 +255,15 @@ public partial class FormDecanato : Form
         FormTrabajo trabajo = new FormTrabajo(jugadorActual);
         trabajo.ShowDialog();
     }
+
+    private void pbPizarra_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void label1_Click(object sender, EventArgs e)
+    {
+
+    }
 }
 

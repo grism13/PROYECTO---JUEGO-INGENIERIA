@@ -113,6 +113,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonazul {
+            get {
+                object obj = ResourceManager.GetObject("botonazul", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap carta {
             get {
                 object obj = ResourceManager.GetObject("carta", resourceCulture);
@@ -514,6 +524,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondo_decanato {
+            get {
+                object obj = ResourceManager.GetObject("fondo decanato", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fondo_decanato1 {
+            get {
+                object obj = ResourceManager.GetObject("fondo decanato1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondo_imagen_para_registro {
             get {
                 object obj = ResourceManager.GetObject("fondo imagen para registro", resourceCulture);
@@ -851,6 +881,16 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lunaechada {
+            get {
+                object obj = ResourceManager.GetObject("lunaechada", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream musicaOswald {
@@ -882,6 +922,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap nubedetexto {
+            get {
+                object obj = ResourceManager.GetObject("nubedetexto", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap oswald_version_mini {
             get {
                 object obj = ResourceManager.GetObject("oswald version mini", resourceCulture);
@@ -905,6 +955,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap Oswald1 {
             get {
                 object obj = ResourceManager.GetObject("Oswald1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pizarra {
+            get {
+                object obj = ResourceManager.GetObject("pizarra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
