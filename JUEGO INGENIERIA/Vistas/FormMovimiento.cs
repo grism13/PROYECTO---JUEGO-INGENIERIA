@@ -250,7 +250,11 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             if (ultimaAnimacion != null && ultimaAnimacion.Count > 0 && frameActual < ultimaAnimacion.Count)
             {
-                g.DrawImage(ultimaAnimacion[frameActual], pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
+                // NUEVO SALVAVIDAS: Verificamos que el contenido de ese frame no esté vacío
+                if (ultimaAnimacion[frameActual] != null)
+                {
+                    g.DrawImage(ultimaAnimacion[frameActual], pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
+                }
             }
             else if (pbPersonaje.Image != null)
             {

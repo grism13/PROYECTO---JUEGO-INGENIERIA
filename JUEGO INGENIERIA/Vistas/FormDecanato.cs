@@ -80,7 +80,7 @@ public partial class FormDecanato : Form
     protected override void OnPaint(PaintEventArgs e)
     {
 
-        e.Graphics.Clear(this.BackColor);
+
 
         base.OnPaint(e);
 
@@ -267,6 +267,11 @@ public partial class FormDecanato : Form
     }
 
     private void pictureBox5_Click(object sender, EventArgs e)
+    {
+
+    }
+
+    private void pbPersonaje_Click(object sender, EventArgs e)
     {
 
     }

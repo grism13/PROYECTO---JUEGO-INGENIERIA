@@ -33,9 +33,9 @@
             pictureBox1 = new PictureBox();
             panelInfo = new FlowLayoutPanel();
             label1 = new Label();
-            btnTrabajo = new Label();
             btnConsejo = new Label();
             btnOno = new Label();
+            btnTrabajo = new Label();
             pbMensaje = new Panel();
             x = new PictureBox();
             lblMensaje = new Label();
@@ -50,6 +50,14 @@
             pbPersonaje = new PictureBox();
             luna = new PictureBox();
             pictureBox5 = new PictureBox();
+            pictureBox7 = new PictureBox();
+            pictureBox8 = new PictureBox();
+            pictureBox9 = new PictureBox();
+            pictureBox10 = new PictureBox();
+            pictureBox11 = new PictureBox();
+            pictureBox12 = new PictureBox();
+            pictureBox13 = new PictureBox();
+            pictureBox14 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panelInfo.SuspendLayout();
             pbMensaje.SuspendLayout();
@@ -63,6 +71,14 @@
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)luna).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -78,15 +94,14 @@
             // 
             // panelInfo
             // 
-            panelInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelInfo.BackColor = Color.White;
             panelInfo.Controls.Add(label1);
-            panelInfo.Controls.Add(btnTrabajo);
             panelInfo.Controls.Add(btnConsejo);
             panelInfo.Controls.Add(btnOno);
-            panelInfo.Location = new Point(562, 358);
+            panelInfo.Controls.Add(btnTrabajo);
+            panelInfo.Location = new Point(493, 337);
             panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(298, 83);
+            panelInfo.Size = new Size(313, 118);
             panelInfo.TabIndex = 4;
             panelInfo.Visible = false;
             // 
@@ -101,25 +116,12 @@
             label1.Text = "Hola futuro ingeniero!! Que necesitas?";
             label1.Click += label1_Click;
             // 
-            // btnTrabajo
-            // 
-            btnTrabajo.AutoSize = true;
-            btnTrabajo.BackColor = Color.CornflowerBlue;
-            btnTrabajo.ForeColor = Color.White;
-            btnTrabajo.Location = new Point(21, 41);
-            btnTrabajo.Margin = new Padding(21, 15, 3, 0);
-            btnTrabajo.Name = "btnTrabajo";
-            btnTrabajo.Size = new Size(57, 15);
-            btnTrabajo.TabIndex = 14;
-            btnTrabajo.Text = "TRABAJO";
-            btnTrabajo.Click += btnTrabajo_Click;
-            // 
             // btnConsejo
             // 
             btnConsejo.AutoSize = true;
             btnConsejo.BackColor = Color.CornflowerBlue;
             btnConsejo.ForeColor = Color.White;
-            btnConsejo.Location = new Point(102, 41);
+            btnConsejo.Location = new Point(21, 41);
             btnConsejo.Margin = new Padding(21, 15, 3, 0);
             btnConsejo.Name = "btnConsejo";
             btnConsejo.Size = new Size(58, 15);
@@ -129,16 +131,31 @@
             // 
             // btnOno
             // 
+            btnOno.AllowDrop = true;
             btnOno.AutoSize = true;
             btnOno.BackColor = Color.CornflowerBlue;
             btnOno.ForeColor = Color.White;
-            btnOno.Location = new Point(184, 41);
+            btnOno.Location = new Point(103, 41);
             btnOno.Margin = new Padding(21, 15, 3, 0);
             btnOno.Name = "btnOno";
             btnOno.Size = new Size(62, 15);
             btnOno.TabIndex = 13;
             btnOno.Text = "LEER ONO";
+            btnOno.TextAlign = ContentAlignment.TopCenter;
             btnOno.Click += btnOno_Click;
+            // 
+            // btnTrabajo
+            // 
+            btnTrabajo.AutoSize = true;
+            btnTrabajo.BackColor = Color.CornflowerBlue;
+            btnTrabajo.ForeColor = Color.White;
+            btnTrabajo.Location = new Point(189, 41);
+            btnTrabajo.Margin = new Padding(21, 15, 3, 0);
+            btnTrabajo.Name = "btnTrabajo";
+            btnTrabajo.Size = new Size(57, 15);
+            btnTrabajo.TabIndex = 14;
+            btnTrabajo.Text = "TRABAJO";
+            btnTrabajo.Click += btnTrabajo_Click;
             // 
             // pbMensaje
             // 
@@ -146,7 +163,7 @@
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
             pbMensaje.Controls.Add(pictureBox6);
-            pbMensaje.Location = new Point(861, 91);
+            pbMensaje.Location = new Point(866, 106);
             pbMensaje.Margin = new Padding(3, 2, 3, 2);
             pbMensaje.Name = "pbMensaje";
             pbMensaje.Size = new Size(292, 154);
@@ -193,7 +210,7 @@
             // 
             // pbZonaActiva
             // 
-            pbZonaActiva.Location = new Point(562, 532);
+            pbZonaActiva.Location = new Point(566, 436);
             pbZonaActiva.Name = "pbZonaActiva";
             pbZonaActiva.Size = new Size(150, 19);
             pbZonaActiva.TabIndex = 5;
@@ -253,9 +270,9 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(297, 655);
+            pbPersonaje.Location = new Point(579, 527);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(126, 181);
+            pbPersonaje.Size = new Size(109, 152);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 11;
             pbPersonaje.TabStop = false;
@@ -264,10 +281,10 @@
             // 
             luna.BackColor = Color.Transparent;
             luna.Image = Properties.Resources.lunaechada;
-            luna.Location = new Point(965, 469);
+            luna.Location = new Point(619, 278);
             luna.Margin = new Padding(3, 4, 3, 4);
             luna.Name = "luna";
-            luna.Size = new Size(173, 127);
+            luna.Size = new Size(97, 69);
             luna.SizeMode = PictureBoxSizeMode.Zoom;
             luna.TabIndex = 12;
             luna.TabStop = false;
@@ -283,6 +300,94 @@
             pictureBox5.TabIndex = 13;
             pictureBox5.TabStop = false;
             // 
+            // pictureBox7
+            // 
+            pictureBox7.BackColor = Color.Red;
+            pictureBox7.Location = new Point(390, 367);
+            pictureBox7.Name = "pictureBox7";
+            pictureBox7.Size = new Size(97, 26);
+            pictureBox7.TabIndex = 14;
+            pictureBox7.TabStop = false;
+            pictureBox7.Tag = "muro";
+            pictureBox7.Visible = false;
+            // 
+            // pictureBox8
+            // 
+            pictureBox8.BackColor = Color.Red;
+            pictureBox8.Location = new Point(812, 389);
+            pictureBox8.Name = "pictureBox8";
+            pictureBox8.Size = new Size(495, 26);
+            pictureBox8.TabIndex = 15;
+            pictureBox8.TabStop = false;
+            pictureBox8.Tag = "muro";
+            pictureBox8.Visible = false;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.Red;
+            pictureBox9.Location = new Point(482, 382);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(336, 26);
+            pictureBox9.TabIndex = 16;
+            pictureBox9.TabStop = false;
+            pictureBox9.Tag = "muro";
+            pictureBox9.Visible = false;
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.BackColor = Color.Red;
+            pictureBox10.Location = new Point(493, 471);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(45, 16);
+            pictureBox10.TabIndex = 17;
+            pictureBox10.TabStop = false;
+            pictureBox10.Tag = "muro";
+            pictureBox10.Visible = false;
+            // 
+            // pictureBox11
+            // 
+            pictureBox11.BackColor = Color.Red;
+            pictureBox11.Location = new Point(734, 471);
+            pictureBox11.Name = "pictureBox11";
+            pictureBox11.Size = new Size(34, 16);
+            pictureBox11.TabIndex = 18;
+            pictureBox11.TabStop = false;
+            pictureBox11.Tag = "muro";
+            pictureBox11.Visible = false;
+            // 
+            // pictureBox12
+            // 
+            pictureBox12.BackColor = Color.Red;
+            pictureBox12.Location = new Point(213, 389);
+            pictureBox12.Name = "pictureBox12";
+            pictureBox12.Size = new Size(97, 26);
+            pictureBox12.TabIndex = 19;
+            pictureBox12.TabStop = false;
+            pictureBox12.Tag = "muro";
+            pictureBox12.Visible = false;
+            // 
+            // pictureBox13
+            // 
+            pictureBox13.BackColor = Color.Red;
+            pictureBox13.Location = new Point(102, 314);
+            pictureBox13.Name = "pictureBox13";
+            pictureBox13.Size = new Size(31, 252);
+            pictureBox13.TabIndex = 20;
+            pictureBox13.TabStop = false;
+            pictureBox13.Tag = "muro";
+            pictureBox13.Visible = false;
+            // 
+            // pictureBox14
+            // 
+            pictureBox14.BackColor = Color.Red;
+            pictureBox14.Location = new Point(1168, 421);
+            pictureBox14.Name = "pictureBox14";
+            pictureBox14.Size = new Size(34, 185);
+            pictureBox14.TabIndex = 21;
+            pictureBox14.TabStop = false;
+            pictureBox14.Tag = "muro";
+            pictureBox14.Visible = false;
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -290,7 +395,13 @@
             BackgroundImage = Properties.Resources.fondodecanato;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
-            Controls.Add(luna);
+            Controls.Add(pictureBox14);
+            Controls.Add(pictureBox13);
+            Controls.Add(pictureBox12);
+            Controls.Add(pictureBox11);
+            Controls.Add(pictureBox10);
+            Controls.Add(pictureBox8);
+            Controls.Add(pictureBox7);
             Controls.Add(pbPersonaje);
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
@@ -301,6 +412,8 @@
             Controls.Add(pbMensaje);
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox5);
+            Controls.Add(luna);
+            Controls.Add(pictureBox9);
             DoubleBuffered = true;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
@@ -323,6 +436,14 @@
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             ((System.ComponentModel.ISupportInitialize)luna).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             ResumeLayout(false);
         }
 
@@ -348,5 +469,13 @@
         private PictureBox luna;
         private PictureBox pictureBox6;
         private PictureBox pictureBox5;
+        private PictureBox pictureBox7;
+        private PictureBox pictureBox8;
+        private PictureBox pictureBox9;
+        private PictureBox pictureBox10;
+        private PictureBox pictureBox11;
+        private PictureBox pictureBox12;
+        private PictureBox pictureBox13;
+        private PictureBox pictureBox14;
     }
 }

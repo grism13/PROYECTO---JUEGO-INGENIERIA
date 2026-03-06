@@ -44,9 +44,10 @@
             // 
             gris.BackColor = Color.Transparent;
             gris.Image = Properties.Resources.gris_frente1;
-            gris.Location = new Point(254, 124);
+            gris.Location = new Point(222, 93);
+            gris.Margin = new Padding(3, 2, 3, 2);
             gris.Name = "gris";
-            gris.Size = new Size(248, 311);
+            gris.Size = new Size(217, 233);
             gris.SizeMode = PictureBoxSizeMode.StretchImage;
             gris.TabIndex = 0;
             gris.TabStop = false;
@@ -55,9 +56,10 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(600, 124);
+            pictureBox1.Location = new Point(525, 93);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(248, 311);
+            pictureBox1.Size = new Size(217, 233);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -66,9 +68,10 @@
             // 
             pictureBox2.BackColor = Color.Transparent;
             pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(944, 124);
+            pictureBox2.Location = new Point(826, 93);
+            pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(248, 311);
+            pictureBox2.Size = new Size(217, 233);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 2;
             pictureBox2.TabStop = false;
@@ -78,9 +81,10 @@
             ElegirGris.BackColor = Color.RoyalBlue;
             ElegirGris.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirGris.ForeColor = SystemColors.ButtonFace;
-            ElegirGris.Location = new Point(254, 478);
+            ElegirGris.Location = new Point(222, 358);
+            ElegirGris.Margin = new Padding(3, 2, 3, 2);
             ElegirGris.Name = "ElegirGris";
-            ElegirGris.Size = new Size(248, 82);
+            ElegirGris.Size = new Size(217, 62);
             ElegirGris.TabIndex = 3;
             ElegirGris.Text = "ELEGIR";
             ElegirGris.UseVisualStyleBackColor = false;
@@ -91,9 +95,10 @@
             ElegirEliezer.BackColor = Color.RoyalBlue;
             ElegirEliezer.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirEliezer.ForeColor = SystemColors.ButtonFace;
-            ElegirEliezer.Location = new Point(600, 478);
+            ElegirEliezer.Location = new Point(525, 342);
+            ElegirEliezer.Margin = new Padding(3, 2, 3, 2);
             ElegirEliezer.Name = "ElegirEliezer";
-            ElegirEliezer.Size = new Size(248, 82);
+            ElegirEliezer.Size = new Size(217, 62);
             ElegirEliezer.TabIndex = 4;
             ElegirEliezer.Text = "ELEGIR";
             ElegirEliezer.UseVisualStyleBackColor = false;
@@ -104,9 +109,10 @@
             ElegirRoand.BackColor = Color.RoyalBlue;
             ElegirRoand.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirRoand.ForeColor = SystemColors.ButtonFace;
-            ElegirRoand.Location = new Point(944, 478);
+            ElegirRoand.Location = new Point(826, 358);
+            ElegirRoand.Margin = new Padding(3, 2, 3, 2);
             ElegirRoand.Name = "ElegirRoand";
-            ElegirRoand.Size = new Size(248, 82);
+            ElegirRoand.Size = new Size(217, 62);
             ElegirRoand.TabIndex = 5;
             ElegirRoand.Text = "ELEGIR";
             ElegirRoand.UseVisualStyleBackColor = false;
@@ -114,15 +120,16 @@
             // 
             // ElegirPersonaje
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1480, 757);
+            ClientSize = new Size(1264, 568);
             Controls.Add(ElegirRoand);
             Controls.Add(ElegirEliezer);
             Controls.Add(ElegirGris);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(gris);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ElegirPersonaje";
             Text = "ElegirPersonaje";
             ((System.ComponentModel.ISupportInitialize)gris).EndInit();
