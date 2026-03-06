@@ -304,16 +304,6 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap eliezer_inclinadaderechafrente2 {
-            get {
-                object obj = ResourceManager.GetObject("eliezer_inclinadaderechafrente2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap eliezer_inclinadaderechafrente3 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_inclinadaderechafrente3", resourceCulture);
@@ -534,16 +524,6 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fondo_decanato {
-            get {
-                object obj = ResourceManager.GetObject("fondo decanato", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap fondo_imagen_para_registro {
             get {
                 object obj = ResourceManager.GetObject("fondo imagen para registro", resourceCulture);
@@ -567,6 +547,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap fondo_tipo_televisor_para_intro {
             get {
                 object obj = ResourceManager.GetObject("fondo tipo televisor para intro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap fondodecanato {
+            get {
+                object obj = ResourceManager.GetObject("fondodecanato", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -747,16 +737,6 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap gris_inclinadaizquiedaespalda3 {
             get {
                 object obj = ResourceManager.GetObject("gris_inclinadaizquiedaespalda3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente1 {
-            get {
-                object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1045,16 +1025,6 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap roand_inclinadaderechaespalda1 {
             get {
                 object obj = ResourceManager.GetObject("roand_inclinadaderechaespalda1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap roand_inclinadaderechaespalda2 {
-            get {
-                object obj = ResourceManager.GetObject("roand_inclinadaderechaespalda2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

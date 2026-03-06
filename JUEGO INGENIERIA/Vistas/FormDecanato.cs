@@ -265,5 +265,10 @@ public partial class FormDecanato : Form
     {
 
     }
+
+    private void pictureBox5_Click(object sender, EventArgs e)
+    {
+
+    }
 }
 
