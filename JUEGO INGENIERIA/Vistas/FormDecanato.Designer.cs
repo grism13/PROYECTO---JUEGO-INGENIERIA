@@ -31,8 +31,6 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDecanato));
             pictureBox1 = new PictureBox();
-            panelInfo = new FlowLayoutPanel();
-            label1 = new Label();
             btnConsejo = new Label();
             btnOno = new Label();
             btnTrabajo = new Label();
@@ -58,8 +56,8 @@
             pictureBox12 = new PictureBox();
             pictureBox13 = new PictureBox();
             pictureBox14 = new PictureBox();
+            panelInfo = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panelInfo.SuspendLayout();
             pbMensaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)x).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
@@ -79,6 +77,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox12).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
+            panelInfo.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBox1
@@ -92,69 +91,48 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
-            // panelInfo
-            // 
-            panelInfo.BackColor = Color.White;
-            panelInfo.Controls.Add(label1);
-            panelInfo.Controls.Add(btnConsejo);
-            panelInfo.Controls.Add(btnOno);
-            panelInfo.Controls.Add(btnTrabajo);
-            panelInfo.Location = new Point(493, 337);
-            panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(313, 118);
-            panelInfo.TabIndex = 4;
-            panelInfo.Visible = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(21, 11);
-            label1.Margin = new Padding(21, 11, 3, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(208, 15);
-            label1.TabIndex = 0;
-            label1.Text = "Hola futuro ingeniero!! Que necesitas?";
-            label1.Click += label1_Click;
-            // 
             // btnConsejo
             // 
-            btnConsejo.AutoSize = true;
-            btnConsejo.BackColor = Color.CornflowerBlue;
-            btnConsejo.ForeColor = Color.White;
-            btnConsejo.Location = new Point(21, 41);
+            btnConsejo.BackColor = Color.Transparent;
+            btnConsejo.Cursor = Cursors.Hand;
+            btnConsejo.ForeColor = Color.Gainsboro;
+            btnConsejo.Image = Properties.Resources.botonazul;
+            btnConsejo.Location = new Point(39, 94);
             btnConsejo.Margin = new Padding(21, 15, 3, 0);
             btnConsejo.Name = "btnConsejo";
-            btnConsejo.Size = new Size(58, 15);
+            btnConsejo.Size = new Size(143, 37);
             btnConsejo.TabIndex = 12;
             btnConsejo.Text = "CONSEJO";
+            btnConsejo.TextAlign = ContentAlignment.MiddleCenter;
             btnConsejo.Click += btnConsejo_Click;
             // 
             // btnOno
             // 
             btnOno.AllowDrop = true;
-            btnOno.AutoSize = true;
-            btnOno.BackColor = Color.CornflowerBlue;
+            btnOno.BackColor = Color.Transparent;
             btnOno.ForeColor = Color.White;
-            btnOno.Location = new Point(103, 41);
+            btnOno.Image = Properties.Resources.botonrosa;
+            btnOno.Location = new Point(193, 94);
             btnOno.Margin = new Padding(21, 15, 3, 0);
             btnOno.Name = "btnOno";
-            btnOno.Size = new Size(62, 15);
+            btnOno.Size = new Size(147, 37);
             btnOno.TabIndex = 13;
             btnOno.Text = "LEER ONO";
-            btnOno.TextAlign = ContentAlignment.TopCenter;
+            btnOno.TextAlign = ContentAlignment.MiddleCenter;
             btnOno.Click += btnOno_Click;
             // 
             // btnTrabajo
             // 
-            btnTrabajo.AutoSize = true;
-            btnTrabajo.BackColor = Color.CornflowerBlue;
+            btnTrabajo.BackColor = Color.Transparent;
             btnTrabajo.ForeColor = Color.White;
-            btnTrabajo.Location = new Point(189, 41);
+            btnTrabajo.Image = Properties.Resources.botonverde1;
+            btnTrabajo.Location = new Point(348, 94);
             btnTrabajo.Margin = new Padding(21, 15, 3, 0);
             btnTrabajo.Name = "btnTrabajo";
-            btnTrabajo.Size = new Size(57, 15);
+            btnTrabajo.Size = new Size(149, 37);
             btnTrabajo.TabIndex = 14;
             btnTrabajo.Text = "TRABAJO";
+            btnTrabajo.TextAlign = ContentAlignment.MiddleCenter;
             btnTrabajo.Click += btnTrabajo_Click;
             // 
             // pbMensaje
@@ -172,11 +150,13 @@
             // 
             // x
             // 
-            x.BackColor = Color.Firebrick;
-            x.Location = new Point(235, 0);
+            x.BackColor = Color.Transparent;
+            x.Image = Properties.Resources.botondecerrar;
+            x.Location = new Point(226, 115);
             x.Margin = new Padding(3, 2, 3, 2);
             x.Name = "x";
-            x.Size = new Size(21, 23);
+            x.Size = new Size(39, 39);
+            x.SizeMode = PictureBoxSizeMode.Zoom;
             x.TabIndex = 11;
             x.TabStop = false;
             x.Click += x_Click;
@@ -185,7 +165,7 @@
             // 
             lblMensaje.AutoSize = true;
             lblMensaje.BackColor = Color.White;
-            lblMensaje.Location = new Point(34, 35);
+            lblMensaje.Location = new Point(39, 40);
             lblMensaje.Name = "lblMensaje";
             lblMensaje.Size = new Size(38, 15);
             lblMensaje.TabIndex = 0;
@@ -388,6 +368,19 @@
             pictureBox14.Tag = "muro";
             pictureBox14.Visible = false;
             // 
+            // panelInfo
+            // 
+            panelInfo.BackColor = Color.Transparent;
+            panelInfo.BackgroundImage = Properties.Resources.paneldecanato1;
+            panelInfo.BackgroundImageLayout = ImageLayout.Stretch;
+            panelInfo.Controls.Add(btnConsejo);
+            panelInfo.Controls.Add(btnTrabajo);
+            panelInfo.Controls.Add(btnOno);
+            panelInfo.Location = new Point(252, 199);
+            panelInfo.Name = "panelInfo";
+            panelInfo.Size = new Size(525, 177);
+            panelInfo.TabIndex = 22;
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -395,6 +388,7 @@
             BackgroundImage = Properties.Resources.fondodecanato;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(panelInfo);
             Controls.Add(pictureBox14);
             Controls.Add(pictureBox13);
             Controls.Add(pictureBox12);
@@ -408,7 +402,6 @@
             Controls.Add(pictureBox2);
             Controls.Add(pbPizarra);
             Controls.Add(pbZonaActiva);
-            Controls.Add(panelInfo);
             Controls.Add(pbMensaje);
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox5);
@@ -422,8 +415,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormDecanato";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panelInfo.ResumeLayout(false);
-            panelInfo.PerformLayout();
             pbMensaje.ResumeLayout(false);
             pbMensaje.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)x).EndInit();
@@ -444,14 +435,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox12).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
+            panelInfo.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private PictureBox pictureBox1;
-        private FlowLayoutPanel panelInfo;
-        private Label label1;
         private System.Windows.Forms.Timer timer1;
         private PictureBox pbZonaActiva;
         private System.Windows.Forms.Timer tmrRevisarZonas;
@@ -477,5 +467,6 @@
         private PictureBox pictureBox12;
         private PictureBox pictureBox13;
         private PictureBox pictureBox14;
+        private Panel panelInfo;
     }
 }

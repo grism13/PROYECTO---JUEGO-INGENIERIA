@@ -113,6 +113,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonazul {
+            get {
+                object obj = ResourceManager.GetObject("botonazul", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botondecerrar {
+            get {
+                object obj = ResourceManager.GetObject("botondecerrar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonnaranja {
             get {
                 object obj = ResourceManager.GetObject("botonnaranja", resourceCulture);
@@ -123,9 +143,29 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botonrosa {
+            get {
+                object obj = ResourceManager.GetObject("botonrosa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonverde {
             get {
                 object obj = ResourceManager.GetObject("botonverde", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap botonverde1 {
+            get {
+                object obj = ResourceManager.GetObject("botonverde1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -935,6 +975,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap Oswald1 {
             get {
                 object obj = ResourceManager.GetObject("Oswald1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paneldecanato1 {
+            get {
+                object obj = ResourceManager.GetObject("paneldecanato1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
