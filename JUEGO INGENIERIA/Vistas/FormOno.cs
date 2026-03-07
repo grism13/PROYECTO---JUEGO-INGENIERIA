@@ -15,7 +15,8 @@ namespace JUEGO_INGENIERIA.Vistas
         private bool moviendoAlCentro = true;
         private int numeroPendiente = 0;
         private string preguntaPendiente = "";
-
+        int altoOriginalCarta;
+        int topOriginalCarta;
         // Ajusta estas coordenadas (X, Y) al centro de tu formulario
         private Point puntoCentro = new Point(340, 200);
 
@@ -42,6 +43,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // 1. Guardamos las cartas en la lista
             listaCartas = new List<PictureBox> { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6 };
+            altoOriginalCarta = pbCartaRevelada.Height;
+            topOriginalCarta = pbCartaRevelada.Top;
+            pbCartaRevelada.Height = 0; // La escondemos al principio
 
             // 2. Registramos la posición inicial de cada una
             foreach (var carta in listaCartas)
@@ -99,6 +103,12 @@ namespace JUEGO_INGENIERIA.Vistas
                     pbCartaRevelada.Image = Properties.Resources.Carta5;
                     break;
             }
+            // Se aplasta la carta y se empuja hacia abajo
+            pbCartaRevelada.Height = 0;
+            pbCartaRevelada.Top = topOriginalCarta + altoOriginalCarta;
+
+            // ¡Se enciende la animación!
+            timerRevelarCarta.Start();
 
             lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroPendiente} de 5 a tu pregunta:\n{preguntaPendiente}";
         }
@@ -137,10 +147,10 @@ namespace JUEGO_INGENIERIA.Vistas
         private void timerAnimacion_Tick(object sender, EventArgs e)
         {
             bool todasLlegaron = true;
-            int velocidad = 14; 
+            int velocidad = 14;
             foreach (var carta in listaCartas)
             {
-                
+
                 Point destino = moviendoAlCentro ? puntoCentro : posicionesOriginales[carta];
 
                 if (Math.Abs(carta.Left - destino.X) > velocidad)
@@ -153,7 +163,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     carta.Left = destino.X;
                 }
 
-                
+
                 if (Math.Abs(carta.Top - destino.Y) > velocidad)
                 {
                     carta.Top += (carta.Top < destino.Y) ? velocidad : -velocidad;
@@ -180,6 +190,22 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
+        private void timerRevelarCarta_Tick(object sender, EventArgs e)
+        {
+            int velocidadAparicion = 15;
 
+            if (pbCartaRevelada.Height < altoOriginalCarta)
+            {
+                pbCartaRevelada.Height += velocidadAparicion;
+                pbCartaRevelada.Top -= velocidadAparicion;
+            }
+            else
+            {
+                // Llegó a su tamaño máximo, se ajusta y se apaga el motor
+                pbCartaRevelada.Height = altoOriginalCarta;
+                pbCartaRevelada.Top = topOriginalCarta;
+                timerRevelarCarta.Stop();
+            }
+        }
     }
 }

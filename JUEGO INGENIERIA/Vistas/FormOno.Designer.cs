@@ -42,6 +42,7 @@
             timerAnimacion = new System.Windows.Forms.Timer(components);
             pbCartaRevelada = new PictureBox();
             pictureBox8 = new PictureBox();
+            timerRevelarCarta = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -190,6 +191,11 @@
             pictureBox8.TabIndex = 12;
             pictureBox8.TabStop = false;
             // 
+            // timerRevelarCarta
+            // 
+            timerRevelarCarta.Interval = 15;
+            timerRevelarCarta.Tick += timerRevelarCarta_Tick;
+            // 
             // FormOno
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -240,5 +246,6 @@
         private System.Windows.Forms.Timer timerAnimacion;
         private PictureBox pbCartaRevelada;
         private PictureBox pictureBox8;
+        private System.Windows.Forms.Timer timerRevelarCarta;
     }
 }
