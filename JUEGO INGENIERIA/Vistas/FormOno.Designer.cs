@@ -57,10 +57,10 @@
             // 
             pictureBox1.BackColor = Color.White;
             pictureBox1.Image = Properties.Resources.carta;
-            pictureBox1.Location = new Point(342, 325);
+            pictureBox1.Location = new Point(343, 325);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(134, 170);
+            pictureBox1.Size = new Size(133, 170);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -70,10 +70,10 @@
             // 
             pictureBox2.BackColor = Color.White;
             pictureBox2.Image = Properties.Resources.carta;
-            pictureBox2.Location = new Point(342, 129);
+            pictureBox2.Location = new Point(343, 129);
             pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(134, 170);
+            pictureBox2.Size = new Size(133, 170);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
@@ -84,10 +84,10 @@
             pictureBox3.BackColor = Color.White;
             pictureBox3.Cursor = Cursors.Hand;
             pictureBox3.Image = Properties.Resources.carta;
-            pictureBox3.Location = new Point(191, 129);
+            pictureBox3.Location = new Point(192, 129);
             pictureBox3.Margin = new Padding(3, 2, 3, 2);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(139, 170);
+            pictureBox3.Size = new Size(138, 170);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
@@ -97,10 +97,10 @@
             // 
             pictureBox4.BackColor = Color.White;
             pictureBox4.Image = Properties.Resources.carta;
-            pictureBox4.Location = new Point(199, 325);
+            pictureBox4.Location = new Point(200, 325);
             pictureBox4.Margin = new Padding(3, 2, 3, 2);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(131, 170);
+            pictureBox4.Size = new Size(130, 170);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 3;
             pictureBox4.TabStop = false;
@@ -110,10 +110,10 @@
             // 
             pictureBox5.BackColor = Color.White;
             pictureBox5.Image = Properties.Resources.carta;
-            pictureBox5.Location = new Point(488, 129);
+            pictureBox5.Location = new Point(489, 129);
             pictureBox5.Margin = new Padding(3, 2, 3, 2);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(135, 170);
+            pictureBox5.Size = new Size(134, 170);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 4;
             pictureBox5.TabStop = false;
@@ -123,10 +123,10 @@
             // 
             pictureBox6.BackColor = Color.White;
             pictureBox6.Image = Properties.Resources.carta;
-            pictureBox6.Location = new Point(488, 325);
+            pictureBox6.Location = new Point(489, 325);
             pictureBox6.Margin = new Padding(3, 2, 3, 2);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(135, 170);
+            pictureBox6.Size = new Size(134, 170);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 5;
             pictureBox6.TabStop = false;
@@ -171,7 +171,8 @@
             // 
             // pbCartaRevelada
             // 
-            pbCartaRevelada.Location = new Point(844, 276);
+            pbCartaRevelada.BackColor = Color.Transparent;
+            pbCartaRevelada.Location = new Point(877, 268);
             pbCartaRevelada.Name = "pbCartaRevelada";
             pbCartaRevelada.Size = new Size(200, 287);
             pbCartaRevelada.SizeMode = PictureBoxSizeMode.StretchImage;

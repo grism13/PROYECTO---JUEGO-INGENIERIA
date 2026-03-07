@@ -13,6 +13,8 @@ namespace JUEGO_INGENIERIA.Vistas
         private Dictionary<PictureBox, Point> posicionesOriginales = new Dictionary<PictureBox, Point>();
         private List<PictureBox> listaCartas = new List<PictureBox>();
         private bool moviendoAlCentro = true;
+        private int numeroPendiente = 0;
+        private string preguntaPendiente = "";
 
         // Ajusta estas coordenadas (X, Y) al centro de tu formulario
         private Point puntoCentro = new Point(340, 200);
@@ -53,18 +55,28 @@ namespace JUEGO_INGENIERIA.Vistas
             // Si la animación ya está corriendo, no hacemos nada
             if (timerAnimacion.Enabled) return;
 
-            // Iniciamos la animación hacia el centro
+            // 1. Ocultamos la carta revelada y el texto por si es la segunda vez que se juega
+            pbCartaRevelada.Image = null;
+            lblTexto.Text = "";
+
+            // 2. Iniciamos la animación hacia el centro
             moviendoAlCentro = true;
             timerAnimacion.Start();
 
-            // Lógica del juego
-            int numeroGenerado = ObtenerNumeroAleatorio(1, 5);
-            string preguntaSeleccionada = cmbOpcionesNPC.SelectedItem.ToString();
+            // 3. Calculamos la respuesta y la guardamos en la memoria temporal (SIN MOSTRARLA)
+            numeroPendiente = ObtenerNumeroAleatorio(1, 5);
+            preguntaPendiente = cmbOpcionesNPC.SelectedItem.ToString();
+        }
+
+        // Según el número, asignamos la frase y la imagen real de la carta
+
+        // IMPORTANTE: Cambiar "Properties.Resources.Carta1" por los nombres reales de las imágenes en el proyecto
+
+        private void RevelarResultadoFinal()
+        {
             string expresionRespuesta = "";
 
-            // Según el número, asignamos la frase y la imagen real de la carta
-            // IMPORTANTE: Cambiar "Properties.Resources.Carta1" por los nombres reales de las imágenes en el proyecto
-            switch (numeroGenerado)
+            switch (numeroPendiente)
             {
                 case 1:
                     expresionRespuesta = "Uy...";
@@ -88,7 +100,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     break;
             }
 
-            lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroGenerado} de 5 a tu pregunta:\n{preguntaSeleccionada}";
+            lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroPendiente} de 5 a tu pregunta:\n{preguntaPendiente}";
         }
 
 
@@ -163,6 +175,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 else
                 {
                     timerAnimacion.Stop();
+                    RevelarResultadoFinal();
                 }
             }
         }
