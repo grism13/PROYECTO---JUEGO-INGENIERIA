@@ -142,6 +142,7 @@
             lblPreguntaNivel1 = new Label();
             pbPuertaNivel5 = new PictureBox();
             pictureBox100 = new PictureBox();
+            pbPuertaNivel3 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -246,6 +247,7 @@
             pnlConfirmacionNivel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox100).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -479,7 +481,7 @@
             // pictureBox13
             // 
             pictureBox13.BackColor = Color.Crimson;
-            pictureBox13.Location = new Point(198, 4);
+            pictureBox13.Location = new Point(195, -43);
             pictureBox13.Margin = new Padding(3, 2, 3, 2);
             pictureBox13.Name = "pictureBox13";
             pictureBox13.Size = new Size(25, 166);
@@ -638,10 +640,10 @@
             // pictureBox31
             // 
             pictureBox31.BackColor = Color.Transparent;
-            pictureBox31.Location = new Point(287, 330);
+            pictureBox31.Location = new Point(288, 327);
             pictureBox31.Margin = new Padding(3, 2, 3, 2);
             pictureBox31.Name = "pictureBox31";
-            pictureBox31.Size = new Size(57, 39);
+            pictureBox31.Size = new Size(56, 42);
             pictureBox31.TabIndex = 43;
             pictureBox31.TabStop = false;
             pictureBox31.Tag = "";
@@ -1473,6 +1475,15 @@
             pictureBox100.TabIndex = 118;
             pictureBox100.TabStop = false;
             // 
+            // pbPuertaNivel3
+            // 
+            pbPuertaNivel3.Location = new Point(102, 155);
+            pbPuertaNivel3.Margin = new Padding(3, 2, 3, 2);
+            pbPuertaNivel3.Name = "pbPuertaNivel3";
+            pbPuertaNivel3.Size = new Size(26, 12);
+            pbPuertaNivel3.TabIndex = 119;
+            pbPuertaNivel3.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1481,6 +1492,7 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1106, 511);
+            Controls.Add(pbPuertaNivel3);
             Controls.Add(pictureBox100);
             Controls.Add(pnlConfirmacionNivel1);
             Controls.Add(pictureBox99);
@@ -1702,6 +1714,7 @@
             pnlConfirmacionNivel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox100).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -1820,5 +1833,6 @@
         private Label lblPreguntaNivel1;
         private PictureBox pbPuertaNivel5;
         private PictureBox pictureBox100;
+        private PictureBox pbPuertaNivel3;
     }
 }

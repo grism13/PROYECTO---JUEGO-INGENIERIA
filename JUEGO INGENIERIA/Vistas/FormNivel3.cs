@@ -6,7 +6,7 @@ using JUEGO_INGENIERIA.Modelos;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
-    public partial class FormNivel2 : Form
+    public partial class FormNivel3 : Form
     {
         // --- VARIABLES DEL JUGADOR ---
         int jugadorX = 50;
@@ -44,7 +44,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         Random rnd = new Random();
 
-        public FormNivel2()
+        public FormNivel3()
         {
             InitializeComponent();
         }

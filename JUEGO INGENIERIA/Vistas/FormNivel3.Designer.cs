@@ -1,6 +1,6 @@
 ﻿namespace JUEGO_INGENIERIA.Vistas
 {
-    partial class FormNivel2
+    partial class FormNivel3
     {
         /// <summary>
         /// Required designer variable.
