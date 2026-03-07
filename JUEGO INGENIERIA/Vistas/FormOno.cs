@@ -62,17 +62,33 @@ namespace JUEGO_INGENIERIA.Vistas
             string preguntaSeleccionada = cmbOpcionesNPC.SelectedItem.ToString();
             string expresionRespuesta = "";
 
+            // Según el número, asignamos la frase y la imagen real de la carta
+            // IMPORTANTE: Cambiar "Properties.Resources.Carta1" por los nombres reales de las imágenes en el proyecto
             switch (numeroGenerado)
             {
-                case 1: expresionRespuesta = "Uy..."; break;
-                case 2: expresionRespuesta = "Mmm..."; break;
-                case 3: expresionRespuesta = "Bueno, no está mal"; break;
-                case 4: expresionRespuesta = "¡Eso suena prometedor!"; break;
-                case 5: expresionRespuesta = "¡Wow, eso es increíble!"; break;
+                case 1:
+                    expresionRespuesta = "Uy...";
+                    pbCartaRevelada.Image = Properties.Resources.Carta1;
+                    break;
+                case 2:
+                    expresionRespuesta = "Mmm...";
+                    pbCartaRevelada.Image = Properties.Resources.Carta2;
+                    break;
+                case 3:
+                    expresionRespuesta = "Bueno, no está mal";
+                    pbCartaRevelada.Image = Properties.Resources.Carta3;
+                    break;
+                case 4:
+                    expresionRespuesta = "¡Eso suena prometedor!";
+                    pbCartaRevelada.Image = Properties.Resources.Carta4;
+                    break;
+                case 5:
+                    expresionRespuesta = "¡Wow, eso es increíble!";
+                    pbCartaRevelada.Image = Properties.Resources.Carta5;
+                    break;
             }
 
             lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroGenerado} de 5 a tu pregunta:\n{preguntaSeleccionada}";
-            return;
         }
 
 

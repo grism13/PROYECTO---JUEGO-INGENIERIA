@@ -982,6 +982,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap nubedetexto1 {
+            get {
+                object obj = ResourceManager.GetObject("nubedetexto1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap oswald_version_mini {
             get {
                 object obj = ResourceManager.GetObject("oswald version mini", resourceCulture);
