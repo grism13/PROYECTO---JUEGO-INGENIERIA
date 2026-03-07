@@ -51,41 +51,70 @@ namespace JUEGO_INGENIERIA
             pbPersonaje.Visible = false;
             EsconderMuros();
         }
-
         // --- DIBUJAMOS EL PERSONAJE DIRECTO EN EL MAPA ---
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            // Configuramos alta calidad para que los bordes del personaje no se vean mal
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            // 1. DIBUJAMOS AL PERSONAJE PRIMERO
+            // 1. CREAMOS UNA PLANTILLA DE RECORTE (CLIPPING)
+            // Inicialmente, toda la ventana es dibujable
+            Region regionDeRecorte = new Region(e.ClipRectangle);
+
+            foreach (Control control in this.Controls)
+            {
+                // Ignoramos el PictureBox viejo del personaje
+                if (control is PictureBox x && x != pbPersonaje)
+                {
+                    // CONDICIÓN: Si NO es un muro, es un PictureBox transparente y chocamos con él
+                    if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && x.BackColor == Color.Transparent)
+                    {
+                        if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
+                        {
+                            // Si nuestras piernas están más arriba que la base de la caja transparente
+                            // significa que nos metimos por detras (efecto 3D)
+                            if (pbPersonaje.Bottom <= x.Bottom)
+                            {
+                                // EXCLUÍMOS el área de este PictureBox
+                                // El lápiz virtual dejará de pintar mágicamente si pasa por esa zona
+                                regionDeRecorte.Exclude(x.Bounds);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Le informamos al Graphics en dónde NO debe pintar
+            e.Graphics.Clip = regionDeRecorte;
+
+            // 2. DIBUJAR AL PERSONAJE (Lo que caiga en la zona excluida, se "cortará" y se verá el fondo)
             if (motorMovimiento != null)
             {
                 motorMovimiento.DibujarPersonaje(e.Graphics);
             }
 
-            // 2. DIBUJAMOS LA DECORACIÓN AUTOMÁTICAMENTE Y PENSANDO EN EL FUTURO
+            // Restauramos el "lápiz" a la normalidad para que el resto de las cosas se dibujen bien
+            e.Graphics.ResetClip();
+            regionDeRecorte.Dispose();
+
+            // 3. DIBUJAR ENCIMA LAS CAJAS TRANSPARENTES QUE SÍ TENGAN IMAGEN (SI ES QUE HAY ALGUNA)
+            // (Por ejemplo, si más adelante decides ponerle una imagen a algún PictureBox)
             foreach (Control control in this.Controls)
             {
                 if (control is PictureBox x && x != pbPersonaje)
                 {
-                    // REGLAS PARA SABER QUÉ ES UN ÁRBOL O TECHO:
-                    // 1. NO tiene el tag "muro"
-                    // 2. Su nombre EMPIEZA por "pictureBox" (así descartamos puertas que se llamen "pbPuerta1", "Cofre2", etc)
-                    if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
+                    if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && x.Image != null)
                     {
-                        // Para evitar bajo CUALQUIER circunstancia dibujar la imagen vieja del personaje si accidentalmente coinciden:
-                        if (x.Image != null && x.Image != pbPersonaje.Image && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
-                        {
-                            e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
-                        }
+                        e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
                     }
                 }
             }
         }
+
+
+
 
         private void Form1_Shown(object sender, EventArgs e)
         {

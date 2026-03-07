@@ -638,10 +638,10 @@
             // pictureBox31
             // 
             pictureBox31.BackColor = Color.Transparent;
-            pictureBox31.Location = new Point(287, 330);
+            pictureBox31.Location = new Point(288, 327);
             pictureBox31.Margin = new Padding(3, 2, 3, 2);
             pictureBox31.Name = "pictureBox31";
-            pictureBox31.Size = new Size(57, 39);
+            pictureBox31.Size = new Size(56, 42);
             pictureBox31.TabIndex = 43;
             pictureBox31.TabStop = false;
             pictureBox31.Tag = "";
