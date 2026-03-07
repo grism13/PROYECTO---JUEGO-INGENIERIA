@@ -20,6 +20,7 @@ namespace JUEGO_INGENIERIA.Vistas
         public FormOno()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
         }
 
         private int ObtenerNumeroAleatorio(int minimo, int maximo)
