@@ -149,7 +149,7 @@
             pbMensaje.Location = new Point(866, 106);
             pbMensaje.Margin = new Padding(3, 2, 3, 2);
             pbMensaje.Name = "pbMensaje";
-            pbMensaje.Size = new Size(292, 154);
+            pbMensaje.Size = new Size(325, 184);
             pbMensaje.TabIndex = 10;
             pbMensaje.Visible = false;
             // 
@@ -157,9 +157,9 @@
             // 
             pictureBox15.BackColor = Color.Transparent;
             pictureBox15.Image = Properties.Resources.consejosicon;
-            pictureBox15.Location = new Point(247, 30);
+            pictureBox15.Location = new Point(12, 129);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(42, 50);
+            pictureBox15.Size = new Size(32, 52);
             pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox15.TabIndex = 23;
             pictureBox15.TabStop = false;
@@ -169,7 +169,7 @@
             x.BackColor = Color.Transparent;
             x.Cursor = Cursors.Hand;
             x.Image = Properties.Resources.botondecerrar;
-            x.Location = new Point(173, 115);
+            x.Location = new Point(265, 133);
             x.Margin = new Padding(3, 2, 3, 2);
             x.Name = "x";
             x.Size = new Size(39, 39);
@@ -184,7 +184,7 @@
             lblMensaje.ForeColor = Color.Black;
             lblMensaje.Location = new Point(32, 30);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(180, 65);
+            lblMensaje.Size = new Size(229, 96);
             lblMensaje.TabIndex = 0;
             lblMensaje.Text = "label2";
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
@@ -195,7 +195,7 @@
             pictureBox6.Image = Properties.Resources.nubedetexto;
             pictureBox6.Location = new Point(-11, 0);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(267, 137);
+            pictureBox6.Size = new Size(315, 172);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox6.TabIndex = 14;
             pictureBox6.TabStop = false;
@@ -430,7 +430,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormDecanato";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormDecanato";
+            Text = "DECANATO";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             pbMensaje.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();

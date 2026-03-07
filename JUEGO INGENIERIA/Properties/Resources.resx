@@ -151,6 +151,9 @@
   <data name="eliezer_ladoderecho2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\eliezer_ladoderecho2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="gris_frente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris_frente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="flavioHablando1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\flavioHablando1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -265,6 +268,9 @@
   <data name="intro-juegoINGENERIA-_1_" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\intro-juegoINGENERIA-_1_.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fondonivel1 (1)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondonivel1 (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="gris_inclinadaderechaespalda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaderechaespalda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -331,9 +337,6 @@
   <data name="gris_espalda3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_espalda3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="eliezer_inclinadaderechafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\eliezer_inclinadaderechafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="lunaechada" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\lunaechada.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -364,8 +367,8 @@
   <data name="flavioCentro2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\flavioCentro2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="gris_frente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\gris_frente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="eliezer_inclinadaderechafrente1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer_inclinadaderechafrente1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="flavioMago" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\flavioMago.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -436,6 +439,9 @@
   <data name="gris_inclinadaderechafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris_inclinadaderechafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="consejosicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\consejosicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="1vidas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\1vidas.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -466,7 +472,7 @@
   <data name="roand_inclinadaderechafrente3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\roand_inclinadaderechafrente3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="consejosicon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\consejosicon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fondoOno" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoOno.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

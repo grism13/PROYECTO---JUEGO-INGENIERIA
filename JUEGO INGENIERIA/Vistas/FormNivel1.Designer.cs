@@ -94,7 +94,7 @@
             lblTiempo.AutoSize = true;
             lblTiempo.BackColor = Color.Transparent;
             lblTiempo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblTiempo.ForeColor = Color.Black;
+            lblTiempo.ForeColor = Color.White;
             lblTiempo.Location = new Point(1113, 173);
             lblTiempo.Name = "lblTiempo";
             lblTiempo.Size = new Size(90, 21);
@@ -106,7 +106,7 @@
             lblPuntos.AutoSize = true;
             lblPuntos.BackColor = Color.Transparent;
             lblPuntos.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblPuntos.ForeColor = Color.FromArgb(192, 255, 192);
+            lblPuntos.ForeColor = Color.Yellow;
             lblPuntos.Location = new Point(1117, 346);
             lblPuntos.Name = "lblPuntos";
             lblPuntos.Size = new Size(86, 21);
@@ -131,11 +131,11 @@
             // pnlIntro
             // 
             pnlIntro.BackColor = Color.Transparent;
-            pnlIntro.Controls.Add(lblOswaldText);
             pnlIntro.Controls.Add(btnSkipDialogo);
+            pnlIntro.Controls.Add(lblOswaldText);
             pnlIntro.Controls.Add(pictureBox1);
             pnlIntro.Controls.Add(pbOswald);
-            pnlIntro.Location = new Point(43, 400);
+            pnlIntro.Location = new Point(64, 369);
             pnlIntro.Name = "pnlIntro";
             pnlIntro.Size = new Size(953, 313);
             pnlIntro.TabIndex = 6;
@@ -154,13 +154,14 @@
             // 
             // btnSkipDialogo
             // 
-            btnSkipDialogo.BackColor = Color.FromArgb(64, 64, 64);
+            btnSkipDialogo.BackColor = Color.Transparent;
             btnSkipDialogo.Cursor = Cursors.Hand;
             btnSkipDialogo.FlatStyle = FlatStyle.Flat;
             btnSkipDialogo.ForeColor = Color.White;
-            btnSkipDialogo.Location = new Point(806, 254);
+            btnSkipDialogo.Image = Properties.Resources.botonazul;
+            btnSkipDialogo.Location = new Point(720, 269);
             btnSkipDialogo.Name = "btnSkipDialogo";
-            btnSkipDialogo.Size = new Size(110, 28);
+            btnSkipDialogo.Size = new Size(163, 41);
             btnSkipDialogo.TabIndex = 8;
             btnSkipDialogo.Text = "SALTAR >>";
             btnSkipDialogo.UseVisualStyleBackColor = false;
@@ -170,7 +171,7 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.narrativa;
-            pictureBox1.Location = new Point(263, 85);
+            pictureBox1.Location = new Point(264, 70);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(686, 210);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -231,7 +232,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            BackgroundImage = Properties.Resources.fondonivel1;
+            BackgroundImage = Properties.Resources.fondonivel1__1_;
+            BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1280, 720);
             Controls.Add(pbVida3);
             Controls.Add(pnlIntro);
@@ -242,6 +244,7 @@
             Controls.Add(label1);
             Controls.Add(pbVida2);
             Controls.Add(pbVida1);
+            Cursor = Cursors.Default;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOno));
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
@@ -50,11 +51,12 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.BackColor = Color.Transparent;
+            pictureBox1.BackColor = Color.White;
             pictureBox1.Image = Properties.Resources.carta;
-            pictureBox1.Location = new Point(203, 210);
+            pictureBox1.Location = new Point(356, 349);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(113, 142);
+            pictureBox1.Size = new Size(103, 132);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -62,11 +64,12 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.BackColor = Color.Transparent;
+            pictureBox2.BackColor = Color.White;
             pictureBox2.Image = Properties.Resources.carta;
-            pictureBox2.Location = new Point(368, 210);
+            pictureBox2.Location = new Point(356, 153);
+            pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(113, 142);
+            pictureBox2.Size = new Size(103, 132);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
@@ -74,23 +77,26 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.BackColor = Color.Transparent;
+            pictureBox3.BackColor = Color.White;
+            pictureBox3.Cursor = Cursors.Hand;
             pictureBox3.Image = Properties.Resources.carta;
-            pictureBox3.Location = new Point(538, 210);
+            pictureBox3.Location = new Point(216, 153);
+            pictureBox3.Margin = new Padding(3, 2, 3, 2);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(113, 142);
-            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.Size = new Size(108, 139);
+            pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
             pictureBox3.Click += pictureBox3_Click;
             // 
             // pictureBox4
             // 
-            pictureBox4.BackColor = Color.Transparent;
+            pictureBox4.BackColor = Color.White;
             pictureBox4.Image = Properties.Resources.carta;
-            pictureBox4.Location = new Point(203, 401);
+            pictureBox4.Location = new Point(213, 349);
+            pictureBox4.Margin = new Padding(3, 2, 3, 2);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(113, 142);
+            pictureBox4.Size = new Size(100, 132);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 3;
             pictureBox4.TabStop = false;
@@ -98,11 +104,12 @@
             // 
             // pictureBox5
             // 
-            pictureBox5.BackColor = Color.Transparent;
+            pictureBox5.BackColor = Color.White;
             pictureBox5.Image = Properties.Resources.carta;
-            pictureBox5.Location = new Point(368, 401);
+            pictureBox5.Location = new Point(502, 153);
+            pictureBox5.Margin = new Padding(3, 2, 3, 2);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(113, 142);
+            pictureBox5.Size = new Size(104, 132);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 4;
             pictureBox5.TabStop = false;
@@ -110,11 +117,12 @@
             // 
             // pictureBox6
             // 
-            pictureBox6.BackColor = Color.Transparent;
+            pictureBox6.BackColor = Color.White;
             pictureBox6.Image = Properties.Resources.carta;
-            pictureBox6.Location = new Point(538, 401);
+            pictureBox6.Location = new Point(502, 349);
+            pictureBox6.Margin = new Padding(3, 2, 3, 2);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(113, 142);
+            pictureBox6.Size = new Size(104, 132);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 5;
             pictureBox6.TabStop = false;
@@ -123,9 +131,9 @@
             // lblTexto
             // 
             lblTexto.AutoSize = true;
-            lblTexto.Location = new Point(190, 41);
+            lblTexto.Location = new Point(748, 53);
             lblTexto.Name = "lblTexto";
-            lblTexto.Size = new Size(484, 20);
+            lblTexto.Size = new Size(386, 15);
             lblTexto.TabIndex = 6;
             lblTexto.Text = "Cuéntame, futuro ingeniero, ¿qué quieres saber? Selecciona tu pregunta";
             // 
@@ -133,18 +141,20 @@
             // 
             cmbOpcionesNPC.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbOpcionesNPC.FormattingEnabled = true;
-            cmbOpcionesNPC.Location = new Point(203, 99);
+            cmbOpcionesNPC.Location = new Point(783, 107);
+            cmbOpcionesNPC.Margin = new Padding(3, 2, 3, 2);
             cmbOpcionesNPC.Name = "cmbOpcionesNPC";
-            cmbOpcionesNPC.Size = new Size(448, 28);
+            cmbOpcionesNPC.Size = new Size(392, 23);
             cmbOpcionesNPC.TabIndex = 9;
             // 
             // pictureBox7
             // 
             pictureBox7.BackColor = Color.Transparent;
             pictureBox7.Image = Properties.Resources.flavioMago;
-            pictureBox7.Location = new Point(51, 32);
+            pictureBox7.Location = new Point(612, 11);
+            pictureBox7.Margin = new Padding(3, 2, 3, 2);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(133, 156);
+            pictureBox7.Size = new Size(174, 186);
             pictureBox7.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox7.TabIndex = 10;
             pictureBox7.TabStop = false;
@@ -156,9 +166,11 @@
             // 
             // FormOno
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 589);
+            BackgroundImage = Properties.Resources.fondoOno;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1264, 681);
             Controls.Add(pictureBox7);
             Controls.Add(cmbOpcionesNPC);
             Controls.Add(lblTexto);
@@ -168,8 +180,11 @@
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormOno";
-            Text = "FormOno";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "JUEGO ONO";
             Load += FormOno_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
