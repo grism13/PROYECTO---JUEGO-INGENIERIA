@@ -1,57 +1,36 @@
 ﻿using JUEGO_INGENIERIA.Vistas;
-using JUEGO_INGENIERIA.Properties;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing.Text;
-using System.IO;
-using WMPLib;
-using System.Security.Cryptography;
 
 namespace JUEGO_INGENIERIA
 {
     public partial class Form1 : Form
     {
-        private Vistas.Jugador jugadorActual;
-
-        // --- VARIABLE DE MÚSICA ---
-        WindowsMediaPlayer musicaFondo = new WindowsMediaPlayer();
-
-        // --- VARIABLE PARA RECORDAR QUÉ NIVEL SE VA A ABRIR ---
-        int nivelSeleccionado = 0;
-
-        public Form1(Vistas.Jugador jugadorRecibido)
-        {
-            InitializeComponent();
-            jugadorActual = jugadorRecibido;
-            ConfigurarGraficos();
-        }
-
-        public static Jugador? JugadorActual;
         private FormMovimiento motorMovimiento;
+        public static Jugador JugadorActual { get; set; }
+        private Jugador jugadorActual;
+
+        private WMPLib.WindowsMediaPlayer musicaFondo;
+
+        // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
+        private int nivelSeleccionado = 0;
 
         public Form1()
         {
             InitializeComponent();
-            ConfigurarGraficos();
-
-        }
-
-        // --- FUNCIÓN QUE ARREGLA EL PROBLEMA DEL FONDO CORTADO ---
-        private void ConfigurarGraficos()
-        {
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            this.UpdateStyles();
 
-            // Ocultamos el PictureBox para que no corte el fondo
+            musicaFondo = new WMPLib.WindowsMediaPlayer();
+
+            // Ocultamos el panel universal por defecto
+            pnlConfirmacionNivel1.Visible = false;
+
             pbPersonaje.Visible = false;
             EsconderMuros();
         }
-        // --- DIBUJAMOS EL PERSONAJE DIRECTO EN EL MAPA ---
+
+        // --- SISTEMA DE DIBUJADO Y EFECTO DE CAMUFLAJE DE ÁRBOLES EN 3D ---
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -59,26 +38,18 @@ namespace JUEGO_INGENIERIA
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            // 1. CREAMOS UNA PLANTILLA DE RECORTE (CLIPPING)
-            // Inicialmente, toda la ventana es dibujable
             Region regionDeRecorte = new Region(e.ClipRectangle);
 
             foreach (Control control in this.Controls)
             {
-                // Ignoramos el PictureBox viejo del personaje
                 if (control is PictureBox x && x != pbPersonaje)
                 {
-                    // CONDICIÓN: Si NO es un muro, es un PictureBox transparente y chocamos con él
                     if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && x.BackColor == Color.Transparent)
                     {
                         if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                         {
-                            // Si nuestras piernas están más arriba que la base de la caja transparente
-                            // significa que nos metimos por detras (efecto 3D)
                             if (pbPersonaje.Bottom <= x.Bottom)
                             {
-                                // EXCLUÍMOS el área de este PictureBox
-                                // El lápiz virtual dejará de pintar mágicamente si pasa por esa zona
                                 regionDeRecorte.Exclude(x.Bounds);
                             }
                         }
@@ -86,21 +57,16 @@ namespace JUEGO_INGENIERIA
                 }
             }
 
-            // Le informamos al Graphics en dónde NO debe pintar
             e.Graphics.Clip = regionDeRecorte;
 
-            // 2. DIBUJAR AL PERSONAJE (Lo que caiga en la zona excluida, se "cortará" y se verá el fondo)
             if (motorMovimiento != null)
             {
                 motorMovimiento.DibujarPersonaje(e.Graphics);
             }
 
-            // Restauramos el "lápiz" a la normalidad para que el resto de las cosas se dibujen bien
             e.Graphics.ResetClip();
             regionDeRecorte.Dispose();
 
-            // 3. DIBUJAR ENCIMA LAS CAJAS TRANSPARENTES QUE SÍ TENGAN IMAGEN (SI ES QUE HAY ALGUNA)
-            // (Por ejemplo, si más adelante decides ponerle una imagen a algún PictureBox)
             foreach (Control control in this.Controls)
             {
                 if (control is PictureBox x && x != pbPersonaje)
@@ -112,9 +78,6 @@ namespace JUEGO_INGENIERIA
                 }
             }
         }
-
-
-
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -129,7 +92,6 @@ namespace JUEGO_INGENIERIA
             ElegirPersonaje seleccion = new ElegirPersonaje();
             seleccion.ShowDialog();
 
-            // Sincronizar el jugador seleccionado con el entorno del juego
             jugadorActual = Form1.JugadorActual;
 
             motorMovimiento = new FormMovimiento(this, pbPersonaje);
@@ -154,7 +116,6 @@ namespace JUEGO_INGENIERIA
             lblNivel.Font = fuentePixel;
             lblDinero.Font = fuentePixel;
 
-            // FUENTE PARA EL PANEL PERSONALIZADO
             lblPreguntaNivel1.Font = fuentePanel;
             btnSiNivel1.Font = fuentePanel;
             btnNoNivel1.Font = fuentePanel;
@@ -171,6 +132,7 @@ namespace JUEGO_INGENIERIA
         {
         }
 
+        // --- MANEJO DE CHOQUES CON PUERTAS ---
         private void MotorMovimiento_ColisionConObjeto(object sender, Control x)
         {
             if (x.Name == "pbPuertaNivel1")
@@ -178,14 +140,26 @@ namespace JUEGO_INGENIERIA
                 motorMovimiento.Stop();
                 motorMovimiento.EstaPausado = true;
 
+                // Configuramos el panel universal para que hable del Nivel 1
                 lblPreguntaNivel1.Text = "¿Estás listo para entrar a la clase del profesor Oswald (Nivel 1)?";
                 nivelSeleccionado = 1;
 
                 pnlConfirmacionNivel1.Visible = true;
                 pnlConfirmacionNivel1.BringToFront();
             }
+            else if (x.Name == "pbPuertaNivel3") // <--- COLISIÓN DE TU NUEVA PUERTA
+            {
+                motorMovimiento.Stop();
+                motorMovimiento.EstaPausado = true;
 
-            else if (x.Name == "pbPuertaNivel5")
+                // Configuramos EL MISMO panel universal para que ahora hable del Nivel 3
+                lblPreguntaNivel1.Text = "¿Estás listo para entrar al Nivel 3?";
+                nivelSeleccionado = 3;
+
+                pnlConfirmacionNivel1.Visible = true;
+                pnlConfirmacionNivel1.BringToFront();
+            }
+            else if (x.Name == "pbPuertaNivel5") // Decanato
             {
                 motorMovimiento.Stop();
                 motorMovimiento.EstaPausado = true;
@@ -193,9 +167,6 @@ namespace JUEGO_INGENIERIA
 
                 this.Hide();
 
-                // --- ESCUDO ANTI-CRASH EN LA RAÍZ ---
-                // Si el jugador está vacío porque saltaste el inicio para hacer pruebas, 
-                // le creamos uno temporal para que no explote el minijuego de trabajo.
                 if (jugadorActual == null)
                 {
                     jugadorActual = new Vistas.Jugador();
@@ -204,7 +175,6 @@ namespace JUEGO_INGENIERIA
                     jugadorActual.Nombre = "Prueba";
                 }
 
-                // Ahora sí, pasamos al jugador de forma segura al Decanato
                 FormDecanato decanato = new FormDecanato(jugadorActual);
                 decanato.ShowDialog();
 
@@ -215,17 +185,17 @@ namespace JUEGO_INGENIERIA
                 pbPersonaje.Top += 40;
                 this.Invalidate(pbPersonaje.Bounds);
 
-                // Reanudamos el movimiento
                 motorMovimiento.Start();
                 motorMovimiento.EstaPausado = false;
             }
         }
 
+        // --- HACER INVISIBLES LOS MUROS ---
         private void EsconderMuros()
         {
             foreach (Control x in this.Controls)
             {
-                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1")
+                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel3")
                 {
                     x.BackColor = Color.Transparent;
                 }
@@ -236,53 +206,76 @@ namespace JUEGO_INGENIERIA
         {
             try
             {
-                string ruta = Path.Combine(Application.StartupPath, "Resources", "musica mapa", "musicaMapa.mp3");
-                musicaFondo.URL = ruta;
-                musicaFondo.settings.setMode("loop", true);
-                musicaFondo.controls.play();
+                string rutaMusica = Path.Combine(Application.StartupPath, "Resources", "Musica Mapa", "TemaMundi1.mp3");
+                if (File.Exists(rutaMusica))
+                {
+                    musicaFondo.URL = rutaMusica;
+                    musicaFondo.settings.setMode("loop", true);
+                    musicaFondo.controls.play();
+                }
             }
-            catch { }
-        }
-
-        private void btnSiNivel1_Click(object sender, EventArgs e)
-        {
-            pnlConfirmacionNivel1.Visible = false;
-            musicaFondo.controls.stop();
-
-            if (nivelSeleccionado == 1)
+            catch (Exception)
             {
-                FormNivel1 nivel1 = new FormNivel1(JugadorActual);
-                nivel1.ShowDialog();
             }
-
-
-            ReproducirMusicaMapa();
-
-            this.Invalidate(pictureBox19.Bounds);
-            this.Invalidate(pnlConfirmacionNivel1.Bounds);
-            this.Invalidate(pbPersonaje.Bounds);
-            pbPersonaje.Top += 40;
-            this.Invalidate(pbPersonaje.Bounds);
-
-            motorMovimiento.Start();
-            motorMovimiento.EstaPausado = false;
         }
 
-        private void btnNoNivel1_Click(object sender, EventArgs e)
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
-            pnlConfirmacionNivel1.Visible = false;
-            this.Invalidate(pictureBox19.Bounds);
-            this.Invalidate(pnlConfirmacionNivel1.Bounds);
-            this.Invalidate(pbPersonaje.Bounds);
-            pbPersonaje.Top += 40;
-            this.Invalidate(pbPersonaje.Bounds);
-            motorMovimiento.Start();
-            motorMovimiento.EstaPausado = false;
+            if (musicaFondo != null)
+            {
+                musicaFondo.controls.stop();
+            }
         }
 
         private void pbPuertaNivel1_Click(object sender, EventArgs e)
         {
+        }
 
+        // --- BOTÓN SÍ UNIVERSAL ---
+        private void btnSiNivel1_Click(object sender, EventArgs e)
+        {
+            // Ocultamos el panel
+            pnlConfirmacionNivel1.Visible = false;
+            musicaFondo.controls.stop();
+
+            // Verificamos qué nivel estaba guardado en memoria cuando chocamos
+            if (nivelSeleccionado == 1)
+            {
+                FormNivel1 nivel1 = new FormNivel1(jugadorActual);
+                nivel1.ShowDialog();
+            }
+            else if (nivelSeleccionado == 3)
+            {
+                // Entramos al formulario Nivel2
+                FormNivel3 nivel3 = new FormNivel3();
+                nivel3.ShowDialog();
+            }
+
+            // Al salir del respectivo nivel, reactivamos música y alejamos al pj de la puerta
+            ReproducirMusicaMapa();
+
+            this.Invalidate(pnlConfirmacionNivel1.Bounds);
+            this.Invalidate(pbPersonaje.Bounds);
+            pbPersonaje.Top += 40;
+            this.Invalidate(pbPersonaje.Bounds);
+
+            motorMovimiento.Start();
+            motorMovimiento.EstaPausado = false;
+        }
+
+        // --- BOTÓN NO UNIVERSAL ---
+        private void btnNoNivel1_Click(object sender, EventArgs e)
+        {
+            // Sin importar a cuál íbamos a entrar, simplemente quitamos el panel
+            pnlConfirmacionNivel1.Visible = false;
+
+            this.Invalidate(pnlConfirmacionNivel1.Bounds);
+            this.Invalidate(pbPersonaje.Bounds);
+            pbPersonaje.Top += 40;
+            this.Invalidate(pbPersonaje.Bounds);
+
+            motorMovimiento.Start();
+            motorMovimiento.EstaPausado = false;
         }
     }
 }
