@@ -354,6 +354,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eliezer_inclinadaderechafrente2 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer_inclinadaderechafrente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap eliezer_inclinadaderechafrente3 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_inclinadaderechafrente3", resourceCulture);
@@ -814,6 +824,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente1 {
+            get {
+                object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gris_inclinadaizquiedafrente2 {
             get {
                 object obj = ResourceManager.GetObject("gris_inclinadaizquiedafrente2", resourceCulture);
@@ -1115,6 +1135,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap roand_inclinadaderechaespalda1 {
             get {
                 object obj = ResourceManager.GetObject("roand_inclinadaderechaespalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_inclinadaderechaespalda2 {
+            get {
+                object obj = ResourceManager.GetObject("roand_inclinadaderechaespalda2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
