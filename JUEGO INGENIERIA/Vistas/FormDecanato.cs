@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Text;
+using System.IO;
 namespace JUEGO_INGENIERIA.Vistas;
 
 using JUEGO_INGENIERIA.Modelos;
@@ -29,6 +31,7 @@ public partial class FormDecanato : Form
     public FormDecanato(Jugador jugadorRecibido)
     {
         InitializeComponent();
+        AplicarFuente();
 
         this.jugadorActual = jugadorRecibido;
 
@@ -254,6 +257,32 @@ public partial class FormDecanato : Form
     {
         FormTrabajo trabajo = new FormTrabajo(jugadorActual);
         trabajo.ShowDialog();
+    }
+    private void AplicarFuente()
+    {
+        try
+        {
+            // Se establece la ruta exacta donde se guardó el archivo .ttf
+            string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+
+            PrivateFontCollection pfc = new PrivateFontCollection();
+            pfc.AddFontFile(rutaFuente);
+
+            // Se configuran los tamaños: uno un poco más grande para el globo de texto y otro para los botones
+            Font fuenteMensaje = new Font(pfc.Families[0], 10f);
+            Font fuenteBoton = new Font(pfc.Families[0], 8f);
+
+            // Se aplica la fuente a los controles (es importante verificar que estos sean los nombres exactos)
+            lblMensaje.Font = fuenteMensaje;
+            btnConsejo.Font = fuenteBoton;
+            btnOno.Font = fuenteBoton;
+            btnTrabajo.Font = fuenteBoton;
+        }
+        catch
+        {
+            // Bloque de seguridad: si el archivo de la fuente no se encuentra, 
+            // el juego usará la fuente estándar de Windows sin mostrar errores.
+        }
     }
 
     private void pbPizarra_Click(object sender, EventArgs e)

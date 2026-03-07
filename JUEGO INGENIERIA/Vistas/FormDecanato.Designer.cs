@@ -35,6 +35,7 @@
             btnOno = new Label();
             btnTrabajo = new Label();
             pbMensaje = new Panel();
+            pictureBox15 = new PictureBox();
             x = new PictureBox();
             lblMensaje = new Label();
             pictureBox6 = new PictureBox();
@@ -59,6 +60,7 @@
             panelInfo = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pbMensaje.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
             ((System.ComponentModel.ISupportInitialize)x).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbZonaActiva).BeginInit();
@@ -110,6 +112,7 @@
             // 
             btnOno.AllowDrop = true;
             btnOno.BackColor = Color.Transparent;
+            btnOno.Cursor = Cursors.Hand;
             btnOno.ForeColor = Color.White;
             btnOno.Image = Properties.Resources.botonrosa;
             btnOno.Location = new Point(193, 94);
@@ -124,6 +127,7 @@
             // btnTrabajo
             // 
             btnTrabajo.BackColor = Color.Transparent;
+            btnTrabajo.Cursor = Cursors.Hand;
             btnTrabajo.ForeColor = Color.White;
             btnTrabajo.Image = Properties.Resources.botonverde1;
             btnTrabajo.Location = new Point(348, 94);
@@ -138,6 +142,7 @@
             // pbMensaje
             // 
             pbMensaje.BackColor = Color.Transparent;
+            pbMensaje.Controls.Add(pictureBox15);
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
             pbMensaje.Controls.Add(pictureBox6);
@@ -148,11 +153,23 @@
             pbMensaje.TabIndex = 10;
             pbMensaje.Visible = false;
             // 
+            // pictureBox15
+            // 
+            pictureBox15.BackColor = Color.Transparent;
+            pictureBox15.Image = Properties.Resources.consejosicon;
+            pictureBox15.Location = new Point(247, 30);
+            pictureBox15.Name = "pictureBox15";
+            pictureBox15.Size = new Size(42, 50);
+            pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox15.TabIndex = 23;
+            pictureBox15.TabStop = false;
+            // 
             // x
             // 
             x.BackColor = Color.Transparent;
+            x.Cursor = Cursors.Hand;
             x.Image = Properties.Resources.botondecerrar;
-            x.Location = new Point(226, 115);
+            x.Location = new Point(173, 115);
             x.Margin = new Padding(3, 2, 3, 2);
             x.Name = "x";
             x.Size = new Size(39, 39);
@@ -163,11 +180,11 @@
             // 
             // lblMensaje
             // 
-            lblMensaje.AutoSize = true;
             lblMensaje.BackColor = Color.White;
-            lblMensaje.Location = new Point(39, 40);
+            lblMensaje.ForeColor = Color.Black;
+            lblMensaje.Location = new Point(32, 30);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(38, 15);
+            lblMensaje.Size = new Size(180, 65);
             lblMensaje.TabIndex = 0;
             lblMensaje.Text = "label2";
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
@@ -190,7 +207,7 @@
             // 
             // pbZonaActiva
             // 
-            pbZonaActiva.Location = new Point(566, 436);
+            pbZonaActiva.Location = new Point(566, 421);
             pbZonaActiva.Name = "pbZonaActiva";
             pbZonaActiva.Size = new Size(150, 19);
             pbZonaActiva.TabIndex = 5;
@@ -250,9 +267,9 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(579, 527);
+            pbPersonaje.Location = new Point(583, 471);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(109, 152);
+            pbPersonaje.Size = new Size(114, 175);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 11;
             pbPersonaje.TabStop = false;
@@ -416,7 +433,7 @@
             Text = "FormDecanato";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             pbMensaje.ResumeLayout(false);
-            pbMensaje.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
             ((System.ComponentModel.ISupportInitialize)x).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox6).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbZonaActiva).EndInit();
@@ -468,5 +485,6 @@
         private PictureBox pictureBox13;
         private PictureBox pictureBox14;
         private Panel panelInfo;
+        private PictureBox pictureBox15;
     }
 }
