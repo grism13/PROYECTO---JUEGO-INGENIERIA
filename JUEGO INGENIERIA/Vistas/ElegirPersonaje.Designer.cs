@@ -48,6 +48,8 @@
             pictureBox14 = new PictureBox();
             pictureBox13 = new PictureBox();
             pictureBox15 = new PictureBox();
+            pictureBox16 = new PictureBox();
+            pictureBox17 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)gris).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -64,6 +66,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
             SuspendLayout();
             // 
             // gris
@@ -104,43 +108,52 @@
             // 
             // ElegirGris
             // 
-            ElegirGris.BackColor = Color.RoyalBlue;
+            ElegirGris.BackColor = Color.Transparent;
+            ElegirGris.BackgroundImage = Properties.Resources.botongris__1_;
+            ElegirGris.BackgroundImageLayout = ImageLayout.Stretch;
+            ElegirGris.Cursor = Cursors.Hand;
+            ElegirGris.FlatStyle = FlatStyle.Flat;
             ElegirGris.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirGris.ForeColor = SystemColors.ButtonFace;
-            ElegirGris.Location = new Point(529, 474);
+            ElegirGris.Location = new Point(510, 461);
             ElegirGris.Margin = new Padding(3, 2, 3, 2);
             ElegirGris.Name = "ElegirGris";
-            ElegirGris.Size = new Size(148, 46);
+            ElegirGris.Size = new Size(167, 56);
             ElegirGris.TabIndex = 3;
-            ElegirGris.Text = "ELEGIR";
             ElegirGris.UseVisualStyleBackColor = false;
             ElegirGris.Click += ElegirGris_Click;
             // 
             // ElegirEliezer
             // 
-            ElegirEliezer.BackColor = Color.RoyalBlue;
+            ElegirEliezer.BackColor = Color.Transparent;
+            ElegirEliezer.BackgroundImage = Properties.Resources.BOTON_ELIEZER;
+            ElegirEliezer.BackgroundImageLayout = ImageLayout.Stretch;
+            ElegirEliezer.Cursor = Cursors.Hand;
+            ElegirEliezer.FlatStyle = FlatStyle.Flat;
             ElegirEliezer.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirEliezer.ForeColor = SystemColors.ButtonFace;
-            ElegirEliezer.Location = new Point(275, 473);
+            ElegirEliezer.Location = new Point(271, 470);
             ElegirEliezer.Margin = new Padding(3, 2, 3, 2);
             ElegirEliezer.Name = "ElegirEliezer";
-            ElegirEliezer.Size = new Size(154, 44);
+            ElegirEliezer.Size = new Size(159, 69);
             ElegirEliezer.TabIndex = 4;
-            ElegirEliezer.Text = "ELEGIR";
             ElegirEliezer.UseVisualStyleBackColor = false;
             ElegirEliezer.Click += ElegirEliezer_Click;
             // 
             // ElegirRoand
             // 
-            ElegirRoand.BackColor = Color.RoyalBlue;
+            ElegirRoand.BackColor = Color.Transparent;
+            ElegirRoand.BackgroundImage = Properties.Resources.BOTONROAND;
+            ElegirRoand.BackgroundImageLayout = ImageLayout.Stretch;
+            ElegirRoand.Cursor = Cursors.Hand;
+            ElegirRoand.FlatStyle = FlatStyle.Flat;
             ElegirRoand.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirRoand.ForeColor = SystemColors.ButtonFace;
-            ElegirRoand.Location = new Point(774, 470);
+            ElegirRoand.Location = new Point(745, 461);
             ElegirRoand.Margin = new Padding(3, 2, 3, 2);
             ElegirRoand.Name = "ElegirRoand";
-            ElegirRoand.Size = new Size(149, 47);
+            ElegirRoand.Size = new Size(163, 56);
             ElegirRoand.TabIndex = 5;
-            ElegirRoand.Text = "ELEGIR";
             ElegirRoand.UseVisualStyleBackColor = false;
             ElegirRoand.Click += ElegirRoand_Click;
             // 
@@ -148,9 +161,9 @@
             // 
             pictureBox3.BackColor = Color.Transparent;
             pictureBox3.Image = Properties.Resources.tvfondoseleccion;
-            pictureBox3.Location = new Point(61, -49);
+            pictureBox3.Location = new Point(12, -111);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(1191, 810);
+            pictureBox3.Size = new Size(1269, 882);
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 6;
             pictureBox3.TabStop = false;
@@ -287,6 +300,28 @@
             pictureBox15.TabIndex = 19;
             pictureBox15.TabStop = false;
             // 
+            // pictureBox16
+            // 
+            pictureBox16.BackColor = Color.Transparent;
+            pictureBox16.Image = Properties.Resources.SELECCIONAR__1_;
+            pictureBox16.Location = new Point(302, 101);
+            pictureBox16.Name = "pictureBox16";
+            pictureBox16.Size = new Size(279, 70);
+            pictureBox16.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox16.TabIndex = 20;
+            pictureBox16.TabStop = false;
+            // 
+            // pictureBox17
+            // 
+            pictureBox17.BackColor = Color.Transparent;
+            pictureBox17.Image = Properties.Resources.PERSONAJE__1_;
+            pictureBox17.Location = new Point(603, 101);
+            pictureBox17.Name = "pictureBox17";
+            pictureBox17.Size = new Size(222, 70);
+            pictureBox17.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox17.TabIndex = 21;
+            pictureBox17.TabStop = false;
+            // 
             // ElegirPersonaje
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -295,6 +330,8 @@
             BackgroundImage = Properties.Resources.pixel_art1;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(pictureBox17);
+            Controls.Add(pictureBox16);
             Controls.Add(pictureBox15);
             Controls.Add(pictureBox13);
             Controls.Add(pictureBox14);
@@ -334,6 +371,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox16).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
             ResumeLayout(false);
         }
 
@@ -358,5 +397,7 @@
         private PictureBox pictureBox14;
         private PictureBox pictureBox13;
         private PictureBox pictureBox15;
+        private PictureBox pictureBox16;
+        private PictureBox pictureBox17;
     }
 }

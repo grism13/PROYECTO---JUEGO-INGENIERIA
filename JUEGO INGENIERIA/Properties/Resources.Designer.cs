@@ -113,6 +113,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BOTON_ELIEZER {
+            get {
+                object obj = ResourceManager.GetObject("BOTON ELIEZER", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonazul {
             get {
                 object obj = ResourceManager.GetObject("botonazul", resourceCulture);
@@ -133,9 +143,29 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap botongris__1_ {
+            get {
+                object obj = ResourceManager.GetObject("botongris (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap botonnaranja {
             get {
                 object obj = ResourceManager.GetObject("botonnaranja", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap BOTONROAND {
+            get {
+                object obj = ResourceManager.GetObject("BOTONROAND", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1286,6 +1316,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap PERSONAJE__1_ {
+            get {
+                object obj = ResourceManager.GetObject("PERSONAJE (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pianoeliezer {
             get {
                 object obj = ResourceManager.GetObject("pianoeliezer", resourceCulture);
@@ -1619,6 +1659,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap segunda_imagen_de_la_intro__1_ {
             get {
                 object obj = ResourceManager.GetObject("segunda imagen de la intro (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SELECCIONAR__1_ {
+            get {
+                object obj = ResourceManager.GetObject("SELECCIONAR (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
