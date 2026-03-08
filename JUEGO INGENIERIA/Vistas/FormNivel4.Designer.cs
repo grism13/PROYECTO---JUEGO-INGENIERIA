@@ -28,12 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "FormNivel4";
+            components = new System.ComponentModel.Container();
+            tmrGravedad = new System.Windows.Forms.Timer(components);
+            pbFondo = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pbFondo).BeginInit();
+            SuspendLayout();
+            // 
+            // tmrGravedad
+            // 
+            tmrGravedad.Enabled = true;
+            tmrGravedad.Interval = 20;
+            // 
+            // pbFondo
+            // 
+            pbFondo.Location = new Point(0, 0);
+            pbFondo.Name = "pbFondo";
+            pbFondo.Size = new Size(100, 50);
+            pbFondo.SizeMode = PictureBoxSizeMode.AutoSize;
+            pbFondo.TabIndex = 0;
+            pbFondo.TabStop = false;
+            // 
+            // FormNivel4
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1184, 681);
+            Controls.Add(pbFondo);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "FormNivel4";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "FormNivel4";
+            ((System.ComponentModel.ISupportInitialize)pbFondo).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private System.Windows.Forms.Timer tmrGravedad;
+        private PictureBox pbFondo;
     }
 }
