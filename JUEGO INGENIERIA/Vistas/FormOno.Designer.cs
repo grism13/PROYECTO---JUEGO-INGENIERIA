@@ -37,12 +37,13 @@
             pictureBox5 = new PictureBox();
             pictureBox6 = new PictureBox();
             lblTexto = new Label();
-            cmbOpcionesNPC = new ComboBox();
             pictureBox7 = new PictureBox();
             timerAnimacion = new System.Windows.Forms.Timer(components);
             pbCartaRevelada = new PictureBox();
             pictureBox8 = new PictureBox();
             timerRevelarCarta = new System.Windows.Forms.Timer(components);
+            lblPreguntaActual = new Label();
+            pictureBox9 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -52,6 +53,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -143,16 +145,6 @@
             lblTexto.TabIndex = 6;
             lblTexto.Text = "Cuéntame, futuro ingeniero, ¿qué quieres saber? Selecciona tu pregunta";
             // 
-            // cmbOpcionesNPC
-            // 
-            cmbOpcionesNPC.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbOpcionesNPC.FormattingEnabled = true;
-            cmbOpcionesNPC.Location = new Point(806, 227);
-            cmbOpcionesNPC.Margin = new Padding(3, 2, 3, 2);
-            cmbOpcionesNPC.Name = "cmbOpcionesNPC";
-            cmbOpcionesNPC.Size = new Size(392, 23);
-            cmbOpcionesNPC.TabIndex = 9;
-            // 
             // pictureBox7
             // 
             pictureBox7.BackColor = Color.Transparent;
@@ -196,6 +188,23 @@
             timerRevelarCarta.Interval = 15;
             timerRevelarCarta.Tick += timerRevelarCarta_Tick;
             // 
+            // lblPreguntaActual
+            // 
+            lblPreguntaActual.Location = new Point(877, 222);
+            lblPreguntaActual.Name = "lblPreguntaActual";
+            lblPreguntaActual.Size = new Size(100, 23);
+            lblPreguntaActual.TabIndex = 13;
+            lblPreguntaActual.Text = "label1";
+            lblPreguntaActual.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox9
+            // 
+            pictureBox9.Location = new Point(672, 323);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(100, 50);
+            pictureBox9.TabIndex = 14;
+            pictureBox9.TabStop = false;
+            // 
             // FormOno
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -203,8 +212,9 @@
             BackgroundImage = Properties.Resources.fondoOno;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(pictureBox9);
+            Controls.Add(lblPreguntaActual);
             Controls.Add(pbCartaRevelada);
-            Controls.Add(cmbOpcionesNPC);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox6);
             Controls.Add(pictureBox5);
@@ -229,6 +239,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
         }
 
@@ -241,11 +252,12 @@
         private PictureBox pictureBox5;
         private PictureBox pictureBox6;
         private Label lblTexto;
-        private ComboBox cmbOpcionesNPC;
         private PictureBox pictureBox7;
         private System.Windows.Forms.Timer timerAnimacion;
         private PictureBox pbCartaRevelada;
         private PictureBox pictureBox8;
         private System.Windows.Forms.Timer timerRevelarCarta;
+        private Label lblPreguntaActual;
+        private PictureBox pictureBox9;
     }
 }
