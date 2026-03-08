@@ -42,6 +42,8 @@
             pbCartaRevelada = new PictureBox();
             pictureBox8 = new PictureBox();
             timerRevelarCarta = new System.Windows.Forms.Timer(components);
+            pictureBox9 = new PictureBox();
+            pictureBox10 = new PictureBox();
             lblPreguntaActual = new Label();
             pictureBox9 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -54,6 +56,8 @@
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -205,6 +209,24 @@
             pictureBox9.TabIndex = 14;
             pictureBox9.TabStop = false;
             // 
+            // pictureBox9
+            // 
+            pictureBox9.BackgroundImage = Properties.Resources.pbFlechaIzq;
+            pictureBox9.Location = new Point(713, 408);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(100, 50);
+            pictureBox9.TabIndex = 13;
+            pictureBox9.TabStop = false;
+            // 
+            // pictureBox10
+            // 
+            pictureBox10.Image = Properties.Resources.pbFlechaDer;
+            pictureBox10.Location = new Point(726, 493);
+            pictureBox10.Name = "pictureBox10";
+            pictureBox10.Size = new Size(100, 50);
+            pictureBox10.TabIndex = 14;
+            pictureBox10.TabStop = false;
+            // 
             // FormOno
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -214,6 +236,8 @@
             ClientSize = new Size(1264, 681);
             Controls.Add(pictureBox9);
             Controls.Add(lblPreguntaActual);
+            Controls.Add(pictureBox10);
+            Controls.Add(pictureBox9);
             Controls.Add(pbCartaRevelada);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox6);
@@ -240,6 +264,8 @@
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
             ResumeLayout(false);
         }
 
@@ -259,5 +285,7 @@
         private System.Windows.Forms.Timer timerRevelarCarta;
         private Label lblPreguntaActual;
         private PictureBox pictureBox9;
+        private PictureBox pictureBox9;
+        private PictureBox pictureBox10;
     }
 }
