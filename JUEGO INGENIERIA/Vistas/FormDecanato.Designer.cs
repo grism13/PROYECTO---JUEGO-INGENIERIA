@@ -157,9 +157,9 @@
             // 
             pictureBox15.BackColor = Color.Transparent;
             pictureBox15.Image = Properties.Resources.consejosicon;
-            pictureBox15.Location = new Point(12, 129);
+            pictureBox15.Location = new Point(3, 133);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(32, 52);
+            pictureBox15.Size = new Size(30, 52);
             pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox15.TabIndex = 23;
             pictureBox15.TabStop = false;
@@ -207,7 +207,7 @@
             // 
             // pbZonaActiva
             // 
-            pbZonaActiva.Location = new Point(566, 421);
+            pbZonaActiva.Location = new Point(566, 414);
             pbZonaActiva.Name = "pbZonaActiva";
             pbZonaActiva.Size = new Size(150, 19);
             pbZonaActiva.TabIndex = 5;
@@ -267,9 +267,9 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(583, 471);
+            pbPersonaje.Location = new Point(578, 471);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(114, 175);
+            pbPersonaje.Size = new Size(117, 161);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 11;
             pbPersonaje.TabStop = false;

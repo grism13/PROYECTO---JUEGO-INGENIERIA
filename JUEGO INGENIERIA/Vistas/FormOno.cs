@@ -257,5 +257,10 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             catch { }
         }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            this.Close();    
+        }
     }
 }
