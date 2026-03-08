@@ -193,7 +193,7 @@
             // pictureBox10
             // 
             pictureBox10.BackColor = Color.Transparent;
-            pictureBox10.Image = Properties.Resources.pbFlechaDer;
+            pictureBox10.Image = Properties.Resources.pbFlechaIzq1;
             pictureBox10.Location = new Point(740, 238);
             pictureBox10.Name = "pictureBox10";
             pictureBox10.Size = new Size(60, 61);
