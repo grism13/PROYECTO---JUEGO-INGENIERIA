@@ -275,6 +275,36 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap controlroand {
+            get {
+                object obj = ResourceManager.GetObject("controlroand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap cuphedeliezer {
+            get {
+                object obj = ResourceManager.GetObject("cuphedeliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap descargar {
+            get {
+                object obj = ResourceManager.GetObject("descargar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a a
         ///aaronita
         ///aarónico
@@ -578,6 +608,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap evilgris {
+            get {
+                object obj = ResourceManager.GetObject("evilgris", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap evilgris__1_ {
+            get {
+                object obj = ResourceManager.GetObject("evilgris (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap flavioCentro {
             get {
                 object obj = ResourceManager.GetObject("flavioCentro", resourceCulture);
@@ -661,6 +711,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap flavoCentro3 {
             get {
                 object obj = ResourceManager.GetObject("flavoCentro3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap florgris {
+            get {
+                object obj = ResourceManager.GetObject("florgris", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1007,6 +1067,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap kirbigris {
+            get {
+                object obj = ResourceManager.GetObject("kirbigris", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap kirbinojaogris {
+            get {
+                object obj = ResourceManager.GetObject("kirbinojaogris", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lobueno {
             get {
                 object obj = ResourceManager.GetObject("lobueno", resourceCulture);
@@ -1037,9 +1117,49 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap lororoand {
+            get {
+                object obj = ResourceManager.GetObject("lororoand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap luigieliezer {
+            get {
+                object obj = ResourceManager.GetObject("luigieliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lunaechada {
             get {
                 object obj = ResourceManager.GetObject("lunaechada", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap macotaeliezer {
+            get {
+                object obj = ResourceManager.GetObject("macotaeliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap microgris {
+            get {
+                object obj = ResourceManager.GetObject("microgris", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1166,9 +1286,59 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap pianoeliezer {
+            get {
+                object obj = ResourceManager.GetObject("pianoeliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap picoroand {
+            get {
+                object obj = ResourceManager.GetObject("picoroand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pinguieliezer {
+            get {
+                object obj = ResourceManager.GetObject("pinguieliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pirularoand {
+            get {
+                object obj = ResourceManager.GetObject("pirularoand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap pixel_art {
             get {
                 object obj = ResourceManager.GetObject("pixel art", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pixel_art1 {
+            get {
+                object obj = ResourceManager.GetObject("pixel art1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1189,6 +1359,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap primera_imagen_de_la_intro {
             get {
                 object obj = ResourceManager.GetObject("primera imagen de la intro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap relojroand {
+            get {
+                object obj = ResourceManager.GetObject("relojroand", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1458,6 +1638,46 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap titulo_DEL_JUEGO {
             get {
                 object obj = ResourceManager.GetObject("titulo DEL JUEGO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tvfondoseleccion {
+            get {
+                object obj = ResourceManager.GetObject("tvfondoseleccion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tvparaseleccion {
+            get {
+                object obj = ResourceManager.GetObject("tvparaseleccion", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yoshigris {
+            get {
+                object obj = ResourceManager.GetObject("yoshigris", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yoshiigris {
+            get {
+                object obj = ResourceManager.GetObject("yoshiigris", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

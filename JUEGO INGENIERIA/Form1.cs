@@ -277,5 +277,7 @@ namespace JUEGO_INGENIERIA
             motorMovimiento.Start();
             motorMovimiento.EstaPausado = false;
         }
+
+      
     }
 }
