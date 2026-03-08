@@ -42,10 +42,10 @@
             pbCartaRevelada = new PictureBox();
             pictureBox8 = new PictureBox();
             timerRevelarCarta = new System.Windows.Forms.Timer(components);
-            
+            pictureBox9 = new PictureBox();
             pictureBox10 = new PictureBox();
             lblPreguntaActual = new Label();
-            
+            pictureBox9 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -55,7 +55,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-         
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
             SuspendLayout();
             // 
