@@ -45,6 +45,7 @@
             pbFlechaIzq = new PictureBox();
             lblPreguntaActual = new Label();
             pbFlechaDer = new PictureBox();
+            pictureBox9 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -56,16 +57,17 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbFlechaIzq).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbFlechaDer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = Color.White;
             pictureBox1.Image = Properties.Resources.carta;
-            pictureBox1.Location = new Point(343, 325);
+            pictureBox1.Location = new Point(318, 308);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(133, 170);
+            pictureBox1.Size = new Size(140, 185);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -75,10 +77,10 @@
             // 
             pictureBox2.BackColor = Color.White;
             pictureBox2.Image = Properties.Resources.carta;
-            pictureBox2.Location = new Point(343, 129);
+            pictureBox2.Location = new Point(318, 112);
             pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(133, 170);
+            pictureBox2.Size = new Size(140, 185);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 1;
             pictureBox2.TabStop = false;
@@ -89,10 +91,10 @@
             pictureBox3.BackColor = Color.White;
             pictureBox3.Cursor = Cursors.Hand;
             pictureBox3.Image = Properties.Resources.carta;
-            pictureBox3.Location = new Point(192, 129);
+            pictureBox3.Location = new Point(167, 112);
             pictureBox3.Margin = new Padding(3, 2, 3, 2);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(138, 170);
+            pictureBox3.Size = new Size(145, 185);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 2;
             pictureBox3.TabStop = false;
@@ -102,10 +104,10 @@
             // 
             pictureBox4.BackColor = Color.White;
             pictureBox4.Image = Properties.Resources.carta;
-            pictureBox4.Location = new Point(200, 325);
+            pictureBox4.Location = new Point(175, 308);
             pictureBox4.Margin = new Padding(3, 2, 3, 2);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(130, 170);
+            pictureBox4.Size = new Size(137, 185);
             pictureBox4.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox4.TabIndex = 3;
             pictureBox4.TabStop = false;
@@ -115,10 +117,10 @@
             // 
             pictureBox5.BackColor = Color.White;
             pictureBox5.Image = Properties.Resources.carta;
-            pictureBox5.Location = new Point(489, 129);
+            pictureBox5.Location = new Point(464, 112);
             pictureBox5.Margin = new Padding(3, 2, 3, 2);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(134, 170);
+            pictureBox5.Size = new Size(141, 185);
             pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox5.TabIndex = 4;
             pictureBox5.TabStop = false;
@@ -128,10 +130,10 @@
             // 
             pictureBox6.BackColor = Color.White;
             pictureBox6.Image = Properties.Resources.carta;
-            pictureBox6.Location = new Point(489, 325);
+            pictureBox6.Location = new Point(464, 308);
             pictureBox6.Margin = new Padding(3, 2, 3, 2);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(134, 170);
+            pictureBox6.Size = new Size(141, 185);
             pictureBox6.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox6.TabIndex = 5;
             pictureBox6.TabStop = false;
@@ -167,7 +169,7 @@
             // pbCartaRevelada
             // 
             pbCartaRevelada.BackColor = Color.Transparent;
-            pbCartaRevelada.Location = new Point(877, 294);
+            pbCartaRevelada.Location = new Point(873, 308);
             pbCartaRevelada.Name = "pbCartaRevelada";
             pbCartaRevelada.Size = new Size(200, 287);
             pbCartaRevelada.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -204,6 +206,7 @@
             // 
             // lblPreguntaActual
             // 
+            lblPreguntaActual.BackColor = Color.White;
             lblPreguntaActual.Location = new Point(806, 250);
             lblPreguntaActual.Name = "lblPreguntaActual";
             lblPreguntaActual.Size = new Size(340, 47);
@@ -223,6 +226,19 @@
             pbFlechaDer.TabStop = false;
             pbFlechaDer.Click += pbFlechaDer_Click;
             // 
+            // pictureBox9
+            // 
+            pictureBox9.BackColor = Color.Transparent;
+            pictureBox9.Cursor = Cursors.Hand;
+            pictureBox9.Image = Properties.Resources.botondecerrar;
+            pictureBox9.Location = new Point(21, 24);
+            pictureBox9.Name = "pictureBox9";
+            pictureBox9.Size = new Size(43, 49);
+            pictureBox9.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox9.TabIndex = 16;
+            pictureBox9.TabStop = false;
+            pictureBox9.Click += pictureBox9_Click;
+            // 
             // FormOno
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -230,6 +246,7 @@
             BackgroundImage = Properties.Resources.fondoOno;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(pictureBox9);
             Controls.Add(pbFlechaDer);
             Controls.Add(lblPreguntaActual);
             Controls.Add(pbFlechaIzq);
@@ -260,6 +277,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbFlechaIzq).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbFlechaDer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox9).EndInit();
             ResumeLayout(false);
         }
 
