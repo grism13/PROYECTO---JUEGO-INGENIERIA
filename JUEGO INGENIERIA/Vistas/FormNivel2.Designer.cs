@@ -1,0 +1,61 @@
+﻿namespace JUEGO_INGENIERIA.Vistas
+{
+    partial class FormNivel2
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            timerMusica = new System.Windows.Forms.Timer(components);
+            timerAnimacion = new System.Windows.Forms.Timer(components);
+            SuspendLayout();
+            // 
+            // timerMusica
+            // 
+            timerMusica.Interval = 272;
+            timerMusica.Tick += timerMusica_Tick;
+            // 
+            // timerAnimacion
+            // 
+            timerAnimacion.Interval = 20;
+            timerAnimacion.Tick += timerAnimacion_Tick;
+            // 
+            // FormNivel2
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1180, 644);
+            Name = "FormNivel2";
+            Text = "FormNivel2";
+            Load += FormNivel2_Load;
+            ResumeLayout(false);
+        }
+
+        #endregion
+        private System.Windows.Forms.Timer timerMusica;
+        private System.Windows.Forms.Timer timerAnimacion;
+    }
+}

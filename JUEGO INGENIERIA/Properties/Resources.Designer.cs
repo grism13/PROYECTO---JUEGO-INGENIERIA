@@ -171,6 +171,40 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a 4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///4
+        ///3
+        ///0
+        ///0
+        ///0
+        ///3
+        ///4
+        ///1
+        ///0
+        ///2
+        ///4
+        ///1.
+        /// </summary>
+        internal static string cancion {
+            get {
+                return ResourceManager.GetString("cancion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap carta {
