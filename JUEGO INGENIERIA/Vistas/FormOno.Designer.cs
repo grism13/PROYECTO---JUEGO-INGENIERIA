@@ -42,9 +42,9 @@
             pbCartaRevelada = new PictureBox();
             pictureBox8 = new PictureBox();
             timerRevelarCarta = new System.Windows.Forms.Timer(components);
-            pictureBox10 = new PictureBox();
+            pbFlechaIzq = new PictureBox();
             lblPreguntaActual = new Label();
-            pictureBox11 = new PictureBox();
+            pbFlechaDer = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -54,8 +54,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFlechaIzq).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbFlechaDer).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -190,16 +190,17 @@
             timerRevelarCarta.Interval = 15;
             timerRevelarCarta.Tick += timerRevelarCarta_Tick;
             // 
-            // pictureBox10
+            // pbFlechaIzq
             // 
-            pictureBox10.BackColor = Color.Transparent;
-            pictureBox10.Image = Properties.Resources.pbFlechaIzq1;
-            pictureBox10.Location = new Point(740, 238);
-            pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(60, 61);
-            pictureBox10.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox10.TabIndex = 14;
-            pictureBox10.TabStop = false;
+            pbFlechaIzq.BackColor = Color.Transparent;
+            pbFlechaIzq.Image = Properties.Resources.pbFlechaIzq1;
+            pbFlechaIzq.Location = new Point(748, 250);
+            pbFlechaIzq.Name = "pbFlechaIzq";
+            pbFlechaIzq.Size = new Size(52, 49);
+            pbFlechaIzq.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFlechaIzq.TabIndex = 14;
+            pbFlechaIzq.TabStop = false;
+            pbFlechaIzq.Click += pbFlechaIzq_Click;
             // 
             // lblPreguntaActual
             // 
@@ -210,16 +211,17 @@
             lblPreguntaActual.Text = "label1";
             lblPreguntaActual.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // pictureBox11
+            // pbFlechaDer
             // 
-            pictureBox11.BackColor = Color.Transparent;
-            pictureBox11.Image = Properties.Resources.pbFlechaDer;
-            pictureBox11.Location = new Point(1152, 250);
-            pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(52, 49);
-            pictureBox11.SizeMode = PictureBoxSizeMode.Zoom;
-            pictureBox11.TabIndex = 15;
-            pictureBox11.TabStop = false;
+            pbFlechaDer.BackColor = Color.Transparent;
+            pbFlechaDer.Image = Properties.Resources.pbFlechaDer;
+            pbFlechaDer.Location = new Point(1152, 250);
+            pbFlechaDer.Name = "pbFlechaDer";
+            pbFlechaDer.Size = new Size(52, 49);
+            pbFlechaDer.SizeMode = PictureBoxSizeMode.Zoom;
+            pbFlechaDer.TabIndex = 15;
+            pbFlechaDer.TabStop = false;
+            pbFlechaDer.Click += pbFlechaDer_Click;
             // 
             // FormOno
             // 
@@ -228,9 +230,9 @@
             BackgroundImage = Properties.Resources.fondoOno;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
-            Controls.Add(pictureBox11);
+            Controls.Add(pbFlechaDer);
             Controls.Add(lblPreguntaActual);
-            Controls.Add(pictureBox10);
+            Controls.Add(pbFlechaIzq);
             Controls.Add(pbCartaRevelada);
             Controls.Add(lblTexto);
             Controls.Add(pictureBox6);
@@ -256,8 +258,8 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox7).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbCartaRevelada).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox8).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox10).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox11).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFlechaIzq).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbFlechaDer).EndInit();
             ResumeLayout(false);
         }
 
@@ -277,7 +279,7 @@
         private System.Windows.Forms.Timer timerRevelarCarta;
         private Label lblPreguntaActual;
         private PictureBox pictureBox9;
-        private PictureBox pictureBox10;
-        private PictureBox pictureBox11;
+        private PictureBox pbFlechaIzq;
+        private PictureBox pbFlechaDer;
     }
 }

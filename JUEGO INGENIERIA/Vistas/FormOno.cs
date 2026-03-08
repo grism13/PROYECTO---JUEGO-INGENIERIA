@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace JUEGO_INGENIERIA.Vistas
@@ -19,10 +20,16 @@ namespace JUEGO_INGENIERIA.Vistas
         int topOriginalCarta;
         // Ajusta estas coordenadas (X, Y) al centro de tu formulario
         private Point puntoCentro = new Point(340, 200);
+        // La 'lista' guarda todas las preguntas como si fuera un inventario
+        private List<string> listaPreguntas = new List<string>();
+
+        // El 'índice' funciona como un contador matemático que señala en qué número de pregunta se está
+        private int indicePregunta = 0;
 
         public FormOno()
         {
             InitializeComponent();
+            AplicarFuente();
             this.DoubleBuffered = true;
         }
 
@@ -33,13 +40,13 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormOno_Load(object sender, EventArgs e)
         {
-            cmbOpcionesNPC.Items.Clear();
-            cmbOpcionesNPC.Items.Add("¿Crees que logré pasar Matemática este semestre sin ir a reparación?");
-            cmbOpcionesNPC.Items.Add("¿Será que por fin saco un 20 en el proyecto de Programación?");
-            cmbOpcionesNPC.Items.Add("¿Sobreviviré a Circuitos sin quemar la protoboard?");
-            cmbOpcionesNPC.Items.Add("¿Cuántas tazas de café necesito para entender esta guía antes del parcial?");
-            cmbOpcionesNPC.Items.Add("¿Crees que el profesor me acepte el código?");
-            cmbOpcionesNPC.SelectedIndex = 0;
+            listaPreguntas.Add("¿Crees que logré pasar Matemática este semestre sin ir a reparación?");
+            listaPreguntas.Add("¿Será que por fin saco un 20 en el proyecto de Programación?");
+            listaPreguntas.Add("¿Sobreviviré a Circuitos sin quemar la protoboard?");
+            listaPreguntas.Add("¿Cuántas tazas de café necesito para entender esta guía antes del parcial?");
+            listaPreguntas.Add("¿Crees que el profesor me acepte el código?");
+
+            lblPreguntaActual.Text = listaPreguntas[0];
 
             // 1. Guardamos las cartas en la lista
             listaCartas = new List<PictureBox> { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6 };
@@ -69,7 +76,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // 3. Calculamos la respuesta y la guardamos en la memoria temporal (SIN MOSTRARLA)
             numeroPendiente = ObtenerNumeroAleatorio(1, 5);
-            preguntaPendiente = cmbOpcionesNPC.SelectedItem.ToString();
+            preguntaPendiente = lblPreguntaActual.Text;
         }
 
         // Según el número, asignamos la frase y la imagen real de la carta
@@ -206,6 +213,49 @@ namespace JUEGO_INGENIERIA.Vistas
                 pbCartaRevelada.Top = topOriginalCarta;
                 timerRevelarCarta.Stop();
             }
+        }
+
+        private void pbFlechaDer_Click(object sender, EventArgs e)
+        {
+            indicePregunta++; // Avanza una posición hacia adelante
+
+            // Si se llegó al final de la lista, el contador vuelve al principio
+            if (indicePregunta >= listaPreguntas.Count)
+            {
+                indicePregunta = 0;
+            }
+
+            // Finalmente, se actualiza el texto visible en la pantalla
+            lblPreguntaActual.Text = listaPreguntas[indicePregunta];
+        }
+
+        private void pbFlechaIzq_Click(object sender, EventArgs e)
+        {
+            indicePregunta--; // Retrocede una posición
+
+            // Si bajó de cero, salta a la última pregunta disponible
+            if (indicePregunta < 0)
+            {
+                indicePregunta = listaPreguntas.Count - 1;
+            }
+
+            // Se actualiza el texto visible
+            lblPreguntaActual.Text = listaPreguntas[indicePregunta];
+        }
+        private void AplicarFuente()
+        {
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                PrivateFontCollection pfc = new PrivateFontCollection();
+                pfc.AddFontFile(rutaFuente);
+
+                Font fuenteRetro = new Font(pfc.Families[0], 9f);
+
+                lblTexto.Font = fuenteRetro;
+                lblPreguntaActual.Font = fuenteRetro; // El nuevo Label del carrusel
+            }
+            catch { }
         }
     }
 }
