@@ -217,6 +217,56 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Carta1 {
+            get {
+                object obj = ResourceManager.GetObject("Carta1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Carta2 {
+            get {
+                object obj = ResourceManager.GetObject("Carta2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Carta3 {
+            get {
+                object obj = ResourceManager.GetObject("Carta3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Carta4 {
+            get {
+                object obj = ResourceManager.GetObject("Carta4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Carta5 {
+            get {
+                object obj = ResourceManager.GetObject("Carta5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap consejosicon {
             get {
                 object obj = ResourceManager.GetObject("consejosicon", resourceCulture);
@@ -1036,6 +1086,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap nubedetexto1 {
+            get {
+                object obj = ResourceManager.GetObject("nubedetexto1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap oswald_version_mini {
             get {
                 object obj = ResourceManager.GetObject("oswald version mini", resourceCulture);
@@ -1069,6 +1129,36 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap paneldecanato1 {
             get {
                 object obj = ResourceManager.GetObject("paneldecanato1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pbFlechaDer {
+            get {
+                object obj = ResourceManager.GetObject("pbFlechaDer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pbFlechaIzq {
+            get {
+                object obj = ResourceManager.GetObject("pbFlechaIzq", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap pbFlechaIzq1 {
+            get {
+                object obj = ResourceManager.GetObject("pbFlechaIzq1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

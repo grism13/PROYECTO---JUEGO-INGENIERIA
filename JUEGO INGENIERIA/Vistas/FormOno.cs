@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace JUEGO_INGENIERIA.Vistas
@@ -13,13 +14,22 @@ namespace JUEGO_INGENIERIA.Vistas
         private Dictionary<PictureBox, Point> posicionesOriginales = new Dictionary<PictureBox, Point>();
         private List<PictureBox> listaCartas = new List<PictureBox>();
         private bool moviendoAlCentro = true;
-
+        private int numeroPendiente = 0;
+        private string preguntaPendiente = "";
+        int altoOriginalCarta;
+        int topOriginalCarta;
         // Ajusta estas coordenadas (X, Y) al centro de tu formulario
         private Point puntoCentro = new Point(340, 200);
+        // La 'lista' guarda todas las preguntas como si fuera un inventario
+        private List<string> listaPreguntas = new List<string>();
+
+        // El 'índice' funciona como un contador matemático que señala en qué número de pregunta se está
+        private int indicePregunta = 0;
 
         public FormOno()
         {
             InitializeComponent();
+            AplicarFuente();
             this.DoubleBuffered = true;
         }
 
@@ -30,16 +40,19 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormOno_Load(object sender, EventArgs e)
         {
-            cmbOpcionesNPC.Items.Clear();
-            cmbOpcionesNPC.Items.Add("¿Crees que logré pasar Matemática este semestre sin ir a reparación?");
-            cmbOpcionesNPC.Items.Add("¿Será que por fin saco un 20 en el proyecto de Programación?");
-            cmbOpcionesNPC.Items.Add("¿Sobreviviré a Circuitos sin quemar la protoboard?");
-            cmbOpcionesNPC.Items.Add("¿Cuántas tazas de café necesito para entender esta guía antes del parcial?");
-            cmbOpcionesNPC.Items.Add("¿Crees que el profesor me acepte el código?");
-            cmbOpcionesNPC.SelectedIndex = 0;
+            listaPreguntas.Add("¿Crees que logré pasar Matemática este semestre sin ir a reparación?");
+            listaPreguntas.Add("¿Será que por fin saco un 20 en el proyecto de Programación?");
+            listaPreguntas.Add("¿Sobreviviré a Circuitos sin quemar la protoboard?");
+            listaPreguntas.Add("¿Cuántas tazas de café necesito para entender esta guía antes del parcial?");
+            listaPreguntas.Add("¿Crees que el profesor me acepte el código?");
+
+            lblPreguntaActual.Text = listaPreguntas[0];
 
             // 1. Guardamos las cartas en la lista
             listaCartas = new List<PictureBox> { pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6 };
+            altoOriginalCarta = pbCartaRevelada.Height;
+            topOriginalCarta = pbCartaRevelada.Top;
+            pbCartaRevelada.Height = 0; // La escondemos al principio
 
             // 2. Registramos la posición inicial de cada una
             foreach (var carta in listaCartas)
@@ -53,26 +66,58 @@ namespace JUEGO_INGENIERIA.Vistas
             // Si la animación ya está corriendo, no hacemos nada
             if (timerAnimacion.Enabled) return;
 
-            // Iniciamos la animación hacia el centro
+            // 1. Ocultamos la carta revelada y el texto por si es la segunda vez que se juega
+            pbCartaRevelada.Image = null;
+            lblTexto.Text = "";
+
+            // 2. Iniciamos la animación hacia el centro
             moviendoAlCentro = true;
             timerAnimacion.Start();
 
-            // Lógica del juego
-            int numeroGenerado = ObtenerNumeroAleatorio(1, 5);
-            string preguntaSeleccionada = cmbOpcionesNPC.SelectedItem.ToString();
+            // 3. Calculamos la respuesta y la guardamos en la memoria temporal (SIN MOSTRARLA)
+            numeroPendiente = ObtenerNumeroAleatorio(1, 5);
+            preguntaPendiente = lblPreguntaActual.Text;
+        }
+
+        // Según el número, asignamos la frase y la imagen real de la carta
+
+        // IMPORTANTE: Cambiar "Properties.Resources.Carta1" por los nombres reales de las imágenes en el proyecto
+
+        private void RevelarResultadoFinal()
+        {
             string expresionRespuesta = "";
 
-            switch (numeroGenerado)
+            switch (numeroPendiente)
             {
-                case 1: expresionRespuesta = "Uy..."; break;
-                case 2: expresionRespuesta = "Mmm..."; break;
-                case 3: expresionRespuesta = "Bueno, no está mal"; break;
-                case 4: expresionRespuesta = "¡Eso suena prometedor!"; break;
-                case 5: expresionRespuesta = "¡Wow, eso es increíble!"; break;
+                case 1:
+                    expresionRespuesta = "Uy...";
+                    pbCartaRevelada.Image = Properties.Resources.Carta1;
+                    break;
+                case 2:
+                    expresionRespuesta = "Mmm...";
+                    pbCartaRevelada.Image = Properties.Resources.Carta2;
+                    break;
+                case 3:
+                    expresionRespuesta = "Bueno, no está mal";
+                    pbCartaRevelada.Image = Properties.Resources.Carta3;
+                    break;
+                case 4:
+                    expresionRespuesta = "¡Eso suena prometedor!";
+                    pbCartaRevelada.Image = Properties.Resources.Carta4;
+                    break;
+                case 5:
+                    expresionRespuesta = "¡Wow, eso es increíble!";
+                    pbCartaRevelada.Image = Properties.Resources.Carta5;
+                    break;
             }
+            // Se aplasta la carta y se empuja hacia abajo
+            pbCartaRevelada.Height = 0;
+            pbCartaRevelada.Top = topOriginalCarta + altoOriginalCarta;
 
-            lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroGenerado} de 5 a tu pregunta:\n{preguntaSeleccionada}";
-            return;
+            // ¡Se enciende la animación!
+            timerRevelarCarta.Start();
+
+            lblTexto.Text = $"{expresionRespuesta} Tienes un {numeroPendiente} de 5 a tu pregunta:\n{preguntaPendiente}";
         }
 
 
@@ -109,10 +154,10 @@ namespace JUEGO_INGENIERIA.Vistas
         private void timerAnimacion_Tick(object sender, EventArgs e)
         {
             bool todasLlegaron = true;
-            int velocidad = 14; 
+            int velocidad = 14;
             foreach (var carta in listaCartas)
             {
-                
+
                 Point destino = moviendoAlCentro ? puntoCentro : posicionesOriginales[carta];
 
                 if (Math.Abs(carta.Left - destino.X) > velocidad)
@@ -125,7 +170,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     carta.Left = destino.X;
                 }
 
-                
+
                 if (Math.Abs(carta.Top - destino.Y) > velocidad)
                 {
                     carta.Top += (carta.Top < destino.Y) ? velocidad : -velocidad;
@@ -147,10 +192,70 @@ namespace JUEGO_INGENIERIA.Vistas
                 else
                 {
                     timerAnimacion.Stop();
+                    RevelarResultadoFinal();
                 }
             }
         }
 
+        private void timerRevelarCarta_Tick(object sender, EventArgs e)
+        {
+            int velocidadAparicion = 15;
 
+            if (pbCartaRevelada.Height < altoOriginalCarta)
+            {
+                pbCartaRevelada.Height += velocidadAparicion;
+                pbCartaRevelada.Top -= velocidadAparicion;
+            }
+            else
+            {
+                // Llegó a su tamaño máximo, se ajusta y se apaga el motor
+                pbCartaRevelada.Height = altoOriginalCarta;
+                pbCartaRevelada.Top = topOriginalCarta;
+                timerRevelarCarta.Stop();
+            }
+        }
+
+        private void pbFlechaDer_Click(object sender, EventArgs e)
+        {
+            indicePregunta++; // Avanza una posición hacia adelante
+
+            // Si se llegó al final de la lista, el contador vuelve al principio
+            if (indicePregunta >= listaPreguntas.Count)
+            {
+                indicePregunta = 0;
+            }
+
+            // Finalmente, se actualiza el texto visible en la pantalla
+            lblPreguntaActual.Text = listaPreguntas[indicePregunta];
+        }
+
+        private void pbFlechaIzq_Click(object sender, EventArgs e)
+        {
+            indicePregunta--; // Retrocede una posición
+
+            // Si bajó de cero, salta a la última pregunta disponible
+            if (indicePregunta < 0)
+            {
+                indicePregunta = listaPreguntas.Count - 1;
+            }
+
+            // Se actualiza el texto visible
+            lblPreguntaActual.Text = listaPreguntas[indicePregunta];
+        }
+        private void AplicarFuente()
+        {
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                PrivateFontCollection pfc = new PrivateFontCollection();
+                pfc.AddFontFile(rutaFuente);
+
+                Font fuenteRetro = new Font(pfc.Families[0], 9f);
+
+                lblTexto.Font = fuenteRetro;
+                lblPreguntaActual.Font = fuenteRetro; // El nuevo Label del carrusel
+            }
+            catch { }
+        }
     }
 }
