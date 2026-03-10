@@ -3,22 +3,28 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using JUEGO_INGENIERIA.Modelos;
+using JUEGO_INGENIERIA.Properties;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormNivel3 : Form
     {
+        // --- IMAGEN DE FONDO Y VARIABLES SEAMLESS (SCROLL INFINITO) ---
+        Image fondoNivel3;
+        int fondoX = 0;
+        int velocidadFondo = 7; // Fondo rapidito para dar sensación de velocidad
+
         // --- VARIABLES DEL JUGADOR ---
         int jugadorX = 50;
         int jugadorY = 300;
-        int velocidadJugador = 15;
+        int velocidadJugador = 15; // ¡Velocidad original restaurada!
         int tamañoJugador = 50;
 
         int vidasJugador = 3;
         int tiempoInmunidad = 0;
 
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
-        int velocidadBala = 25;
+        int velocidadBala = 25; // ¡Disparos a la velocidad de la luz originales!
         int cooldownDisparo = 0;
 
         bool moverArriba = false;
@@ -33,7 +39,7 @@ namespace JUEGO_INGENIERIA.Vistas
         int bossY = 50;
         int tamañoBoss = 150;
         int vidaBoss = 1500;
-        int velocidadBoss = 8;
+        int velocidadBoss = 8; // Velocidad original restaurada
 
         bool bossSube = false;
         bool bossAvanza = true;
@@ -53,6 +59,12 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
+
+            // CARGAMOS LA IMAGEN AQUÍ (1 SOLA VEZ AL INICIAR)
+            fondoNivel3 = (Image)Properties.Resources.ResourceManager.GetObject("FondoNivel3");
+
+            // --- INYECCIÓN DE 60 FPS ---
+            tmrGameLoop.Interval = 16;
 
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -87,6 +99,13 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
+            // --- SCROLL INFINITO DEL FONDO (SEAMLESS) ---
+            fondoX -= velocidadFondo;
+            if (fondoX <= -pnlEscenario.Width)
+            {
+                fondoX = 0;
+            }
+
             // --- 0. CRONÓMETRO DE INMUNIDAD (I-Frames) ---
             if (tiempoInmunidad > 0)
             {
@@ -109,7 +128,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 nuevaBala.Y = jugadorY + (tamañoJugador / 2) - 5;
                 nuevaBala.Tag = "bala_jugador";
                 balasJugador.Add(nuevaBala);
-                cooldownDisparo = 5;
+                cooldownDisparo = 6; // Ajuste fino para que sea metralleta pero no sature
             }
 
             for (int i = balasJugador.Count - 1; i >= 0; i--)
@@ -228,8 +247,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else // FASE 3
                     {
-                        // BALANCEO FASE 3: 
-                        velocidadBoss = 15; // Un poco menos rápido que antes
+                        velocidadBoss = 15;
 
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
@@ -240,7 +258,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         else balaMala.Tag = "bala_boss_rebotona_sube";
 
                         balasBoss.Add(balaMala);
-                        cooldownAtaqueBoss = 13; // Aumentamos la recarga para crear más "espacio" entre balas
+                        cooldownAtaqueBoss = 13;
                     }
                 }
             }
@@ -248,6 +266,7 @@ namespace JUEGO_INGENIERIA.Vistas
             // --- 4. MOVER BALAS DEL PROFESOR Y DAÑO AL JUGADOR ---
             Rectangle hitboxJugador = new Rectangle(jugadorX, jugadorY, tamañoJugador, tamañoJugador);
 
+            // ¡Velocidades originales de balas restauradas!
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
                 balasBoss[i].X -= 15;
@@ -288,7 +307,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     if (tiempoInmunidad <= 0)
                     {
                         vidasJugador--;
-                        tiempoInmunidad = 100; // 2 SEGUNDOS I-FRAMES
+                        tiempoInmunidad = 100; // I-FRAMES
 
                         if (vidasJugador <= 0)
                         {
@@ -308,7 +327,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
-            // --- 5. DAÑO POR CHOCAR CONTRA MARCEL (NUEVO) ---
+            // --- 5. DAÑO POR CHOCAR CONTRA MARCEL ---
             if (vidaBoss > 0)
             {
                 Rectangle hitboxBoss = new Rectangle(bossX, bossY, tamañoBoss, tamañoBoss);
@@ -316,7 +335,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 if (hitboxJugador.IntersectsWith(hitboxBoss) && tiempoInmunidad <= 0)
                 {
                     vidasJugador--;
-                    tiempoInmunidad = 100; // 2 SEGUNDOS I-FRAMES por chocar
+                    tiempoInmunidad = 100; // I-FRAMES por chocar
 
                     if (vidasJugador <= 0)
                     {
@@ -335,6 +354,17 @@ namespace JUEGO_INGENIERIA.Vistas
         // --- EL PINTOR ---
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
+            // --- 0. DIBUJAR EL FONDO EN MOVIMIENTO (SEAMLESS) ---
+            if (fondoNivel3 != null)
+            {
+                e.Graphics.DrawImage(fondoNivel3, fondoX, 0, pnlEscenario.Width, pnlEscenario.Height);
+                e.Graphics.DrawImage(fondoNivel3, fondoX + pnlEscenario.Width, 0, pnlEscenario.Width, pnlEscenario.Height);
+            }
+            else
+            {
+                e.Graphics.Clear(Color.FromArgb(20, 20, 30));
+            }
+
             // 1. Dibujar jugador (Con I-Frames)
             if (tiempoInmunidad > 0)
             {

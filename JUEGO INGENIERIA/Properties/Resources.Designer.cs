@@ -838,6 +838,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FondoNivel3 {
+            get {
+                object obj = ResourceManager.GetObject("FondoNivel3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondoOno {
             get {
                 object obj = ResourceManager.GetObject("fondoOno", resourceCulture);
