@@ -27,7 +27,7 @@ public partial class FormDecanato : Form
     private Image imgFlavioHablando3;
     private Image imgFlavioTranquilo;
     private Image imgFlavioActual;
-    public PictureBox pbPuertaSalida; // Nva puerta
+    
     public FormDecanato(Jugador jugadorRecibido)
     {
         InitializeComponent();
@@ -57,16 +57,8 @@ public partial class FormDecanato : Form
             this.Controls.Add(pbPersonaje);
         }
 
-        // Inicializar la puerta de salida
-        pbPuertaSalida = new PictureBox();
-        pbPuertaSalida.Name = "pbPuertaSalida";
-        pbPuertaSalida.Size = new Size(50, 50); // Tamaño sugerido
-                                                // Posicionar puerta en algún lugar visible o inferior (Ajustar Location a necesidad, ej: esquina inf-izq)
-        pbPuertaSalida.Location = new Point(10, this.ClientSize.Height - 60);
-        pbPuertaSalida.BackColor = Color.Brown; // Un color visible para distinguirla rápido
-                                                // Atributos clave para que no parpadee si es transparente y un TAG o evento
-        pbPuertaSalida.Tag = "puerta";
-        this.Controls.Add(pbPuertaSalida);
+        
+
 
         DoubleBuffered = true;
         motorMovimiento = new FormMovimiento(this, pbPersonaje);

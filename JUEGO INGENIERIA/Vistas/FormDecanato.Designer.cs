@@ -58,6 +58,7 @@
             pictureBox13 = new PictureBox();
             pictureBox14 = new PictureBox();
             panelInfo = new Panel();
+            pbPuertaSalida = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pbMensaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
@@ -80,6 +81,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             panelInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -398,6 +400,16 @@
             panelInfo.Size = new Size(525, 177);
             panelInfo.TabIndex = 22;
             // 
+            // pbPuertaSalida
+            // 
+            pbPuertaSalida.BackColor = Color.Transparent;
+            pbPuertaSalida.Location = new Point(321, 666);
+            pbPuertaSalida.Name = "pbPuertaSalida";
+            pbPuertaSalida.Size = new Size(604, 23);
+            pbPuertaSalida.TabIndex = 23;
+            pbPuertaSalida.TabStop = false;
+            pbPuertaSalida.Tag = "puerta";
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -405,6 +417,7 @@
             BackgroundImage = Properties.Resources.fondodecanato;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1264, 681);
+            Controls.Add(pbPuertaSalida);
             Controls.Add(panelInfo);
             Controls.Add(pictureBox14);
             Controls.Add(pictureBox13);
@@ -453,6 +466,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             panelInfo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).EndInit();
             ResumeLayout(false);
         }
 
@@ -486,5 +500,6 @@
         private PictureBox pictureBox14;
         private Panel panelInfo;
         private PictureBox pictureBox15;
+        private PictureBox pbPuertaSalida;
     }
 }
