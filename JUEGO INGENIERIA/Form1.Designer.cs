@@ -1415,7 +1415,7 @@
             pnlConfirmacionNivel1.Controls.Add(lblPreguntaNivel1);
             pnlConfirmacionNivel1.Controls.Add(btnNoNivel1);
             pnlConfirmacionNivel1.Controls.Add(btnSiNivel1);
-            pnlConfirmacionNivel1.Location = new Point(452, 226);
+            pnlConfirmacionNivel1.Location = new Point(455, 223);
             pnlConfirmacionNivel1.Name = "pnlConfirmacionNivel1";
             pnlConfirmacionNivel1.Size = new Size(370, 227);
             pnlConfirmacionNivel1.TabIndex = 116;
@@ -1463,13 +1463,14 @@
             // 
             // pbPuertaNivel5
             // 
-            pbPuertaNivel5.BackColor = Color.Transparent;
-            pbPuertaNivel5.Location = new Point(522, 473);
+            pbPuertaNivel5.BackColor = Color.Chartreuse;
+            pbPuertaNivel5.Location = new Point(619, 288);
             pbPuertaNivel5.Margin = new Padding(3, 2, 3, 2);
             pbPuertaNivel5.Name = "pbPuertaNivel5";
             pbPuertaNivel5.Size = new Size(26, 8);
             pbPuertaNivel5.TabIndex = 117;
             pbPuertaNivel5.TabStop = false;
+            pbPuertaNivel5.Visible = false;
             // 
             // pictureBox100
             // 
