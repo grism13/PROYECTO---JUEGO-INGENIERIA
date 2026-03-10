@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ElegirPersonaje));
             gris = new PictureBox();
             pictureBox1 = new PictureBox();
@@ -50,6 +51,7 @@
             pictureBox15 = new PictureBox();
             pictureBox16 = new PictureBox();
             pictureBox17 = new PictureBox();
+            timerOrbitaPersonaje1 = new System.Windows.Forms.Timer(components);
             ((System.ComponentModel.ISupportInitialize)gris).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -322,6 +324,10 @@
             pictureBox17.TabIndex = 21;
             pictureBox17.TabStop = false;
             // 
+            // timerOrbitaPersonaje1
+            // 
+            timerOrbitaPersonaje1.Interval = 30;
+            // 
             // ElegirPersonaje
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -399,5 +405,6 @@
         private PictureBox pictureBox15;
         private PictureBox pictureBox16;
         private PictureBox pictureBox17;
+        private System.Windows.Forms.Timer timerOrbitaPersonaje1;
     }
 }
