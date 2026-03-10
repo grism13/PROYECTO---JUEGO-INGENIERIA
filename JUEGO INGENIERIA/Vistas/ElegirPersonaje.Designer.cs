@@ -114,6 +114,7 @@
             ElegirGris.BackgroundImage = Properties.Resources.botongris__1_;
             ElegirGris.BackgroundImageLayout = ImageLayout.Stretch;
             ElegirGris.Cursor = Cursors.Hand;
+            ElegirGris.FlatAppearance.BorderSize = 0;
             ElegirGris.FlatStyle = FlatStyle.Flat;
             ElegirGris.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirGris.ForeColor = SystemColors.ButtonFace;
@@ -131,6 +132,7 @@
             ElegirEliezer.BackgroundImage = Properties.Resources.BOTON_ELIEZER;
             ElegirEliezer.BackgroundImageLayout = ImageLayout.Stretch;
             ElegirEliezer.Cursor = Cursors.Hand;
+            ElegirEliezer.FlatAppearance.BorderSize = 0;
             ElegirEliezer.FlatStyle = FlatStyle.Flat;
             ElegirEliezer.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirEliezer.ForeColor = SystemColors.ButtonFace;
@@ -148,6 +150,7 @@
             ElegirRoand.BackgroundImage = Properties.Resources.BOTONROAND;
             ElegirRoand.BackgroundImageLayout = ImageLayout.Stretch;
             ElegirRoand.Cursor = Cursors.Hand;
+            ElegirRoand.FlatAppearance.BorderSize = 0;
             ElegirRoand.FlatStyle = FlatStyle.Flat;
             ElegirRoand.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             ElegirRoand.ForeColor = SystemColors.ButtonFace;

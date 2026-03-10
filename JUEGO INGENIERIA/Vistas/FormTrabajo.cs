@@ -1,10 +1,11 @@
-﻿using System;
+﻿using JUEGO_INGENIERIA.Modelos; // Importante para usar la clase Jugador
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Forms;
 using System.IO;
 using System.Text.Json;
-using JUEGO_INGENIERIA.Modelos; // Importante para usar la clase Jugador
+using System.Drawing.Text;
+using System.Windows.Forms;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -26,6 +27,7 @@ namespace JUEGO_INGENIERIA.Vistas
         public FormTrabajo(Jugador jugadorRecibido)
         {
             InitializeComponent();
+            AplicarFuente();
             this.DoubleBuffered = true;
 
             // Guardamos los datos del jugador
@@ -74,11 +76,6 @@ namespace JUEGO_INGENIERIA.Vistas
         private void AsignarNuevaMesa()
         {
             mesaIndicada = generadorAleatorio.Next(1, 5);
-
-            pbMesa1.BackColor = Color.Blue;
-            pbMesa2.BackColor = Color.Blue;
-            pbMesa3.BackColor = Color.Blue;
-            pbMesa4.BackColor = Color.Blue;
 
             if (lblMesaDestino != null)
             {
@@ -202,6 +199,40 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 this.Close();
             }
+        }
+        private void AplicarFuente()
+        {
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                PrivateFontCollection pfc = new PrivateFontCollection();
+                pfc.AddFontFile(rutaFuente);
+
+                Font fuenteRetro = new Font(pfc.Families[0], 11f);
+
+                lblTiempo.Font = fuenteRetro;
+                lblDocumentos.Font = fuenteRetro;
+                lblEntregados.Font = fuenteRetro;
+                lblMesaDestino.Font = fuenteRetro;
+                label1.Font = fuenteRetro;
+                label2.Font = fuenteRetro;
+                label3.Font = fuenteRetro;
+                label4.Font = fuenteRetro; 
+            }
+            catch { }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
