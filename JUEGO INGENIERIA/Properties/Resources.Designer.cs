@@ -93,6 +93,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap alexis {
+            get {
+                object obj = ResourceManager.GetObject("alexis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_siguiente {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente", resourceCulture);
@@ -798,6 +808,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondoformtrabajo {
+            get {
+                object obj = ResourceManager.GetObject("fondoformtrabajo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondomapa {
             get {
                 object obj = ResourceManager.GetObject("fondomapa", resourceCulture);
@@ -841,6 +861,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap fondoOno {
             get {
                 object obj = ResourceManager.GetObject("fondoOno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gacielita {
+            get {
+                object obj = ResourceManager.GetObject("gacielita", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1117,6 +1147,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap libreria {
+            get {
+                object obj = ResourceManager.GetObject("libreria", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap lobueno {
             get {
                 object obj = ResourceManager.GetObject("lobueno", resourceCulture);
@@ -1180,6 +1220,36 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap macotaeliezer {
             get {
                 object obj = ResourceManager.GetObject("macotaeliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mesa {
+            get {
+                object obj = ResourceManager.GetObject("mesa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mesa1 {
+            get {
+                object obj = ResourceManager.GetObject("mesa1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mesa2 {
+            get {
+                object obj = ResourceManager.GetObject("mesa2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
