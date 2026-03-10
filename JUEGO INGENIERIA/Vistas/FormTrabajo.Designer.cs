@@ -78,7 +78,7 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(701, 281);
+            pbPersonaje.Location = new Point(657, 281);
             pbPersonaje.Margin = new Padding(3, 2, 3, 2);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(100, 125);
@@ -151,30 +151,30 @@
             // 
             // lblEntregados
             // 
-            lblEntregados.AutoSize = true;
-            lblEntregados.Location = new Point(13, 63);
+            lblEntregados.Location = new Point(14, 85);
             lblEntregados.Name = "lblEntregados";
-            lblEntregados.Size = new Size(38, 15);
+            lblEntregados.Size = new Size(381, 22);
             lblEntregados.TabIndex = 2;
             lblEntregados.Text = "label3";
+            lblEntregados.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblDocumentos
             // 
-            lblDocumentos.AutoSize = true;
-            lblDocumentos.Location = new Point(13, 36);
+            lblDocumentos.Location = new Point(13, 46);
             lblDocumentos.Name = "lblDocumentos";
-            lblDocumentos.Size = new Size(38, 15);
+            lblDocumentos.Size = new Size(380, 23);
             lblDocumentos.TabIndex = 1;
             lblDocumentos.Text = "label2";
+            lblDocumentos.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // lblTiempo
             // 
-            lblTiempo.AutoSize = true;
-            lblTiempo.Location = new Point(13, 11);
+            lblTiempo.Location = new Point(14, 11);
             lblTiempo.Name = "lblTiempo";
-            lblTiempo.Size = new Size(38, 15);
+            lblTiempo.Size = new Size(368, 22);
             lblTiempo.TabIndex = 0;
             lblTiempo.Text = "label1";
+            lblTiempo.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // timer1
             // 
@@ -197,25 +197,27 @@
             // panel2
             // 
             panel2.Controls.Add(lblMesaDestino);
-            panel2.Location = new Point(443, 530);
+            panel2.Location = new Point(443, 552);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(400, 152);
+            panel2.Size = new Size(400, 130);
             panel2.TabIndex = 12;
             // 
             // lblMesaDestino
             // 
-            lblMesaDestino.AutoSize = true;
-            lblMesaDestino.Location = new Point(34, 40);
+            lblMesaDestino.Location = new Point(29, 20);
             lblMesaDestino.Name = "lblMesaDestino";
-            lblMesaDestino.Size = new Size(38, 15);
+            lblMesaDestino.Size = new Size(343, 61);
             lblMesaDestino.TabIndex = 0;
             lblMesaDestino.Text = "label1";
+            lblMesaDestino.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(244, 271);
+            label1.BackColor = Color.Transparent;
+            label1.ForeColor = Color.White;
+            label1.Location = new Point(247, 329);
             label1.Name = "label1";
             label1.Size = new Size(41, 15);
             label1.TabIndex = 1;
@@ -224,7 +226,9 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(234, 466);
+            label2.BackColor = Color.Transparent;
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(247, 540);
             label2.Name = "label2";
             label2.Size = new Size(41, 15);
             label2.TabIndex = 13;
@@ -233,7 +237,9 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(965, 270);
+            label3.BackColor = Color.Transparent;
+            label3.ForeColor = Color.White;
+            label3.Location = new Point(964, 331);
             label3.Name = "label3";
             label3.Size = new Size(41, 15);
             label3.TabIndex = 14;
@@ -242,7 +248,9 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(990, 466);
+            label4.BackColor = Color.Transparent;
+            label4.ForeColor = Color.White;
+            label4.Location = new Point(964, 540);
             label4.Name = "label4";
             label4.Size = new Size(41, 15);
             label4.TabIndex = 15;
@@ -339,7 +347,7 @@
             // pictureBox9
             // 
             pictureBox9.BackColor = Color.Red;
-            pictureBox9.Location = new Point(537, 162);
+            pictureBox9.Location = new Point(526, 209);
             pictureBox9.Name = "pictureBox9";
             pictureBox9.Size = new Size(215, 31);
             pictureBox9.TabIndex = 24;
@@ -384,10 +392,8 @@
             ((System.ComponentModel.ISupportInitialize)pbMesa3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMesa4).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pbGenerador).EndInit();
             panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
