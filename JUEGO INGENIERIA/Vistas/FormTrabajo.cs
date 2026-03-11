@@ -34,12 +34,16 @@ namespace JUEGO_INGENIERIA.Vistas
             AplicarFuente();
             this.DoubleBuffered = true;
 
+            // --- LÍNEAS NUEVAS AGREGADAS ---
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            this.UpdateStyles();
+            this.KeyPreview = true;
+            // -------------------------------
+
             // Guardamos los datos del jugador
             this.jugadorActual = jugadorRecibido;
 
             this.Load += FormTrabajo_Load;
-            this.Paint += FormTrabajo_Paint;
-            this.FormClosing += FormTrabajo_FormClosing;
         }
 
         private void FormTrabajo_Load(object sender, EventArgs e)
@@ -161,7 +165,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        private void FormTrabajo_Paint(object sender, PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
             // Mejorar calidad del dibujo
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
