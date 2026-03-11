@@ -40,6 +40,16 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormTrabajo_Load(object sender, EventArgs e)
         {
+            // Ocultar objetos gráficos para dibujarlos manualmente en OnPaint 
+            // Esto mejora inmensamente los FPS, quita el lag de WinForms y permite efecto de profundidad.
+            pbMesa1.Visible = false;
+            pbMesa2.Visible = false;
+            pbMesa3.Visible = false;
+            pbMesa4.Visible = false;
+            pbGenerador.Visible = false;
+            pictureBox5.Visible = false;
+            pictureBox6.Visible = false;
+
             movimientoJugador = new FormMovimiento(this, pbPersonaje);
             movimientoJugador.ColisionConObjeto += MovimientoJugador_ColisionConObjeto;
             movimientoJugador.Start();
@@ -126,9 +136,37 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormTrabajo_Paint(object sender, PaintEventArgs e)
         {
-            if (movimientoJugador != null)
+            // Mejorar calidad del dibujo
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+            // Lista de todos los objetos que queremos dibujar, incluyendo el personaje
+            List<Control> objetosParaDibujar = new List<Control>
             {
-                movimientoJugador.DibujarPersonaje(e.Graphics);
+                pbPersonaje, pbMesa1, pbMesa2, pbMesa3, pbMesa4, pbGenerador, pictureBox5, pictureBox6
+            };
+
+            // Ordenar todos los objetos por su coordenada Y (Top)
+            // Esto hace que el personaje pueda pasar por delante o por detrás de las mesas/NPCs (Profundidad)
+            objetosParaDibujar.Sort((a, b) => a.Top.CompareTo(b.Top));
+
+            foreach (var obj in objetosParaDibujar)
+            {
+                if (obj == pbPersonaje)
+                {
+                    if (movimientoJugador != null)
+                        movimientoJugador.DibujarPersonaje(e.Graphics);
+                }
+                else
+                {
+                    PictureBox pb = (PictureBox)obj;
+                    // Tomar la imagen de Image (personajes) o de BackgroundImage (mesas/generador)
+                    Image img = pb.Image ?? pb.BackgroundImage;
+                    if (img != null)
+                    {
+                        e.Graphics.DrawImage(img, pb.Bounds);
+                    }
+                }
             }
         }
 
@@ -217,7 +255,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 label1.Font = fuenteRetro;
                 label2.Font = fuenteRetro;
                 label3.Font = fuenteRetro;
-                label4.Font = fuenteRetro; 
+                label4.Font = fuenteRetro;
             }
             catch { }
         }

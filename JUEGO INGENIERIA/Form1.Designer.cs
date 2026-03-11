@@ -428,7 +428,7 @@
             // pictureBox15
             // 
             pictureBox15.BackColor = Color.Crimson;
-            pictureBox15.Location = new Point(1079, 125);
+            pictureBox15.Location = new Point(1089, 109);
             pictureBox15.Margin = new Padding(3, 2, 3, 2);
             pictureBox15.Name = "pictureBox15";
             pictureBox15.Size = new Size(88, 42);
@@ -1483,7 +1483,7 @@
             // 
             // pbPuertaNivel3
             // 
-            pbPuertaNivel3.Location = new Point(1107, 178);
+            pbPuertaNivel3.Location = new Point(1110, 155);
             pbPuertaNivel3.Margin = new Padding(3, 2, 3, 2);
             pbPuertaNivel3.Name = "pbPuertaNivel3";
             pbPuertaNivel3.Size = new Size(26, 12);
