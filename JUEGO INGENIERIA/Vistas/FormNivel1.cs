@@ -46,6 +46,11 @@ namespace JUEGO_INGENIERIA.Vistas
             "Si tocas uno... CRASH. El sistema se cae. ¿Listo para compilar o vas a dar error?"
         };
 
+        // --- ANIMACIÓN DIÁLOGO ---
+        Image oswaldEstatico;
+        Image oswaldHablando;
+        bool oswaldBocaAbierta = false;
+
         public FormNivel1(Jugador jugadorRecibido)
         {
             InitializeComponent();
@@ -108,11 +113,36 @@ namespace JUEGO_INGENIERIA.Vistas
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
 
+            // Preparar imágenes de Oswald para interactuar sutilmente
+            try { oswaldEstatico = Properties.Resources.oswald_version_narrativa; }
+            catch { oswaldEstatico = pbOswald.Image; }
+
+            try { oswaldHablando = Properties.Resources.Oswald1; }
+            catch { oswaldHablando = oswaldEstatico; }
+
+            pbOswald.Image = oswaldEstatico;
+
+            // Habilitar de nuevo el botón "SALTAR" para saltar toda la intro
+            btnSkipDialogo.Visible = true;
+
             pnlIntro.Visible = true;
             pnlIntro.BringToFront();
             lblOswaldText.Text = "";
-            btnSkipDialogo.Visible = true; // Aseguramos que el botón aparezca al inicio
+
+            // Suscribir eventos globales para pasar diálogo
+            this.MouseClick += FormNivel1_ClickDialogo;
+            pnlIntro.MouseClick += FormNivel1_ClickDialogo;
+            lblOswaldText.MouseClick += FormNivel1_ClickDialogo;
+            pictureBox1.MouseClick += FormNivel1_ClickDialogo;
+            pbOswald.MouseClick += FormNivel1_ClickDialogo;
+
+            if (pictureBox2 != null) pictureBox2.MouseClick += FormNivel1_ClickDialogo; // Por si bloquea clics
+
             timerEscritura.Start();
+
+            // Forzar el foco para que KeyDown empiece a funcionar desde el primer milisegundo
+            this.ActiveControl = null;
+            this.Focus();
         }
 
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
@@ -236,13 +266,11 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void btnSkipDialogo_Click(object sender, EventArgs e)
         {
-            // Detenemos la animación del texto
+            // Este botón ya no se usa visualmente, pero mantenemos la lógica por si acaso
             timerEscritura.Stop();
-
-            // Llamamos directamente a la función que inicia el juego de esquivar
+            pbOswald.Image = oswaldEstatico; // Asegurar que quede estático al saltar
             EmpezarJuegoReal();
         }
-
 
         private void timerEscritura_Tick(object sender, EventArgs e)
         {
@@ -251,24 +279,44 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 lblOswaldText.Text += fraseCompleta[indiceLetra];
                 indiceLetra++;
+
+                // Animar cara de Oswald (cambia cada cierta cantidad de letras para un efecto sutil)
+                if (indiceLetra % 10 == 0) // Cambia 1 vez cada 10 letras
+                {
+                    oswaldBocaAbierta = !oswaldBocaAbierta;
+                    pbOswald.Image = oswaldBocaAbierta ? oswaldHablando : oswaldEstatico;
+                }
             }
             else
             {
                 timerEscritura.Stop();
-                btnSkipDialogo.Visible = false; // Se oculta al terminar de escribir la frase por sí solo
+                pbOswald.Image = oswaldEstatico; // Cierra la boca al terminar de hablar
             }
+        }
+
+        private void FormNivel1_ClickDialogo(object sender, MouseEventArgs e)
+        {
+            SaltarOContinuarDialogo();
         }
 
         private void lblOswaldText_Click(object sender, EventArgs e)
         {
+            SaltarOContinuarDialogo();
+        }
+
+        private void SaltarOContinuarDialogo()
+        {
+            // Si no estamos en la intro, ignorar clicks
+            if (!pnlIntro.Visible) return;
+
             // Si la animación de texto sigue corriendo, complétala de una
             if (timerEscritura.Enabled)
             {
                 timerEscritura.Stop();
                 lblOswaldText.Text = discursoOswald[indiceFrase];
-                btnSkipDialogo.Visible = false; // Como acabas de forzar que salga completo, el botón "saltar" se oculta
+                pbOswald.Image = oswaldEstatico; // Cierra la boca
             }
-            // Si ya terminó de escribirse, salta a la siguiente frase
+            // Si ya terminó de escribirse, salta a la siguiente frase o empieza el juego
             else
             {
                 indiceFrase++;
@@ -276,11 +324,11 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     lblOswaldText.Text = "";
                     indiceLetra = 0;
-                    btnSkipDialogo.Visible = true; // Hace aparecer el botón de nuevo para la próxima frase
                     timerEscritura.Start();
                 }
                 else
                 {
+                    pbOswald.Image = oswaldEstatico;
                     EmpezarJuegoReal();
                 }
             }
@@ -303,6 +351,13 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormNivel1_KeyDown(object sender, KeyEventArgs e)
         {
+            // Si estamos en la intro, cualquier tecla sirve para avanzar el diálogo (Stardew Valley style)
+            if (pnlIntro.Visible)
+            {
+                SaltarOContinuarDialogo();
+                return;
+            }
+
             if ((e.KeyCode == Keys.Left || e.KeyCode == Keys.A) && carrilActual > 0)
             {
                 carrilActual--;
