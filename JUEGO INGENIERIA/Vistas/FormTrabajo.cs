@@ -23,6 +23,10 @@ namespace JUEGO_INGENIERIA.Vistas
         private int mesaIndicada = 0;
         private Random generadorAleatorio = new Random();
 
+        // --- CACHÉ DE RENDERIZADO OPTIMIZADO ---
+        private Dictionary<Control, Image> cacheImagenes = new Dictionary<Control, Image>();
+        private List<Control> objetosZOrder = new List<Control>();
+
         // Recibimos al jugador en el constructor igual que en FormNivel1
         public FormTrabajo(Jugador jugadorRecibido)
         {
@@ -40,15 +44,38 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormTrabajo_Load(object sender, EventArgs e)
         {
-            // Ocultar objetos gráficos para dibujarlos manualmente en OnPaint 
-            // Esto mejora inmensamente los FPS, quita el lag de WinForms y permite efecto de profundidad.
-            pbMesa1.Visible = false;
-            pbMesa2.Visible = false;
-            pbMesa3.Visible = false;
-            pbMesa4.Visible = false;
-            pbGenerador.Visible = false;
-            pictureBox5.Visible = false;
-            pictureBox6.Visible = false;
+            // Ocultar objetos y pre-escalar imágenes para dibujarlos MUCHO más rápido manualmente
+            List<Control> objetosEstaticos = new List<Control>
+            {
+                pbMesa1, pbMesa2, pbMesa3, pbMesa4, pbGenerador, pictureBox5, pictureBox6
+            };
+
+            foreach (var control in objetosEstaticos)
+            {
+                control.Visible = false; // Lo ocultamos para que WinForms no lo dibuje solo
+                PictureBox pb = (PictureBox)control;
+                Image imgOriginal = pb.Image ?? pb.BackgroundImage;
+                if (imgOriginal != null)
+                {
+                    // Crear un bitmap pre-escalado al tamaño exacto del PictureBox
+                    Bitmap bmpEscalado = new Bitmap(pb.Width, pb.Height);
+                    using (Graphics g = Graphics.FromImage(bmpEscalado))
+                    {
+                        // Asegura que las imágenes no se vean borrosas
+                        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+
+                        // Si la imagen original usa BackgroundImageLayout.Stretch, aquí esto replica ese comportamiento
+                        g.DrawImage(imgOriginal, 0, 0, pb.Width, pb.Height);
+                    }
+                    // Guardamos la imagen pre-escalonada en caché
+                    cacheImagenes[pb] = bmpEscalado;
+                }
+            }
+
+            // Lista maestra con todos los objetos, incluyendo el personaje
+            objetosZOrder.AddRange(objetosEstaticos);
+            objetosZOrder.Add(pbPersonaje);
 
             movimientoJugador = new FormMovimiento(this, pbPersonaje);
             movimientoJugador.ColisionConObjeto += MovimientoJugador_ColisionConObjeto;
@@ -140,31 +167,25 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            // Lista de todos los objetos que queremos dibujar, incluyendo el personaje
-            List<Control> objetosParaDibujar = new List<Control>
-            {
-                pbPersonaje, pbMesa1, pbMesa2, pbMesa3, pbMesa4, pbGenerador, pictureBox5, pictureBox6
-            };
-
             // Ordenar todos los objetos por su coordenada Y (Top)
-            // Esto hace que el personaje pueda pasar por delante o por detrás de las mesas/NPCs (Profundidad)
-            objetosParaDibujar.Sort((a, b) => a.Top.CompareTo(b.Top));
+            // Esto hace que el personaje pueda pasar por delante o por detrás de las mesas/NPCs
+            objetosZOrder.Sort((a, b) => a.Top.CompareTo(b.Top));
 
-            foreach (var obj in objetosParaDibujar)
+            foreach (var obj in objetosZOrder)
             {
-                if (obj == pbPersonaje)
+                // Solo dibujar el objeto si intersecta con el área que se está actualizando (ClipRectangle)
+                // Esto previene redibujar el formulario completo inútilmente y gana MUCHA velocidad.
+                if (e.ClipRectangle.IntersectsWith(obj.Bounds))
                 {
-                    if (movimientoJugador != null)
-                        movimientoJugador.DibujarPersonaje(e.Graphics);
-                }
-                else
-                {
-                    PictureBox pb = (PictureBox)obj;
-                    // Tomar la imagen de Image (personajes) o de BackgroundImage (mesas/generador)
-                    Image img = pb.Image ?? pb.BackgroundImage;
-                    if (img != null)
+                    if (obj == pbPersonaje)
                     {
-                        e.Graphics.DrawImage(img, pb.Bounds);
+                        if (movimientoJugador != null)
+                            movimientoJugador.DibujarPersonaje(e.Graphics);
+                    }
+                    else if (cacheImagenes.ContainsKey(obj))
+                    {
+                        // Se dibuja la imagen sin escalar porque ya la pre-escalamos al iniciar el Form
+                        e.Graphics.DrawImageUnscaled(cacheImagenes[obj], obj.Location);
                     }
                 }
             }
