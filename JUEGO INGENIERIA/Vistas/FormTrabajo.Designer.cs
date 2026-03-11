@@ -85,6 +85,7 @@
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 4;
             pbPersonaje.TabStop = false;
+            pbPersonaje.Visible = false; // El motor lo dibuja manualmente
             // 
             // pbMesa1
             // 
