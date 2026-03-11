@@ -206,7 +206,7 @@ namespace JUEGO_INGENIERIA
         {
             try
             {
-                string rutaMusica = Path.Combine(Application.StartupPath, "Resources", "musica mapa", "musicaMapa.mp3");
+                string rutaMusica = Path.Combine(Application.StartupPath, "Resources", "Musica Mapa", "musicaMapa.mp3");
                 if (File.Exists(rutaMusica))
                 {
                     musicaFondo.URL = rutaMusica;
