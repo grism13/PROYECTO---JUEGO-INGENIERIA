@@ -10,9 +10,14 @@ namespace JUEGO_INGENIERIA.Vistas
     public partial class FormNivel3 : Form
     {
         // --- IMAGEN DE FONDO Y VARIABLES SEAMLESS (SCROLL INFINITO) ---
-        Image fondoNivel3;
+        // --- IMÁGENES DE FONDO POR FASES ---
+        Image fondoFase1;
+        Image fondoFase2;
+        Image fondoFase3;
+        Image fondoActual; // Este será el que actúe como "pantalla" cambiando según la fase
+
         int fondoX = 0;
-        int velocidadFondo = 7; // Fondo rapidito para dar sensación de velocidad
+        int velocidadFondo = 7;
 
         // --- VARIABLES DEL JUGADOR ---
         int jugadorX = 50;
@@ -60,8 +65,12 @@ namespace JUEGO_INGENIERIA.Vistas
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // CARGAMOS LA IMAGEN AQUÍ (1 SOLA VEZ AL INICIAR)
-            fondoNivel3 = (Image)Properties.Resources.ResourceManager.GetObject("FondoNivel3");
+            fondoFase1 = Properties.Resources.fondoFase1;
+            fondoFase2 = Properties.Resources.fondoFase2;
+            fondoFase3 = Properties.Resources.fondoFase3;
+
+            // Le decimos al juego que arranque mostrando el fondo de la Fase 1
+            fondoActual = fondoFase1;
 
             // --- INYECCIÓN DE 60 FPS ---
             tmrGameLoop.Interval = 16;
@@ -206,6 +215,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                     if (vidaBoss > 1000) // FASE 1
                     {
+                        fondoActual = fondoFase1;
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
                         balaMala.Y = bossY + (tamañoBoss / 2);
@@ -218,6 +228,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else if (vidaBoss <= 1000 && vidaBoss > 500) // FASE 2
                     {
+                        fondoActual = fondoFase2;
                         velocidadBoss = 12;
 
                         if (probabilidad < 85)
@@ -237,6 +248,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
                         else
                         {
+                           
                             ObjetoJuego balaMala = new ObjetoJuego();
                             balaMala.X = bossX;
                             balaMala.Y = bossY + (tamañoBoss / 2);
@@ -247,6 +259,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else // FASE 3
                     {
+                        fondoActual = fondoFase3;
                         velocidadBoss = 15;
 
                         ObjetoJuego balaMala = new ObjetoJuego();
@@ -355,10 +368,10 @@ namespace JUEGO_INGENIERIA.Vistas
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
             // --- 0. DIBUJAR EL FONDO EN MOVIMIENTO (SEAMLESS) ---
-            if (fondoNivel3 != null)
+            if (fondoActual != null) // Cambiamos fondoNivel3 por fondoActual
             {
-                e.Graphics.DrawImage(fondoNivel3, fondoX, 0, pnlEscenario.Width, pnlEscenario.Height);
-                e.Graphics.DrawImage(fondoNivel3, fondoX + pnlEscenario.Width, 0, pnlEscenario.Width, pnlEscenario.Height);
+                e.Graphics.DrawImage(fondoActual, fondoX, 0, pnlEscenario.Width, pnlEscenario.Height);
+                e.Graphics.DrawImage(fondoActual, fondoX + pnlEscenario.Width, 0, pnlEscenario.Width, pnlEscenario.Height);
             }
             else
             {

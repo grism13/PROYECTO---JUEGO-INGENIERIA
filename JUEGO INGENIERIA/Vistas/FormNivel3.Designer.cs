@@ -46,14 +46,14 @@
             tmrGameLoop.Interval = 20;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
             // 
-            // FormNivel2
+            // FormNivel3
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1264, 681);
             Controls.Add(pnlEscenario);
             KeyPreview = true;
-            Name = "FormNivel2";
+            Name = "FormNivel3";
             Text = "FormNivel2";
             Load += FormNivel2_Load;
             KeyDown += FormNivel2_KeyDown;

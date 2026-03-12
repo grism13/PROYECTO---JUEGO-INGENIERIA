@@ -45,9 +45,10 @@
             // 
             // FormNivel2
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1180, 644);
+            ClientSize = new Size(1032, 483);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "FormNivel2";
             Text = "FormNivel2";
             Load += FormNivel2_Load;
