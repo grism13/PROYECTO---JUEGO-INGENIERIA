@@ -28,6 +28,8 @@ namespace JUEGO_INGENIERIA
 
             pbPersonaje.Visible = false;
             EsconderMuros();
+
+            NavegacionConsola.Configurar(this, btnSiNivel1, btnNoNivel1);
         }
 
         // --- SISTEMA DE DIBUJADO Y EFECTO DE CAMUFLAJE DE ÁRBOLES EN 3D ---

@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
+
 namespace JUEGO_INGENIERIA.Vistas;
 
 using JUEGO_INGENIERIA.Modelos;
@@ -21,13 +19,16 @@ public partial class FormDecanato : Form
     Point puntoAnterior;
     private FormMovimiento motorMovimiento;
     Random generadorAleatorio = new Random();
-    // Variables para optimizar RAM cargando las imágenes solo una vez
+
     private Image imgFlavioHablando1;
     private Image imgFlavioHablando2;
     private Image imgFlavioHablando3;
     private Image imgFlavioTranquilo;
     private Image imgFlavioActual;
-    
+
+    // NUEVA variable para que no te atrape infinitamente
+    private bool menuAperturaBloqueada = false;
+
     public FormDecanato(Jugador jugadorRecibido)
     {
         InitializeComponent();
@@ -36,16 +37,14 @@ public partial class FormDecanato : Form
         this.jugadorActual = jugadorRecibido;
 
         imgFlavioHablando1 = Properties.Resources.flavioHablando1;
-
-        imgFlavioHablando1 = Properties.Resources.flavioHablando1;
         imgFlavioHablando2 = Properties.Resources.flavioHablando2;
         imgFlavioHablando3 = Properties.Resources.flavioHablando3;
         imgFlavioTranquilo = Properties.Resources.flavioTranquilo;
         imgFlavioActual = imgFlavioHablando2;
-        // Ocultar el control y dibujarlo más eficientemente en OnPaint
+
         pictureBox1.Visible = false;
         timer1.Start();
-        // Si pbPersonaje falta en el diseñador visual, lo inicializamos
+
         if (pbPersonaje == null)
         {
             pbPersonaje = new PictureBox();
@@ -57,12 +56,8 @@ public partial class FormDecanato : Form
             this.Controls.Add(pbPersonaje);
         }
 
-        
-
-
         DoubleBuffered = true;
         motorMovimiento = new FormMovimiento(this, pbPersonaje);
-        // Suscribir al evento de colision
         motorMovimiento.ColisionConObjeto += MotorMovimiento_ColisionConObjeto;
 
         motorMovimiento.Start();
@@ -71,17 +66,31 @@ public partial class FormDecanato : Form
         dibujante.Clear(Color.White);
         pbPizarra.Image = lienzo;
         pictureBox2.BorderStyle = BorderStyle.Fixed3D;
+
+        panelInfo.Visible = false;
+        pbMensaje.Visible = false;
+
+        // NUEVO: Permite salir del menú al presionar la flecha ABAJO, ESCAPE o S
+        this.KeyDown += (s, ev) => {
+            if (panelInfo.Visible && (ev.KeyCode == Keys.Down || ev.KeyCode == Keys.Escape || ev.KeyCode == Keys.S))
+            {
+                panelInfo.Visible = false;
+                pbMensaje.Visible = false;
+                menuAperturaBloqueada = true; // Activar el seguro! No abrir más hasta que se aleje
+                NavegacionConsola.LimpiarFoco(this);
+                if (motorMovimiento != null) motorMovimiento.EstaPausado = false;
+                timer1.Start();
+            }
+        };
     }
+
     protected override void OnPaint(PaintEventArgs e)
     {
-
-
-
         base.OnPaint(e);
 
         e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
         e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
-        // Dibujar a Flavio directamente
+
         if (imgFlavioActual != null)
         {
             e.Graphics.DrawImage(imgFlavioActual, pictureBox1.Bounds);
@@ -94,7 +103,7 @@ public partial class FormDecanato : Form
         {
             if (control is PictureBox x && x != pictureBox1)
             {
-                if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
+                if (x.Visible && (string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
                 {
                     if (x.Image != null && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
                     {
@@ -104,17 +113,16 @@ public partial class FormDecanato : Form
             }
         }
     }
+
     private void MotorMovimiento_ColisionConObjeto(object sender, Control objetoColisionado)
     {
         if (objetoColisionado == pbPuertaSalida)
         {
-            // Evitamos que salte multiples veces seguidas
             motorMovimiento.Stop();
             this.Close();
         }
     }
 
-    // Variables para animacion de telefono
     private int pasoAnimacion = 0;
     private void timer1_Tick(object sender, EventArgs e)
     {
@@ -125,46 +133,46 @@ public partial class FormDecanato : Form
         }
         switch (pasoAnimacion)
         {
-            case 0:
-                imgFlavioActual = imgFlavioHablando1;
-                break;
-            case 1:
-                imgFlavioActual = imgFlavioHablando2;
-                break;
-            case 2:
-                imgFlavioActual = imgFlavioHablando3;
-                break;
-            case 3:
-                imgFlavioActual = imgFlavioTranquilo;
-                break;
+            case 0: imgFlavioActual = imgFlavioHablando1; break;
+            case 1: imgFlavioActual = imgFlavioHablando2; break;
+            case 2: imgFlavioActual = imgFlavioHablando3; break;
+            case 3: imgFlavioActual = imgFlavioTranquilo; break;
         }
-        Invalidate(pictureBox1.Bounds); // Solo repintamos el área de Flavio
+        Invalidate(pictureBox1.Bounds);
     }
+
     private void tmrRevisarZonas_Tick(object sender, EventArgs e)
     {
-
         if (pbPersonaje.Bounds.IntersectsWith(pbZonaActiva.Bounds))
         {
-            if (panelInfo.Visible == false)
+            // Solo abrimos el menú si el Seguro NO está activado
+            if (panelInfo.Visible == false && !menuAperturaBloqueada)
             {
                 panelInfo.Visible = true;
-                // 1. Pausamos el Timer que hace que Flavio se mueva
+                NavegacionConsola.Configurar(this, btnConsejo, btnOno, btnTrabajo);
+
                 timer1.Stop();
                 imgFlavioActual = imgFlavioTranquilo;
                 Invalidate(pictureBox1.Bounds);
+
+                // Pausar al personaje
+                if (motorMovimiento != null)
+                {
+                    motorMovimiento.goArriba = false;
+                    motorMovimiento.goAbajo = false;
+                    motorMovimiento.goIzquierda = false;
+                    motorMovimiento.goDerecha = false;
+                    motorMovimiento.EstaPausado = true;
+                }
             }
         }
         else
         {
-            // Si sales de la zona y el panel estaba visible...
-            if (panelInfo.Visible == true)
-            {
-                panelInfo.Visible = false;
-                // 3. Volvemos a iniciar el Timer de Flavio para que continúe su animación normal
-                timer1.Start();
-            }
+            // El jugador salió de la zona por fin. Quitamos el seguro por si quiere volver a entrar luego.
+            menuAperturaBloqueada = false;
         }
     }
+
     private void pbPizarra_MouseDown(object sender, MouseEventArgs e)
     {
         estaDibujando = true;
@@ -183,21 +191,18 @@ public partial class FormDecanato : Form
     {
         estaDibujando = false;
     }
-    // Aqui empiezan los marcadores de colores (aqui es el azul)
     private void pictureBox2_Click(object sender, EventArgs e)
     {
         marcador.Color = Color.RoyalBlue;
         ApagarBordes();
         pictureBox2.BorderStyle = BorderStyle.Fixed3D;
     }
-    // Rojo
     private void pictureBox4_Click(object sender, EventArgs e)
     {
         marcador.Color = Color.Firebrick;
         ApagarBordes();
         pictureBox4.BorderStyle = BorderStyle.Fixed3D;
     }
-    // Amarillo
     private void pictureBox3_Click(object sender, EventArgs e)
     {
         marcador.Color = Color.Gold;
@@ -220,24 +225,12 @@ public partial class FormDecanato : Form
         int resultado = generadorAleatorio.Next(1, 7);
         switch (resultado)
         {
-            case 1:
-                lblMensaje.Text = "Cambiate de carrera";
-                break;
-            case 2:
-                lblMensaje.Text = "Báñate plis :)";
-                break;
-            case 3:
-                lblMensaje.Text = "No te rindas eres increible";
-                break;
-            case 4:
-                lblMensaje.Text = "Si te sientes mal,\nimaginate como se sentirán los de diseño";
-                break;
-            case 5:
-                lblMensaje.Text = "Como dice una persona muy sabia: \nHay que comerse la hamburguesa por partes...";
-                break;
-            case 6:
-                lblMensaje.Text = "Descansa un rato, tienes 1 semana sin dormir.\n Por Dios";
-                break;
+            case 1: lblMensaje.Text = "Cambiate de carrera"; break;
+            case 2: lblMensaje.Text = "Báñate plis :)"; break;
+            case 3: lblMensaje.Text = "No te rindas eres increible"; break;
+            case 4: lblMensaje.Text = "Si te sientes mal,\nimaginate como se sentirán los de diseño"; break;
+            case 5: lblMensaje.Text = "Como dice una persona muy sabia: \nHay que comerse la hamburguesa por partes..."; break;
+            case 6: lblMensaje.Text = "Descansa un rato, tienes 1 semana sin dormir.\n Por Dios"; break;
         }
     }
     private void btnOno_Click(object sender, EventArgs e)
@@ -254,47 +247,23 @@ public partial class FormDecanato : Form
     {
         try
         {
-            // Se establece la ruta exacta donde se guardó el archivo .ttf
             string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
-
             PrivateFontCollection pfc = new PrivateFontCollection();
             pfc.AddFontFile(rutaFuente);
 
-            // Se configuran los tamaños: uno un poco más grande para el globo de texto y otro para los botones
             Font fuenteMensaje = new Font(pfc.Families[0], 10f);
             Font fuenteBoton = new Font(pfc.Families[0], 8f);
 
-            // Se aplica la fuente a los controles (es importante verificar que estos sean los nombres exactos)
             lblMensaje.Font = fuenteMensaje;
             btnConsejo.Font = fuenteBoton;
             btnOno.Font = fuenteBoton;
             btnTrabajo.Font = fuenteBoton;
         }
-        catch
-        {
-            // Bloque de seguridad: si el archivo de la fuente no se encuentra, 
-            // el juego usará la fuente estándar de Windows sin mostrar errores.
-        }
+        catch { }
     }
 
-    private void pbPizarra_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void label1_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void pictureBox5_Click(object sender, EventArgs e)
-    {
-
-    }
-
-    private void pbPersonaje_Click(object sender, EventArgs e)
-    {
-
-    }
+    private void pbPizarra_Click(object sender, EventArgs e) { }
+    private void label1_Click(object sender, EventArgs e) { }
+    private void pictureBox5_Click(object sender, EventArgs e) { }
+    private void pbPersonaje_Click(object sender, EventArgs e) { }
 }
-
