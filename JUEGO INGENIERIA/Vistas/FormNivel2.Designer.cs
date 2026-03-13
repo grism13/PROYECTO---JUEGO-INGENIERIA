@@ -36,12 +36,12 @@
             // timerMusica
             // 
             timerMusica.Interval = 272;
-            timerMusica.Tick += timerMusica_Tick;
+
             // 
             // timerAnimacion
             // 
             timerAnimacion.Interval = 20;
-            timerAnimacion.Tick += timerAnimacion_Tick;
+
             // 
             // FormNivel2
             // 
@@ -51,7 +51,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormNivel2";
             Text = "FormNivel2";
-            Load += FormNivel2_Load;
+
             ResumeLayout(false);
         }
 
