@@ -15,7 +15,7 @@ namespace JUEGO_INGENIERIA
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //FormNivel2())
-            Application.Run(new formNivel2());
+            Application.Run(new FormNivel2Juego());
         }
 
     }

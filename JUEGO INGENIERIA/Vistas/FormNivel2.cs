@@ -14,7 +14,7 @@ namespace JUEGO_INGENIERIA.Vistas
     {
 
         //"C:\Users\eliez\Desktop\cancion-formNivel2.wav"
-        private string rutaArchivo = "C:\\Users\\eliez\\Desktop\\cancion.txt";
+        private string rutaArchivo = Application.StartupPath + @"\cancion.txt";
         private Stopwatch cronometro = new Stopwatch();
         private SoundPlayer reproductor;
         private List<string> notasGrabadas = new List<string>();
