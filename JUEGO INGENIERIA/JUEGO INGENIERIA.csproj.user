@@ -25,6 +25,9 @@
     <Compile Update="Vistas\FormNivel2.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\FormNivel2Juego.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistas\FormNivel3.cs">
       <SubType>Form</SubType>
     </Compile>

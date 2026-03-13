@@ -5,24 +5,28 @@ using System.Drawing;
 using System.IO;
 using System.Media;
 using System.Windows.Forms;
+using JUEGO_INGENIERIA.Modelos;
+using System.Drawing;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class formNivel2 : Form
     {
-        private string rutaArchivo = "mapa_gary_vs_david.txt";
+
+        //"C:\Users\eliez\Desktop\cancion-formNivel2.wav"
+        private string rutaArchivo = "C:\\Users\\eliez\\Desktop\\cancion.txt";
         private Stopwatch cronometro = new Stopwatch();
         private SoundPlayer reproductor;
         private List<string> notasGrabadas = new List<string>();
         private bool estaGrabando = false;
-        
+
         // Variable para controlar la cuenta regresiva
-        private int conteo = 3; 
+        private int conteo = 3;
 
         public formNivel2()
         {
             InitializeComponent();
-            reproductor = new SoundPlayer("ruta_a_tu_cancion.wav");
+            reproductor = new SoundPlayer("C:\\Users\\eliez\\Desktop\\cancion-formNivel2.wav");
             this.KeyPreview = true; // Súper importante para que detecte el teclado
         }
 
@@ -35,8 +39,60 @@ namespace JUEGO_INGENIERIA.Vistas
             timerCuenta.Start(); // Arranca el timer de 1 segundo
         }
 
-        // Da doble clic en tu timerCuenta en el diseñador para crear este evento
-        private void timerCuenta_Tick(object sender, EventArgs e)
+
+        // Evento cuando PRESIONAS la tecla (Ilumina el panel y graba)
+        // Esta función intercepta las teclas ANTES de que Windows robe el foco
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (estaGrabando)
+            {
+                long tiempoActual = cronometro.ElapsedMilliseconds;
+                int numeroFlecha = 0;
+                Control panelActivo = null;
+
+                // Si presiona ESC, terminamos y guardamos
+                if (keyData == Keys.Escape)
+                {
+                    TerminarYGuardar();
+                    return true;
+                }
+
+                // Asignamos números y encendemos el panel correspondiente
+                if (keyData == Keys.Up) { numeroFlecha = 1; panelActivo = panelArriba; panelActivo.BackColor = Color.Cyan; }
+                else if (keyData == Keys.Right) { numeroFlecha = 2; panelActivo = panelDer; panelActivo.BackColor = Color.Red; }
+                else if (keyData == Keys.Down) { numeroFlecha = 3; panelActivo = panelAbajo; panelActivo.BackColor = Color.Lime; }
+                else if (keyData == Keys.Left) { numeroFlecha = 4; panelActivo = panelIzq; panelActivo.BackColor = Color.Magenta; }
+
+                // Si presionó una flecha, guardamos el dato y hacemos el efecto visual
+                if (numeroFlecha != 0)
+                {
+                    notasGrabadas.Add($"{numeroFlecha},{tiempoActual}");
+
+                    ApagarPanel(panelActivo); // Llama al efecto de apagado rápido
+
+                    return true; // Le dice a Windows: "Ya usé esta tecla, no cambies de botón"
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        // Truco moderno: Espera 150 milisegundos y apaga el panel automáticamente
+        private async void ApagarPanel(Control p)
+        {
+            await System.Threading.Tasks.Task.Delay(150);
+            if (p != null) p.BackColor = Color.Gray;
+        }
+
+        private void TerminarYGuardar()
+        {
+            estaGrabando = false;
+            cronometro.Stop();
+            reproductor.Stop();
+            File.WriteAllLines(rutaArchivo, notasGrabadas);
+            MessageBox.Show("¡Nivel guardado con éxito!");
+        }
+
+        private void timerCuenta_Tick_1(object sender, EventArgs e)
         {
             conteo--;
 
@@ -53,78 +109,13 @@ namespace JUEGO_INGENIERIA.Vistas
                 // Cuando baja de 0, apagamos el timer y ¡ARRANCAMOS A GRABAR!
                 timerCuenta.Stop();
                 lblCuentaRegresiva.Visible = false;
-                
+
                 notasGrabadas.Clear();
                 estaGrabando = true;
-                
+
                 reproductor.Play();
                 cronometro.Start();
             }
-        }
-
-        // Evento cuando PRESIONAS la tecla (Ilumina el panel y graba)
-        private void formNivel2_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!estaGrabando) return;
-
-            if (e.KeyCode == Keys.Escape)
-            {
-                TerminarYGuardar();
-                return;
-            }
-
-            long tiempoActual = cronometro.ElapsedMilliseconds;
-            int numeroFlecha = 0;
-
-            // Iluminamos el panel correspondiente y asignamos el número
-            switch (e.KeyCode)
-            {
-                case Keys.Up:
-                    numeroFlecha = 1;
-                    panelArriba.BackColor = Color.Cyan; // Color de "encendido"
-                    break;
-                case Keys.Right:
-                    numeroFlecha = 2;
-                    panelDer.BackColor = Color.Red;
-                    break;
-                case Keys.Down:
-                    numeroFlecha = 3;
-                    panelAbajo.BackColor = Color.Lime;
-                    break;
-                case Keys.Left:
-                    numeroFlecha = 4;
-                    panelIzq.BackColor = Color.Magenta;
-                    break;
-            }
-
-            if (numeroFlecha != 0)
-            {
-                notasGrabadas.Add($"{numeroFlecha},{tiempoActual}");
-            }
-        }
-
-        // Evento cuando SUELTAS la tecla (Apaga el panel)
-        private void formNivel2_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (!estaGrabando) return;
-
-            // Regresamos el color al estado "apagado" (gris)
-            switch (e.KeyCode)
-            {
-                case Keys.Up: panelArriba.BackColor = Color.Gray; break;
-                case Keys.Right: panelDer.BackColor = Color.Gray; break;
-                case Keys.Down: panelAbajo.BackColor = Color.Gray; break;
-                case Keys.Left: panelIzq.BackColor = Color.Gray; break;
-            }
-        }
-
-        private void TerminarYGuardar()
-        {
-            estaGrabando = false;
-            cronometro.Stop();
-            reproductor.Stop();
-            File.WriteAllLines(rutaArchivo, notasGrabadas);
-            MessageBox.Show("¡Nivel guardado con éxito!");
         }
     }
 }

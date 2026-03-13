@@ -65,7 +65,7 @@
             // panelArriba
             // 
             panelArriba.BackColor = Color.Firebrick;
-            panelArriba.Location = new Point(202, 215);
+            panelArriba.Location = new Point(191, 223);
             panelArriba.Name = "panelArriba";
             panelArriba.Size = new Size(87, 62);
             panelArriba.TabIndex = 2;
@@ -102,6 +102,7 @@
             // timerCuenta
             // 
             timerCuenta.Interval = 1000;
+            timerCuenta.Tick += timerCuenta_Tick_1;
             // 
             // formNivel2
             // 
