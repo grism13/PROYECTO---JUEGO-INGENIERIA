@@ -211,36 +211,20 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a 4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///4
-        ///3
-        ///0
-        ///0
-        ///0
-        ///3
-        ///4
-        ///1
-        ///0
-        ///2
-        ///4
-        ///1.
+        ///   Busca una cadena traducida similar a .
         /// </summary>
         internal static string cancion {
             get {
                 return ResourceManager.GetString("cancion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream cancion_formNivel2 {
+            get {
+                return ResourceManager.GetStream("cancion-formNivel2", resourceCulture);
             }
         }
         
