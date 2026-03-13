@@ -13,6 +13,8 @@ namespace JUEGO_INGENIERIA.Vistas
         public FormMenuPrincipal()
         {
             InitializeComponent();
+            NavegacionConsola.Configurar(this, btnJugar, btnSalir);
+
         }
 
         private void btnJugar_Click(object sender, EventArgs e)

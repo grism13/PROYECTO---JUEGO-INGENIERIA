@@ -31,6 +31,10 @@ namespace JUEGO_INGENIERIA.Vistas
             InitializeComponent();
             AplicarFuente();
             this.DoubleBuffered = true;
+
+            // Configurar la navegación 2D para las cartas, las flechas y la X de salir
+            NavegacionConsola.Configurar(this, pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pbFlechaIzq, pbFlechaDer, pictureBox9);
+
         }
 
         private int ObtenerNumeroAleatorio(int minimo, int maximo)

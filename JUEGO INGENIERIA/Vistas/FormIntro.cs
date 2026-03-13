@@ -27,6 +27,7 @@ namespace JUEGO_INGENIERIA.Vistas
             CargarFuente();
             CargarDatos();
             ActualizarPantalla();
+            NavegacionConsola.Configurar(this, btnSkip, btnSiguiente);
         }
 
         private void CargarFuente()

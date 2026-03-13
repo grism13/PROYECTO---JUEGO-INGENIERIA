@@ -15,6 +15,7 @@ namespace JUEGO_INGENIERIA.Vistas
         public ElegirPersonaje()
         {
             InitializeComponent();
+            NavegacionConsola.Configurar(this, ElegirEliezer, ElegirGris, ElegirRoand);
         }
 
 

@@ -55,6 +55,7 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             InitializeComponent();
             this.jugadorActual = jugadorRecibido;
+            NavegacionConsola.Configurar(this, btnSkipDialogo);
         }
 
         private void FormNivel1_Load(object sender, EventArgs e)
