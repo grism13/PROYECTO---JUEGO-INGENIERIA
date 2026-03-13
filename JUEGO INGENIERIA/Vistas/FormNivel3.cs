@@ -1,10 +1,10 @@
-﻿using System;
+﻿using JUEGO_INGENIERIA.Modelos;
+using JUEGO_INGENIERIA.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using JUEGO_INGENIERIA.Modelos;
-using JUEGO_INGENIERIA.Properties;
-
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormNivel3 : Form
@@ -15,29 +15,22 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoFase2;
         Image fondoFase3;
         Image fondoActual; // Este será el que actúe como "pantalla" cambiando según la fase
-
         int fondoX = 0;
         int velocidadFondo = 7;
-
-        // --- VARIABLES DEL JUGADOR ---
-        int jugadorX = 50;
-        int jugadorY = 300;
-        int velocidadJugador = 15; // ¡Velocidad original restaurada!
-        int tamañoJugador = 50;
-
+        // --- VARIABLES DEL JUGador ---
+        FormMovimiento movimiento;
+        PictureBox pbJugador;
+        int tamañoJugador = 150;
         int vidasJugador = 3;
         int tiempoInmunidad = 0;
-
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
         int velocidadBala = 25; // ¡Disparos a la velocidad de la luz originales!
         int cooldownDisparo = 0;
-
-        bool moverArriba = false;
-        bool moverAbajo = false;
-        bool moverIzquierda = false;
-        bool moverDerecha = false;
+        int danoJugador = 100;
         bool disparando = false;
-
+        bool modoConcentrado = false;
+        // --- Animación Concentrado ---
+        int targetTamañoJugador = 150;
         // --- VARIABLES DEL JEFE (Profesor Marcel) ---
         int bossBaseX;
         int bossX;
@@ -45,107 +38,127 @@ namespace JUEGO_INGENIERIA.Vistas
         int tamañoBoss = 150;
         int vidaBoss = 1500;
         int velocidadBoss = 8; // Velocidad original restaurada
-
         bool bossSube = false;
         bool bossAvanza = true;
-
         int flashBoss = 0;
         int cooldownAtaqueBoss = 50;
         List<ObjetoJuego> balasBoss = new List<ObjetoJuego>();
-
         Random rnd = new Random();
-
+        // --- ASYNC KEYBOARD INPUT ---
+        [DllImport("user32.dll")]
+        static extern short GetAsyncKeyState(Keys vKey);
         public FormNivel3()
         {
             InitializeComponent();
         }
-
         private void FormNivel2_Load(object sender, EventArgs e)
         {
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
-
-            fondoFase1 = Properties.Resources.fondoFase1;
-            fondoFase2 = Properties.Resources.fondoFase2;
-            fondoFase3 = Properties.Resources.fondoFase3;
-
+            fondoFase1 = new Bitmap(Properties.Resources.fondoFase1, 1280, 720);
+            fondoFase2 = new Bitmap(Properties.Resources.fondoFase2, 1280, 720);
+            fondoFase3 = new Bitmap(Properties.Resources.fondoFase3, 1280, 720);
             // Le decimos al juego que arranque mostrando el fondo de la Fase 1
             fondoActual = fondoFase1;
-
             // --- INYECCIÓN DE 60 FPS ---
             tmrGameLoop.Interval = 16;
-
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
             typeof(Panel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty |
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
-
+            // INICIALIZACIÓN DE pbJugador Y FormMovimiento
+            pbJugador = new PictureBox();
+            pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
+            pbJugador.Location = new Point(200, 200);
+            pnlEscenario.Controls.Add(pbJugador); // Necesario para que pertenezca al form
+            movimiento = new FormMovimiento(this, pbJugador, true); // true = esNivelEspacial
+            movimiento.Start();
             bossBaseX = pnlEscenario.Width - tamañoBoss - 50;
             bossX = bossBaseX;
-
             tmrGameLoop.Start();
         }
-
-        private void FormNivel2_KeyDown(object sender, KeyEventArgs e)
+        protected override void WndProc(ref Message m)
         {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W) moverArriba = true;
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S) moverAbajo = true;
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A) moverIzquierda = true;
-            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D) moverDerecha = true;
-            if (e.KeyCode == Keys.Space) disparando = true;
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_KEYMENU = 0xF100;
+            // Bloquea que la tecla Alt active el menú de la ventana, permitiendo movimiento de flechas libre
+            if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_KEYMENU)
+            {
+                return;
+            }
+            base.WndProc(ref m);
         }
-
-        private void FormNivel2_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Up || e.KeyCode == Keys.W) moverArriba = false;
-            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S) moverAbajo = false;
-            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A) moverIzquierda = false;
-            if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D) moverDerecha = false;
-            if (e.KeyCode == Keys.Space) disparando = false;
-        }
-
+        // --- SE ELIMINARON LOS KEYDOWN/KEYUP A FAVOR DEL GETASYNCKEYSTATE EN EL TICK ---
+        private void FormNivel2_KeyDown(object sender, KeyEventArgs e) { }
+        private void FormNivel2_KeyUp(object sender, KeyEventArgs e) { }
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
+            // --- EVALUACIÓN DE TECLADO ASÍNCRONO ---
+            disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+            if (altPresionado && !modoConcentrado)
+            {
+                modoConcentrado = true;
+                targetTamañoJugador = 60;
+                danoJugador = 25;
+            }
+            else if (!altPresionado && modoConcentrado)
+            {
+                modoConcentrado = false;
+                targetTamañoJugador = 150;
+                danoJugador = 100;
+            }
             // --- SCROLL INFINITO DEL FONDO (SEAMLESS) ---
             fondoX -= velocidadFondo;
             if (fondoX <= -pnlEscenario.Width)
             {
                 fondoX = 0;
             }
-
-            // --- 0. CRONÓMETRO DE INMUNIDAD (I-Frames) ---
+            // --- 0. CRONÓMETRO DE INMUNIDAD (I-Frames) Y ANIMACIÓN ---
             if (tiempoInmunidad > 0)
             {
                 tiempoInmunidad--;
             }
-
+            // --- Animación de Reducción/Aumento de la Nave ---
+            if (tamañoJugador != targetTamañoJugador)
+            {
+                int velocidadAnimacion = 15; // Modifica esto para hacerlo más rápido o lento
+                int nuevoTamaño = targetTamañoJugador < tamañoJugador ? tamañoJugador - velocidadAnimacion : tamañoJugador + velocidadAnimacion;
+                // Asegurar que no rebase el tamaño exacto del objetivo
+                if (targetTamañoJugador < tamañoJugador && nuevoTamaño < targetTamañoJugador) nuevoTamaño = targetTamañoJugador;
+                if (targetTamañoJugador > tamañoJugador && nuevoTamaño > targetTamañoJugador) nuevoTamaño = targetTamañoJugador;
+                int diferencia = tamañoJugador - nuevoTamaño;
+                tamañoJugador = nuevoTamaño;
+                pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
+                pbJugador.Left += diferencia / 2; // Mantener la nave centrada
+                pbJugador.Top += diferencia / 2;
+            }
             // --- 1. MOVIMIENTO DEL JUGADOR ---
-            if (moverArriba && jugadorY > 0) jugadorY -= velocidadJugador;
-            if (moverAbajo && jugadorY < pnlEscenario.Height - tamañoJugador) jugadorY += velocidadJugador;
-            if (moverIzquierda && jugadorX > 0) jugadorX -= velocidadJugador;
-            if (moverDerecha && jugadorX < pnlEscenario.Width - tamañoJugador) jugadorX += velocidadJugador;
-
+            // Manejado automáticamente por FormMovimiento.
+            // Restringimos bordes (opcional si Move no lo hace tan exacto, pero no interfiere)
+            if (pbJugador.Left < 0) pbJugador.Left = 0;
+            if (pbJugador.Top < 0) pbJugador.Top = 0;
+            if (pbJugador.Right > pnlEscenario.Width) pbJugador.Left = pnlEscenario.Width - pbJugador.Width;
+            if (pbJugador.Bottom > pnlEscenario.Height) pbJugador.Top = pnlEscenario.Height - pbJugador.Height;
             // --- 2. DISPARO DEL JUGADOR ---
             if (cooldownDisparo > 0) cooldownDisparo--;
-
-            if (disparando == true && cooldownDisparo <= 0)
+            // Solo puede disparar si no está en modo concentrado (Alt)
+            if (disparando == true && cooldownDisparo <= 0 && !modoConcentrado)
             {
                 ObjetoJuego nuevaBala = new ObjetoJuego();
-                nuevaBala.X = jugadorX + tamañoJugador;
-                nuevaBala.Y = jugadorY + (tamañoJugador / 2) - 5;
+                nuevaBala.X = pbJugador.Left + tamañoJugador;
+                nuevaBala.Y = pbJugador.Top + (tamañoJugador / 2) - 5;
                 nuevaBala.Tag = "bala_jugador";
                 balasJugador.Add(nuevaBala);
                 cooldownDisparo = 6; // Ajuste fino para que sea metralleta pero no sature
             }
-
             for (int i = balasJugador.Count - 1; i >= 0; i--)
             {
                 balasJugador[i].X += velocidadBala;
                 if (balasJugador[i].X > pnlEscenario.Width) balasJugador.RemoveAt(i);
             }
-
             // --- 3. INTELIGENCIA DEL PROFESOR MARCEL ---
             if (vidaBoss > 0)
             {
@@ -159,7 +172,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     bossY += velocidadBoss;
                     if (bossY >= pnlEscenario.Height - tamañoBoss) bossSube = true;
                 }
-
                 if (vidaBoss > 500)
                 {
                     if (bossAvanza)
@@ -177,9 +189,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     if (bossX < bossBaseX) bossX += (velocidadBoss / 2);
                 }
-
                 if (flashBoss > 0) flashBoss--;
-
                 // Daño al Jefe
                 Rectangle areaBoss = new Rectangle(bossX, bossY, tamañoBoss, tamañoBoss);
                 for (int i = balasJugador.Count - 1; i >= 0; i--)
@@ -187,10 +197,9 @@ namespace JUEGO_INGENIERIA.Vistas
                     Rectangle areaBala = new Rectangle(balasJugador[i].X, balasJugador[i].Y, 20, 10);
                     if (areaBala.IntersectsWith(areaBoss))
                     {
-                        vidaBoss -= 100; // MODO PRUEBA
+                        vidaBoss -= danoJugador; // DAÑO VARIABLE SEGUN EL MODO
                         balasJugador.RemoveAt(i);
                         flashBoss = 3;
-
                         // CONDICIÓN DE VICTORIA
                         if (vidaBoss <= 0)
                         {
@@ -203,7 +212,6 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
                     }
                 }
-
                 // Ataques del Profesor
                 if (cooldownAtaqueBoss > 0)
                 {
@@ -212,17 +220,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 else
                 {
                     int probabilidad = rnd.Next(0, 100);
-
                     if (vidaBoss > 1000) // FASE 1
                     {
                         fondoActual = fondoFase1;
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
                         balaMala.Y = bossY + (tamañoBoss / 2);
-
                         if (probabilidad < 85) balaMala.Tag = "bala_boss_recta";
                         else balaMala.Tag = "bala_boss_perseguidora";
-
                         balasBoss.Add(balaMala);
                         cooldownAtaqueBoss = 45;
                     }
@@ -230,7 +235,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         fondoActual = fondoFase2;
                         velocidadBoss = 12;
-
                         if (probabilidad < 85)
                         {
                             for (int j = -1; j <= 1; j++)
@@ -238,17 +242,14 @@ namespace JUEGO_INGENIERIA.Vistas
                                 ObjetoJuego balaMala = new ObjetoJuego();
                                 balaMala.X = bossX;
                                 balaMala.Y = bossY + (tamañoBoss / 2);
-
                                 if (j == -1) balaMala.Tag = "bala_boss_arriba";
                                 else if (j == 1) balaMala.Tag = "bala_boss_abajo";
                                 else balaMala.Tag = "bala_boss_fase2_recta";
-
                                 balasBoss.Add(balaMala);
                             }
                         }
                         else
                         {
-                           
                             ObjetoJuego balaMala = new ObjetoJuego();
                             balaMala.X = bossX;
                             balaMala.Y = bossY + (tamañoBoss / 2);
@@ -261,43 +262,34 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         fondoActual = fondoFase3;
                         velocidadBoss = 15;
-
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
                         balaMala.Y = bossY + rnd.Next(0, tamañoBoss);
-
                         if (probabilidad < 85) balaMala.Tag = "bala_boss_fase2_recta";
                         else if (probabilidad < 92) balaMala.Tag = "bala_boss_perseguidora";
                         else balaMala.Tag = "bala_boss_rebotona_sube";
-
                         balasBoss.Add(balaMala);
-                        cooldownAtaqueBoss = 13;
+                        cooldownAtaqueBoss = 25; // Aumentado de 13 a 25 para evitar saturación de balas en GDI+
                     }
                 }
             }
-
             // --- 4. MOVER BALAS DEL PROFESOR Y DAÑO AL JUGADOR ---
-            Rectangle hitboxJugador = new Rectangle(jugadorX, jugadorY, tamañoJugador, tamañoJugador);
-
+            Rectangle hitboxJugador = new Rectangle(pbJugador.Left, pbJugador.Top, tamañoJugador, tamañoJugador);
             // ¡Velocidades originales de balas restauradas!
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
                 balasBoss[i].X -= 15;
-
                 if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 5;
                 if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 5;
-
                 if (balasBoss[i].Tag == "bala_boss_perseguidora")
                 {
                     balasBoss[i].X += 3;
-                    if (balasBoss[i].Y < jugadorY) balasBoss[i].Y += 4;
-                    else if (balasBoss[i].Y > jugadorY) balasBoss[i].Y -= 4;
+                    if (balasBoss[i].Y < pbJugador.Top) balasBoss[i].Y += 4;
+                    else if (balasBoss[i].Y > pbJugador.Top) balasBoss[i].Y -= 4;
                 }
-
                 if (balasBoss[i].Tag.StartsWith("bala_boss_rebotona"))
                 {
                     balasBoss[i].X += 8;
-
                     if (balasBoss[i].Tag == "bala_boss_rebotona_sube")
                     {
                         balasBoss[i].Y -= 15;
@@ -309,19 +301,15 @@ namespace JUEGO_INGENIERIA.Vistas
                         if (balasBoss[i].Y >= pnlEscenario.Height - 30) balasBoss[i].Tag = "bala_boss_rebotona_sube";
                     }
                 }
-
                 // DAÑO POR BALA
                 Rectangle areaBalaMala = new Rectangle(balasBoss[i].X, balasBoss[i].Y, 20, 20);
-
                 if (areaBalaMala.IntersectsWith(hitboxJugador))
                 {
                     balasBoss.RemoveAt(i);
-
                     if (tiempoInmunidad <= 0)
                     {
                         vidasJugador--;
                         tiempoInmunidad = 100; // I-FRAMES
-
                         if (vidasJugador <= 0)
                         {
                             tmrGameLoop.Stop();
@@ -333,23 +321,19 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     continue;
                 }
-
-                if (balasBoss[i].X < -50 || balasBoss[i].Y < -100 || balasBoss[i].Y > pnlEscenario.Height + 100)
+                if (balasBoss[i].X < -50 || balasBoss[i].X > pnlEscenario.Width + 100 || balasBoss[i].Y < -100 || balasBoss[i].Y > pnlEscenario.Height + 100)
                 {
                     balasBoss.RemoveAt(i);
                 }
             }
-
             // --- 5. DAÑO POR CHOCAR CONTRA MARCEL ---
             if (vidaBoss > 0)
             {
                 Rectangle hitboxBoss = new Rectangle(bossX, bossY, tamañoBoss, tamañoBoss);
-
                 if (hitboxJugador.IntersectsWith(hitboxBoss) && tiempoInmunidad <= 0)
                 {
                     vidasJugador--;
                     tiempoInmunidad = 100; // I-FRAMES por chocar
-
                     if (vidasJugador <= 0)
                     {
                         tmrGameLoop.Stop();
@@ -360,57 +344,51 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
             }
-
             pnlEscenario.Invalidate();
         }
-
         // --- EL PINTOR ---
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
             // --- 0. DIBUJAR EL FONDO EN MOVIMIENTO (SEAMLESS) ---
-            if (fondoActual != null) // Cambiamos fondoNivel3 por fondoActual
+            if (fondoActual != null)
             {
-                e.Graphics.DrawImage(fondoActual, fondoX, 0, pnlEscenario.Width, pnlEscenario.Height);
-                e.Graphics.DrawImage(fondoActual, fondoX + pnlEscenario.Width, 0, pnlEscenario.Width, pnlEscenario.Height);
+                // Optimización crítica: Solo dibujamos la parte visible del fondo, sin escalar pesadamente
+                e.Graphics.DrawImageUnscaled(fondoActual, fondoX, 0);
+                e.Graphics.DrawImageUnscaled(fondoActual, fondoX + fondoActual.Width, 0);
             }
             else
             {
                 e.Graphics.Clear(Color.FromArgb(20, 20, 30));
             }
-
             // 1. Dibujar jugador (Con I-Frames)
             if (tiempoInmunidad > 0)
             {
                 if (tiempoInmunidad % 10 > 4)
                 {
-                    e.Graphics.FillRectangle(Brushes.LightSkyBlue, jugadorX, jugadorY, tamañoJugador, tamañoJugador);
+                    movimiento.DibujarPersonaje(e.Graphics);
                 }
             }
             else
             {
-                e.Graphics.FillRectangle(Brushes.DodgerBlue, jugadorX, jugadorY, tamañoJugador, tamañoJugador);
+                movimiento.DibujarPersonaje(e.Graphics);
             }
-
-            // 2. Dibujar vidas del jugador
+            // 2. (Aura eliminada a petición del usuario)
+            // 3. Dibujar vidas del jugador
             Font fuenteVidas = new Font("Arial", 16, FontStyle.Bold);
             e.Graphics.DrawString("Vidas: " + vidasJugador, fuenteVidas, Brushes.LimeGreen, 20, 20);
-
             // 3. Dibujar balas del jugador
             foreach (ObjetoJuego bala in balasJugador)
             {
                 e.Graphics.FillRectangle(Brushes.Yellow, bala.X, bala.Y, 20, 10);
             }
-
             // 4. Dibujar al Profesor Marcel y su Vida
             if (vidaBoss > 0)
             {
                 if (flashBoss > 0) e.Graphics.FillRectangle(Brushes.White, bossX, bossY, tamañoBoss, tamañoBoss);
                 else e.Graphics.FillRectangle(Brushes.Crimson, bossX, bossY, tamañoBoss, tamañoBoss);
-
                 Font fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
                 e.Graphics.DrawString("HP Marcel: " + vidaBoss, fuenteVidaBoss, Brushes.White, bossX, bossY - 25);
             }
-
             // 5. Dibujar balas del Jefe
             foreach (ObjetoJuego balaMala in balasBoss)
             {
