@@ -673,4 +673,16 @@
   <data name="roand-pirula3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\roand-pirula3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="eliezer-iguana4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-iguana4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-iguana1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-iguana1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-iguana2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-iguana2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-iguana3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-iguana3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

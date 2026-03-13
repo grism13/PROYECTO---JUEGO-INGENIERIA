@@ -468,6 +468,46 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eliezer_iguana1 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-iguana1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_iguana2 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-iguana2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_iguana3 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-iguana3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_iguana4 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-iguana4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap eliezer_inclinadaderechaespalda1 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_inclinadaderechaespalda1", resourceCulture);
