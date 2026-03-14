@@ -26,7 +26,7 @@ namespace JUEGO_INGENIERIA.Vistas
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
         int velocidadBala = 25; // ¡Disparos a la velocidad de la luz originales!
         int cooldownDisparo = 0;
-        int danoJugador = 100;
+        int danoJugador = 10;
         bool disparando = false;
         bool modoConcentrado = false;
         // --- Animación Concentrado ---
@@ -35,7 +35,7 @@ namespace JUEGO_INGENIERIA.Vistas
         int bossBaseX;
         int bossX;
         int bossY = 50;
-        int tamañoBoss = 150;
+        int tamañoBoss = 200;
         int vidaBoss = 1500;
         int velocidadBoss = 8; // Velocidad original restaurada
         bool bossSube = false;
@@ -44,6 +44,15 @@ namespace JUEGO_INGENIERIA.Vistas
         int cooldownAtaqueBoss = 50;
         List<ObjetoJuego> balasBoss = new List<ObjetoJuego>();
         Random rnd = new Random();
+        // --- ANIMACIONES DEL JEFE MARCEL ---
+private Image[] framesFase1;
+private Image[] framesFase2;
+private Image[] framesFase3;
+private Image imagenActualBoss; 
+
+private int frameBossActual = 0; 
+private int contadorAnimacionBoss = 0; 
+private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/se mueve Marcel
         // --- ASYNC KEYBOARD INPUT ---
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
@@ -53,13 +62,39 @@ namespace JUEGO_INGENIERIA.Vistas
         }
         private void FormNivel2_Load(object sender, EventArgs e)
         {
+
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
             fondoFase1 = new Bitmap(Properties.Resources.fondoFase1, 1280, 720);
             fondoFase2 = new Bitmap(Properties.Resources.fondoFase2, 1280, 720);
             fondoFase3 = new Bitmap(Properties.Resources.fondoFase3, 1280, 720);
+
             // Le decimos al juego que arranque mostrando el fondo de la Fase 1
             fondoActual = fondoFase1;
+
+            // --- CARGAR ANIMACIONES DE MARCEL (4 frames por fase) ---
+            framesFase1 = new Image[] {
+                Properties.Resources.MarcelF1_1,
+                Properties.Resources.MarcelF1_2,
+                Properties.Resources.MarcelF1_3,
+                Properties.Resources.MarcelF1_4
+            };
+
+            framesFase2 = new Image[] {
+                Properties.Resources.MarcelF2_1,
+                Properties.Resources.MarcelF2_2,
+                Properties.Resources.MarcelF2_3,
+                Properties.Resources.MarcelF2_4
+            };
+
+            framesFase3 = new Image[] {
+                Properties.Resources.MarcelF3_1,
+                Properties.Resources.MarcelF3_2,
+                Properties.Resources.MarcelF3_3,
+                
+            };
+            imagenActualBoss = framesFase1[0]; // Arranca con la primera imagen
+
             // --- INYECCIÓN DE 60 FPS ---
             tmrGameLoop.Interval = 16;
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
@@ -68,6 +103,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
+
             // INICIALIZACIÓN DE pbJugador Y FormMovimiento
             pbJugador = new PictureBox();
             pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
@@ -102,13 +138,13 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 modoConcentrado = true;
                 targetTamañoJugador = 60;
-                danoJugador = 25;
+                danoJugador = 5;
             }
             else if (!altPresionado && modoConcentrado)
             {
                 modoConcentrado = false;
                 targetTamañoJugador = 150;
-                danoJugador = 100;
+                danoJugador = 10;
             }
             // --- SCROLL INFINITO DEL FONDO (SEAMLESS) ---
             fondoX -= velocidadFondo;
@@ -162,6 +198,30 @@ namespace JUEGO_INGENIERIA.Vistas
             // --- 3. INTELIGENCIA DEL PROFESOR MARCEL ---
             if (vidaBoss > 0)
             {
+                // --- MOTOR DE ANIMACIÓN DE MARCEL ---
+                contadorAnimacionBoss++;
+                if (contadorAnimacionBoss >= velocidadAnimacionBoss)
+                {
+                    frameBossActual++;
+                    contadorAnimacionBoss = 0; // Reiniciamos el relojito
+
+                    // Asignamos el dibujo correcto según la fase de vida
+                    if (vidaBoss > 1000) // FASE 1
+                    {
+                        if (frameBossActual >= framesFase1.Length) frameBossActual = 0;
+                        imagenActualBoss = framesFase1[frameBossActual];
+                    }
+                    else if (vidaBoss <= 1000 && vidaBoss > 500) // FASE 2
+                    {
+                        if (frameBossActual >= framesFase2.Length) frameBossActual = 0;
+                        imagenActualBoss = framesFase2[frameBossActual];
+                    }
+                    else // FASE 3
+                    {
+                        if (frameBossActual >= framesFase3.Length) frameBossActual = 0;
+                        imagenActualBoss = framesFase3[frameBossActual];
+                    }
+                }
                 if (bossSube)
                 {
                     bossY -= velocidadBoss;
@@ -275,6 +335,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             // --- 4. MOVER BALAS DEL PROFESOR Y DAÑO AL JUGADOR ---
             Rectangle hitboxJugador = new Rectangle(pbJugador.Left, pbJugador.Top, tamañoJugador, tamañoJugador);
+
             // ¡Velocidades originales de balas restauradas!
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
@@ -381,18 +442,30 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 e.Graphics.FillRectangle(Brushes.Yellow, bala.X, bala.Y, 20, 10);
             }
+
             // 4. Dibujar al Profesor Marcel y su Vida
             if (vidaBoss > 0)
             {
-                if (flashBoss > 0) e.Graphics.FillRectangle(Brushes.White, bossX, bossY, tamañoBoss, tamañoBoss);
-                else e.Graphics.FillRectangle(Brushes.Crimson, bossX, bossY, tamañoBoss, tamañoBoss);
+                // 1. Dibujamos la imagen animada del profesor
+                if (imagenActualBoss != null)
+                {
+                    e.Graphics.DrawImage(imagenActualBoss, bossX, bossY, tamañoBoss, tamañoBoss);
+                }
+
+                // 2. Si recibió daño, le dibujamos un cuadrado blanco semitransparente encima para el destello
+                if (flashBoss > 0)
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(120, Color.White)), bossX, bossY, tamañoBoss, tamañoBoss);
+                }
+
+                // 3. El texto de su vida
                 Font fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
                 e.Graphics.DrawString("HP Marcel: " + vidaBoss, fuenteVidaBoss, Brushes.White, bossX, bossY - 25);
-            }
-            // 5. Dibujar balas del Jefe
-            foreach (ObjetoJuego balaMala in balasBoss)
-            {
-                e.Graphics.FillRectangle(Brushes.OrangeRed, balaMala.X, balaMala.Y, 20, 20);
+
+                foreach (ObjetoJuego balaMala in balasBoss)
+                {
+                    e.Graphics.FillRectangle(Brushes.OrangeRed, balaMala.X, balaMala.Y, 20, 20);
+                }
             }
         }
     }
