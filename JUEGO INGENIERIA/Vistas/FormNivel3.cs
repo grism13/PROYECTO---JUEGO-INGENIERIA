@@ -17,6 +17,8 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoActual; // Este será el que actúe como "pantalla" cambiando según la fase
         int fondoX = 0;
         int velocidadFondo = 7;
+
+
         // --- VARIABLES DEL JUGador ---
         FormMovimiento movimiento;
         PictureBox pbJugador;
@@ -31,11 +33,17 @@ namespace JUEGO_INGENIERIA.Vistas
         bool modoConcentrado = false;
         // --- Animación Concentrado ---
         int targetTamañoJugador = 150;
+        // --- NUEVO: IMÁGENES DE ESTADO DE VIDA DEL JUGADOR ---
+        Image imgVidaFull;  // Imagen con 3 corazones
+        Image imgVidaMedia; // Imagen con 2 corazones
+        Image imgVidaBaja;  // Imagen con 1 corazón
+
+
         // --- VARIABLES DEL JEFE (Profesor Marcel) ---
         int bossBaseX;
         int bossX;
         int bossY = 50;
-        int tamañoBoss = 200;
+        int tamañoBoss = 180;
         int vidaBoss = 1500;
         int velocidadBoss = 8; // Velocidad original restaurada
         bool bossSube = false;
@@ -45,14 +53,15 @@ namespace JUEGO_INGENIERIA.Vistas
         List<ObjetoJuego> balasBoss = new List<ObjetoJuego>();
         Random rnd = new Random();
         // --- ANIMACIONES DEL JEFE MARCEL ---
-private Image[] framesFase1;
-private Image[] framesFase2;
-private Image[] framesFase3;
-private Image imagenActualBoss; 
+        private Image[] framesFase1;
+        private Image[] framesFase2;
+        private Image[] framesFase3;
+        private Image imagenActualBoss; 
+        private int frameBossActual = 0; 
+        private int contadorAnimacionBoss = 0; 
+        private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/se mueve Marcel
 
-private int frameBossActual = 0; 
-private int contadorAnimacionBoss = 0; 
-private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/se mueve Marcel
+
         // --- ASYNC KEYBOARD INPUT ---
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
@@ -94,6 +103,11 @@ private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/
                 
             };
             imagenActualBoss = framesFase1[0]; // Arranca con la primera imagen
+
+            // --- CARGAR IMÁGENES DE VIDA DEL JUGADOR ---
+            imgVidaFull = Properties.Resources.vida_3;   // Reemplaza con tus nombres reales
+            imgVidaMedia = Properties.Resources.vida_2; // Reemplaza con tus nombres reales
+            imgVidaBaja = Properties.Resources.vida_1;   // Reemplaza con tus nombres reales
 
             // --- INYECCIÓN DE 60 FPS ---
             tmrGameLoop.Interval = 16;
@@ -433,10 +447,34 @@ private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/
             {
                 movimiento.DibujarPersonaje(e.Graphics);
             }
-            // 2. (Aura eliminada a petición del usuario)
-            // 3. Dibujar vidas del jugador
-            Font fuenteVidas = new Font("Arial", 16, FontStyle.Bold);
-            e.Graphics.DrawString("Vidas: " + vidasJugador, fuenteVidas, Brushes.LimeGreen, 20, 20);
+            
+           
+            // --- DIBUJAR VIDAS DEL JUGADOR (Asset Swapping) ---
+            // 1. Creamos una variable temporal para guardar la imagen que vamos a decidir mostrar
+            Image imagenAVisualizar = null;
+
+            // 2. Decidimos matemáticamente cuál imagen usar según las vidas actuales
+            if (vidasJugador == 3)
+            {
+                imagenAVisualizar = imgVidaFull;
+            }
+            else if (vidasJugador == 2)
+            {
+                imagenAVisualizar = imgVidaMedia;
+            }
+            else if (vidasJugador == 1)
+            {
+                imagenAVisualizar = imgVidaBaja;
+            }
+
+            // 3. Si encontramos una imagen válida para ese estado, la dibujamos
+            if (imagenAVisualizar != null)
+            {
+                // Dibuja la imagen elegida en la esquina superior izquierda
+                // (imagen, posición X, posición Y, ancho, alto)
+                // Ajusta el ancho (120) y alto (40) al tamaño real de tu asset para que no se vea estirado
+                e.Graphics.DrawImage(imagenAVisualizar, 20, 20, 120, 40);
+            }
             // 3. Dibujar balas del jugador
             foreach (ObjetoJuego bala in balasJugador)
             {

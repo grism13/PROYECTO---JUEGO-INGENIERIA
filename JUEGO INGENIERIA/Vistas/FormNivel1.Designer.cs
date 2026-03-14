@@ -29,8 +29,8 @@
             tmrGenerador = new System.Windows.Forms.Timer(components);
             tmrReloj = new System.Windows.Forms.Timer(components);
             pnlIntro = new Panel();
-            lblOswaldText = new Label();
             btnSkipDialogo = new Button();
+            lblOswaldText = new Label();
             pictureBox1 = new PictureBox();
             timerEscritura = new System.Windows.Forms.Timer(components);
             pbVida1 = new PictureBox();
@@ -140,18 +140,6 @@
             pnlIntro.Size = new Size(953, 313);
             pnlIntro.TabIndex = 6;
             // 
-            // lblOswaldText
-            // 
-            lblOswaldText.BackColor = Color.FromArgb(192, 192, 255);
-            lblOswaldText.ForeColor = Color.Black;
-            lblOswaldText.Image = Properties.Resources.narrativa;
-            lblOswaldText.Location = new Point(309, 141);
-            lblOswaldText.Name = "lblOswaldText";
-            lblOswaldText.Size = new Size(590, 110);
-            lblOswaldText.TabIndex = 7;
-            lblOswaldText.Text = "label2";
-            lblOswaldText.Click += lblOswaldText_Click;
-            // 
             // btnSkipDialogo
             // 
             btnSkipDialogo.BackColor = Color.Transparent;
@@ -166,6 +154,18 @@
             btnSkipDialogo.Text = "SALTAR >>";
             btnSkipDialogo.UseVisualStyleBackColor = false;
             btnSkipDialogo.Click += btnSkipDialogo_Click;
+            // 
+            // lblOswaldText
+            // 
+            lblOswaldText.BackColor = Color.FromArgb(192, 192, 255);
+            lblOswaldText.ForeColor = Color.Black;
+            lblOswaldText.Image = Properties.Resources.narrativa;
+            lblOswaldText.Location = new Point(309, 141);
+            lblOswaldText.Name = "lblOswaldText";
+            lblOswaldText.Size = new Size(590, 110);
+            lblOswaldText.TabIndex = 7;
+            lblOswaldText.Text = "label2";
+            lblOswaldText.Click += lblOswaldText_Click;
             // 
             // pictureBox1
             // 
@@ -186,7 +186,7 @@
             // pbVida1
             // 
             pbVida1.BackColor = Color.Transparent;
-            pbVida1.Image = Properties.Resources._1vidas;
+            pbVida1.Image = Properties.Resources.vida_1;
             pbVida1.Location = new Point(1078, 221);
             pbVida1.Name = "pbVida1";
             pbVida1.Size = new Size(165, 71);
@@ -197,7 +197,7 @@
             // pbVida3
             // 
             pbVida3.BackColor = Color.Transparent;
-            pbVida3.Image = Properties.Resources._3vidas__1_;
+            pbVida3.Image = Properties.Resources.vida_3;
             pbVida3.Location = new Point(1078, 221);
             pbVida3.Name = "pbVida3";
             pbVida3.Size = new Size(165, 71);
@@ -208,7 +208,7 @@
             // pbVida2
             // 
             pbVida2.BackColor = Color.Transparent;
-            pbVida2.Image = Properties.Resources._2vidas;
+            pbVida2.Image = Properties.Resources.vida_2;
             pbVida2.Location = new Point(1078, 221);
             pbVida2.Name = "pbVida2";
             pbVida2.Size = new Size(165, 71);
@@ -244,7 +244,6 @@
             Controls.Add(label1);
             Controls.Add(pbVida2);
             Controls.Add(pbVida1);
-            Cursor = Cursors.Default;
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
