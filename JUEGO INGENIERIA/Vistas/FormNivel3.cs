@@ -26,7 +26,7 @@ namespace JUEGO_INGENIERIA.Vistas
         int vidasJugador = 3;
         int tiempoInmunidad = 0;
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
-        int velocidadBala = 25; // ¡Disparos a la velocidad de la luz originales!
+        int velocidadBala = 30; // ¡Disparos a la velocidad de la luz originales!
         int cooldownDisparo = 0;
         int danoJugador = 10;
         bool disparando = false;
@@ -45,7 +45,7 @@ namespace JUEGO_INGENIERIA.Vistas
         int bossY = 50;
         int tamañoBoss = 180;
         int vidaBoss = 1500;
-        int velocidadBoss = 8; // Velocidad original restaurada
+        int velocidadBoss =   8; // Velocidad original restaurada
         bool bossSube = false;
         bool bossAvanza = true;
         int flashBoss = 0;
@@ -74,9 +74,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
-            fondoFase1 = new Bitmap(Properties.Resources.fondoFase1, 1280, 720);
-            fondoFase2 = new Bitmap(Properties.Resources.fondoFase2, 1280, 720);
-            fondoFase3 = new Bitmap(Properties.Resources.fondoFase3, 1280, 720);
+            fondoFase1 = new Bitmap(Properties.Resources.fondoF1_marcel, 1280, 720);
+            fondoFase2 = new Bitmap(Properties.Resources.fondoF2_marcel, 1280, 720);
+            fondoFase3 = new Bitmap(Properties.Resources.fondoF3_marcel_a, 1280, 720);
 
             // Le decimos al juego que arranque mostrando el fondo de la Fase 1
             fondoActual = fondoFase1;
@@ -475,12 +475,17 @@ namespace JUEGO_INGENIERIA.Vistas
                 // Ajusta el ancho (120) y alto (40) al tamaño real de tu asset para que no se vea estirado
                 e.Graphics.DrawImage(imagenAVisualizar, 20, 20, 120, 40);
             }
-            // 3. Dibujar balas del jugador
+            // 3. Dibujar balas del jugador con imagen
+            Image imgBalaJugador = Properties.Resources.balas_personaje; 
+
             foreach (ObjetoJuego bala in balasJugador)
             {
-                e.Graphics.FillRectangle(Brushes.Yellow, bala.X, bala.Y, 20, 10);
+                if (imgBalaJugador != null)
+                {
+                    // Ajusta el 30 y 15 según el tamaño de tu imagen
+                    e.Graphics.DrawImage(imgBalaJugador, bala.X, bala.Y, 50, 25);
+                }
             }
-
             // 4. Dibujar al Profesor Marcel y su Vida
             if (vidaBoss > 0)
             {
@@ -500,9 +505,15 @@ namespace JUEGO_INGENIERIA.Vistas
                 Font fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
                 e.Graphics.DrawString("HP Marcel: " + vidaBoss, fuenteVidaBoss, Brushes.White, bossX, bossY - 25);
 
+                // Dibujar balas del Jefe con imagen
+                Image imgBalaJefe = Properties.Resources.bala_marcel; // Pon el nombre de tu recurso aquí
                 foreach (ObjetoJuego balaMala in balasBoss)
                 {
-                    e.Graphics.FillRectangle(Brushes.OrangeRed, balaMala.X, balaMala.Y, 20, 20);
+                    if (imgBalaJefe != null)
+                    {
+                        // Ajusta el 30 y 30 según el tamaño de tu imagen
+                        e.Graphics.DrawImage(imgBalaJefe, balaMala.X, balaMala.Y, 50, 50);
+                    }
                 }
             }
         }

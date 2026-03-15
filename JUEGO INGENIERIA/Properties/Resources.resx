@@ -613,15 +613,6 @@
   <data name="FondoNivel3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\FondoNivel3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="fondoFase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fondoFase1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="fondoFase2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fondoFase2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="fondoFase3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\fondoFase3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="gris-estrella-izquierda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gris-estrella-izquierda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -720,5 +711,20 @@
   </data>
   <data name="vida_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vida_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bala_marcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bala_marcel.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="balas_personaje" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\balas_personaje.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoF1_marcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoF1_marcel (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoF2_marcel" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoF2_marcel (1).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoF3_marcel_a" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoF3_marcel_a.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

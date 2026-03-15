@@ -73,6 +73,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bala_marcel {
+            get {
+                object obj = ResourceManager.GetObject("bala_marcel", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap balas_personaje {
+            get {
+                object obj = ResourceManager.GetObject("balas_personaje", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_siguiente {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente", resourceCulture);
@@ -802,9 +822,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fondoFase1 {
+        internal static System.Drawing.Bitmap fondoF1_marcel {
             get {
-                object obj = ResourceManager.GetObject("fondoFase1", resourceCulture);
+                object obj = ResourceManager.GetObject("fondoF1_marcel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -812,9 +832,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fondoFase2 {
+        internal static System.Drawing.Bitmap fondoF2_marcel {
             get {
-                object obj = ResourceManager.GetObject("fondoFase2", resourceCulture);
+                object obj = ResourceManager.GetObject("fondoF2_marcel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -822,9 +842,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fondoFase3 {
+        internal static System.Drawing.Bitmap fondoF3_marcel_a {
             get {
-                object obj = ResourceManager.GetObject("fondoFase3", resourceCulture);
+                object obj = ResourceManager.GetObject("fondoF3_marcel_a", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
