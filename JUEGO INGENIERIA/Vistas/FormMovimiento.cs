@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -251,8 +251,13 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 Rectangle areaAnterior = new Rectangle(xAnterior, yAnterior, pbPersonaje.Width, pbPersonaje.Height);
                 Rectangle areaNueva = new Rectangle(pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
-                frm.Invalidate(areaAnterior);
-                frm.Invalidate(areaNueva);
+                
+                // Optimizacion: Evitar sobre-invalidar areas enteras innecesariamente si no hubo movimiento real
+                if (seMueve)
+                {
+                    frm.Invalidate(areaAnterior);
+                    frm.Invalidate(areaNueva);
+                }
             }
         }
         private void Animar(List<Image> animacionNueva)

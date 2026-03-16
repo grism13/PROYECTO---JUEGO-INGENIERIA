@@ -1,10 +1,12 @@
-﻿using JUEGO_INGENIERIA.Modelos;
+using JUEGO_INGENIERIA.Modelos;
 using JUEGO_INGENIERIA.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Text.Json;
+using System.IO;
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormNivel3 : Form
@@ -17,9 +19,8 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoActual; // Este será el que actúe como "pantalla" cambiando según la fase
         int fondoX = 0;
         int velocidadFondo = 7;
-
-
         // --- VARIABLES DEL JUGador ---
+        Jugador jugadorActual;
         FormMovimiento movimiento;
         PictureBox pbJugador;
         int tamañoJugador = 150;
@@ -37,15 +38,13 @@ namespace JUEGO_INGENIERIA.Vistas
         Image imgVidaFull;  // Imagen con 3 corazones
         Image imgVidaMedia; // Imagen con 2 corazones
         Image imgVidaBaja;  // Imagen con 1 corazón
-
-
         // --- VARIABLES DEL JEFE (Profesor Marcel) ---
         int bossBaseX;
         int bossX;
         int bossY = 50;
         int tamañoBoss = 180;
         int vidaBoss = 1500;
-        int velocidadBoss =   8; // Velocidad original restaurada
+        int velocidadBoss = 8; // Velocidad original restaurada
         bool bossSube = false;
         bool bossAvanza = true;
         int flashBoss = 0;
@@ -56,59 +55,78 @@ namespace JUEGO_INGENIERIA.Vistas
         private Image[] framesFase1;
         private Image[] framesFase2;
         private Image[] framesFase3;
-        private Image imagenActualBoss; 
-        private int frameBossActual = 0; 
-        private int contadorAnimacionBoss = 0; 
+        private Image imagenActualBoss;
+        private int frameBossActual = 0;
+        private int contadorAnimacionBoss = 0;
         private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/se mueve Marcel
-
-
         // --- ASYNC KEYBOARD INPUT ---
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
-        public FormNivel3()
+        // --- CACHÉ GDI+ PARA OPTIMIZACIÓN ---
+        private Image imgBalaJugador;
+        private Image imgBalaJefe;
+        private Font fuenteVidaBoss;
+        private SolidBrush pincelDestello;
+        public FormNivel3(Jugador jugadorRecibido)
         {
             InitializeComponent();
+            this.jugadorActual = jugadorRecibido;
+        }
+        // --- HELPER PARA OPTIMIZAR IMÁGENES EN RAM (PRE-ESCALADO Y 32BPP) ---
+        private Bitmap OptimizarImagen(Image img, int width, int height)
+        {
+            if (img == null) return null;
+            Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+                g.DrawImage(img, 0, 0, width, height);
+            }
+            return bmp;
         }
         private void FormNivel2_Load(object sender, EventArgs e)
         {
-
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
-            fondoFase1 = new Bitmap(Properties.Resources.fondoF1_marcel, 1280, 720);
-            fondoFase2 = new Bitmap(Properties.Resources.fondoF2_marcel, 1280, 720);
-            fondoFase3 = new Bitmap(Properties.Resources.fondoF3_marcel_a, 1280, 720);
-
+            // Pre-cargamos en RAM versiones 32-bits de los fondos
+            fondoFase1 = OptimizarImagen(Properties.Resources.fondoF1_marcel, 1280, 720);
+            fondoFase2 = OptimizarImagen(Properties.Resources.fondoF2_marcel, 1280, 720);
+            fondoFase3 = OptimizarImagen(Properties.Resources.fondoF3_marcel_a, 1280, 720);
             // Le decimos al juego que arranque mostrando el fondo de la Fase 1
             fondoActual = fondoFase1;
-
             // --- CARGAR ANIMACIONES DE MARCEL (4 frames por fase) ---
             framesFase1 = new Image[] {
-                Properties.Resources.MarcelF1_1,
-                Properties.Resources.MarcelF1_2,
-                Properties.Resources.MarcelF1_3,
-                Properties.Resources.MarcelF1_4
+                OptimizarImagen(Properties.Resources.MarcelF1_1, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF1_2, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF1_3, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF1_4, tamañoBoss, tamañoBoss)
             };
-
             framesFase2 = new Image[] {
-                Properties.Resources.MarcelF2_1,
-                Properties.Resources.MarcelF2_2,
-                Properties.Resources.MarcelF2_3,
-                Properties.Resources.MarcelF2_4
+                OptimizarImagen(Properties.Resources.MarcelF2_1, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF2_2, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF2_3, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF2_4, tamañoBoss, tamañoBoss)
             };
-
             framesFase3 = new Image[] {
-                Properties.Resources.MarcelF3_1,
-                Properties.Resources.MarcelF3_2,
-                Properties.Resources.MarcelF3_3,
-                
+                OptimizarImagen(Properties.Resources.MarcelF3_1, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF3_2, tamañoBoss, tamañoBoss),
+                OptimizarImagen(Properties.Resources.MarcelF3_3, tamañoBoss, tamañoBoss),
+
             };
             imagenActualBoss = framesFase1[0]; // Arranca con la primera imagen
-
             // --- CARGAR IMÁGENES DE VIDA DEL JUGADOR ---
-            imgVidaFull = Properties.Resources.vida_3;   // Reemplaza con tus nombres reales
-            imgVidaMedia = Properties.Resources.vida_2; // Reemplaza con tus nombres reales
-            imgVidaBaja = Properties.Resources.vida_1;   // Reemplaza con tus nombres reales
-
+            imgVidaFull = OptimizarImagen(Properties.Resources.vida_3, 120, 40);
+            imgVidaMedia = OptimizarImagen(Properties.Resources.vida_2, 120, 40);
+            imgVidaBaja = OptimizarImagen(Properties.Resources.vida_1, 120, 40);
+            // --- INICIALIZAR CACHÉ DE GDI+ PARA OPTIMIZAR ---
+            imgBalaJugador = OptimizarImagen(Properties.Resources.balas_personaje, 50, 25);
+            imgBalaJefe = OptimizarImagen(Properties.Resources.bala_marcel, 50, 50);
+            fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
+            pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
             // --- INYECCIÓN DE 60 FPS ---
             tmrGameLoop.Interval = 16;
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
@@ -117,12 +135,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
-
             // INICIALIZACIÓN DE pbJugador Y FormMovimiento
             pbJugador = new PictureBox();
             pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
             pbJugador.Location = new Point(200, 200);
-            pnlEscenario.Controls.Add(pbJugador); // Necesario para que pertenezca al form
+
+            // LA MAGIA: Quitamos el Control de la pantalla, pbJugador existirá pero Invisible a Windows
+            // Esto elimina el "Graphics Invalidate Transparent Loop"
+            // pnlEscenario.Controls.Add(pbJugador);  // <- ELIMINADO
             movimiento = new FormMovimiento(this, pbJugador, true); // true = esNivelEspacial
             movimiento.Start();
             bossBaseX = pnlEscenario.Width - tamañoBoss - 50;
@@ -218,7 +238,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     frameBossActual++;
                     contadorAnimacionBoss = 0; // Reiniciamos el relojito
-
                     // Asignamos el dibujo correcto según la fase de vida
                     if (vidaBoss > 1000) // FASE 1
                     {
@@ -349,7 +368,6 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             // --- 4. MOVER BALAS DEL PROFESOR Y DAÑO AL JUGADOR ---
             Rectangle hitboxJugador = new Rectangle(pbJugador.Left, pbJugador.Top, tamañoJugador, tamañoJugador);
-
             // ¡Velocidades originales de balas restauradas!
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
@@ -387,10 +405,8 @@ namespace JUEGO_INGENIERIA.Vistas
                         tiempoInmunidad = 100; // I-FRAMES
                         if (vidasJugador <= 0)
                         {
-                            tmrGameLoop.Stop();
-                            pnlEscenario.Invalidate();
-                            MessageBox.Show("Te has quedado sin vidas.\nEl Profesor Marcel te mandó a reparación.", "¡GAME OVER!");
-                            this.Close();
+                            DetenerJuego();
+                            PerderNivel("Te has quedado sin vidas.\nEl Profesor Marcel te mandó a reparación.");
                             return;
                         }
                     }
@@ -411,10 +427,8 @@ namespace JUEGO_INGENIERIA.Vistas
                     tiempoInmunidad = 100; // I-FRAMES por chocar
                     if (vidasJugador <= 0)
                     {
-                        tmrGameLoop.Stop();
-                        pnlEscenario.Invalidate();
-                        MessageBox.Show("Te has quedado sin vidas.\n¡Te estrellaste contra el Profesor Marcel!", "¡GAME OVER!");
-                        this.Close();
+                        DetenerJuego();
+                        PerderNivel("Te has quedado sin vidas.\n¡Te estrellaste contra el Profesor Marcel!");
                         return;
                     }
                 }
@@ -424,6 +438,12 @@ namespace JUEGO_INGENIERIA.Vistas
         // --- EL PINTOR ---
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
+            // Opciones de máxima velocidad (al usar Unscaled y fondos ya procesados)
+            e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+            e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
             // --- 0. DIBUJAR EL FONDO EN MOVIMIENTO (SEAMLESS) ---
             if (fondoActual != null)
             {
@@ -447,12 +467,11 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 movimiento.DibujarPersonaje(e.Graphics);
             }
-            
-           
+
+
             // --- DIBUJAR VIDAS DEL JUGADOR (Asset Swapping) ---
             // 1. Creamos una variable temporal para guardar la imagen que vamos a decidir mostrar
             Image imagenAVisualizar = null;
-
             // 2. Decidimos matemáticamente cuál imagen usar según las vidas actuales
             if (vidasJugador == 3)
             {
@@ -466,24 +485,20 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 imagenAVisualizar = imgVidaBaja;
             }
-
             // 3. Si encontramos una imagen válida para ese estado, la dibujamos
             if (imagenAVisualizar != null)
             {
                 // Dibuja la imagen elegida en la esquina superior izquierda
                 // (imagen, posición X, posición Y, ancho, alto)
-                // Ajusta el ancho (120) y alto (40) al tamaño real de tu asset para que no se vea estirado
-                e.Graphics.DrawImage(imagenAVisualizar, 20, 20, 120, 40);
+                // Las imágenes ya están pre-escaladas, usamos DrawImageUnscaled rápido
+                e.Graphics.DrawImageUnscaled(imagenAVisualizar, 20, 20);
             }
             // 3. Dibujar balas del jugador con imagen
-            Image imgBalaJugador = Properties.Resources.balas_personaje; 
-
             foreach (ObjetoJuego bala in balasJugador)
             {
                 if (imgBalaJugador != null)
                 {
-                    // Ajusta el 30 y 15 según el tamaño de tu imagen
-                    e.Graphics.DrawImage(imgBalaJugador, bala.X, bala.Y, 50, 25);
+                    e.Graphics.DrawImageUnscaled(imgBalaJugador, bala.X, bala.Y);
                 }
             }
             // 4. Dibujar al Profesor Marcel y su Vida
@@ -492,30 +507,63 @@ namespace JUEGO_INGENIERIA.Vistas
                 // 1. Dibujamos la imagen animada del profesor
                 if (imagenActualBoss != null)
                 {
-                    e.Graphics.DrawImage(imagenActualBoss, bossX, bossY, tamañoBoss, tamañoBoss);
+                    e.Graphics.DrawImageUnscaled(imagenActualBoss, bossX, bossY);
                 }
-
                 // 2. Si recibió daño, le dibujamos un cuadrado blanco semitransparente encima para el destello
                 if (flashBoss > 0)
                 {
-                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(120, Color.White)), bossX, bossY, tamañoBoss, tamañoBoss);
+                    e.Graphics.FillRectangle(pincelDestello, bossX, bossY, tamañoBoss, tamañoBoss);
                 }
-
                 // 3. El texto de su vida
-                Font fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
                 e.Graphics.DrawString("HP Marcel: " + vidaBoss, fuenteVidaBoss, Brushes.White, bossX, bossY - 25);
-
                 // Dibujar balas del Jefe con imagen
-                Image imgBalaJefe = Properties.Resources.bala_marcel; // Pon el nombre de tu recurso aquí
                 foreach (ObjetoJuego balaMala in balasBoss)
                 {
                     if (imgBalaJefe != null)
                     {
-                        // Ajusta el 30 y 30 según el tamaño de tu imagen
-                        e.Graphics.DrawImage(imgBalaJefe, balaMala.X, balaMala.Y, 50, 50);
+                        e.Graphics.DrawImageUnscaled(imgBalaJefe, balaMala.X, balaMala.Y);
                     }
                 }
             }
+        }
+        // --- MÉTODOS DE PENALIZACIÓN ---
+        private void DetenerJuego()
+        {
+            tmrGameLoop.Stop();
+            pnlEscenario.Invalidate();
+        }
+        private void PerderNivel(string mensaje)
+        {
+            if (jugadorActual != null)
+            {
+                jugadorActual.Billetera -= 100;
+                MessageBox.Show($"{mensaje}\nMulta: $100", "¡GAME OVER!");
+                ActualizarDatos();
+            }
+            else
+            {
+                MessageBox.Show(mensaje, "¡GAME OVER!");
+            }
+            this.Close();
+        }
+        private void ActualizarDatos()
+        {
+            string rutaArchivo = "jugadores.json";
+            if (!File.Exists(rutaArchivo)) return;
+            string TextoJson = File.ReadAllText(rutaArchivo);
+            List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
+            for (int i = 0; i < listaDeJugadores.Count; i++)
+            {
+                if (listaDeJugadores[i].IdJugador == jugadorActual.IdJugador)
+                {
+                    listaDeJugadores[i].Nivel = jugadorActual.Nivel;
+                    listaDeJugadores[i].Billetera = jugadorActual.Billetera;
+                    break;
+                }
+            }
+            var opciones = new JsonSerializerOptions { WriteIndented = true };
+            string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
+            File.WriteAllText(rutaArchivo, nuevoJson);
         }
     }
 }

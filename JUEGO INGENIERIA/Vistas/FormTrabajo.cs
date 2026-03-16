@@ -1,4 +1,4 @@
-﻿using JUEGO_INGENIERIA.Modelos; // Importante para usar la clase Jugador
+using JUEGO_INGENIERIA.Modelos; // Importante para usar la clase Jugador
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -42,6 +42,19 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // Guardamos los datos del jugador
             this.jugadorActual = jugadorRecibido;
+
+            // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
+            if (this.BackgroundImage != null)
+            {
+                this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
+                Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (Graphics g = Graphics.FromImage(fondoOptimizado))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                }
+                this.BackgroundImage = fondoOptimizado;
+            }
 
             this.Load += FormTrabajo_Load;
         }
