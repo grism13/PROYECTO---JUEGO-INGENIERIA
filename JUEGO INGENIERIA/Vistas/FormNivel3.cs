@@ -7,50 +7,56 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Text.Json;
 using System.IO;
+using WMPLib;
+
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormNivel3 : Form
     {
         // --- IMAGEN DE FONDO Y VARIABLES SEAMLESS (SCROLL INFINITO) ---
-        // --- IMÁGENES DE FONDO POR FASES ---
         Image fondoFase1;
         Image fondoFase2;
         Image fondoFase3;
-        Image fondoActual; // Este será el que actúe como "pantalla" cambiando según la fase
+        Image fondoActual;
         int fondoX = 0;
-        int velocidadFondo = 7;
-        // --- VARIABLES DEL JUGador ---
+        int velocidadFondo = 4; // Ajustado al ritmo original (compensando FPS)
+
+        // --- VARIABLES DEL JUGADOR ---
         Jugador jugadorActual;
         FormMovimiento movimiento;
         PictureBox pbJugador;
         int tamañoJugador = 150;
         int vidasJugador = 3;
         int tiempoInmunidad = 0;
+
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
-        int velocidadBala = 30; // ¡Disparos a la velocidad de la luz originales!
+        int velocidadBala = 18; // Ajustado al ritmo original
         int cooldownDisparo = 0;
         int danoJugador = 10;
         bool disparando = false;
         bool modoConcentrado = false;
-        // --- Animación Concentrado ---
         int targetTamañoJugador = 150;
-        // --- NUEVO: IMÁGENES DE ESTADO DE VIDA DEL JUGADOR ---
-        Image imgVidaFull;  // Imagen con 3 corazones
-        Image imgVidaMedia; // Imagen con 2 corazones
-        Image imgVidaBaja;  // Imagen con 1 corazón
+
+        // --- IMÁGENES DE ESTADO DE VIDA DEL JUGADOR ---
+        Image imgVidaFull;
+        Image imgVidaMedia;
+        Image imgVidaBaja;
+
         // --- VARIABLES DEL JEFE (Profesor Marcel) ---
         int bossBaseX;
         int bossX;
         int bossY = 50;
         int tamañoBoss = 180;
         int vidaBoss = 1500;
-        int velocidadBoss = 8; // Velocidad original restaurada
+        int velocidadBoss = 5; // Ajustado al ritmo original
         bool bossSube = false;
         bool bossAvanza = true;
         int flashBoss = 0;
-        int cooldownAtaqueBoss = 50;
+        int cooldownAtaqueBoss = 80; // Ajustado al ritmo original
         List<ObjetoJuego> balasBoss = new List<ObjetoJuego>();
+
         Random rnd = new Random();
+
         // --- ANIMACIONES DEL JEFE MARCEL ---
         private Image[] framesFase1;
         private Image[] framesFase2;
@@ -58,21 +64,28 @@ namespace JUEGO_INGENIERIA.Vistas
         private Image imagenActualBoss;
         private int frameBossActual = 0;
         private int contadorAnimacionBoss = 0;
-        private int velocidadAnimacionBoss = 6; // A menor número, más rápido aletea/se mueve Marcel
+        private int velocidadAnimacionBoss = 10; // Ajustado al ritmo original
+
+        // --- AUDIO (MÚSICA DEL NIVEL) ---
+        WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+        int faseActualMusica = 1;
+
         // --- ASYNC KEYBOARD INPUT ---
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
+
         // --- CACHÉ GDI+ PARA OPTIMIZACIÓN ---
         private Image imgBalaJugador;
         private Image imgBalaJefe;
         private Font fuenteVidaBoss;
         private SolidBrush pincelDestello;
+
         public FormNivel3(Jugador jugadorRecibido)
         {
             InitializeComponent();
             this.jugadorActual = jugadorRecibido;
         }
-        // --- HELPER PARA OPTIMIZAR IMÁGENES EN RAM (PRE-ESCALADO Y 32BPP) ---
+
         private Bitmap OptimizarImagen(Image img, int width, int height)
         {
             if (img == null) return null;
@@ -88,86 +101,105 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             return bmp;
         }
+
         private void FormNivel2_Load(object sender, EventArgs e)
         {
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
-            // Pre-cargamos en RAM versiones 32-bits de los fondos
+
             fondoFase1 = OptimizarImagen(Properties.Resources.fondoF1_marcel, 1280, 720);
             fondoFase2 = OptimizarImagen(Properties.Resources.fondoF2_marcel, 1280, 720);
             fondoFase3 = OptimizarImagen(Properties.Resources.fondoF3_marcel_a, 1280, 720);
-            // Le decimos al juego que arranque mostrando el fondo de la Fase 1
+
             fondoActual = fondoFase1;
-            // --- CARGAR ANIMACIONES DE MARCEL (4 frames por fase) ---
+
             framesFase1 = new Image[] {
                 OptimizarImagen(Properties.Resources.MarcelF1_1, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF1_2, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF1_3, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF1_4, tamañoBoss, tamañoBoss)
             };
+
             framesFase2 = new Image[] {
                 OptimizarImagen(Properties.Resources.MarcelF2_1, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF2_2, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF2_3, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF2_4, tamañoBoss, tamañoBoss)
             };
+
             framesFase3 = new Image[] {
                 OptimizarImagen(Properties.Resources.MarcelF3_1, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF3_2, tamañoBoss, tamañoBoss),
                 OptimizarImagen(Properties.Resources.MarcelF3_3, tamañoBoss, tamañoBoss),
-
             };
-            imagenActualBoss = framesFase1[0]; // Arranca con la primera imagen
-            // --- CARGAR IMÁGENES DE VIDA DEL JUGADOR ---
+
+            imagenActualBoss = framesFase1[0];
+
             imgVidaFull = OptimizarImagen(Properties.Resources.vida_3, 120, 40);
             imgVidaMedia = OptimizarImagen(Properties.Resources.vida_2, 120, 40);
             imgVidaBaja = OptimizarImagen(Properties.Resources.vida_1, 120, 40);
-            // --- INICIALIZAR CACHÉ DE GDI+ PARA OPTIMIZAR ---
+
             imgBalaJugador = OptimizarImagen(Properties.Resources.balas_personaje, 50, 25);
             imgBalaJefe = OptimizarImagen(Properties.Resources.bala_marcel, 50, 50);
             fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
-            // --- INYECCIÓN DE 60 FPS ---
-            tmrGameLoop.Interval = 16;
+
+            // --- INICIAR MÚSICA OST NIVEL 3 ---
+            try
+            {
+                string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "OST nivel 3.wav");
+                reproductorMusica.URL = rutaAudio;
+                reproductorMusica.settings.setMode("loop", true);
+                // Velocidad Normal para Fase 1
+                reproductorMusica.settings.rate = 1.0;
+                reproductorMusica.controls.play();
+            }
+            catch { }
+
+            // FPS A 100 FPS (10 ms por tick para que se vea súper fluido)
+            tmrGameLoop.Interval = 10;
+
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
             typeof(Panel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty |
                 System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.NonPublic,
                 null, pnlEscenario, new object[] { true });
-            // INICIALIZACIÓN DE pbJugador Y FormMovimiento
+
             pbJugador = new PictureBox();
             pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
             pbJugador.Location = new Point(200, 200);
 
-            // LA MAGIA: Quitamos el Control de la pantalla, pbJugador existirá pero Invisible a Windows
-            // Esto elimina el "Graphics Invalidate Transparent Loop"
-            // pnlEscenario.Controls.Add(pbJugador);  // <- ELIMINADO
-            movimiento = new FormMovimiento(this, pbJugador, true); // true = esNivelEspacial
+            movimiento = new FormMovimiento(this, pbJugador, true);
             movimiento.Start();
+
             bossBaseX = pnlEscenario.Width - tamañoBoss - 50;
             bossX = bossBaseX;
+
             tmrGameLoop.Start();
         }
+
         protected override void WndProc(ref Message m)
         {
             const int WM_SYSCOMMAND = 0x0112;
             const int SC_KEYMENU = 0xF100;
-            // Bloquea que la tecla Alt active el menú de la ventana, permitiendo movimiento de flechas libre
+
             if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_KEYMENU)
             {
                 return;
             }
+
             base.WndProc(ref m);
         }
-        // --- SE ELIMINARON LOS KEYDOWN/KEYUP A FAVOR DEL GETASYNCKEYSTATE EN EL TICK ---
+
         private void FormNivel2_KeyDown(object sender, KeyEventArgs e) { }
         private void FormNivel2_KeyUp(object sender, KeyEventArgs e) { }
+
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            // --- EVALUACIÓN DE TECLADO ASÍNCRONO ---
             disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
             bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+
             if (altPresionado && !modoConcentrado)
             {
                 modoConcentrado = true;
@@ -180,41 +212,41 @@ namespace JUEGO_INGENIERIA.Vistas
                 targetTamañoJugador = 150;
                 danoJugador = 10;
             }
-            // --- SCROLL INFINITO DEL FONDO (SEAMLESS) ---
+
             fondoX -= velocidadFondo;
             if (fondoX <= -pnlEscenario.Width)
             {
                 fondoX = 0;
             }
-            // --- 0. CRONÓMETRO DE INMUNIDAD (I-Frames) Y ANIMACIÓN ---
+
             if (tiempoInmunidad > 0)
             {
                 tiempoInmunidad--;
             }
-            // --- Animación de Reducción/Aumento de la Nave ---
+
             if (tamañoJugador != targetTamañoJugador)
             {
-                int velocidadAnimacion = 15; // Modifica esto para hacerlo más rápido o lento
+                int velocidadAnimacion = 10; // Ajustado
                 int nuevoTamaño = targetTamañoJugador < tamañoJugador ? tamañoJugador - velocidadAnimacion : tamañoJugador + velocidadAnimacion;
-                // Asegurar que no rebase el tamaño exacto del objetivo
+
                 if (targetTamañoJugador < tamañoJugador && nuevoTamaño < targetTamañoJugador) nuevoTamaño = targetTamañoJugador;
                 if (targetTamañoJugador > tamañoJugador && nuevoTamaño > targetTamañoJugador) nuevoTamaño = targetTamañoJugador;
+
                 int diferencia = tamañoJugador - nuevoTamaño;
                 tamañoJugador = nuevoTamaño;
+
                 pbJugador.Size = new Size(tamañoJugador, tamañoJugador);
-                pbJugador.Left += diferencia / 2; // Mantener la nave centrada
+                pbJugador.Left += diferencia / 2;
                 pbJugador.Top += diferencia / 2;
             }
-            // --- 1. MOVIMIENTO DEL JUGADOR ---
-            // Manejado automáticamente por FormMovimiento.
-            // Restringimos bordes (opcional si Move no lo hace tan exacto, pero no interfiere)
+
             if (pbJugador.Left < 0) pbJugador.Left = 0;
             if (pbJugador.Top < 0) pbJugador.Top = 0;
             if (pbJugador.Right > pnlEscenario.Width) pbJugador.Left = pnlEscenario.Width - pbJugador.Width;
             if (pbJugador.Bottom > pnlEscenario.Height) pbJugador.Top = pnlEscenario.Height - pbJugador.Height;
-            // --- 2. DISPARO DEL JUGADOR ---
+
             if (cooldownDisparo > 0) cooldownDisparo--;
-            // Solo puede disparar si no está en modo concentrado (Alt)
+
             if (disparando == true && cooldownDisparo <= 0 && !modoConcentrado)
             {
                 ObjetoJuego nuevaBala = new ObjetoJuego();
@@ -222,39 +254,41 @@ namespace JUEGO_INGENIERIA.Vistas
                 nuevaBala.Y = pbJugador.Top + (tamañoJugador / 2) - 5;
                 nuevaBala.Tag = "bala_jugador";
                 balasJugador.Add(nuevaBala);
-                cooldownDisparo = 6; // Ajuste fino para que sea metralleta pero no sature
+
+                cooldownDisparo = 10; // Ajustado al ritmo original
             }
+
             for (int i = balasJugador.Count - 1; i >= 0; i--)
             {
                 balasJugador[i].X += velocidadBala;
                 if (balasJugador[i].X > pnlEscenario.Width) balasJugador.RemoveAt(i);
             }
-            // --- 3. INTELIGENCIA DEL PROFESOR MARCEL ---
+
             if (vidaBoss > 0)
             {
-                // --- MOTOR DE ANIMACIÓN DE MARCEL ---
                 contadorAnimacionBoss++;
                 if (contadorAnimacionBoss >= velocidadAnimacionBoss)
                 {
                     frameBossActual++;
-                    contadorAnimacionBoss = 0; // Reiniciamos el relojito
-                    // Asignamos el dibujo correcto según la fase de vida
-                    if (vidaBoss > 1000) // FASE 1
+                    contadorAnimacionBoss = 0;
+
+                    if (vidaBoss > 1000)
                     {
                         if (frameBossActual >= framesFase1.Length) frameBossActual = 0;
                         imagenActualBoss = framesFase1[frameBossActual];
                     }
-                    else if (vidaBoss <= 1000 && vidaBoss > 500) // FASE 2
+                    else if (vidaBoss <= 1000 && vidaBoss > 500)
                     {
                         if (frameBossActual >= framesFase2.Length) frameBossActual = 0;
                         imagenActualBoss = framesFase2[frameBossActual];
                     }
-                    else // FASE 3
+                    else
                     {
                         if (frameBossActual >= framesFase3.Length) frameBossActual = 0;
                         imagenActualBoss = framesFase3[frameBossActual];
                     }
                 }
+
                 if (bossSube)
                 {
                     bossY -= velocidadBoss;
@@ -265,6 +299,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     bossY += velocidadBoss;
                     if (bossY >= pnlEscenario.Height - tamañoBoss) bossSube = true;
                 }
+
                 if (vidaBoss > 500)
                 {
                     if (bossAvanza)
@@ -282,21 +317,24 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     if (bossX < bossBaseX) bossX += (velocidadBoss / 2);
                 }
+
                 if (flashBoss > 0) flashBoss--;
-                // Daño al Jefe
+
                 Rectangle areaBoss = new Rectangle(bossX, bossY, tamañoBoss, tamañoBoss);
+
                 for (int i = balasJugador.Count - 1; i >= 0; i--)
                 {
                     Rectangle areaBala = new Rectangle(balasJugador[i].X, balasJugador[i].Y, 20, 10);
                     if (areaBala.IntersectsWith(areaBoss))
                     {
-                        vidaBoss -= danoJugador; // DAÑO VARIABLE SEGUN EL MODO
+                        vidaBoss -= danoJugador;
                         balasJugador.RemoveAt(i);
                         flashBoss = 3;
-                        // CONDICIÓN DE VICTORIA
+
                         if (vidaBoss <= 0)
                         {
                             vidaBoss = 0;
+                            reproductorMusica.controls.stop();
                             tmrGameLoop.Stop();
                             pnlEscenario.Invalidate();
                             MessageBox.Show("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!");
@@ -305,7 +343,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
                     }
                 }
-                // Ataques del Profesor
+
                 if (cooldownAtaqueBoss > 0)
                 {
                     cooldownAtaqueBoss--;
@@ -313,21 +351,33 @@ namespace JUEGO_INGENIERIA.Vistas
                 else
                 {
                     int probabilidad = rnd.Next(0, 100);
-                    if (vidaBoss > 1000) // FASE 1
+
+                    if (vidaBoss > 1000)
                     {
                         fondoActual = fondoFase1;
+
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
                         balaMala.Y = bossY + (tamañoBoss / 2);
                         if (probabilidad < 85) balaMala.Tag = "bala_boss_recta";
                         else balaMala.Tag = "bala_boss_perseguidora";
                         balasBoss.Add(balaMala);
-                        cooldownAtaqueBoss = 45;
+
+                        cooldownAtaqueBoss = 75; // Ajustado al ritmo original
                     }
-                    else if (vidaBoss <= 1000 && vidaBoss > 500) // FASE 2
+                    else if (vidaBoss <= 1000 && vidaBoss > 500)
                     {
+                        // --- ACELERAR MÚSICA AL ENTRAR A FASE 2 ---
+                        if (faseActualMusica == 1)
+                        {
+                            // Apenas más rápida
+                            reproductorMusica.settings.rate = 1.08;
+                            faseActualMusica = 2;
+                        }
+
                         fondoActual = fondoFase2;
-                        velocidadBoss = 12;
+                        velocidadBoss = 7; // Ajustado al ritmo original
+
                         if (probabilidad < 85)
                         {
                             for (int j = -1; j <= 1; j++)
@@ -338,6 +388,7 @@ namespace JUEGO_INGENIERIA.Vistas
                                 if (j == -1) balaMala.Tag = "bala_boss_arriba";
                                 else if (j == 1) balaMala.Tag = "bala_boss_abajo";
                                 else balaMala.Tag = "bala_boss_fase2_recta";
+
                                 balasBoss.Add(balaMala);
                             }
                         }
@@ -349,60 +400,78 @@ namespace JUEGO_INGENIERIA.Vistas
                             balaMala.Tag = "bala_boss_rebotona_sube";
                             balasBoss.Add(balaMala);
                         }
-                        cooldownAtaqueBoss = 35;
+
+                        cooldownAtaqueBoss = 55; // Ajustado al ritmo original
                     }
-                    else // FASE 3
+                    else
                     {
+                        // --- ACELERAR MÚSICA AL ENTRAR A FASE 3 ---
+                        if (faseActualMusica == 2)
+                        {
+                            // Un poco más rápida, sin exagerar
+                            reproductorMusica.settings.rate = 1.15;
+                            faseActualMusica = 3;
+                        }
+
                         fondoActual = fondoFase3;
-                        velocidadBoss = 15;
+                        velocidadBoss = 9; // Ajustado al ritmo original
+
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
                         balaMala.Y = bossY + rnd.Next(0, tamañoBoss);
+
                         if (probabilidad < 85) balaMala.Tag = "bala_boss_fase2_recta";
                         else if (probabilidad < 92) balaMala.Tag = "bala_boss_perseguidora";
                         else balaMala.Tag = "bala_boss_rebotona_sube";
+
                         balasBoss.Add(balaMala);
-                        cooldownAtaqueBoss = 25; // Aumentado de 13 a 25 para evitar saturación de balas en GDI+
+
+                        cooldownAtaqueBoss = 40; // Ajustado al ritmo original
                     }
                 }
             }
-            // --- 4. MOVER BALAS DEL PROFESOR Y DAÑO AL JUGADOR ---
+
             Rectangle hitboxJugador = new Rectangle(pbJugador.Left, pbJugador.Top, tamañoJugador, tamañoJugador);
-            // ¡Velocidades originales de balas restauradas!
+
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
-                balasBoss[i].X -= 15;
-                if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 5;
-                if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 5;
+                balasBoss[i].X -= 9; // Ajustado al ritmo original
+
+                if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 3;
+                if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 3;
+
                 if (balasBoss[i].Tag == "bala_boss_perseguidora")
                 {
-                    balasBoss[i].X += 3;
-                    if (balasBoss[i].Y < pbJugador.Top) balasBoss[i].Y += 4;
-                    else if (balasBoss[i].Y > pbJugador.Top) balasBoss[i].Y -= 4;
+                    balasBoss[i].X += 2;
+                    if (balasBoss[i].Y < pbJugador.Top) balasBoss[i].Y += 2;
+                    else if (balasBoss[i].Y > pbJugador.Top) balasBoss[i].Y -= 2;
                 }
+
                 if (balasBoss[i].Tag.StartsWith("bala_boss_rebotona"))
                 {
-                    balasBoss[i].X += 8;
+                    balasBoss[i].X += 5;
                     if (balasBoss[i].Tag == "bala_boss_rebotona_sube")
                     {
-                        balasBoss[i].Y -= 15;
+                        balasBoss[i].Y -= 9;
                         if (balasBoss[i].Y <= 0) balasBoss[i].Tag = "bala_boss_rebotona_baja";
                     }
                     else if (balasBoss[i].Tag == "bala_boss_rebotona_baja")
                     {
-                        balasBoss[i].Y += 15;
+                        balasBoss[i].Y += 9;
                         if (balasBoss[i].Y >= pnlEscenario.Height - 30) balasBoss[i].Tag = "bala_boss_rebotona_sube";
                     }
                 }
-                // DAÑO POR BALA
+
                 Rectangle areaBalaMala = new Rectangle(balasBoss[i].X, balasBoss[i].Y, 20, 20);
                 if (areaBalaMala.IntersectsWith(hitboxJugador))
                 {
                     balasBoss.RemoveAt(i);
+
                     if (tiempoInmunidad <= 0)
                     {
                         vidasJugador--;
-                        tiempoInmunidad = 100; // I-FRAMES
+                        tiempoInmunidad = 100;
+
                         if (vidasJugador <= 0)
                         {
                             DetenerJuego();
@@ -412,19 +481,21 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     continue;
                 }
+
                 if (balasBoss[i].X < -50 || balasBoss[i].X > pnlEscenario.Width + 100 || balasBoss[i].Y < -100 || balasBoss[i].Y > pnlEscenario.Height + 100)
                 {
                     balasBoss.RemoveAt(i);
                 }
             }
-            // --- 5. DAÑO POR CHOCAR CONTRA MARCEL ---
+
             if (vidaBoss > 0)
             {
                 Rectangle hitboxBoss = new Rectangle(bossX, bossY, tamañoBoss, tamañoBoss);
                 if (hitboxJugador.IntersectsWith(hitboxBoss) && tiempoInmunidad <= 0)
                 {
                     vidasJugador--;
-                    tiempoInmunidad = 100; // I-FRAMES por chocar
+                    tiempoInmunidad = 100;
+
                     if (vidasJugador <= 0)
                     {
                         DetenerJuego();
@@ -433,21 +504,20 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
             }
+
             pnlEscenario.Invalidate();
         }
-        // --- EL PINTOR ---
+
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
-            // Opciones de máxima velocidad (al usar Unscaled y fondos ya procesados)
             e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
             e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-            // --- 0. DIBUJAR EL FONDO EN MOVIMIENTO (SEAMLESS) ---
+
             if (fondoActual != null)
             {
-                // Optimización crítica: Solo dibujamos la parte visible del fondo, sin escalar pesadamente
                 e.Graphics.DrawImageUnscaled(fondoActual, fondoX, 0);
                 e.Graphics.DrawImageUnscaled(fondoActual, fondoX + fondoActual.Width, 0);
             }
@@ -455,7 +525,7 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 e.Graphics.Clear(Color.FromArgb(20, 20, 30));
             }
-            // 1. Dibujar jugador (Con I-Frames)
+
             if (tiempoInmunidad > 0)
             {
                 if (tiempoInmunidad % 10 > 4)
@@ -468,11 +538,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 movimiento.DibujarPersonaje(e.Graphics);
             }
 
-
-            // --- DIBUJAR VIDAS DEL JUGADOR (Asset Swapping) ---
-            // 1. Creamos una variable temporal para guardar la imagen que vamos a decidir mostrar
             Image imagenAVisualizar = null;
-            // 2. Decidimos matemáticamente cuál imagen usar según las vidas actuales
+
             if (vidasJugador == 3)
             {
                 imagenAVisualizar = imgVidaFull;
@@ -485,15 +552,12 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 imagenAVisualizar = imgVidaBaja;
             }
-            // 3. Si encontramos una imagen válida para ese estado, la dibujamos
+
             if (imagenAVisualizar != null)
             {
-                // Dibuja la imagen elegida en la esquina superior izquierda
-                // (imagen, posición X, posición Y, ancho, alto)
-                // Las imágenes ya están pre-escaladas, usamos DrawImageUnscaled rápido
                 e.Graphics.DrawImageUnscaled(imagenAVisualizar, 20, 20);
             }
-            // 3. Dibujar balas del jugador con imagen
+
             foreach (ObjetoJuego bala in balasJugador)
             {
                 if (imgBalaJugador != null)
@@ -501,22 +565,21 @@ namespace JUEGO_INGENIERIA.Vistas
                     e.Graphics.DrawImageUnscaled(imgBalaJugador, bala.X, bala.Y);
                 }
             }
-            // 4. Dibujar al Profesor Marcel y su Vida
+
             if (vidaBoss > 0)
             {
-                // 1. Dibujamos la imagen animada del profesor
                 if (imagenActualBoss != null)
                 {
                     e.Graphics.DrawImageUnscaled(imagenActualBoss, bossX, bossY);
                 }
-                // 2. Si recibió daño, le dibujamos un cuadrado blanco semitransparente encima para el destello
+
                 if (flashBoss > 0)
                 {
                     e.Graphics.FillRectangle(pincelDestello, bossX, bossY, tamañoBoss, tamañoBoss);
                 }
-                // 3. El texto de su vida
+
                 e.Graphics.DrawString("HP Marcel: " + vidaBoss, fuenteVidaBoss, Brushes.White, bossX, bossY - 25);
-                // Dibujar balas del Jefe con imagen
+
                 foreach (ObjetoJuego balaMala in balasBoss)
                 {
                     if (imgBalaJefe != null)
@@ -526,12 +589,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
         }
-        // --- MÉTODOS DE PENALIZACIÓN ---
+
         private void DetenerJuego()
         {
             tmrGameLoop.Stop();
+            reproductorMusica.controls.stop();
             pnlEscenario.Invalidate();
         }
+
         private void PerderNivel(string mensaje)
         {
             if (jugadorActual != null)
@@ -546,12 +611,16 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             this.Close();
         }
+
         private void ActualizarDatos()
         {
             string rutaArchivo = "jugadores.json";
+
             if (!File.Exists(rutaArchivo)) return;
+
             string TextoJson = File.ReadAllText(rutaArchivo);
             List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
+
             for (int i = 0; i < listaDeJugadores.Count; i++)
             {
                 if (listaDeJugadores[i].IdJugador == jugadorActual.IdJugador)
@@ -561,6 +630,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     break;
                 }
             }
+
             var opciones = new JsonSerializerOptions { WriteIndented = true };
             string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
             File.WriteAllText(rutaArchivo, nuevoJson);
