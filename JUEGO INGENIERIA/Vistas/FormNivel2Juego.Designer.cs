@@ -28,91 +28,104 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNivel2Juego));
             lblCuentaRegresiva = new Label();
             btnEmpezar = new Button();
-            pictureBox1 = new PictureBox();
-            pictureBox2 = new PictureBox();
-            pictureBox3 = new PictureBox();
-            pictureBox4 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).BeginInit();
+            pbMetaIzq = new PictureBox();
+            pbMetaAbajo = new PictureBox();
+            pbMetaDer = new PictureBox();
+            pbMetaArriba = new PictureBox();
+            pnlPistaBaile = new Panel();
+            lblPuntuacion = new Label();
+            lblFaltas = new Label();
+            ((System.ComponentModel.ISupportInitialize)pbMetaIzq).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaAbajo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaDer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaArriba).BeginInit();
+            pnlPistaBaile.SuspendLayout();
             SuspendLayout();
             // 
             // lblCuentaRegresiva
             // 
-            lblCuentaRegresiva.AutoSize = true;
-            lblCuentaRegresiva.Font = new Font("Segoe UI", 25.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblCuentaRegresiva.Location = new Point(322, 18);
+            resources.ApplyResources(lblCuentaRegresiva, "lblCuentaRegresiva");
+            lblCuentaRegresiva.BackColor = Color.Transparent;
             lblCuentaRegresiva.Name = "lblCuentaRegresiva";
-            lblCuentaRegresiva.Size = new Size(147, 60);
-            lblCuentaRegresiva.TabIndex = 0;
-            lblCuentaRegresiva.Text = "Listo...";
             // 
             // btnEmpezar
             // 
-            btnEmpezar.Location = new Point(501, 32);
+            resources.ApplyResources(btnEmpezar, "btnEmpezar");
             btnEmpezar.Name = "btnEmpezar";
-            btnEmpezar.Size = new Size(94, 29);
-            btnEmpezar.TabIndex = 1;
-            btnEmpezar.Text = "Empezar";
             btnEmpezar.UseVisualStyleBackColor = true;
             btnEmpezar.Click += btnEmpezar_Click_1;
             // 
-            // pictureBox1
+            // pbMetaIzq
             // 
-            pictureBox1.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox1.Location = new Point(42, 368);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(65, 75);
-            pictureBox1.TabIndex = 2;
-            pictureBox1.TabStop = false;
+            pbMetaIzq.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(pbMetaIzq, "pbMetaIzq");
+            pbMetaIzq.Name = "pbMetaIzq";
+            pbMetaIzq.TabStop = false;
             // 
-            // pictureBox2
+            // pbMetaAbajo
             // 
-            pictureBox2.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox2.Location = new Point(113, 368);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(62, 75);
-            pictureBox2.TabIndex = 3;
-            pictureBox2.TabStop = false;
+            pbMetaAbajo.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(pbMetaAbajo, "pbMetaAbajo");
+            pbMetaAbajo.Name = "pbMetaAbajo";
+            pbMetaAbajo.TabStop = false;
             // 
-            // pictureBox3
+            // pbMetaDer
             // 
-            pictureBox3.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox3.Location = new Point(181, 368);
-            pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(58, 75);
-            pictureBox3.TabIndex = 4;
-            pictureBox3.TabStop = false;
+            pbMetaDer.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(pbMetaDer, "pbMetaDer");
+            pbMetaDer.Name = "pbMetaDer";
+            pbMetaDer.TabStop = false;
             // 
-            // pictureBox4
+            // pbMetaArriba
             // 
-            pictureBox4.BorderStyle = BorderStyle.FixedSingle;
-            pictureBox4.Location = new Point(245, 368);
-            pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(64, 75);
-            pictureBox4.TabIndex = 5;
-            pictureBox4.TabStop = false;
+            pbMetaArriba.BorderStyle = BorderStyle.FixedSingle;
+            resources.ApplyResources(pbMetaArriba, "pbMetaArriba");
+            pbMetaArriba.Name = "pbMetaArriba";
+            pbMetaArriba.TabStop = false;
+            // 
+            // pnlPistaBaile
+            // 
+            pnlPistaBaile.BackColor = Color.White;
+            pnlPistaBaile.Controls.Add(pbMetaIzq);
+            pnlPistaBaile.Controls.Add(pbMetaArriba);
+            pnlPistaBaile.Controls.Add(pbMetaAbajo);
+            pnlPistaBaile.Controls.Add(pbMetaDer);
+            resources.ApplyResources(pnlPistaBaile, "pnlPistaBaile");
+            pnlPistaBaile.Name = "pnlPistaBaile";
+            // 
+            // lblPuntuacion
+            // 
+            lblPuntuacion.BackColor = Color.Transparent;
+            resources.ApplyResources(lblPuntuacion, "lblPuntuacion");
+            lblPuntuacion.Name = "lblPuntuacion";
+            // 
+            // lblFaltas
+            // 
+            lblFaltas.BackColor = Color.Transparent;
+            resources.ApplyResources(lblFaltas, "lblFaltas");
+            lblFaltas.Name = "lblFaltas";
             // 
             // FormNivel2Juego
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 480);
-            Controls.Add(pictureBox4);
-            Controls.Add(pictureBox3);
-            Controls.Add(pictureBox2);
-            Controls.Add(pictureBox1);
+            BackColor = Color.White;
+            BackgroundImage = Properties.Resources.fondoNivel2;
+            Controls.Add(lblFaltas);
+            Controls.Add(lblPuntuacion);
+            Controls.Add(pnlPistaBaile);
             Controls.Add(btnEmpezar);
             Controls.Add(lblCuentaRegresiva);
+            DoubleBuffered = true;
             Name = "FormNivel2Juego";
-            Text = "FormNivel2Juego";
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaIzq).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaAbajo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaDer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbMetaArriba).EndInit();
+            pnlPistaBaile.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -121,9 +134,12 @@
 
         private Label lblCuentaRegresiva;
         private Button btnEmpezar;
-        private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
-        private PictureBox pictureBox3;
-        private PictureBox pictureBox4;
+        private PictureBox pbMetaIzq;
+        private PictureBox pbMetaAbajo;
+        private PictureBox pbMetaDer;
+        private PictureBox pbMetaArriba;
+        private Panel pnlPistaBaile;
+        private Label lblPuntuacion;
+        private Label lblFaltas;
     }
 }

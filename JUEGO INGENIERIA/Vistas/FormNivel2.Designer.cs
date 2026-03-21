@@ -47,54 +47,59 @@
             // 
             lblCuentaRegresiva.AutoSize = true;
             lblCuentaRegresiva.Font = new Font("Segoe UI", 36F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            lblCuentaRegresiva.Location = new Point(142, 32);
+            lblCuentaRegresiva.Location = new Point(124, 24);
             lblCuentaRegresiva.Name = "lblCuentaRegresiva";
-            lblCuentaRegresiva.Size = new Size(197, 81);
+            lblCuentaRegresiva.Size = new Size(157, 65);
             lblCuentaRegresiva.TabIndex = 0;
             lblCuentaRegresiva.Text = "Listo...";
             // 
             // panelIzq
             // 
             panelIzq.BackColor = Color.DarkOrange;
-            panelIzq.Location = new Point(95, 305);
+            panelIzq.Location = new Point(83, 229);
+            panelIzq.Margin = new Padding(3, 2, 3, 2);
             panelIzq.Name = "panelIzq";
-            panelIzq.Size = new Size(87, 62);
+            panelIzq.Size = new Size(76, 46);
             panelIzq.TabIndex = 1;
             panelIzq.TabStop = false;
             // 
             // panelArriba
             // 
             panelArriba.BackColor = Color.Firebrick;
-            panelArriba.Location = new Point(191, 223);
+            panelArriba.Location = new Point(177, 163);
+            panelArriba.Margin = new Padding(3, 2, 3, 2);
             panelArriba.Name = "panelArriba";
-            panelArriba.Size = new Size(87, 62);
+            panelArriba.Size = new Size(76, 46);
             panelArriba.TabIndex = 2;
             panelArriba.TabStop = false;
             // 
             // panelAbajo
             // 
             panelAbajo.BackColor = Color.ForestGreen;
-            panelAbajo.Location = new Point(202, 305);
+            panelAbajo.Location = new Point(177, 229);
+            panelAbajo.Margin = new Padding(3, 2, 3, 2);
             panelAbajo.Name = "panelAbajo";
-            panelAbajo.Size = new Size(87, 62);
+            panelAbajo.Size = new Size(76, 46);
             panelAbajo.TabIndex = 3;
             panelAbajo.TabStop = false;
             // 
             // panelDer
             // 
             panelDer.BackColor = Color.SteelBlue;
-            panelDer.Location = new Point(314, 305);
+            panelDer.Location = new Point(275, 229);
+            panelDer.Margin = new Padding(3, 2, 3, 2);
             panelDer.Name = "panelDer";
-            panelDer.Size = new Size(87, 62);
+            panelDer.Size = new Size(76, 46);
             panelDer.TabIndex = 4;
             panelDer.TabStop = false;
             // 
             // btnEmpezar
             // 
             btnEmpezar.BackColor = Color.DeepPink;
-            btnEmpezar.Location = new Point(399, 61);
+            btnEmpezar.Location = new Point(349, 46);
+            btnEmpezar.Margin = new Padding(3, 2, 3, 2);
             btnEmpezar.Name = "btnEmpezar";
-            btnEmpezar.Size = new Size(43, 39);
+            btnEmpezar.Size = new Size(38, 29);
             btnEmpezar.TabIndex = 5;
             btnEmpezar.TabStop = false;
             btnEmpezar.Click += btnEmpezar_Click;
@@ -106,15 +111,16 @@
             // 
             // formNivel2
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(491, 450);
+            ClientSize = new Size(430, 338);
             Controls.Add(btnEmpezar);
             Controls.Add(panelDer);
             Controls.Add(panelAbajo);
             Controls.Add(panelArriba);
             Controls.Add(panelIzq);
             Controls.Add(lblCuentaRegresiva);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "formNivel2";
             Text = "FormNivel2";
             ((System.ComponentModel.ISupportInitialize)panelIzq).EndInit();

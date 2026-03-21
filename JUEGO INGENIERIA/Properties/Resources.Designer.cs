@@ -772,6 +772,46 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap flechaAbj {
+            get {
+                object obj = ResourceManager.GetObject("flechaAbj", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flechaarrb {
+            get {
+                object obj = ResourceManager.GetObject("flechaarrb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flechaDer {
+            get {
+                object obj = ResourceManager.GetObject("flechaDer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap flechaIzq {
+            get {
+                object obj = ResourceManager.GetObject("flechaIzq", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap florgris {
             get {
                 object obj = ResourceManager.GetObject("florgris", resourceCulture);
@@ -902,6 +942,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondoNivel2 {
+            get {
+                object obj = ResourceManager.GetObject("fondoNivel2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FondoNivel3 {
             get {
                 object obj = ResourceManager.GetObject("FondoNivel3", resourceCulture);
@@ -915,6 +965,17 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap fondoOno {
             get {
                 object obj = ResourceManager.GetObject("fondoOno", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap From_KlickPin_CF_Sonic_The_Hedgehog_Tails_GIF___Sonic_The_Hedgehog_Tails_Knuckles___Descubre_y_comparte_GIF___Classic_sonic_Dancing_gif_Sonic_funny__1_ {
+            get {
+                object obj = ResourceManager.GetObject("From KlickPin CF Sonic The Hedgehog Tails GIF - Sonic The Hedgehog Tails Knuckles" +
+                        " - Descubre y comparte GIF _ Classic sonic Dancing gif Sonic funny (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

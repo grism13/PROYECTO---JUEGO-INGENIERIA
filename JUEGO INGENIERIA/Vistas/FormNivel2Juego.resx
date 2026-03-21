@@ -117,4 +117,272 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblCuentaRegresiva.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblCuentaRegresiva.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 25.800001pt</value>
+  </data>
+  <data name="lblCuentaRegresiva.Location" type="System.Drawing.Point, System.Drawing">
+    <value>770, 29</value>
+  </data>
+  <data name="lblCuentaRegresiva.Size" type="System.Drawing.Size, System.Drawing">
+    <value>116, 47</value>
+  </data>
+  <data name="lblCuentaRegresiva.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="lblCuentaRegresiva.Text" xml:space="preserve">
+    <value>Listo...</value>
+  </data>
+  <data name="&gt;&gt;lblCuentaRegresiva.Name" xml:space="preserve">
+    <value>lblCuentaRegresiva</value>
+  </data>
+  <data name="&gt;&gt;lblCuentaRegresiva.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblCuentaRegresiva.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblCuentaRegresiva.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="btnEmpezar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>985, 39</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnEmpezar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="btnEmpezar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 37</value>
+  </data>
+  <data name="btnEmpezar.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="btnEmpezar.Text" xml:space="preserve">
+    <value>Empezar</value>
+  </data>
+  <data name="&gt;&gt;btnEmpezar.Name" xml:space="preserve">
+    <value>btnEmpezar</value>
+  </data>
+  <data name="&gt;&gt;btnEmpezar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;btnEmpezar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;btnEmpezar.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pbMetaIzq.Location" type="System.Drawing.Point, System.Drawing">
+    <value>31, 487</value>
+  </data>
+  <data name="pbMetaIzq.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="pbMetaIzq.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 57</value>
+  </data>
+  <data name="pbMetaIzq.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;pbMetaIzq.Name" xml:space="preserve">
+    <value>pbMetaIzq</value>
+  </data>
+  <data name="&gt;&gt;pbMetaIzq.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbMetaIzq.Parent" xml:space="preserve">
+    <value>pnlPistaBaile</value>
+  </data>
+  <data name="&gt;&gt;pbMetaIzq.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="pbMetaAbajo.Location" type="System.Drawing.Point, System.Drawing">
+    <value>119, 487</value>
+  </data>
+  <data name="pbMetaAbajo.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="pbMetaAbajo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 57</value>
+  </data>
+  <data name="pbMetaAbajo.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;pbMetaAbajo.Name" xml:space="preserve">
+    <value>pbMetaAbajo</value>
+  </data>
+  <data name="&gt;&gt;pbMetaAbajo.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbMetaAbajo.Parent" xml:space="preserve">
+    <value>pnlPistaBaile</value>
+  </data>
+  <data name="&gt;&gt;pbMetaAbajo.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="pbMetaDer.Location" type="System.Drawing.Point, System.Drawing">
+    <value>208, 487</value>
+  </data>
+  <data name="pbMetaDer.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="pbMetaDer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 57</value>
+  </data>
+  <data name="pbMetaDer.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;pbMetaDer.Name" xml:space="preserve">
+    <value>pbMetaDer</value>
+  </data>
+  <data name="&gt;&gt;pbMetaDer.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbMetaDer.Parent" xml:space="preserve">
+    <value>pnlPistaBaile</value>
+  </data>
+  <data name="&gt;&gt;pbMetaDer.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="pbMetaArriba.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 487</value>
+  </data>
+  <data name="pbMetaArriba.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="pbMetaArriba.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 57</value>
+  </data>
+  <data name="pbMetaArriba.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;pbMetaArriba.Name" xml:space="preserve">
+    <value>pbMetaArriba</value>
+  </data>
+  <data name="&gt;&gt;pbMetaArriba.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbMetaArriba.Parent" xml:space="preserve">
+    <value>pnlPistaBaile</value>
+  </data>
+  <data name="&gt;&gt;pbMetaArriba.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pnlPistaBaile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>233, 54</value>
+  </data>
+  <data name="pnlPistaBaile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>390, 572</value>
+  </data>
+  <data name="pnlPistaBaile.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="&gt;&gt;pnlPistaBaile.Name" xml:space="preserve">
+    <value>pnlPistaBaile</value>
+  </data>
+  <data name="&gt;&gt;pnlPistaBaile.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pnlPistaBaile.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pnlPistaBaile.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="lblPuntuacion.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Bold</value>
+  </data>
+  <data name="lblPuntuacion.Location" type="System.Drawing.Point, System.Drawing">
+    <value>739, 586</value>
+  </data>
+  <data name="lblPuntuacion.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 51</value>
+  </data>
+  <data name="lblPuntuacion.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="lblPuntuacion.Text" xml:space="preserve">
+    <value>Puntos: 0</value>
+  </data>
+  <data name="lblPuntuacion.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblPuntuacion.Name" xml:space="preserve">
+    <value>lblPuntuacion</value>
+  </data>
+  <data name="&gt;&gt;lblPuntuacion.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblPuntuacion.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblPuntuacion.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="lblFaltas.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt, style=Bold</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="lblFaltas.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="lblFaltas.Location" type="System.Drawing.Point, System.Drawing">
+    <value>886, 586</value>
+  </data>
+  <data name="lblFaltas.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 51</value>
+  </data>
+  <data name="lblFaltas.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="lblFaltas.Text" xml:space="preserve">
+    <value>Faltas: 0</value>
+  </data>
+  <data name="lblFaltas.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;lblFaltas.Name" xml:space="preserve">
+    <value>lblFaltas</value>
+  </data>
+  <data name="&gt;&gt;lblFaltas.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;lblFaltas.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;lblFaltas.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>1264, 681</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 2, 3, 2</value>
+  </data>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterScreen</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>FormNivel2Juego</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormNivel2Juego</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

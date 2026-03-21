@@ -37,6 +37,8 @@ namespace JUEGO_INGENIERIA.Vistas
         private System.Windows.Forms.Timer timerJuego = new System.Windows.Forms.Timer();
 
         private int conteo = 3;
+        private int puntuacion = 0;
+        private int faltas = 0;
 
         public FormNivel2Juego()
         {
@@ -44,6 +46,7 @@ namespace JUEGO_INGENIERIA.Vistas
             reproductor = new SoundPlayer(rutaCancion);
             ConfigurarTimers();
             CargarMapaDeNotas();
+            lblPuntuacion.Text = "Puntos: 0";
         }
 
         private void ConfigurarTimers()
@@ -124,34 +127,70 @@ namespace JUEGO_INGENIERIA.Vistas
                 PictureBox pic = notasEnPantalla[i];
                 pic.Top += velocidadCaida;
 
-                // Si la nota sale de la pantalla por abajo, se borra (El jugador falló)
-                if (pic.Top > this.Height)
+                // Si la nota sale del PANEL por abajo, se borra
+                if (pic.Top > pnlPistaBaile.Height)
                 {
-                    this.Controls.Remove(pic);
+                    pnlPistaBaile.Controls.Remove(pic); // BORRAR DEL PANEL
                     notasEnPantalla.RemoveAt(i);
+
+                    faltas++; // <--- SUMAMOS UNA FALTA
+                    lblFaltas.Text = "Faltas: " + faltas; 
                 }
+            }
+            // --- 3. VERIFICAR FIN DEL JUEGO ---
+            if (indiceNotaActual >= listaNotas.Count && notasEnPantalla.Count == 0)
+            {
+                timerJuego.Stop();
+                cronometro.Stop();
+                reproductor.Stop();
+
+                lblCuentaRegresiva.Visible = true;
+                lblCuentaRegresiva.Text = "¡CANCION TERMINADA!";
+
+                MessageBox.Show("¡Uff, coronaste la pista de baile!", "Nivel Completado");
+
+                // Aquí en el futuro pones la lógica para volver al menú o pasar de nivel
+                // this.Close(); 
             }
         }
 
+
         // EL GENERADOR DE CUADROS
+        // EL GENERADOR DE CUADROS - Ahora con imágenes
         private void GenerarNotaVisual(int direccion, long tiempoObjetivo)
         {
             PictureBox nuevaNota = new PictureBox();
-            nuevaNota.Size = new Size(50, 50);
-            nuevaNota.Top = -50; // Nacen un poco más arriba para que la caída sea limpia
+            nuevaNota.Size = new Size(50, 50); // Ajusta si tus imágenes son más grandes
+            nuevaNota.Top = -50;
 
-            // TRUCO: Guardamos en el cuadro de qué dirección es y en qué milisegundo exacto debía tocarse
+            // SUPER IMPORTANTE: Para que la imagen se adapte al cuadrito
+            nuevaNota.SizeMode = PictureBoxSizeMode.Zoom;
+            nuevaNota.BackColor = Color.Transparent; // Para que no tenga fondo feo
+
             nuevaNota.Tag = $"{direccion},{tiempoObjetivo}";
 
+            // Asignamos la imagen correcta y alineamos con la meta
             switch (direccion)
             {
-                case 1: nuevaNota.BackColor = Color.Cyan; nuevaNota.Left = 100; break;     // Arriba
-                case 2: nuevaNota.BackColor = Color.Red; nuevaNota.Left = 160; break;      // Derecha
-                case 3: nuevaNota.BackColor = Color.Lime; nuevaNota.Left = 220; break;     // Abajo
-                case 4: nuevaNota.BackColor = Color.Magenta; nuevaNota.Left = 40; break;   // Izquierda
+                case 1: // ARRIBA - Azul
+                    nuevaNota.Image = Properties.Resources.flechaarrb; // <--- Tu imagen aquí
+                    nuevaNota.Left = pbMetaArriba.Left;
+                    break;
+                case 2: // ABAJO - Rojo
+                    nuevaNota.Image = Properties.Resources.flechaAbj; // <--- Tu imagen aquí
+                    nuevaNota.Left = pbMetaAbajo.Left;
+                    break;
+                case 3: // DERECHA - Verde
+                    nuevaNota.Image = Properties.Resources.flechaDer; // <--- Tu imagen aquí
+                    nuevaNota.Left = pbMetaDer.Left;
+                    break;
+                case 4: // IZQUIERDA - Rosa
+                    nuevaNota.Image = Properties.Resources.flechaIzq; // <--- Tu imagen aquí
+                    nuevaNota.Left = pbMetaIzq.Left;
+                    break;
             }
 
-            this.Controls.Add(nuevaNota);
+            pnlPistaBaile.Controls.Add(nuevaNota);
             nuevaNota.BringToFront();
             notasEnPantalla.Add(nuevaNota);
         }
@@ -177,32 +216,41 @@ namespace JUEGO_INGENIERIA.Vistas
         }
 
         // EL CEREBRO DEL HIT Y EL RANGO DE ACEPTACIÓN
+        // EL CEREBRO DEL HIT POR COLISIÓN VISUAL
         private void VerificarGolpe(int direccionPulsada)
         {
-            long tiempoActual = cronometro.ElapsedMilliseconds;
+            // 1. Identificamos cuál meta PictureBox corresponde a la tecla pulsada
+            PictureBox pbMetaObjetivo = null;
+            switch (direccionPulsada)
+            {
+                case 1: pbMetaObjetivo = pbMetaArriba; break;
+                case 2: pbMetaObjetivo = pbMetaAbajo; break;
+                case 3: pbMetaObjetivo = pbMetaDer; break;
+                case 4: pbMetaObjetivo = pbMetaIzq; break;
+            }
 
+            if (pbMetaObjetivo == null) return;
+
+            // 2. Buscamos en la pantalla notas que sean de esa misma dirección
             for (int i = 0; i < notasEnPantalla.Count; i++)
             {
-                PictureBox pic = notasEnPantalla[i];
-                string[] datos = pic.Tag.ToString().Split(',');
-
+                PictureBox notaVisual = notasEnPantalla[i];
+                string[] datos = notaVisual.Tag.ToString().Split(',');
                 int direccionNota = int.Parse(datos[0]);
-                long tiempoNota = long.Parse(datos[1]);
 
-                // Si tocaste la flecha correcta para este color...
                 if (direccionNota == direccionPulsada)
                 {
-                    // Calculamos la diferencia matemática (si te adelantaste o te atrasaste)
-                    long diferencia = Math.Abs(tiempoActual - tiempoNota);
-
-                    // Si estás dentro de los 250ms de tolerancia...
-                    if (diferencia <= margenError)
+                    // --- LA LÓGICA MÁGICA DE COLISIÓN ---
+                    // Verificamos matemáticamente si los rectángulos se superponen
+                    if (notaVisual.Bounds.IntersectsWith(pbMetaObjetivo.Bounds))
                     {
-                        // ¡ACIERTO! Eliminamos el cuadro de la pantalla
-                        this.Controls.Remove(pic);
+                        // ¡ACIERTO VISUAL!
+                        pnlPistaBaile.Controls.Remove(notaVisual);
                         notasEnPantalla.RemoveAt(i);
 
-                        // Aquí es donde en el futuro sumaremos puntos
+                        // Sumamos puntos
+                        puntuacion += 10;
+                        lblPuntuacion.Text = "Puntos: " + puntuacion;
 
                         return; // Rompemos el ciclo para destruir solo una nota por cada teclazo
                     }

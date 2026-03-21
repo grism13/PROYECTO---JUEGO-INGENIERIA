@@ -26,7 +26,7 @@ namespace JUEGO_INGENIERIA.Vistas
         public formNivel2()
         {
             InitializeComponent();
-            reproductor = new SoundPlayer("C:\\Users\\eliez\\Desktop\\cancion-formNivel2.wav");
+            reproductor = new SoundPlayer("cancion-formNivel2.wav");
             this.KeyPreview = true; // Súper importante para que detecte el teclado
         }
 
