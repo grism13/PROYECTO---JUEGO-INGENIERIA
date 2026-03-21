@@ -38,11 +38,13 @@
             pnlPistaBaile = new Panel();
             lblPuntuacion = new Label();
             lblFaltas = new Label();
+            pbJoseJesus = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbMetaIzq).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaAbajo).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaDer).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaArriba).BeginInit();
             pnlPistaBaile.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbJoseJesus).BeginInit();
             SuspendLayout();
             // 
             // lblCuentaRegresiva
@@ -60,28 +62,28 @@
             // 
             // pbMetaIzq
             // 
-            pbMetaIzq.BorderStyle = BorderStyle.FixedSingle;
+            pbMetaIzq.BackColor = Color.DarkViolet;
             resources.ApplyResources(pbMetaIzq, "pbMetaIzq");
             pbMetaIzq.Name = "pbMetaIzq";
             pbMetaIzq.TabStop = false;
             // 
             // pbMetaAbajo
             // 
-            pbMetaAbajo.BorderStyle = BorderStyle.FixedSingle;
+            pbMetaAbajo.BackColor = Color.DodgerBlue;
             resources.ApplyResources(pbMetaAbajo, "pbMetaAbajo");
             pbMetaAbajo.Name = "pbMetaAbajo";
             pbMetaAbajo.TabStop = false;
             // 
             // pbMetaDer
             // 
-            pbMetaDer.BorderStyle = BorderStyle.FixedSingle;
+            pbMetaDer.BackColor = Color.OrangeRed;
             resources.ApplyResources(pbMetaDer, "pbMetaDer");
             pbMetaDer.Name = "pbMetaDer";
             pbMetaDer.TabStop = false;
             // 
             // pbMetaArriba
             // 
-            pbMetaArriba.BorderStyle = BorderStyle.FixedSingle;
+            pbMetaArriba.BackColor = Color.GreenYellow;
             resources.ApplyResources(pbMetaArriba, "pbMetaArriba");
             pbMetaArriba.Name = "pbMetaArriba";
             pbMetaArriba.TabStop = false;
@@ -93,6 +95,7 @@
             pnlPistaBaile.Controls.Add(pbMetaArriba);
             pnlPistaBaile.Controls.Add(pbMetaAbajo);
             pnlPistaBaile.Controls.Add(pbMetaDer);
+            pnlPistaBaile.ForeColor = Color.Black;
             resources.ApplyResources(pnlPistaBaile, "pnlPistaBaile");
             pnlPistaBaile.Name = "pnlPistaBaile";
             // 
@@ -108,12 +111,20 @@
             resources.ApplyResources(lblFaltas, "lblFaltas");
             lblFaltas.Name = "lblFaltas";
             // 
+            // pbJoseJesus
+            // 
+            pbJoseJesus.BackColor = Color.Transparent;
+            resources.ApplyResources(pbJoseJesus, "pbJoseJesus");
+            pbJoseJesus.Name = "pbJoseJesus";
+            pbJoseJesus.TabStop = false;
+            // 
             // FormNivel2Juego
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             BackgroundImage = Properties.Resources.fondoNivel2;
+            Controls.Add(pbJoseJesus);
             Controls.Add(lblFaltas);
             Controls.Add(lblPuntuacion);
             Controls.Add(pnlPistaBaile);
@@ -126,6 +137,7 @@
             ((System.ComponentModel.ISupportInitialize)pbMetaDer).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaArriba).EndInit();
             pnlPistaBaile.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pbJoseJesus).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -141,5 +153,6 @@
         private Panel pnlPistaBaile;
         private Label lblPuntuacion;
         private Label lblFaltas;
+        private PictureBox pbJoseJesus;
     }
 }

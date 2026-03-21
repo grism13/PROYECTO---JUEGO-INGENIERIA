@@ -147,10 +147,17 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblCuentaRegresiva.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btnEmpezar.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Stretch</value>
+  </data>
+  <data name="btnEmpezar.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
   </data>
   <data name="btnEmpezar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>985, 39</value>
+    <value>952, 39</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnEmpezar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
@@ -175,7 +182,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnEmpezar.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="pbMetaIzq.Location" type="System.Drawing.Point, System.Drawing">
     <value>31, 487</value>
@@ -277,7 +284,7 @@
     <value>233, 54</value>
   </data>
   <data name="pnlPistaBaile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>390, 572</value>
+    <value>372, 572</value>
   </data>
   <data name="pnlPistaBaile.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -292,13 +299,13 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pnlPistaBaile.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="lblPuntuacion.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
   <data name="lblPuntuacion.Location" type="System.Drawing.Point, System.Drawing">
-    <value>739, 586</value>
+    <value>737, 601</value>
   </data>
   <data name="lblPuntuacion.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 51</value>
@@ -322,17 +329,16 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblPuntuacion.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="lblFaltas.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9pt, style=Bold</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="lblFaltas.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="lblFaltas.Location" type="System.Drawing.Point, System.Drawing">
-    <value>886, 586</value>
+    <value>885, 601</value>
   </data>
   <data name="lblFaltas.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 51</value>
@@ -356,6 +362,30 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lblFaltas.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="pbJoseJesus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>611, 268</value>
+  </data>
+  <data name="pbJoseJesus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>209, 330</value>
+  </data>
+  <data name="pbJoseJesus.SizeMode" type="System.Windows.Forms.PictureBoxSizeMode, System.Windows.Forms">
+    <value>StretchImage</value>
+  </data>
+  <data name="pbJoseJesus.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="&gt;&gt;pbJoseJesus.Name" xml:space="preserve">
+    <value>pbJoseJesus</value>
+  </data>
+  <data name="&gt;&gt;pbJoseJesus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PictureBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;pbJoseJesus.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;pbJoseJesus.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
