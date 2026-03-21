@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Media;
 using System.Windows.Forms;
+using System.Drawing.Text;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -18,7 +19,16 @@ namespace JUEGO_INGENIERIA.Vistas
         private int tiempoAnticipacion = 1500; // La nota nace 1.5 seg antes para darle tiempo de caer
         private int margenError = 250; // +/- 250 milisegundos de perdón para acertar la tecla
         private int velocidadCaida = 6; // Qué tan rápido caen los cuadros (ajusta esto si caen muy lento)
+        // --- ANIMACIÓN DE JOSÉ JESÚS ---
+        private Image[] framesJoseJesus;
+        private int frameActualJJ = 0;
+        private int contadorAnimacionJJ = 0;
+        private int velocidadAnimacionJJ = 10; // A menor número, más rápido toca la guitarra
 
+        // --- FUENTE PERSONALIZADA ---
+        PrivateFontCollection coleccionFuentes = new PrivateFontCollection();
+        Font fuenteJuegoNormal;
+        Font fuenteJuegoGrande;
         // Estructura y Listas
         struct Nota
         {
@@ -47,6 +57,40 @@ namespace JUEGO_INGENIERIA.Vistas
             ConfigurarTimers();
             CargarMapaDeNotas();
             lblPuntuacion.Text = "Puntos: 0";
+
+            framesJoseJesus = new Image[] 
+            {
+                Properties.Resources.josejesus1,
+                Properties.Resources.josejesus2,
+                Properties.Resources.josejesus3,
+            };
+            pbJoseJesus.Image = framesJoseJesus[0];
+
+            try
+            {
+
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf"); // <--- PON TU NOMBRE AQUÍ
+
+
+                coleccionFuentes.AddFontFile(rutaFuente);
+
+                
+                fuenteJuegoNormal = new Font(coleccionFuentes.Families[0], 12f);
+                fuenteJuegoGrande = new Font(coleccionFuentes.Families[0], 16f);
+
+                
+                lblPuntuacion.Font = fuenteJuegoNormal;
+                lblCuentaRegresiva.Font = fuenteJuegoGrande;
+                lblFaltas.Font = fuenteJuegoNormal;
+                btnEmpezar.Font = fuenteJuegoNormal;
+                btnEmpezar.Font = fuenteJuegoNormal;
+
+            }
+            catch (Exception ex)
+            {
+                // Si por alguna razón no encuentra el archivo, no se crashea el juego, solo muestra un aviso
+                MessageBox.Show("Aviso: No se pudo cargar la fuente personalizada.");
+            }
         }
 
         private void ConfigurarTimers()
@@ -107,10 +151,26 @@ namespace JUEGO_INGENIERIA.Vistas
         private void TimerJuego_Tick(object sender, EventArgs e)
         {
             long tiempoActual = cronometro.ElapsedMilliseconds;
+            // --- ANIMACIÓN DE JOSÉ JESÚS ---
+            contadorAnimacionJJ++;
+            if (contadorAnimacionJJ >= velocidadAnimacionJJ)
+            {
+                frameActualJJ++;
+
+                // Si llegó al último dibujo, vuelve a empezar (ciclo infinito)
+                if (frameActualJJ >= framesJoseJesus.Length)
+                {
+                    frameActualJJ = 0;
+                }
+
+                // Actualizamos la imagen que se ve en la pantalla
+                pbJoseJesus.Image = framesJoseJesus[frameActualJJ];
+                contadorAnimacionJJ = 0; // Reiniciamos el relojito
+            }
 
             // Debug visual para ti
             lblCuentaRegresiva.Visible = true;
-            lblCuentaRegresiva.Font = new Font("Arial", 12);
+            lblCuentaRegresiva.Font = fuenteJuegoNormal;
             lblCuentaRegresiva.Text = $"Reloj: {tiempoActual}ms | Faltan: {listaNotas.Count - indiceNotaActual}";
 
             // 1. GENERAR NOTAS (Con la anticipación aplicada)
@@ -160,7 +220,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private void GenerarNotaVisual(int direccion, long tiempoObjetivo)
         {
             PictureBox nuevaNota = new PictureBox();
-            nuevaNota.Size = new Size(50, 50); // Ajusta si tus imágenes son más grandes
+            nuevaNota.Size = new Size(80, 80); // Ajusta si tus imágenes son más grandes
             nuevaNota.Top = -50;
 
             // SUPER IMPORTANTE: Para que la imagen se adapte al cuadrito
