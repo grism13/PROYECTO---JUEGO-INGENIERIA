@@ -65,27 +65,27 @@
             // pbMalo
             // 
             pbMalo.BackColor = Color.Red;
-            pbMalo.Location = new Point(397, 31);
+            pbMalo.Location = new Point(384, 31);
             pbMalo.Name = "pbMalo";
-            pbMalo.Size = new Size(25, 25);
+            pbMalo.Size = new Size(38, 45);
             pbMalo.TabIndex = 1;
             pbMalo.TabStop = false;
             // 
             // pbPersonaje
             // 
-            pbPersonaje.BackColor = Color.Green;
+            pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Location = new Point(21, 31);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(25, 25);
+            pbPersonaje.Size = new Size(43, 45);
             pbPersonaje.TabIndex = 0;
             pbPersonaje.TabStop = false;
             // 
             // pbPersonaje2
             // 
-            pbPersonaje2.BackColor = Color.Green;
-            pbPersonaje2.Location = new Point(528, 257);
+            pbPersonaje2.BackColor = Color.Transparent;
+            pbPersonaje2.Location = new Point(528, 190);
             pbPersonaje2.Name = "pbPersonaje2";
-            pbPersonaje2.Size = new Size(57, 66);
+            pbPersonaje2.Size = new Size(106, 133);
             pbPersonaje2.TabIndex = 1;
             pbPersonaje2.TabStop = false;
             pbPersonaje2.Visible = false;

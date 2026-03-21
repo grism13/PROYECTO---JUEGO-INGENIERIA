@@ -12,11 +12,15 @@ namespace JUEGO_INGENIERIA.Vistas
     {
         private FormMovimiento movimiento;
         private System.Windows.Forms.Timer tmrPersecucion;
+        private bool esFaseExterior = false;
+
         public FormNivel4Inicio()
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
             this.Load += FormNivel4Inicio_Load;
             this.FormClosing += FormNivel4Inicio_FormClosing;
+            this.Paint += FormNivel4Inicio_Paint;
         }
         private void FormNivel4Inicio_Load(object sender, EventArgs e)
         {
@@ -25,6 +29,10 @@ namespace JUEGO_INGENIERIA.Vistas
                 // Iniciar FormMovimiento con pbPersonaje
                 movimiento = new FormMovimiento(this, pbPersonaje, false);
                 movimiento.Start();
+                
+                // Cargar la imagen de la cabeza dinámicamente desde los recursos para el personaje interior
+                CargarCabezaPersonaje(pbPersonaje);
+
                 // Restaurar visibilidad para usar una sola imagen estática
                 pbPersonaje.Visible = true;
                 pbPersonaje.SizeMode = PictureBoxSizeMode.Zoom;
@@ -72,16 +80,23 @@ namespace JUEGO_INGENIERIA.Vistas
                 if (pbPersonajeFuera != null)
                 {
                     // Transferir el control conectando FormMovimiento al nuevo personaje outside
-                    // El nuevo FormMovimiento usará automáticamente los bordes del Form porque ya no está dentro del Panel.
                     movimiento = new FormMovimiento(this, pbPersonajeFuera, false);
                     movimiento.Start();
                     
-                    // IMPORTANTE: Hacerlo visible DESPUÉS de inicializar FormMovimiento, 
-                    // ya que el constructor de FormMovimiento oculta el personaje por defecto.
-                    pbPersonajeFuera.Visible = true;
-                    pbPersonajeFuera.SizeMode = PictureBoxSizeMode.Zoom;
-                    pbLaverinto.Visible = false;
+                    // Activamos la fase exterior para que OnPaint comience a registrar los gráficos animados
+                    esFaseExterior = true;
+                    
+                    if (pbLaverinto != null) pbLaverinto.Visible = false;
                 }
+            }
+        }
+
+        private void FormNivel4Inicio_Paint(object sender, PaintEventArgs e)
+        {
+            // Dibujar al personaje animado solo si estamos en la fase exterior (ya fuera del laberinto)
+            if (esFaseExterior && movimiento != null)
+            {
+                movimiento.DibujarPersonaje(e.Graphics);
             }
         }
         private void ReiniciarNivel()
@@ -99,6 +114,32 @@ namespace JUEGO_INGENIERIA.Vistas
             if (movimiento != null) movimiento.Start();
             if (tmrPersecucion != null) tmrPersecucion.Start();
         }
+        private void CargarCabezaPersonaje(PictureBox pb)
+        {
+            try
+            {
+                string p = "gris";
+                if (!string.IsNullOrEmpty(DatosJuego.PersonajeElegido))
+                {
+                    p = DatosJuego.PersonajeElegido.ToLower();
+                }
+
+                // Buscar la imagen de la cabeza (soporta nombre exacto o con guión bajo si VS lo renombra)
+                object obj = Properties.Resources.ResourceManager.GetObject($"{p}-cabeza");
+                if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"{p}_cabeza");
+                
+                // Si no tiene, por defecto cargamos a gris-cabeza
+                if (obj == null) obj = Properties.Resources.ResourceManager.GetObject("gris-cabeza");
+                if (obj == null) obj = Properties.Resources.ResourceManager.GetObject("gris_cabeza");
+
+                if (obj != null)
+                {
+                    pb.Image = (Image)obj;
+                }
+            }
+            catch (Exception) { }
+        }
+
         private void FormNivel4Inicio_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (movimiento != null) movimiento.Stop();
