@@ -162,6 +162,9 @@ namespace JUEGO_INGENIERIA.Vistas
             goAbajo = (GetAsyncKeyState(Keys.Down) & 0x8000) != 0 || (GetAsyncKeyState(Keys.S) & 0x8000) != 0;
             goIzquierda = (GetAsyncKeyState(Keys.Left) & 0x8000) != 0 || (GetAsyncKeyState(Keys.A) & 0x8000) != 0;
             goDerecha = (GetAsyncKeyState(Keys.Right) & 0x8000) != 0 || (GetAsyncKeyState(Keys.D) & 0x8000) != 0;
+            int limiteAncho = pbPersonaje.Parent != null ? pbPersonaje.Parent.ClientSize.Width : frm.ClientSize.Width;
+            int limiteAlto = pbPersonaje.Parent != null ? pbPersonaje.Parent.ClientSize.Height : frm.ClientSize.Height;
+
             int xAnterior = pbPersonaje.Left;
             int yAnterior = pbPersonaje.Top;
             int vNormal = esNivelEspacial ? 15 : 5;
@@ -170,7 +173,7 @@ namespace JUEGO_INGENIERIA.Vistas
             bool seMueve = false;
             if (goArriba && goDerecha)
             {
-                if (pbPersonaje.Top > 0 && pbPersonaje.Left + pbPersonaje.Width < frm.ClientSize.Width)
+                if (pbPersonaje.Top > 0 && pbPersonaje.Left + pbPersonaje.Width < limiteAncho)
                 {
                     pbPersonaje.Top -= vDiag; pbPersonaje.Left += vDiag;
                     Animar(animArribaDerecha); seMueve = true;
@@ -186,7 +189,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (goAbajo && goDerecha)
             {
-                if (pbPersonaje.Top + pbPersonaje.Height < frm.ClientSize.Height && pbPersonaje.Left + pbPersonaje.Width < frm.ClientSize.Width)
+                if (pbPersonaje.Top + pbPersonaje.Height < limiteAlto && pbPersonaje.Left + pbPersonaje.Width < limiteAncho)
                 {
                     pbPersonaje.Top += vDiag; pbPersonaje.Left += vDiag;
                     Animar(animAbajoDerecha); seMueve = true;
@@ -194,7 +197,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (goAbajo && goIzquierda)
             {
-                if (pbPersonaje.Top + pbPersonaje.Height < frm.ClientSize.Height && pbPersonaje.Left > 0)
+                if (pbPersonaje.Top + pbPersonaje.Height < limiteAlto && pbPersonaje.Left > 0)
                 {
                     pbPersonaje.Top += vDiag; pbPersonaje.Left -= vDiag;
                     Animar(animAbajoIzquierda); seMueve = true;
@@ -206,7 +209,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (goAbajo)
             {
-                if (pbPersonaje.Top + pbPersonaje.Height < frm.ClientSize.Height) { pbPersonaje.Top += vNormal; Animar(animAbajo); seMueve = true; }
+                if (pbPersonaje.Top + pbPersonaje.Height < limiteAlto) { pbPersonaje.Top += vNormal; Animar(animAbajo); seMueve = true; }
             }
             else if (goIzquierda)
             {
@@ -214,7 +217,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (goDerecha)
             {
-                if (pbPersonaje.Left + pbPersonaje.Width < frm.ClientSize.Width) { pbPersonaje.Left += vNormal; Animar(animDerecha); seMueve = true; }
+                if (pbPersonaje.Left + pbPersonaje.Width < limiteAncho) { pbPersonaje.Left += vNormal; Animar(animDerecha); seMueve = true; }
             }
             foreach (Control x in frm.Controls)
             {
