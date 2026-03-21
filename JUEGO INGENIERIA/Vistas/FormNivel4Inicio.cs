@@ -80,6 +80,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     // ya que el constructor de FormMovimiento oculta el personaje por defecto.
                     pbPersonajeFuera.Visible = true;
                     pbPersonajeFuera.SizeMode = PictureBoxSizeMode.Zoom;
+                    pbLaverinto.Visible = false;
                 }
             }
         }
