@@ -9,10 +9,6 @@ namespace JUEGO_INGENIERIA.Vistas
     public partial class FormNivel4_Final : Form
     {
         // === LIBRERÍA DE TECLADO ===
-        // Moverse: Flechas 
-        // Saltar: Z o Espacio
-        // Disparar: X
-        // Dash: Shift
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(Keys vKey);
 
@@ -21,7 +17,8 @@ namespace JUEGO_INGENIERIA.Vistas
         int playerSpeed = 8;
         int facingDirection = 1;
         int playerHealth = 3;
-        int playerInvulnerability = 0; // Tiempo de invencibilidad tras recibir daño
+        int playerDamage = 15;
+        int playerInvulnerability = 0;
 
         // === FÍSICAS ===
         bool isJumping = false;
@@ -36,23 +33,48 @@ namespace JUEGO_INGENIERIA.Vistas
         int dashCooldown = 0;
         int dashSpeed = 16;
 
-        // === DISPAROS JUGADOR ===
+        // === BOLAS DEL JUGADOR ===
         List<BalaTesis> balasJugador = new List<BalaTesis>();
         int bulletSpeed = 18;
         int cooldownDisparo = 0;
 
-        // === JEFE TESIS (FASE 1 - TUTOR/PAPA) ===
-        Rectangle boss;
-        int bossHealth = 350;
+        // ============================================
+        // SISTEMA DE FASES Y JEFES
+        // ============================================
+        int currentPhase = 1;
         int flashBoss = 0;
         SolidBrush pincelDestello;
-
-        // CEREBRO DEL JEFE
         List<BalaTesis> balasBoss = new List<BalaTesis>();
-        int bossState = 0; // 0 = Esperando, 1 = Atacando
-        int bossAttackCooldown = 150; // Tiempo de pausa antes de la siguiente ráfaga
-        int bossSpitCounter = 0; // Bolas escupidas en la ráfaga actual
-        int bossSpitTimer = 0; // Espaciado entre bola y bola (Ajustado)
+        Random rnd = new Random();
+
+        // ------------------------------
+        // J1: LA PAPA 
+        // ------------------------------
+        Rectangle bossPapa;
+        int papaHealth = 150;
+        int papaState = 0;
+        int papaAttackCooldown = 80;
+        int papaSpitCounter = 0;
+        int papaSpitTimer = 0;
+
+        // ------------------------------
+        // J2: LA CEBOLLA 
+        // ------------------------------
+        Rectangle bossCebolla;
+        int cebollaHealth = 250;
+        int cebollaState = 0;
+        int cebollaLluviaCooldown = 0;
+
+        // ------------------------------
+        // J3: LA ZANAHORIA GIGANTE
+        // ------------------------------
+        Rectangle bossZanahoria;
+        int zanahoriaHealth = 400;
+        int zanahoriaState = 0;
+        int zanahoriaAttackCooldown = 150;
+        int zanahoriaRayoCounter = 0;
+        int zanahoriaRayoTimer = 0;
+        int zanahoriaMiniCooldown = 250;
 
         public FormNivel4_Final()
         {
@@ -66,7 +88,6 @@ namespace JUEGO_INGENIERIA.Vistas
             this.StartPosition = FormStartPosition.CenterScreen;
             groundY = pnlEscenario.Height - 150;
 
-            // SUPER-OPTIMIZACIÓN GRAFICA
             typeof(Panel).InvokeMember("DoubleBuffered",
                 System.Reflection.BindingFlags.SetProperty |
                 System.Reflection.BindingFlags.Instance |
@@ -77,36 +98,56 @@ namespace JUEGO_INGENIERIA.Vistas
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
 
             player = new Rectangle(150, groundY - 80, 60, 80);
-            boss = new Rectangle(1000, groundY - 250, 200, 250);
+            int centroPantallaX = (this.ClientSize.Width / 2) - 100;
+
+            bossPapa = new Rectangle(1000, groundY - 250, 200, 250);
+            bossCebolla = new Rectangle(centroPantallaX, groundY + 10, 200, 250);
+
+            // LA ZANAHORIA AHORA ES COLOSAL (500 de pura altura) Y EMPIEZA MÁS ARRIBA
+            bossZanahoria = new Rectangle(centroPantallaX + 25, groundY - 450, 150, 500);
 
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
             tmrGameLoop.Start();
         }
 
+        private Bitmap OptimizarImagen(Image img, int width, int height)
+        {
+            if (img == null) return null;
+            Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
+                g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+                g.DrawImage(img, 0, 0, width, height);
+            }
+            return bmp;
+        }
+
+        // ====== GAME LOOP PRINCIPAL ======
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            // === CONTROLES CUPHEAD EXACTOS ===
+            // === LECTURA DE CONTROLES ===
             bool goLeft = (GetAsyncKeyState(Keys.Left) & 0x8000) != 0;
             bool goRight = (GetAsyncKeyState(Keys.Right) & 0x8000) != 0;
-            bool keyJump = (GetAsyncKeyState(Keys.Z) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Space) & 0x8000) != 0; // Salto = Z o Espacio
-            bool keyShoot = (GetAsyncKeyState(Keys.X) & 0x8000) != 0; // Disparo = X
-            bool keyDash = (GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0; // Dash = Shift
+            bool keyJump = (GetAsyncKeyState(Keys.Z) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            bool keyShoot = (GetAsyncKeyState(Keys.X) & 0x8000) != 0;
+            bool keyDash = (GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0;
 
-            // Retardos y Enfriamientos
             if (dashCooldown > 0) dashCooldown--;
             if (cooldownDisparo > 0) cooldownDisparo--;
             if (flashBoss > 0) flashBoss--;
             if (playerInvulnerability > 0) playerInvulnerability--;
 
             // =========================
-            // LÓGICA DEL DASH
+            // LÓGICA DEL JUGADOR
             // =========================
             if (keyDash && !isDashing && dashCooldown == 0)
             {
-                isDashing = true;
-                dashTimer = 18;
-                dashCooldown = 60;
+                isDashing = true; dashTimer = 18; dashCooldown = 60;
             }
 
             if (isDashing)
@@ -120,146 +161,279 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else
             {
-                // =========================
-                // MOVER NORMALMENTE
-                // =========================
-                if (goLeft && player.X > 0)
-                {
-                    player.X -= playerSpeed;
-                    facingDirection = -1;
-                }
-                if (goRight && player.X < pnlEscenario.Width - player.Width)
-                {
-                    player.X += playerSpeed;
-                    facingDirection = 1;
-                }
+                if (goLeft && player.X > 0) { player.X -= playerSpeed; facingDirection = -1; }
+                if (goRight && player.X < pnlEscenario.Width - player.Width) { player.X += playerSpeed; facingDirection = 1; }
             }
 
-            // =========================
-            // SALTO Y GRAVEDAD
-            // =========================
             if (keyJump && !isJumping && player.Y + player.Height >= groundY)
             {
-                isJumping = true;
-                force = 22; // Fuerza de brinco
+                isJumping = true; force = 22;
             }
 
-            if (isJumping)
-            {
-                jumpSpeed = -force;
-                force -= 1;
-            }
-            else
-            {
-                jumpSpeed = gravity * 4;
-            }
+            if (isJumping) { jumpSpeed = -force; force -= 1; }
+            else { jumpSpeed = gravity * 4; }
 
             player.Y += jumpSpeed;
+            if (player.Y + player.Height >= groundY) { player.Y = groundY - player.Height; isJumping = false; }
 
-            if (player.Y + player.Height >= groundY)
-            {
-                player.Y = groundY - player.Height;
-                isJumping = false;
-            }
-
-            // =========================
-            // DISPAROS JUGADOR (Tecla X)
-            // =========================
             if (keyShoot && cooldownDisparo <= 0)
             {
                 BalaTesis nuevaBala = new BalaTesis();
                 nuevaBala.X = player.X + (player.Width / 2);
                 nuevaBala.Y = player.Y + (player.Height / 2) - 10;
                 nuevaBala.Tag = facingDirection == 1 ? "der" : "izq";
-
                 balasJugador.Add(nuevaBala);
                 cooldownDisparo = 12;
             }
 
+            // =========================
+            // COLISIONES: TUS BALAS VS MUNDO
+            // =========================
             for (int i = balasJugador.Count - 1; i >= 0; i--)
             {
                 BalaTesis balaActual = balasJugador[i];
                 balaActual.X += bulletSpeed * (balaActual.Tag == "der" ? 1 : -1);
+                Rectangle hitboxBala = new Rectangle((int)balaActual.X, (int)balaActual.Y, 20, 10);
+                bool impactoRealizado = false;
 
-                Rectangle hitboxBala = new Rectangle(balaActual.X, balaActual.Y, 20, 10);
-
-                if (hitboxBala.IntersectsWith(boss) && bossHealth > 0)
+                for (int m = balasBoss.Count - 1; m >= 0; m--)
                 {
-                    balasJugador.RemoveAt(i);
-                    bossHealth -= 1; // Hacer Daño a la Tesis
-                    flashBoss = 4;
-                }
-                else if (balaActual.X > pnlEscenario.Width || balaActual.X < -50)
-                {
-                    balasJugador.RemoveAt(i);
-                }
-            }
-
-            // =========================
-            // INTELIGENCIA DEL JEFE (FASE 1 - LA PAPA / EL TUTOR)
-            // =========================
-            if (bossHealth > 0)
-            {
-                if (bossState == 0) // Estado 0: Pausa
-                {
-                    bossAttackCooldown--;
-                    if (bossAttackCooldown <= 0)
+                    if (balasBoss[m].Tag == "boss_minizanahoria")
                     {
-                        bossState = 1; // Inicia el Ataque
-                        bossSpitCounter = 0;
-                        bossSpitTimer = 0;
+                        Rectangle rectMini = new Rectangle((int)balasBoss[m].X, (int)balasBoss[m].Y, 30, 30);
+                        if (hitboxBala.IntersectsWith(rectMini))
+                        {
+                            balasBoss.RemoveAt(m); // Tú matas secuaces
+                            impactoRealizado = true;
+                            break;
+                        }
                     }
                 }
-                else if (bossState == 1) // Estado 1: Escupiendo la ráfaga
+
+                if (impactoRealizado) { balasJugador.RemoveAt(i); continue; }
+
+                if (currentPhase == 1 && hitboxBala.IntersectsWith(bossPapa) && papaHealth > 0)
                 {
-                    bossSpitTimer--;
-                    if (bossSpitTimer <= 0)
+                    papaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
+                    if (papaHealth <= 0) { currentPhase = 2; cebollaState = 1; balasBoss.Clear(); }
+                }
+                else if (currentPhase == 2 && cebollaState == 2 && hitboxBala.IntersectsWith(bossCebolla) && cebollaHealth > 0)
+                {
+                    cebollaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
+                    if (cebollaHealth <= 0) { currentPhase = 3; balasBoss.Clear(); }
+                }
+                else if (currentPhase == 3 && hitboxBala.IntersectsWith(bossZanahoria) && zanahoriaHealth > 0)
+                {
+                    zanahoriaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
+                    if (zanahoriaHealth <= 0)
+                    {
+                        tmrGameLoop.Stop();
+                        MessageBox.Show("¡HAS DEFENDIDO TU TESIS MAGISTRALMENTE Y HAS SIDO APROBADO CON HONORES!", "¡VICTORIA ABSOLUTA!");
+                        this.Close();
+                        return;
+                    }
+                }
+
+                if (impactoRealizado) { balasJugador.RemoveAt(i); }
+                else if (balaActual.X > pnlEscenario.Width || balaActual.X < -50) { balasJugador.RemoveAt(i); }
+            }
+
+            // ====================================================
+            // I.A. DE LOS JEFES (POR FASES)
+            // ====================================================
+            if (currentPhase == 1) // ====== LA PAPA ======
+            {
+                if (papaState == 0)
+                {
+                    papaAttackCooldown--;
+                    if (papaAttackCooldown <= 0) { papaState = 1; papaSpitCounter = 0; papaSpitTimer = 0; }
+                }
+                else if (papaState == 1)
+                {
+                    papaSpitTimer--;
+                    if (papaSpitTimer <= 0)
                     {
                         BalaTesis bolaTierra = new BalaTesis();
-                        bolaTierra.X = boss.X;
-                        bolaTierra.Y = groundY - 60; // Casi pegadas al suelo
-                        bolaTierra.Tag = "boss_tierra";
+                        bolaTierra.X = bossPapa.X; bolaTierra.Y = groundY - 60; bolaTierra.Tag = "boss_tierra";
                         balasBoss.Add(bolaTierra);
 
-                        bossSpitCounter++;
-
-                        if (bossSpitCounter >= 4) // Ya escupió las 4
-                        {
-                            bossState = 0; // Termina la ráfaga
-                            bossAttackCooldown = 180;
-                        }
-                        else
-                        {
-                            // AJUSTE: Separación más grande entre cada bala (Antes 30, Ahora 55)
-                            bossSpitTimer = 55;
-                        }
+                        papaSpitCounter++;
+                        if (papaSpitCounter >= 6) { papaState = 0; papaAttackCooldown = 80; }
+                        else { papaSpitTimer = 50; }
                     }
                 }
 
                 for (int i = balasBoss.Count - 1; i >= 0; i--)
                 {
                     BalaTesis bola = balasBoss[i];
-                    // AJUSTE: Ahora viajan un poco más lento hacia la izquierda (Antes 12, Ahora 9)
-                    bola.X -= 9;
-
-                    Rectangle hitboxBalaBoss = new Rectangle(bola.X, bola.Y, 60, 60);
-
-                    // Si la bola le da al jugador (y él no es inmune ni está en pleno Dash)
-                    if (hitboxBalaBoss.IntersectsWith(player) && playerInvulnerability <= 0 && !isDashing)
+                    bola.X -= 11;
+                    Rectangle hitboxBola = new Rectangle((int)bola.X, (int)bola.Y, 50, 50);
+                    if (hitboxBola.IntersectsWith(player) && playerInvulnerability <= 0)
                     {
-                        playerHealth--;
-                        playerInvulnerability = 100; // Inmunidad temporal por golpe
-                        balasBoss.RemoveAt(i);
+                        RecibirDano(); balasBoss.RemoveAt(i); if (playerHealth <= 0) return;
+                    }
+                    else if (bola.X < -150) { balasBoss.RemoveAt(i); }
+                }
+            }
+            else if (currentPhase == 2) // ====== LA CEBOLLA ======
+            {
+                if (player.IntersectsWith(bossCebolla) && playerInvulnerability <= 0 && cebollaState > 0)
+                {
+                    RecibirDano(); if (playerHealth <= 0) return;
+                }
 
-                        if (playerHealth <= 0)
+                if (cebollaState == 1)
+                {
+                    bossCebolla.Y -= 3;
+                    if (bossCebolla.Y <= groundY - 250)
+                    {
+                        bossCebolla.Y = groundY - 250; cebollaState = 2; cebollaLluviaCooldown = 30;
+                    }
+                }
+                else if (cebollaState == 2)
+                {
+                    cebollaLluviaCooldown--;
+                    if (cebollaLluviaCooldown <= 0)
+                    {
+                        BalaTesis lagrima = new BalaTesis();
+                        lagrima.X = rnd.Next(20, pnlEscenario.Width - 50);
+                        lagrima.Y = -50;
+                        lagrima.Tag = "boss_lagrima";
+                        balasBoss.Add(lagrima);
+                        cebollaLluviaCooldown = rnd.Next(15, 35);
+                    }
+
+                    for (int i = balasBoss.Count - 1; i >= 0; i--)
+                    {
+                        BalaTesis gota = balasBoss[i];
+                        gota.Y += 11;
+                        Rectangle hitboxLagrima = new Rectangle((int)gota.X, (int)gota.Y, 30, 50);
+                        if (hitboxLagrima.IntersectsWith(player) && playerInvulnerability <= 0)
                         {
-                            tmrGameLoop.Stop();
-                            MessageBox.Show("¡Llovieron demasiadas correcciones sobre tu Tesis!\n¡Game Over!", "REPROBADO");
-                            this.Close();
-                            return;
+                            RecibirDano(); balasBoss.RemoveAt(i); if (playerHealth <= 0) return;
+                        }
+                        else if (gota.Y > groundY) { balasBoss.RemoveAt(i); }
+                    }
+                }
+            }
+            else if (currentPhase == 3) // ====== ZANAHORIA GIGANTE ======
+            {
+                // 1. EL LÁSER MASIVO Y RETRASADO
+                if (zanahoriaState == 0) // Reposo muy largo
+                {
+                    zanahoriaAttackCooldown--;
+                    if (zanahoriaAttackCooldown <= 0)
+                    {
+                        zanahoriaState = 1;
+                        zanahoriaRayoCounter = 0;
+                        zanahoriaRayoTimer = 0;
+                    }
+                }
+                else if (zanahoriaState == 1)
+                {
+                    zanahoriaRayoTimer--;
+                    if (zanahoriaRayoTimer <= 0)
+                    {
+                        BalaTesis rayo = new BalaTesis();
+                        rayo.X = bossZanahoria.X + (bossZanahoria.Width / 2);
+                        rayo.Y = bossZanahoria.Y - 20; // Nace muchísimo más alto por el nuevo tamaño del Jefe
+                        rayo.Tag = "boss_rayo";
+
+                        float dirX = (player.X + 30) - rayo.X;
+                        float dirY = (player.Y + 40) - rayo.Y;
+                        float distancia = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
+
+                        rayo.VX = (dirX / distancia) * 6.5f;
+                        rayo.VY = (dirY / distancia) * 6.5f;
+
+                        balasBoss.Add(rayo);
+
+                        zanahoriaRayoCounter++;
+
+                        if (zanahoriaRayoCounter >= 2)
+                        {
+                            zanahoriaState = 0;
+                            zanahoriaAttackCooldown = rnd.Next(180, 250);
+                        }
+                        else
+                        {
+                            // AQUI ESTÁ LA MAGIA: 110 Frames = Más de 1 Seg de pausa vital
+                            zanahoriaRayoTimer = 110;
                         }
                     }
-                    else if (bola.X < -150)
+                }
+
+                // 2. MINI ZANAHORIAS RASTREADORAS 
+                zanahoriaMiniCooldown--;
+                if (zanahoriaMiniCooldown <= 0)
+                {
+                    BalaTesis mini = new BalaTesis();
+                    if (player.X < (pnlEscenario.Width / 2)) mini.X = pnlEscenario.Width + 50;
+                    else mini.X = -50;
+
+                    mini.Y = rnd.Next(groundY - 100, groundY - 30);
+                    mini.Tag = "boss_minizanahoria";
+                    balasBoss.Add(mini);
+
+                    zanahoriaMiniCooldown = rnd.Next(250, 400);
+                }
+
+                // -------------------------------------------------------------
+                // SISTEMA DE FUEGO AMIGO (Láser Desintegra Secuaces)
+                // -------------------------------------------------------------
+                List<BalaTesis> basuraFuegoAmigo = new List<BalaTesis>();
+                foreach (BalaTesis laser in balasBoss)
+                {
+                    if (laser.Tag == "boss_rayo")
+                    {
+                        Rectangle rectLaserFront = new Rectangle((int)laser.X - 15, (int)laser.Y - 15, 30, 30);
+                        foreach (BalaTesis miniz in balasBoss)
+                        {
+                            if (miniz.Tag == "boss_minizanahoria" && !basuraFuegoAmigo.Contains(miniz))
+                            {
+                                Rectangle rectMini = new Rectangle((int)miniz.X, (int)miniz.Y, 30, 30);
+                                if (rectLaserFront.IntersectsWith(rectMini))
+                                    basuraFuegoAmigo.Add(miniz);
+                            }
+                        }
+                    }
+                }
+                foreach (BalaTesis destruida in basuraFuegoAmigo) { balasBoss.Remove(destruida); }
+                // -------------------------------------------------------------
+
+                // MOVER LOS PROYECTILES DEL JEFE 3
+                for (int i = balasBoss.Count - 1; i >= 0; i--)
+                {
+                    BalaTesis bola = balasBoss[i];
+                    int tamHitbox = 40;
+
+                    if (bola.Tag == "boss_rayo")
+                    {
+                        bola.X += bola.VX;
+                        bola.Y += bola.VY;
+                        tamHitbox = 30; // HITBOX AMPLIADO a un bloque de 30x30 en la punta
+                    }
+                    else if (bola.Tag == "boss_minizanahoria")
+                    {
+                        float distX = (player.X + 30) - bola.X;
+                        float distY = (player.Y + 40) - bola.Y;
+                        float distTotal = (float)Math.Sqrt(distX * distX + distY * distY);
+
+                        if (distTotal > 0)
+                        {
+                            bola.X += (distX / distTotal) * 3.0f;
+                            bola.Y += (distY / distTotal) * 3.0f;
+                        }
+                        tamHitbox = 30;
+                    }
+
+                    Rectangle chocaPoder = new Rectangle((int)bola.X - 15, (int)bola.Y - 15, tamHitbox, tamHitbox);
+
+                    if (chocaPoder.IntersectsWith(player) && playerInvulnerability <= 0)
+                    {
+                        RecibirDano(); balasBoss.RemoveAt(i); if (playerHealth <= 0) return;
+                    }
+                    else if (bola.X < -250 || bola.X > pnlEscenario.Width + 250 || bola.Y > pnlEscenario.Height + 250 || bola.Y < -250)
                     {
                         balasBoss.RemoveAt(i);
                     }
@@ -267,6 +441,19 @@ namespace JUEGO_INGENIERIA.Vistas
             }
 
             pnlEscenario.Invalidate();
+        }
+
+        private void RecibirDano()
+        {
+            playerHealth--;
+            playerInvulnerability = 100;
+
+            if (playerHealth <= 0)
+            {
+                tmrGameLoop.Stop();
+                MessageBox.Show("¡La defensa de Tesis ha fracasado en manos del Jurado!\n¡Game Over!", "REPROBADO");
+                this.Close();
+            }
         }
 
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
@@ -277,55 +464,79 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
 
-            // 1. EL CIELO
             e.Graphics.Clear(Color.FromArgb(20, 20, 30));
-
-            // 2. EL SUELO 
             e.Graphics.FillRectangle(Brushes.DarkOliveGreen, 0, groundY, pnlEscenario.Width, pnlEscenario.Height - groundY);
 
-            // 3. EL JEFE (TESIS / TUTOR)
-            if (bossHealth > 0)
+            if (currentPhase == 1 && papaHealth > 0)
             {
-                e.Graphics.FillRectangle(Brushes.DarkRed, boss);
-                if (flashBoss > 0)
-                {
-                    e.Graphics.FillRectangle(pincelDestello, boss);
-                }
-                e.Graphics.DrawString("La Tesis HP: " + bossHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, boss.X - 10, boss.Y - 30);
+                e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
+                if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
+                e.Graphics.DrawString("Papa HP: " + papaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossPapa.X, bossPapa.Y - 30);
+            }
+            else if (currentPhase == 2 && cebollaHealth > 0 && cebollaState > 0)
+            {
+                e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
+                if (flashBoss > 0 && cebollaState == 2) e.Graphics.FillRectangle(pincelDestello, bossCebolla);
+                if (cebollaState == 2) e.Graphics.DrawString("Cebolla (Marco) HP: " + cebollaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
+            }
+            else if (currentPhase == 3 && zanahoriaHealth > 0)
+            {
+                e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
+                if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossZanahoria);
+                e.Graphics.DrawString("Zanahoria (Jurado) HP: " + zanahoriaHealth, new Font("Arial", 20, FontStyle.Bold), Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
             }
 
-            // 4. BALAS DEL JEFE (Bolas Gigantes)
             foreach (BalaTesis bola in balasBoss)
             {
-                e.Graphics.FillEllipse(Brushes.SaddleBrown, bola.X, bola.Y, 60, 60);
+                if (bola.Tag == "boss_tierra")
+                {
+                    e.Graphics.FillEllipse(Brushes.SaddleBrown, (int)bola.X, (int)bola.Y, 50, 50);
+                }
+                else if (bola.Tag == "boss_lagrima")
+                {
+                    e.Graphics.FillEllipse(Brushes.SkyBlue, (int)bola.X, (int)bola.Y, 30, 50);
+                }
+                else if (bola.Tag == "boss_rayo")
+                {
+                    // LÁSER MASIVO Y ESPECTACULAR
+                    float estela = 15.0f; // Más larga
+                    Pen laserPen = new Pen(Color.Cyan, 26); // Grosor 26
+                    laserPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+                    laserPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+                    e.Graphics.DrawLine(laserPen, bola.X, bola.Y, bola.X - (bola.VX * estela), bola.Y - (bola.VY * estela));
+
+                    // Núcleo Blanco Puro (Destello en la punta)
+                    e.Graphics.FillEllipse(Brushes.White, bola.X - 12, bola.Y - 12, 24, 24);
+                }
+                else if (bola.Tag == "boss_minizanahoria")
+                {
+                    e.Graphics.FillEllipse(Brushes.Orange, (int)bola.X, (int)bola.Y, 30, 30);
+                    e.Graphics.FillRectangle(Brushes.Green, (int)bola.X + 10, (int)bola.Y - 10, 10, 15);
+                }
             }
 
-            // 5. EL JUGADOR 
-            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0)
-            {
-                // Dejamos en blanco para Efecto Parpadeo al recibir daño
-            }
+            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0) { }
             else
             {
                 Brush colorJugador = isDashing ? Brushes.Cyan : Brushes.Blue;
                 e.Graphics.FillRectangle(colorJugador, player);
             }
 
-            // 6. TUS DISPAROS 
             foreach (BalaTesis bala in balasJugador)
             {
-                e.Graphics.FillEllipse(Brushes.Yellow, bala.X, bala.Y, 20, 10);
+                e.Graphics.FillEllipse(Brushes.Yellow, (int)bala.X, (int)bala.Y, 20, 10);
             }
 
-            // 7. GUI (Vidas)
             e.Graphics.DrawString("Vidas Estudiante: " + playerHealth, new Font("Arial", 18, FontStyle.Bold), Brushes.LightPink, 20, 20);
         }
     }
 
     public class BalaTesis
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float VX { get; set; }
+        public float VY { get; set; }
         public string Tag { get; set; }
     }
 }
