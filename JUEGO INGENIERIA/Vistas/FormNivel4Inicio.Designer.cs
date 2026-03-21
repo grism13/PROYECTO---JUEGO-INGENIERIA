@@ -83,9 +83,10 @@
             // pbPersonaje2
             // 
             pbPersonaje2.BackColor = Color.Transparent;
-            pbPersonaje2.Location = new Point(528, 190);
+            pbPersonaje2.Location = new Point(522, 190);
             pbPersonaje2.Name = "pbPersonaje2";
-            pbPersonaje2.Size = new Size(106, 133);
+            pbPersonaje2.Size = new Size(120, 170);
+            pbPersonaje2.SizeMode = PictureBoxSizeMode.Zoom;
             pbPersonaje2.TabIndex = 1;
             pbPersonaje2.TabStop = false;
             pbPersonaje2.Visible = false;
