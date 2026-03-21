@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -18,7 +18,7 @@ namespace JUEGO_INGENIERIA.Vistas
         // 2. Variables Mágicas del Gameplay
         private int tiempoAnticipacion = 1500; // La nota nace 1.5 seg antes para darle tiempo de caer
         private int margenError = 250; // +/- 250 milisegundos de perdón para acertar la tecla
-        private int velocidadCaida = 6; // Qué tan rápido caen los cuadros (ajusta esto si caen muy lento)
+        private int velocidadCaida = 7; // Qué tan rápido caen los cuadros (ajusta esto si caen muy lento)
         // --- ANIMACIÓN DE JOSÉ JESÚS ---
         private Image[] framesJoseJesus;
         private int frameActualJJ = 0;
@@ -29,6 +29,13 @@ namespace JUEGO_INGENIERIA.Vistas
         PrivateFontCollection coleccionFuentes = new PrivateFontCollection();
         Font fuenteJuegoNormal;
         Font fuenteJuegoGrande;
+
+        // --- IMAGENES PRECARGADAS ---
+        private Image imgFlechaArriba;
+        private Image imgFlechaAbajo;
+        private Image imgFlechaDerecha;
+        private Image imgFlechaIzquierda;
+
         // Estructura y Listas
         struct Nota
         {
@@ -36,8 +43,18 @@ namespace JUEGO_INGENIERIA.Vistas
             public long Tiempo;
         }
 
+        class NotaVisual
+        {
+            public float X;
+            public float Y;
+            public int Direccion;
+            public Image Imagen;
+            public long TiempoObjetivo; // Para sincronización de tiempo absoluto
+            public Rectangle Bounds => new Rectangle((int)X, (int)Y, 80, 80);
+        }
+
         private List<Nota> listaNotas = new List<Nota>();
-        private List<PictureBox> notasEnPantalla = new List<PictureBox>();
+        private List<NotaVisual> notasEnPantalla = new List<NotaVisual>();
         private int indiceNotaActual = 0;
 
         // Herramientas del sistema
@@ -53,6 +70,20 @@ namespace JUEGO_INGENIERIA.Vistas
         public FormNivel2Juego()
         {
             InitializeComponent();
+
+            // Evitar parpadeos al dibujar manualmente sobre el panel
+            typeof(Panel).InvokeMember("DoubleBuffered", 
+                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic, 
+                null, pnlPistaBaile, new object[] { true });
+            
+            pnlPistaBaile.Paint += PnlPistaBaile_Paint;
+
+            // Precargamos las imágenes para no saturar la memoria accediendo a Properties.Resources a cada rato
+            imgFlechaArriba = Properties.Resources.flechaarrb;
+            imgFlechaAbajo = Properties.Resources.flechaAbj;
+            imgFlechaDerecha = Properties.Resources.flechaDer;
+            imgFlechaIzquierda = Properties.Resources.flechaIzq;
+
             reproductor = new SoundPlayer(rutaCancion);
             ConfigurarTimers();
             CargarMapaDeNotas();
@@ -181,22 +212,38 @@ namespace JUEGO_INGENIERIA.Vistas
                 indiceNotaActual++;
             }
 
-            // 2. MOVER NOTAS
+            // 2. MOVER NOTAS (Sincronización Perfecta Basada en Tiempo, No en Frames)
+            // Asumimos que pbMetaArriba.Top es la línea de meta oficial para las 4 flechas
+            float posY_Meta = pbMetaArriba.Top;
+            float posY_Inicio = -50f;
+            float distanciaTotal = posY_Meta - posY_Inicio;
+
             for (int i = notasEnPantalla.Count - 1; i >= 0; i--)
             {
-                PictureBox pic = notasEnPantalla[i];
-                pic.Top += velocidadCaida;
+                NotaVisual nota = notasEnPantalla[i];
+                
+                // ¿Cuántos milisegundos faltan para que llegue el tiempo exacto de esta nota?
+                long tiempoFaltante = nota.TiempoObjetivo - tiempoActual;
+
+                // Fracción matemática: 1 (recién nace), 0 (está sobre la meta), Negativo (ya pasó la meta)
+                float fraccionRecorrido = (float)tiempoFaltante / tiempoAnticipacion;
+                
+                // Ubicación calculada milimétricamente con el audio. Así, si el juego se traba, 
+                // la flecha "se teletransporta" a la posición en la que DEBE estar. NUNCA pierde el ritmo de la canción.
+                nota.Y = posY_Meta - (distanciaTotal * fraccionRecorrido);
 
                 // Si la nota sale del PANEL por abajo, se borra
-                if (pic.Top > pnlPistaBaile.Height)
+                if (nota.Y > pnlPistaBaile.Height)
                 {
-                    pnlPistaBaile.Controls.Remove(pic); // BORRAR DEL PANEL
                     notasEnPantalla.RemoveAt(i);
+                    // Ya no hay PictureBox que destruir ni remover del panel
 
                     faltas++; // <--- SUMAMOS UNA FALTA
                     lblFaltas.Text = "Faltas: " + faltas; 
                 }
             }
+            // Refrescar el panel para que OnPaint dibuje los nuevos cuadros
+            pnlPistaBaile.Invalidate();
             // --- 3. VERIFICAR FIN DEL JUEGO ---
             if (indiceNotaActual >= listaNotas.Count && notasEnPantalla.Count == 0)
             {
@@ -215,43 +262,48 @@ namespace JUEGO_INGENIERIA.Vistas
         }
 
 
-        // EL GENERADOR DE CUADROS
+        // EL EVENTO PAINT QUE DIBUJA TODO DE UNA SOLA VEZ
+        private void PnlPistaBaile_Paint(object sender, PaintEventArgs e)
+        {
+            // Opcional: mejora la calidad si las imágenes se ven pixeladas
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // Dibujar cada nota almacenada en la lista
+            foreach (var nota in notasEnPantalla)
+            {
+                e.Graphics.DrawImage(nota.Imagen, nota.X, nota.Y, 80, 80);
+            }
+        }
+
         // EL GENERADOR DE CUADROS - Ahora con imágenes
         private void GenerarNotaVisual(int direccion, long tiempoObjetivo)
         {
-            PictureBox nuevaNota = new PictureBox();
-            nuevaNota.Size = new Size(80, 80); // Ajusta si tus imágenes son más grandes
-            nuevaNota.Top = -50;
-
-            // SUPER IMPORTANTE: Para que la imagen se adapte al cuadrito
-            nuevaNota.SizeMode = PictureBoxSizeMode.Zoom;
-            nuevaNota.BackColor = Color.Transparent; // Para que no tenga fondo feo
-
-            nuevaNota.Tag = $"{direccion},{tiempoObjetivo}";
+            NotaVisual nuevaNota = new NotaVisual();
+            nuevaNota.Y = -50;
+            nuevaNota.Direccion = direccion;
+            nuevaNota.TiempoObjetivo = tiempoObjetivo; // Sincronización absoluta
 
             // Asignamos la imagen correcta y alineamos con la meta
             switch (direccion)
             {
                 case 1: // ARRIBA - Azul
-                    nuevaNota.Image = Properties.Resources.flechaarrb; // <--- Tu imagen aquí
-                    nuevaNota.Left = pbMetaArriba.Left;
+                    nuevaNota.Imagen = imgFlechaArriba; // Imágen precargada
+                    nuevaNota.X = pbMetaArriba.Left;
                     break;
                 case 2: // ABAJO - Rojo
-                    nuevaNota.Image = Properties.Resources.flechaAbj; // <--- Tu imagen aquí
-                    nuevaNota.Left = pbMetaAbajo.Left;
+                    nuevaNota.Imagen = imgFlechaAbajo; // Imágen precargada
+                    nuevaNota.X = pbMetaAbajo.Left;
                     break;
                 case 3: // DERECHA - Verde
-                    nuevaNota.Image = Properties.Resources.flechaDer; // <--- Tu imagen aquí
-                    nuevaNota.Left = pbMetaDer.Left;
+                    nuevaNota.Imagen = imgFlechaDerecha; // Imágen precargada
+                    nuevaNota.X = pbMetaDer.Left;
                     break;
                 case 4: // IZQUIERDA - Rosa
-                    nuevaNota.Image = Properties.Resources.flechaIzq; // <--- Tu imagen aquí
-                    nuevaNota.Left = pbMetaIzq.Left;
+                    nuevaNota.Imagen = imgFlechaIzquierda; // Imágen precargada
+                    nuevaNota.X = pbMetaIzq.Left;
                     break;
             }
 
-            pnlPistaBaile.Controls.Add(nuevaNota);
-            nuevaNota.BringToFront();
             notasEnPantalla.Add(nuevaNota);
         }
 
@@ -294,18 +346,15 @@ namespace JUEGO_INGENIERIA.Vistas
             // 2. Buscamos en la pantalla notas que sean de esa misma dirección
             for (int i = 0; i < notasEnPantalla.Count; i++)
             {
-                PictureBox notaVisual = notasEnPantalla[i];
-                string[] datos = notaVisual.Tag.ToString().Split(',');
-                int direccionNota = int.Parse(datos[0]);
+                NotaVisual notaVisual = notasEnPantalla[i];
 
-                if (direccionNota == direccionPulsada)
+                if (notaVisual.Direccion == direccionPulsada)
                 {
                     // --- LA LÓGICA MÁGICA DE COLISIÓN ---
                     // Verificamos matemáticamente si los rectángulos se superponen
                     if (notaVisual.Bounds.IntersectsWith(pbMetaObjetivo.Bounds))
                     {
                         // ¡ACIERTO VISUAL!
-                        pnlPistaBaile.Controls.Remove(notaVisual);
                         notasEnPantalla.RemoveAt(i);
 
                         // Sumamos puntos
