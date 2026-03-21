@@ -1,4 +1,4 @@
-﻿using JUEGO_INGENIERIA.Vistas;
+using JUEGO_INGENIERIA.Vistas;
 using System.Drawing.Text;
 
 namespace JUEGO_INGENIERIA
@@ -21,6 +21,19 @@ namespace JUEGO_INGENIERIA
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.UpdateStyles();
 
+            // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
+            if (this.BackgroundImage != null)
+            {
+                this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
+                Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (Graphics g = Graphics.FromImage(fondoOptimizado))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                }
+                this.BackgroundImage = fondoOptimizado;
+            }
+
             musicaFondo = new WMPLib.WindowsMediaPlayer();
 
             // Ocultamos el panel universal por defecto
@@ -29,55 +42,77 @@ namespace JUEGO_INGENIERIA
             pbPersonaje.Visible = false;
             EsconderMuros();
 
+            EsconderMuros();
+
+            // NUEVO: Ocultamos TODOS los obstáculos visuales "nativos" para que Windows no calcule su transparencia ni recortes super-lentos.
+            // Las hitboxes seguirán vivas porque FormMovimiento evalúa los limites (.Bounds) lógicos, no visuales.
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox x && x != pbPersonaje)
+                {
+                    if (x.Name.StartsWith("pictureBox") && x.BackColor == Color.Transparent)
+                    {
+                        // En lugar de matarlos, apagamos su dibujado nativo
+                        x.Visible = false;
+                    }
+                }
+            }
+
             NavegacionConsola.Configurar(this, btnSiNivel1, btnNoNivel1);
         }
 
-        // --- SISTEMA DE DIBUJADO Y EFECTO DE CAMUFLAJE DE ÁRBOLES EN 3D ---
+        // --- SISTEMA DE DIBUJADO Y EFECTO DE CAMUFLAJE DE ÁRBOLES EN 3D (Z-Sort Puro) ---
         protected override void OnPaint(PaintEventArgs e)
         {
+            // Nota Vital: Llamar a base.OnPaint dibuja el fondo (BackgroundImage).
             base.OnPaint(e);
 
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            Region regionDeRecorte = new Region(e.ClipRectangle);
-
-            foreach (Control control in this.Controls)
-            {
-                if (control is PictureBox x && x != pbPersonaje)
-                {
-                    if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && x.BackColor == Color.Transparent)
-                    {
-                        if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
-                        {
-                            if (pbPersonaje.Bottom <= x.Bottom)
-                            {
-                                regionDeRecorte.Exclude(x.Bounds);
-                            }
-                        }
-                    }
-                }
-            }
-
-            e.Graphics.Clip = regionDeRecorte;
-
-            if (motorMovimiento != null)
-            {
-                motorMovimiento.DibujarPersonaje(e.Graphics);
-            }
-
-            e.Graphics.ResetClip();
-            regionDeRecorte.Dispose();
-
+            // 1. Recolectamos todos los PictureBoxes (Árboles, etc) que antes eran visibles
+            List<PictureBox> objetosADibujar = new List<PictureBox>();
             foreach (Control control in this.Controls)
             {
                 if (control is PictureBox x && x != pbPersonaje)
                 {
                     if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && x.Image != null)
                     {
-                        e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
+                        objetosADibujar.Add(x);
                     }
                 }
+            }
+
+            // 2. Separamos y ordenamos para el efecto 3D: Los que están "detrás" del jugador se dibujan antes.
+            // Los que están "delante" del jugador se dibujan después de él para taparlo.
+            List<PictureBox> capaFondo = new List<PictureBox>();
+            List<PictureBox> capaFrente = new List<PictureBox>();
+
+            foreach (var obj in objetosADibujar)
+            {
+                // Si la base inferior del árbol está más arriba que los pies del jugador, está "detrás"
+                if (obj.Bottom <= pbPersonaje.Bottom)
+                    capaFondo.Add(obj);
+                else
+                    capaFrente.Add(obj);
+            }
+
+            // 3. Dibujamos Nivel de Fondo (Detrás del Jugador)
+            foreach (var fondo in capaFondo)
+            {
+                e.Graphics.DrawImage(fondo.Image, fondo.Left, fondo.Top, fondo.Width, fondo.Height);
+            }
+
+            // 4. Dibujamos al Personaje en el medio de ambas capas
+            if (motorMovimiento != null)
+            {
+                motorMovimiento.DibujarPersonaje(e.Graphics);
+            }
+
+            // 5. Dibujamos Nivel de Frente (Delante del Jugador, permitiendo esconderse)
+            foreach (var frente in capaFrente)
+            {
+                e.Graphics.DrawImage(frente.Image, frente.Left, frente.Top, frente.Width, frente.Height);
             }
         }
 
@@ -248,8 +283,8 @@ namespace JUEGO_INGENIERIA
             }
             else if (nivelSeleccionado == 3)
             {
-                // Entramos al formulario Nivel2
-                FormNivel3 nivel3 = new FormNivel3();
+                // Entramos al formulario Nivel3
+                FormNivel3 nivel3 = new FormNivel3(jugadorActual);
                 nivel3.ShowDialog();
             }
 

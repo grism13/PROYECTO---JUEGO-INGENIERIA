@@ -382,6 +382,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eliezer_cabeza {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-cabeza", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap eliezer_espalda1 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_espalda1", resourceCulture);
@@ -655,6 +665,56 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap eliezer_ladoizquiedo3 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_ladoizquiedo3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_saltando1 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-saltando1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_saltando2 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-saltando2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_saltando3 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-saltando3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_saltando4 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-saltando4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_saltando5 {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-saltando5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -986,6 +1046,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap gacielita {
             get {
                 object obj = ResourceManager.GetObject("gacielita", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_cabeza {
+            get {
+                object obj = ResourceManager.GetObject("gris-cabeza", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1331,11 +1401,91 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_saltando1 {
+            get {
+                object obj = ResourceManager.GetObject("gris-saltando1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_saltando2 {
+            get {
+                object obj = ResourceManager.GetObject("gris-saltando2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_saltando3 {
+            get {
+                object obj = ResourceManager.GetObject("gris-saltando3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_saltando4 {
+            get {
+                object obj = ResourceManager.GetObject("gris-saltando4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_saltando5 {
+            get {
+                object obj = ResourceManager.GetObject("gris-saltando5", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream intro_juegoINGENERIA__1_ {
             get {
                 return ResourceManager.GetStream("intro-juegoINGENERIA-_1_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap josejesus1 {
+            get {
+                object obj = ResourceManager.GetObject("josejesus1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap josejesus2 {
+            get {
+                object obj = ResourceManager.GetObject("josejesus2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap josejesus3 {
+            get {
+                object obj = ResourceManager.GetObject("josejesus3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -1639,6 +1789,24 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream OST_nivel_3 {
+            get {
+                return ResourceManager.GetStream("OST nivel 3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream OST_nivel_3_ {
+            get {
+                return ResourceManager.GetStream("OST nivel 3.", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap oswald_version_mini {
@@ -1804,6 +1972,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap relojroand {
             get {
                 object obj = ResourceManager.GetObject("relojroand", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_cabeza {
+            get {
+                object obj = ResourceManager.GetObject("roand-cabeza", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2084,6 +2262,56 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap roand_pirula4 {
             get {
                 object obj = ResourceManager.GetObject("roand-pirula4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_saltando1 {
+            get {
+                object obj = ResourceManager.GetObject("roand-saltando1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_saltando2 {
+            get {
+                object obj = ResourceManager.GetObject("roand-saltando2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_saltando3 {
+            get {
+                object obj = ResourceManager.GetObject("roand-saltando3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_saltando4 {
+            get {
+                object obj = ResourceManager.GetObject("roand-saltando4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_saltando5 {
+            get {
+                object obj = ResourceManager.GetObject("roand-saltando5", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -36,6 +36,20 @@ public partial class FormDecanato : Form
 
         this.jugadorActual = jugadorRecibido;
 
+        // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
+        if (this.BackgroundImage != null)
+        {
+            this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
+            Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            using (Graphics g = Graphics.FromImage(fondoOptimizado))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                // FormDecanato has specific bounds, let's make sure it matches the form's display size
+                g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            }
+            this.BackgroundImage = fondoOptimizado;
+        }
+
         imgFlavioHablando1 = Properties.Resources.flavioHablando1;
         imgFlavioHablando2 = Properties.Resources.flavioHablando2;
         imgFlavioHablando3 = Properties.Resources.flavioHablando3;
@@ -54,6 +68,20 @@ public partial class FormDecanato : Form
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Visible = false;
             this.Controls.Add(pbPersonaje);
+        }
+
+        // ESCONDER NATIVAMENTE LAS DECORACIONES PARA CORTAR EL "INVALIDATE COSTOSO"
+        foreach (Control control in this.Controls)
+        {
+            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox2 && x != pictureBox3 && x != pictureBox4)
+            {
+                if (x.Name.StartsWith("pictureBox"))
+                {
+                    // Guardamos una tag mental por si queremos saber si "debería" haber sido visible
+                    x.Tag = x.Visible ? x.Tag : "oculto_intencional";
+                    x.Visible = false; 
+                }
+            }
         }
 
         DoubleBuffered = true;
@@ -95,22 +123,45 @@ public partial class FormDecanato : Form
         {
             e.Graphics.DrawImage(imgFlavioActual, pictureBox1.Bounds);
         }
+
+        // Dividido en Frente y Fondo para Z-Index, como en Form1 puro
+        List<PictureBox> capaFondo = new List<PictureBox>();
+        List<PictureBox> capaFrente = new List<PictureBox>();
+
+        foreach (Control control in this.Controls)
+        {
+            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra)
+            {
+                // Solo renderizamos si NO tiene la tag que indica que estaba oculto a propósito antes en el designer
+                if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && (string)x.Tag != "oculto_intencional")
+                {
+                    if (x.Image != null)
+                    {
+                        if (x.Bottom <= pbPersonaje.Bottom)
+                            capaFondo.Add(x);
+                        else
+                            capaFrente.Add(x);
+                    }
+                }
+            }
+        }
+
+        // Dibujar lo que va atrás
+        foreach (var pFondo in capaFondo)
+        {
+            e.Graphics.DrawImage(pFondo.Image, pFondo.Left, pFondo.Top, pFondo.Width, pFondo.Height);
+        }
+
+        // Dibujar personaje
         if (motorMovimiento != null)
         {
             motorMovimiento.DibujarPersonaje(e.Graphics);
         }
-        foreach (Control control in this.Controls)
+
+        // Dibujar cosas frente
+        foreach (var pFrente in capaFrente)
         {
-            if (control is PictureBox x && x != pictureBox1)
-            {
-                if (x.Visible && (string)x.Tag != "muro" && x.Name.StartsWith("pictureBox"))
-                {
-                    if (x.Image != null && pbPersonaje.Bounds.IntersectsWith(x.Bounds))
-                    {
-                        e.Graphics.DrawImage(x.Image, x.Left, x.Top, x.Width, x.Height);
-                    }
-                }
-            }
+            e.Graphics.DrawImage(pFrente.Image, pFrente.Left, pFrente.Top, pFrente.Width, pFrente.Height);
         }
     }
 

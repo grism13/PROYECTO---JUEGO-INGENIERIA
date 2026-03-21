@@ -745,4 +745,73 @@
   <data name="flechaDer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\flechaDer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="OST nivel 3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OST nivel 3.mp3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="OST nivel 3." type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\OST nivel 3.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="josejesus1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="josejesus2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="josejesus3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-cabeza" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-cabeza.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-cabeza" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-cabeza.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-cabeza" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-cabeza.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-saltando1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-saltando1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-saltando2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-saltando2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-saltando3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-saltando3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-saltando4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-saltando4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gris-saltando5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gris-saltando5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-saltando2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-saltando2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-saltando3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-saltando3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-saltando4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-saltando4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-saltando5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-saltando5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-saltando2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-saltando2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-saltando3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-saltando3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-saltando4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-saltando4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-saltando5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-saltando5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="eliezer-saltando1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\eliezer-saltando1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="roand-saltando1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\roand-saltando1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
