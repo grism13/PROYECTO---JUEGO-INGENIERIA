@@ -392,6 +392,66 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_diagonal_abajo_derecha {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-diagonal-abajo-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_diagonal_abajo_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-diagonal-abajo-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_diagonal_arriba_derecha {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-diagonal-arriba-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_diagonal_arriba_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-diagonal-arriba-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_medio_derecha {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-medio-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap eliezer_disparo_medio_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("eliezer-disparo-medio-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap eliezer_espalda1 {
             get {
                 object obj = ResourceManager.GetObject("eliezer_espalda1", resourceCulture);
@@ -1056,6 +1116,66 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap gris_cabeza {
             get {
                 object obj = ResourceManager.GetObject("gris-cabeza", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_diagonal_abajo_derecha {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-diagonal-abajo-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_diagonal_abajo_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-diagonal-abajo-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_diagonal_arriba_derecha {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-diagonal-arriba-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_diagonal_arriba_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-diagonal-arriba-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_medio_derecha {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-medio-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gris_disparo_medio_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("gris-disparo-medio-izquierda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1982,6 +2102,66 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap roand_cabeza {
             get {
                 object obj = ResourceManager.GetObject("roand-cabeza", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_diagonal_abajo_derecha {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-diagonal-abajo-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_diagonal_abajo_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-diagonal-abajo-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_diagonal_arriba_derecha {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-diagonal-arriba-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_diagonal_arriba_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-diagonal-arriba-izquierda", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_medio_derecha {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-medio-derecha", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap roand_disparo_medio_izquierda {
+            get {
+                object obj = ResourceManager.GetObject("roand-disparo-medio-izquierda", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
