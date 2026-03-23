@@ -140,10 +140,13 @@
             lblPreguntaNivel1 = new Label();
             btnNoNivel1 = new Button();
             btnSiNivel1 = new Button();
-            pbPuertaNivel5 = new PictureBox();
-            pictureBox100 = new PictureBox();
-            pbPuertaNivel3 = new PictureBox();
             geyzer = new PictureBox();
+            pbPuertaNivel5 = new PictureBox();
+            pbPuertaNivel4 = new PictureBox();
+            pbPuertaNivel3 = new PictureBox();
+            pictureBox101 = new PictureBox();
+            pbPuertaNivel2 = new PictureBox();
+            pictureBox103 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -246,10 +249,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox98).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).BeginInit();
             pnlConfirmacionNivel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox100).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)geyzer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox101).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox103).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -429,7 +435,7 @@
             // pictureBox15
             // 
             pictureBox15.BackColor = Color.Crimson;
-            pictureBox15.Location = new Point(1245, 145);
+            pictureBox15.Location = new Point(1249, 127);
             pictureBox15.Name = "pictureBox15";
             pictureBox15.Size = new Size(101, 56);
             pictureBox15.TabIndex = 19;
@@ -1381,6 +1387,17 @@
             btnSiNivel1.UseVisualStyleBackColor = false;
             btnSiNivel1.Click += btnSiNivel1_Click;
             // 
+            // geyzer
+            // 
+            geyzer.BackColor = Color.Transparent;
+            geyzer.Image = Properties.Resources.geyzer1;
+            geyzer.Location = new Point(980, 105);
+            geyzer.Name = "geyzer";
+            geyzer.Size = new Size(88, 148);
+            geyzer.SizeMode = PictureBoxSizeMode.StretchImage;
+            geyzer.TabIndex = 120;
+            geyzer.TabStop = false;
+            // 
             // pbPuertaNivel5
             // 
             pbPuertaNivel5.BackColor = Color.Chartreuse;
@@ -1391,32 +1408,49 @@
             pbPuertaNivel5.TabStop = false;
             pbPuertaNivel5.Visible = false;
             // 
-            // pictureBox100
+            // pbPuertaNivel4
             // 
-            pictureBox100.Location = new Point(1233, 507);
-            pictureBox100.Name = "pictureBox100";
-            pictureBox100.Size = new Size(30, 16);
-            pictureBox100.TabIndex = 118;
-            pictureBox100.TabStop = false;
+            pbPuertaNivel4.Location = new Point(1199, 394);
+            pbPuertaNivel4.Name = "pbPuertaNivel4";
+            pbPuertaNivel4.Size = new Size(10, 10);
+            pbPuertaNivel4.TabIndex = 118;
+            pbPuertaNivel4.TabStop = false;
             // 
             // pbPuertaNivel3
             // 
-            pbPuertaNivel3.Location = new Point(1269, 207);
+            pbPuertaNivel3.Location = new Point(1274, 191);
             pbPuertaNivel3.Name = "pbPuertaNivel3";
-            pbPuertaNivel3.Size = new Size(30, 16);
+            pbPuertaNivel3.Size = new Size(30, 10);
             pbPuertaNivel3.TabIndex = 119;
             pbPuertaNivel3.TabStop = false;
             // 
-            // geyzer
+            // pictureBox101
             // 
-            geyzer.BackColor = Color.Transparent;
-            geyzer.Image = Properties.Resources.geyzer1;
-            geyzer.Location = new Point(949, 332);
-            geyzer.Name = "geyzer";
-            geyzer.Size = new Size(88, 148);
-            geyzer.SizeMode = PictureBoxSizeMode.StretchImage;
-            geyzer.TabIndex = 120;
-            geyzer.TabStop = false;
+            pictureBox101.BackColor = Color.Crimson;
+            pictureBox101.Location = new Point(1014, 149);
+            pictureBox101.Name = "pictureBox101";
+            pictureBox101.Size = new Size(15, 80);
+            pictureBox101.TabIndex = 121;
+            pictureBox101.TabStop = false;
+            pictureBox101.Tag = "muro";
+            // 
+            // pbPuertaNivel2
+            // 
+            pbPuertaNivel2.Location = new Point(151, 243);
+            pbPuertaNivel2.Name = "pbPuertaNivel2";
+            pbPuertaNivel2.Size = new Size(19, 10);
+            pbPuertaNivel2.TabIndex = 122;
+            pbPuertaNivel2.TabStop = false;
+            // 
+            // pictureBox103
+            // 
+            pictureBox103.BackColor = Color.Crimson;
+            pictureBox103.Location = new Point(1233, 403);
+            pictureBox103.Name = "pictureBox103";
+            pictureBox103.Size = new Size(117, 73);
+            pictureBox103.TabIndex = 123;
+            pictureBox103.TabStop = false;
+            pictureBox103.Tag = "muro";
             // 
             // Form1
             // 
@@ -1426,9 +1460,12 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1445, 908);
+            Controls.Add(pictureBox103);
+            Controls.Add(pbPuertaNivel2);
+            Controls.Add(pictureBox101);
             Controls.Add(geyzer);
             Controls.Add(pnlConfirmacionNivel1);
-            Controls.Add(pictureBox100);
+            Controls.Add(pbPuertaNivel4);
             Controls.Add(pictureBox99);
             Controls.Add(pictureBox91);
             Controls.Add(pictureBox92);
@@ -1646,10 +1683,13 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox98).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox99).EndInit();
             pnlConfirmacionNivel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pictureBox100).EndInit();
-            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).EndInit();
             ((System.ComponentModel.ISupportInitialize)geyzer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel5).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox101).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox103).EndInit();
             ResumeLayout(false);
         }
 
@@ -1766,8 +1806,11 @@
         private Button btnSiNivel1;
         private Label lblPreguntaNivel1;
         private PictureBox pbPuertaNivel5;
-        private PictureBox pictureBox100;
+        private PictureBox pbPuertaNivel4;
         private PictureBox pbPuertaNivel3;
         private PictureBox geyzer;
+        private PictureBox pictureBox101;
+        private PictureBox pbPuertaNivel2;
+        private PictureBox pictureBox103;
     }
 }

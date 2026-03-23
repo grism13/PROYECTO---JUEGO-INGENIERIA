@@ -10,10 +10,12 @@ namespace JUEGO_INGENIERIA
         private Jugador jugadorActual;
 
         private WMPLib.WindowsMediaPlayer musicaFondo;
-        
+
         // Variables para la animación del geyser
         private System.Windows.Forms.Timer timerGeyzer;
         private bool isGeyzerFrame1 = true;
+        private Image geyzer1;
+        private Image geyzer2;
 
         // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
         private int nivelSeleccionado = 0;
@@ -22,7 +24,7 @@ namespace JUEGO_INGENIERIA
         {
             InitializeComponent();
             this.DoubleBuffered = true;
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             this.UpdateStyles();
 
             // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
@@ -39,6 +41,17 @@ namespace JUEGO_INGENIERIA
             }
 
             musicaFondo = new WMPLib.WindowsMediaPlayer();
+
+            // Pre-cachear los frames del geyzer en formato rápido
+            geyzer1 = new Bitmap(Properties.Resources.geyzer1);
+            geyzer2 = new Bitmap(Properties.Resources.geyzer2);
+
+            // Desactivar completamente el PictureBox nativo del geyzer para que OnPaint tome el control total
+            if (this.Controls.ContainsKey("geyzer"))
+            {
+                this.Controls["geyzer"].Visible = false;
+                this.Controls["geyzer"].Enabled = false; // Evita que Windows Forms intente procesar eventos o redibujados internos
+            }
 
             // Inicializar timer para animación del geyser
             timerGeyzer = new System.Windows.Forms.Timer();
@@ -107,22 +120,42 @@ namespace JUEGO_INGENIERIA
                     capaFrente.Add(obj);
             }
 
-            // 3. Dibujamos Nivel de Fondo (Detrás del Jugador)
+            // 2.5 Lógica de profundidad para el Geyzer (Z-Order dinámico)
+            bool geyzerEnFrente = false;
+            Control g = this.Controls.ContainsKey("geyzer") ? this.Controls["geyzer"] : null;
+            if (g != null && g.Bottom > (pbPersonaje.Bottom + 5))
+                geyzerEnFrente = true;
+
+            // 1. Dibujamos el Geyzer si está detrás de todo
+            if (!geyzerEnFrente && g != null)
+            {
+                Image frameActual = isGeyzerFrame1 ? geyzer1 : geyzer2;
+                if (frameActual != null) e.Graphics.DrawImage(frameActual, g.Left, g.Top, g.Width, g.Height);
+            }
+
+            // 2. Dibujamos Nivel de Fondo (Detrás del Jugador)
             foreach (var fondo in capaFondo)
             {
                 e.Graphics.DrawImage(fondo.Image, fondo.Left, fondo.Top, fondo.Width, fondo.Height);
             }
 
-            // 4. Dibujamos al Personaje en el medio de ambas capas
+            // 3. Dibujamos al Personaje en el medio
             if (motorMovimiento != null)
             {
                 motorMovimiento.DibujarPersonaje(e.Graphics);
             }
 
-            // 5. Dibujamos Nivel de Frente (Delante del Jugador, permitiendo esconderse)
+            // 4. Dibujamos Nivel de Frente (Delante del Jugador)
             foreach (var frente in capaFrente)
             {
                 e.Graphics.DrawImage(frente.Image, frente.Left, frente.Top, frente.Width, frente.Height);
+            }
+
+            // 5. Dibujamos el Geyzer si está delante de todo (tapa al jugador y a los objetos)
+            if (geyzerEnFrente && g != null)
+            {
+                Image frameActual = isGeyzerFrame1 ? geyzer1 : geyzer2;
+                if (frameActual != null) e.Graphics.DrawImage(frameActual, g.Left, g.Top, g.Width, g.Height);
             }
         }
 
@@ -181,15 +214,26 @@ namespace JUEGO_INGENIERIA
 
         private void TimerGeyzer_Tick(object sender, EventArgs e)
         {
-            if (isGeyzerFrame1)
-            {
-                geyzer.Image = Properties.Resources.geyzer2;
-            }
-            else
-            {
-                geyzer.Image = Properties.Resources.geyzer1;
-            }
             isGeyzerFrame1 = !isGeyzerFrame1;
+
+            if (this.Controls.ContainsKey("geyzer"))
+            {
+                Control geyzer = this.Controls["geyzer"];
+                Rectangle areaGeyzer = geyzer.Bounds;
+
+                // Evaluamos si el área de nuestro jugador choca o se superpone con el área de Geyzer
+                if (pbPersonaje.Bounds.IntersectsWith(areaGeyzer))
+                {
+                    // Si se están tocando, unimos las dos áreas para redibujarlos a ambos limpiamente
+                    Rectangle areaCombinada = Rectangle.Union(areaGeyzer, pbPersonaje.Bounds);
+                    this.Invalidate(areaCombinada);
+                }
+                else
+                {
+                    // Si están lejos, solo redibujamos la zona de Geyzer (ahorra recursos)
+                    this.Invalidate(areaGeyzer);
+                }
+            }
         }
 
         // --- MANEJO DE CHOQUES CON PUERTAS ---
@@ -215,6 +259,29 @@ namespace JUEGO_INGENIERIA
                 // Configuramos EL MISMO panel universal para que ahora hable del Nivel 3
                 lblPreguntaNivel1.Text = "¿Estás listo para entrar al Nivel 3?";
                 nivelSeleccionado = 3;
+
+                pnlConfirmacionNivel1.Visible = true;
+                pnlConfirmacionNivel1.BringToFront();
+            }
+            else if (x.Name == "pbPuertaNivel2")
+            {
+                motorMovimiento.Stop();
+                motorMovimiento.EstaPausado = true;
+
+                // Configuramos el panel universal para que hable del Nivel 2
+                lblPreguntaNivel1.Text = "¿Estás listo para entrar al Nivel 2?";
+                nivelSeleccionado = 2;
+
+                pnlConfirmacionNivel1.Visible = true;
+                pnlConfirmacionNivel1.BringToFront();
+            }
+            else if (x.Name == "pbPuertaNivel4")
+            {
+                motorMovimiento.Stop();
+                motorMovimiento.EstaPausado = true;
+
+                lblPreguntaNivel1.Text = "¿Estás listo para entrar al Nivel 4?";
+                nivelSeleccionado = 4;
 
                 pnlConfirmacionNivel1.Visible = true;
                 pnlConfirmacionNivel1.BringToFront();
@@ -255,7 +322,7 @@ namespace JUEGO_INGENIERIA
         {
             foreach (Control x in this.Controls)
             {
-                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel3")
+                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel2" || x.Name == "pbPuertaNivel3" || x.Name == "pbPuertaNivel4")
                 {
                     x.BackColor = Color.Transparent;
                 }
@@ -315,6 +382,18 @@ namespace JUEGO_INGENIERIA
                 FormNivel3 nivel3 = new FormNivel3(jugadorActual);
                 nivel3.ShowDialog();
             }
+            else if (nivelSeleccionado == 2)
+            {
+                // Entramos al formulario Nivel2
+                FormNivel2Juego nivel2 = new FormNivel2Juego();
+                nivel2.ShowDialog();
+            }
+            else if (nivelSeleccionado == 4)
+            {
+                // Entramos al formulario Nivel 4 Inicio
+                FormNivel4Inicio nivel4 = new FormNivel4Inicio();
+                nivel4.ShowDialog();
+            }
 
             // Al salir del respectivo nivel, reactivamos música y alejamos al pj de la puerta
             ReproducirMusicaMapa();
@@ -343,6 +422,6 @@ namespace JUEGO_INGENIERIA
             motorMovimiento.EstaPausado = false;
         }
 
-      
+
     }
 }
