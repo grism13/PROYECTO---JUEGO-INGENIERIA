@@ -10,6 +10,10 @@ namespace JUEGO_INGENIERIA
         private Jugador jugadorActual;
 
         private WMPLib.WindowsMediaPlayer musicaFondo;
+        
+        // Variables para la animación del geyser
+        private System.Windows.Forms.Timer timerGeyzer;
+        private bool isGeyzerFrame1 = true;
 
         // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
         private int nivelSeleccionado = 0;
@@ -35,6 +39,12 @@ namespace JUEGO_INGENIERIA
             }
 
             musicaFondo = new WMPLib.WindowsMediaPlayer();
+
+            // Inicializar timer para animación del geyser
+            timerGeyzer = new System.Windows.Forms.Timer();
+            timerGeyzer.Interval = 300; // Ajusta este valor para hacer la animación más rápida o lenta
+            timerGeyzer.Tick += TimerGeyzer_Tick;
+            timerGeyzer.Start();
 
             // Ocultamos el panel universal por defecto
             pnlConfirmacionNivel1.Visible = false;
@@ -169,6 +179,19 @@ namespace JUEGO_INGENIERIA
         {
         }
 
+        private void TimerGeyzer_Tick(object sender, EventArgs e)
+        {
+            if (isGeyzerFrame1)
+            {
+                geyzer.Image = Properties.Resources.geyzer2;
+            }
+            else
+            {
+                geyzer.Image = Properties.Resources.geyzer1;
+            }
+            isGeyzerFrame1 = !isGeyzerFrame1;
+        }
+
         // --- MANEJO DE CHOQUES CON PUERTAS ---
         private void MotorMovimiento_ColisionConObjeto(object sender, Control x)
         {
@@ -258,6 +281,11 @@ namespace JUEGO_INGENIERIA
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (timerGeyzer != null)
+            {
+                timerGeyzer.Stop();
+                timerGeyzer.Dispose();
+            }
             if (musicaFondo != null)
             {
                 musicaFondo.controls.stop();

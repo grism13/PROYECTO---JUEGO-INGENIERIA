@@ -1113,6 +1113,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap geyzer1 {
+            get {
+                object obj = ResourceManager.GetObject("geyzer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap geyzer2 {
+            get {
+                object obj = ResourceManager.GetObject("geyzer2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gris_cabeza {
             get {
                 object obj = ResourceManager.GetObject("gris-cabeza", resourceCulture);
