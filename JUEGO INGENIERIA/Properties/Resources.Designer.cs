@@ -2077,6 +2077,33 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_loop_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_loop_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_loop_01_end_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_loop_01_end_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_start_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_start_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap primera_imagen_de_la_intro {
