@@ -883,4 +883,28 @@
   <data name="geyzer2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\geyzer2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="rector-caminando-izquierda2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-izquierda2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-atras1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-atras1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-atras2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-atras2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-centro1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-centro1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-centro2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-centro2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-derecha1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-derecha1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-derecha2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-derecha2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rector-caminando-izquierda1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\rector-caminando-izquierda1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

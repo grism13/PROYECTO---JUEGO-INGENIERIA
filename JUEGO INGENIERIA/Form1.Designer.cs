@@ -147,6 +147,7 @@
             pictureBox101 = new PictureBox();
             pbPuertaNivel2 = new PictureBox();
             pictureBox103 = new PictureBox();
+            rector = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -256,6 +257,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox101).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox103).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)rector).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -1452,6 +1454,17 @@
             pictureBox103.TabStop = false;
             pictureBox103.Tag = "muro";
             // 
+            // rector
+            // 
+            rector.BackColor = Color.Transparent;
+            rector.Image = Properties.Resources.rector_caminando_centro1;
+            rector.Location = new Point(284, 87);
+            rector.Name = "rector";
+            rector.Size = new Size(86, 124);
+            rector.SizeMode = PictureBoxSizeMode.StretchImage;
+            rector.TabIndex = 124;
+            rector.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1460,6 +1473,7 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1445, 908);
+            Controls.Add(rector);
             Controls.Add(pictureBox103);
             Controls.Add(pbPuertaNivel2);
             Controls.Add(pictureBox101);
@@ -1690,6 +1704,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox101).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox103).EndInit();
+            ((System.ComponentModel.ISupportInitialize)rector).EndInit();
             ResumeLayout(false);
         }
 
@@ -1812,5 +1827,6 @@
         private PictureBox pictureBox101;
         private PictureBox pbPuertaNivel2;
         private PictureBox pictureBox103;
+        private PictureBox rector;
     }
 }
