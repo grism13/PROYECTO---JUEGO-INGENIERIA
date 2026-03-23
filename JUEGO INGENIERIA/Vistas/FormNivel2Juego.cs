@@ -36,6 +36,18 @@ namespace JUEGO_INGENIERIA.Vistas
         private Image imgFlechaDerecha;
         private Image imgFlechaIzquierda;
 
+        // IMÁGENES DE LOS BOTONES PRESIONADOS (LOS DE ABAJO) ---
+        private Image imgBtnPresionadoArriba;
+        private Image imgBtnPresionadoAbajo;
+        private Image imgBtnPresionadoDer;
+        private Image imgBtnPresionadoIzq;
+
+        // --- SISTEMA DE DIÁLOGO (NARRATIVA) ---
+        private string[] dialogosJJ;      // Aquí guardaremos las partes de la historia
+        private int indiceDialogo = 0;    // En qué parte vamos (0, 1, 2...)
+        private int indiceCaracter = 0;   // Por cuál letra vamos
+        private bool escribiendo = false; // Para saber si el texto se está moviendo
+        private System.Windows.Forms.Timer timerEscribir = new System.Windows.Forms.Timer();
         // Estructura y Listas
         struct Nota
         {
@@ -72,10 +84,10 @@ namespace JUEGO_INGENIERIA.Vistas
             InitializeComponent();
 
             // Evitar parpadeos al dibujar manualmente sobre el panel
-            typeof(Panel).InvokeMember("DoubleBuffered", 
-                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic, 
+            typeof(Panel).InvokeMember("DoubleBuffered",
+                System.Reflection.BindingFlags.SetProperty | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic,
                 null, pnlPistaBaile, new object[] { true });
-            
+
             pnlPistaBaile.Paint += PnlPistaBaile_Paint;
 
             // Precargamos las imágenes para no saturar la memoria accediendo a Properties.Resources a cada rato
@@ -84,12 +96,21 @@ namespace JUEGO_INGENIERIA.Vistas
             imgFlechaDerecha = Properties.Resources.flechaDer;
             imgFlechaIzquierda = Properties.Resources.flechaIzq;
 
+            
+
+            // OJO: Cambia estos nombres por los reales de tus imágenes presionadas
+            imgBtnPresionadoArriba = Properties.Resources.verde_presionado;
+            imgBtnPresionadoAbajo = Properties.Resources.azul_presionado;
+            imgBtnPresionadoDer = Properties.Resources.naranja_presionado;
+            imgBtnPresionadoIzq = Properties.Resources.rosa_presionado;
+
+
             reproductor = new SoundPlayer(rutaCancion);
             ConfigurarTimers();
             CargarMapaDeNotas();
             lblPuntuacion.Text = "Puntos: 0";
 
-            framesJoseJesus = new Image[] 
+            framesJoseJesus = new Image[]
             {
                 Properties.Resources.josejesus1,
                 Properties.Resources.josejesus2,
@@ -105,11 +126,11 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 coleccionFuentes.AddFontFile(rutaFuente);
 
-                
+
                 fuenteJuegoNormal = new Font(coleccionFuentes.Families[0], 12f);
                 fuenteJuegoGrande = new Font(coleccionFuentes.Families[0], 16f);
 
-                
+
                 lblPuntuacion.Font = fuenteJuegoNormal;
                 lblCuentaRegresiva.Font = fuenteJuegoGrande;
                 lblFaltas.Font = fuenteJuegoNormal;
@@ -121,6 +142,60 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 // Si por alguna razón no encuentra el archivo, no se crashea el juego, solo muestra un aviso
                 MessageBox.Show("Aviso: No se pudo cargar la fuente personalizada.");
+            }
+
+            // --- LÓGICA DE INICIO CON NARRATIVA (EFECTO RPG) ---
+            pnlNarrativaIntro.Visible = true;
+            pnlNarrativaIntro.BringToFront();
+            pnlPistaBaile.Visible = false;
+            lblPuntuacion.Visible = false;
+            lblFaltas.Visible = false;
+            pbJoseJesus.Visible = false;
+
+            // pbJoseJesusIntro.Image = Properties.Resources.jj_intro_estatico; // Tu imagen de JJ parado
+            lblTextoNarrativa.Font = fuenteJuegoNormal;
+            lblTextoNarrativa.Text = ""; // Arranca vacío
+
+            // 1. Dividimos la historia en las partes que quieras
+            dialogosJJ = new string[]
+            {
+                "¡Saludos, ingenieros rítmicos! Soy José Jesús.",
+                "Para aprobar Ingeniería Rítmica 2, deben demostrar\r\nque sus dedos tienen un 'flow' matemático.",
+                "Alineen sus mentes, sientan el ritmo...\r\ny pulsen las teclas exactas.",
+                "¿Están listos para el examen final?"
+            };
+
+            // 2. Configuramos la velocidad de la máquina de escribir
+            timerEscribir.Interval = 30; // 30 milisegundos por letra (cámbialo si lo quieres más rápido o lento)
+            timerEscribir.Tick += TimerEscribir_Tick;
+
+            // 3. Arrancamos la primera parte
+            EmpezarAEscribir();
+        }
+
+        // Método que resetea el label y empieza a escupir letras
+        private void EmpezarAEscribir()
+        {
+            lblTextoNarrativa.Text = "";
+            indiceCaracter = 0;
+            escribiendo = true;
+            timerEscribir.Start();
+        }
+
+        // El motor que se ejecuta cada 30 milisegundos
+        private void TimerEscribir_Tick(object sender, EventArgs e)
+        {
+            // Si todavía faltan letras en la frase actual...
+            if (indiceCaracter < dialogosJJ[indiceDialogo].Length)
+            {
+                lblTextoNarrativa.Text += dialogosJJ[indiceDialogo][indiceCaracter];
+                indiceCaracter++;
+            }
+            else
+            {
+                // Si ya terminó la frase, apagamos el motor para esperar el clic
+                timerEscribir.Stop();
+                escribiendo = false;
             }
         }
 
@@ -221,25 +296,43 @@ namespace JUEGO_INGENIERIA.Vistas
             for (int i = notasEnPantalla.Count - 1; i >= 0; i--)
             {
                 NotaVisual nota = notasEnPantalla[i];
-                
+
                 // ¿Cuántos milisegundos faltan para que llegue el tiempo exacto de esta nota?
                 long tiempoFaltante = nota.TiempoObjetivo - tiempoActual;
 
                 // Fracción matemática: 1 (recién nace), 0 (está sobre la meta), Negativo (ya pasó la meta)
                 float fraccionRecorrido = (float)tiempoFaltante / tiempoAnticipacion;
-                
+
                 // Ubicación calculada milimétricamente con el audio. Así, si el juego se traba, 
                 // la flecha "se teletransporta" a la posición en la que DEBE estar. NUNCA pierde el ritmo de la canción.
                 nota.Y = posY_Meta - (distanciaTotal * fraccionRecorrido);
 
                 // Si la nota sale del PANEL por abajo, se borra
+                // Si la nota sale del PANEL por abajo, se borra
                 if (nota.Y > pnlPistaBaile.Height)
                 {
                     notasEnPantalla.RemoveAt(i);
-                    // Ya no hay PictureBox que destruir ni remover del panel
 
                     faltas++; // <--- SUMAMOS UNA FALTA
-                    lblFaltas.Text = "Faltas: " + faltas; 
+                    lblFaltas.Text = "Faltas: " + faltas;
+
+                    // --- LÓGICA DE DERROTA (GAME OVER) ---
+                    if (faltas > 5)
+                    {
+                        // 1. Detenemos todos los motores y la música
+                        timerJuego.Stop();
+                        cronometro.Stop();
+                        reproductor.Stop();
+
+                        // 2. Mostramos el mensaje de derrota
+                        MessageBox.Show("¡Te pelaste muchos pasos! Has reprobado el nivel.", "¡GAME OVER!");
+
+                        // 3. Cerramos el nivel (o puedes reiniciarlo si prefieres)
+                        this.Close();
+
+                        // 4. IMPORTANTE: Salimos del método para que no siga calculando nada más
+                        return;
+                    }
                 }
             }
             // Refrescar el panel para que OnPaint dibuje los nuevos cuadros
@@ -308,19 +401,49 @@ namespace JUEGO_INGENIERIA.Vistas
         }
 
         // EL ESCUCHADOR DEL TECLADO
+        // EL ESCUCHADOR DEL TECLADO ACTUALIZADO
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             if (timerJuego.Enabled)
             {
                 int direccionPulsada = 0;
-                if (keyData == Keys.Up) direccionPulsada = 1;
-                else if (keyData == Keys.Right) direccionPulsada = 3;
-                else if (keyData == Keys.Down) direccionPulsada = 2;
-                else if (keyData == Keys.Left) direccionPulsada = 4;
+                PictureBox botonAAnimar = null;
+                Image imagenHundida = null;
+
+                // Identificamos qué flecha se tocó, qué botón animar y con qué imagen
+                if (keyData == Keys.Up)
+                {
+                    direccionPulsada = 1;
+                    botonAAnimar = pbMetaArriba;
+                    imagenHundida = imgBtnPresionadoArriba;
+                }
+                else if (keyData == Keys.Right)
+                {
+                    direccionPulsada = 3;
+                    botonAAnimar = pbMetaDer;
+                    imagenHundida = imgBtnPresionadoDer;
+                }
+                else if (keyData == Keys.Down)
+                {
+                    direccionPulsada = 2;
+                    botonAAnimar = pbMetaAbajo;
+                    imagenHundida = imgBtnPresionadoAbajo;
+                }
+                else if (keyData == Keys.Left)
+                {
+                    direccionPulsada = 4;
+                    botonAAnimar = pbMetaIzq;
+                    imagenHundida = imgBtnPresionadoIzq;
+                }
 
                 if (direccionPulsada != 0)
                 {
+                    // 1. Disparamos la animación visual del botón abajo
+                    AnimarBotonPresionado(botonAAnimar, imagenHundida);
+
+                    // 2. Evaluamos si le diste a una nota que venía cayendo
                     VerificarGolpe(direccionPulsada);
+
                     return true; // Le dice a Windows que no intente mover el foco a otro botón
                 }
             }
@@ -367,15 +490,78 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
+        // TRUCO MODERNO: Animación rápida de botón presionado
+        private async void AnimarBotonPresionado(PictureBox pbBotonMeta, Image imagenPresionada)
+        {
+            if (pbBotonMeta == null || imagenPresionada == null) return;
+
+            // 1. Guardamos la imagen normal (la que está sin presionar)
+            Image imagenNormal = pbBotonMeta.Image;
+
+            // 2. Le ponemos la imagen "hundida" o "iluminada"
+            pbBotonMeta.Image = imagenPresionada;
+
+            // 3. Esperamos 100 milisegundos (puedes bajarlo a 80 o subirlo a 150 a tu gusto)
+            await System.Threading.Tasks.Task.Delay(100);
+
+            // 4. Lo devolvemos a su estado normal
+            pbBotonMeta.Image = imagenNormal;
+        }
+
         // Evento de tu botón de empezar
+        // Este es tu botón "Saltar/Empezar"
         private void btnEmpezar_Click_1(object sender, EventArgs e)
         {
+            IniciarJuegoDesdeIntro();
+        }
+
+        // Lógica maestra para apagar la intro y prender el juego
+        private void IniciarJuegoDesdeIntro()
+        {
+            // 1. Apagamos todo lo de la historia
+            timerEscribir.Stop();
+            pnlNarrativaIntro.Visible = false;
+
+            // 2. Prendemos la pista de baile
+            pnlPistaBaile.Visible = true;
+            lblPuntuacion.Visible = true;
+            lblFaltas.Visible = true;
+            pbJoseJesus.Visible = true;
+
+            // 3. Arrancamos el contador 3, 2, 1...
             conteo = 3;
             lblCuentaRegresiva.Text = conteo.ToString();
+            lblCuentaRegresiva.Font = fuenteJuegoGrande;
             lblCuentaRegresiva.Visible = true;
-            btnEmpezar.Visible = false;
+            btnEmpezar.Visible = false; // Ocultar botón (si lo dejaste afuera)
 
             timerCuenta.Start();
+        }
+
+        private void lblTextoNarrativa_Click(object sender, EventArgs e)
+        {
+            if (escribiendo)
+            {
+                // Si el jugador hace clic MIENTRAS se está escribiendo, autocompletamos la frase de golpe
+                timerEscribir.Stop();
+                lblTextoNarrativa.Text = dialogosJJ[indiceDialogo];
+                escribiendo = false;
+            }
+            else
+            {
+                // Si ya terminó de escribir, pasamos a la siguiente frase
+                indiceDialogo++;
+
+                if (indiceDialogo < dialogosJJ.Length)
+                {
+                    EmpezarAEscribir(); // Arranca la siguiente parte
+                }
+                else
+                {
+                    // Si ya no hay más diálogos, iniciamos el juego automáticamente
+                    IniciarJuegoDesdeIntro();
+                }
+            }
         }
     }
 }
