@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Text;
 using System.IO;
+using WMPLib;
 
 namespace JUEGO_INGENIERIA.Vistas;
 
@@ -29,12 +30,26 @@ public partial class FormDecanato : Form
     // NUEVA variable para que no te atrape infinitamente
     private bool menuAperturaBloqueada = false;
 
+    // --- AUDIO ---
+    private WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+
     public FormDecanato(Jugador jugadorRecibido)
     {
         InitializeComponent();
         AplicarFuente();
 
         this.jugadorActual = jugadorRecibido;
+
+        // --- INICIAR MÚSICA ---
+        try
+        {
+            string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "decanato_musica.mp3");
+            reproductorMusica.URL = rutaAudio;
+            reproductorMusica.settings.setMode("loop", true);
+            reproductorMusica.settings.volume = 20; // Volumen moderado
+            reproductorMusica.controls.play();
+        }
+        catch { }
 
         // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
         if (this.BackgroundImage != null)
@@ -79,7 +94,7 @@ public partial class FormDecanato : Form
                 {
                     // Guardamos una tag mental por si queremos saber si "debería" haber sido visible
                     x.Tag = x.Visible ? x.Tag : "oculto_intencional";
-                    x.Visible = false; 
+                    x.Visible = false;
                 }
             }
         }
@@ -108,6 +123,13 @@ public partial class FormDecanato : Form
                 NavegacionConsola.LimpiarFoco(this);
                 if (motorMovimiento != null) motorMovimiento.EstaPausado = false;
                 timer1.Start();
+            }
+        };
+
+        this.FormClosing += (s, ev) => {
+            if (reproductorMusica != null)
+            {
+                reproductorMusica.controls.stop();
             }
         };
     }
@@ -170,6 +192,7 @@ public partial class FormDecanato : Form
         if (objetoColisionado == pbPuertaSalida)
         {
             motorMovimiento.Stop();
+            if (reproductorMusica != null) reproductorMusica.controls.stop();
             this.Close();
         }
     }
@@ -286,13 +309,17 @@ public partial class FormDecanato : Form
     }
     private void btnOno_Click(object sender, EventArgs e)
     {
+        if (reproductorMusica != null) reproductorMusica.controls.pause(); // Pausar Decanato
         FormOno formOno = new FormOno();
         formOno.ShowDialog();
+        if (reproductorMusica != null) reproductorMusica.controls.play(); // Reanudar Decanato al salir del ONO
     }
     private void btnTrabajo_Click(object sender, EventArgs e)
     {
+        if (reproductorMusica != null) reproductorMusica.controls.pause(); // Pausar Decanato
         FormTrabajo trabajo = new FormTrabajo(jugadorActual);
         trabajo.ShowDialog();
+        if (reproductorMusica != null) reproductorMusica.controls.play(); // Reanudar Decanato al salir del Trabajo
     }
     private void AplicarFuente()
     {

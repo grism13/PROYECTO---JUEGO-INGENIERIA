@@ -309,6 +309,15 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream decanato_musica {
+            get {
+                return ResourceManager.GetStream("decanato_musica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap descargar {
@@ -1931,6 +1940,15 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream ono_musica {
+            get {
+                return ResourceManager.GetStream("ono_musica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream OST_nivel_3 {
             get {
                 return ResourceManager.GetStream("OST nivel 3", resourceCulture);
@@ -2659,6 +2677,15 @@ namespace JUEGO_INGENIERIA.Properties {
             get {
                 object obj = ResourceManager.GetObject("titulo DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream trabajo_musica {
+            get {
+                return ResourceManager.GetStream("trabajo_musica", resourceCulture);
             }
         }
         
