@@ -149,8 +149,8 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 if (p == "gris")
                 {
-                    saltoEscala = 0.80f; // Ajusta si Gris se ve gigante al saltar (ej. 0.80f o 0.90f)
-                    saltoElevar = 11;     // Ajusta si sus pies quedan hundidos o flotando
+                    saltoEscala = 0.78f; // Ajusta si Gris se ve gigante al saltar (ej. 0.80f o 0.90f)
+                    saltoElevar = 10;     // Ajusta si sus pies quedan hundidos o flotando
                 }
                 else if (p == "roand")
                 {
