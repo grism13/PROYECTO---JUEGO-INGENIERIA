@@ -66,9 +66,18 @@ namespace JUEGO_INGENIERIA.Vistas
         private int contadorAnimacionBoss = 0;
         private int velocidadAnimacionBoss = 10; // Ajustado al ritmo original
 
-        // --- AUDIO (MÚSICA DEL NIVEL) ---
-        WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+        // --- AUDIO (MÚSICA DEL NIVEL MULTI-PISTA PARA EVITAR CORTES) ---
+        WindowsMediaPlayer reproductorMusicaF1 = new WindowsMediaPlayer();
+        WindowsMediaPlayer reproductorMusicaF2 = new WindowsMediaPlayer();
+        WindowsMediaPlayer reproductorMusicaF3 = new WindowsMediaPlayer();
         int faseActualMusica = 1;
+        int transicionVolumen = 0; // Temporizador para el Crossfade
+
+        // --- EFECTOS DE SONIDO (DISPARO CUPHEAD) ---
+        WindowsMediaPlayer sfxDisparoStart = new WindowsMediaPlayer();
+        WindowsMediaPlayer sfxDisparoLoop = new WindowsMediaPlayer();
+        WindowsMediaPlayer sfxDisparoEnd = new WindowsMediaPlayer();
+        bool estabaDisparando = false;
 
         // --- ASYNC KEYBOARD INPUT ---
         [DllImport("user32.dll")]
@@ -144,15 +153,47 @@ namespace JUEGO_INGENIERIA.Vistas
             fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
 
-            // --- INICIAR MÚSICA OST NIVEL 3 ---
+            // --- INICIAR MÚSICA Y SFX ---
             try
             {
+                // Música de fondo (Inicializamos los 3 reproductores invisibles al tiempo)
                 string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "OST nivel 3.wav");
-                reproductorMusica.URL = rutaAudio;
-                reproductorMusica.settings.setMode("loop", true);
-                // Velocidad Normal para Fase 1
-                reproductorMusica.settings.rate = 1.0;
-                reproductorMusica.controls.play();
+
+                reproductorMusicaF1.URL = rutaAudio;
+                reproductorMusicaF1.settings.setMode("loop", true);
+                reproductorMusicaF1.settings.rate = 1.0;
+                reproductorMusicaF1.settings.volume = 30; // Solo suena esta al inicio
+                reproductorMusicaF1.controls.play();
+
+                reproductorMusicaF2.URL = rutaAudio;
+                reproductorMusicaF2.settings.setMode("loop", true);
+                reproductorMusicaF2.settings.rate = 1.08;
+                reproductorMusicaF2.settings.volume = 0; // Se carga en silencio total
+                reproductorMusicaF2.controls.play();
+
+                reproductorMusicaF3.URL = rutaAudio;
+                reproductorMusicaF3.settings.setMode("loop", true);
+                reproductorMusicaF3.settings.rate = 1.15;
+                reproductorMusicaF3.settings.volume = 0; // Se carga en silencio total
+                reproductorMusicaF3.controls.play();
+
+                // SFX DISPARO CUPHEAD (Volumen al 15 para acompañar)
+                string rutaStart = Path.Combine(Application.StartupPath, "Resources", "player_plane_weapon_fire_start_01.wav");
+                string rutaLoop = Path.Combine(Application.StartupPath, "Resources", "player_plane_weapon_fire_loop_01.wav");
+                string rutaEnd = Path.Combine(Application.StartupPath, "Resources", "player_plane_weapon_fire_loop_01_end_01.wav");
+
+                sfxDisparoStart.URL = rutaStart;
+                sfxDisparoStart.settings.volume = 15;
+                sfxDisparoStart.controls.stop();
+
+                sfxDisparoLoop.URL = rutaLoop;
+                sfxDisparoLoop.settings.setMode("loop", true);
+                sfxDisparoLoop.settings.volume = 15;
+                sfxDisparoLoop.controls.stop();
+
+                sfxDisparoEnd.URL = rutaEnd;
+                sfxDisparoEnd.settings.volume = 15;
+                sfxDisparoEnd.controls.stop();
             }
             catch { }
 
@@ -198,6 +239,48 @@ namespace JUEGO_INGENIERIA.Vistas
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
             disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+
+            // --- LÓGICA DE TRANSICIÓN DE MÚSICA FLUIDA (DJ CROSSFADE) ---
+            if (transicionVolumen > 0)
+            {
+                transicionVolumen--;
+                if (transicionVolumen == 0)
+                {
+                    if (faseActualMusica == 2)
+                    {
+                        reproductorMusicaF1.settings.volume = 0; // Apagamos la normal
+                        reproductorMusicaF2.settings.volume = 30; // Prendemos la veloz instanteamente
+                    }
+                    else if (faseActualMusica == 3)
+                    {
+                        reproductorMusicaF2.settings.volume = 0; // Apagamos la veloz
+                        reproductorMusicaF3.settings.volume = 30; // Prendemos la ultra-veloz
+                    }
+                }
+            }
+
+
+            // --- LÓGICA DE AUDIO ESTILO CUPHEAD ---
+            if (disparando && !estabaDisparando)
+            {
+                sfxDisparoEnd.controls.stop();
+
+                sfxDisparoStart.controls.stop();
+                sfxDisparoStart.controls.play();
+
+                sfxDisparoLoop.controls.stop();
+                sfxDisparoLoop.controls.play();
+            }
+            else if (!disparando && estabaDisparando)
+            {
+                sfxDisparoStart.controls.stop();
+                sfxDisparoLoop.controls.stop();
+
+                sfxDisparoEnd.controls.stop();
+                sfxDisparoEnd.controls.play();
+            }
+            estabaDisparando = disparando;
+
             bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
 
             if (altPresionado && !modoConcentrado)
@@ -226,7 +309,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (tamañoJugador != targetTamañoJugador)
             {
-                int velocidadAnimacion = 10; // Ajustado
+                int velocidadAnimacion = 10;
                 int nuevoTamaño = targetTamañoJugador < tamañoJugador ? tamañoJugador - velocidadAnimacion : tamañoJugador + velocidadAnimacion;
 
                 if (targetTamañoJugador < tamañoJugador && nuevoTamaño < targetTamañoJugador) nuevoTamaño = targetTamañoJugador;
@@ -255,7 +338,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 nuevaBala.Tag = "bala_jugador";
                 balasJugador.Add(nuevaBala);
 
-                cooldownDisparo = 10; // Ajustado al ritmo original
+                cooldownDisparo = 10;
             }
 
             for (int i = balasJugador.Count - 1; i >= 0; i--)
@@ -334,7 +417,14 @@ namespace JUEGO_INGENIERIA.Vistas
                         if (vidaBoss <= 0)
                         {
                             vidaBoss = 0;
-                            reproductorMusica.controls.stop();
+                            // Ganaste
+                            reproductorMusicaF1.controls.stop();
+                            reproductorMusicaF2.controls.stop();
+                            reproductorMusicaF3.controls.stop();
+                            sfxDisparoStart.controls.stop();
+                            sfxDisparoLoop.controls.stop();
+                            sfxDisparoEnd.controls.stop();
+
                             tmrGameLoop.Stop();
                             pnlEscenario.Invalidate();
                             MessageBox.Show("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!");
@@ -363,20 +453,20 @@ namespace JUEGO_INGENIERIA.Vistas
                         else balaMala.Tag = "bala_boss_perseguidora";
                         balasBoss.Add(balaMala);
 
-                        cooldownAtaqueBoss = 75; // Ajustado al ritmo original
+                        cooldownAtaqueBoss = 75;
                     }
                     else if (vidaBoss <= 1000 && vidaBoss > 500)
                     {
-                        // --- ACELERAR MÚSICA AL ENTRAR A FASE 2 ---
+                        // --- CAMBIO A FASE 2 ---
                         if (faseActualMusica == 1)
                         {
-                            // Apenas más rápida
-                            reproductorMusica.settings.rate = 1.08;
+                            reproductorMusicaF2.controls.currentPosition = reproductorMusicaF1.controls.currentPosition;
+                            transicionVolumen = 15;
                             faseActualMusica = 2;
                         }
 
                         fondoActual = fondoFase2;
-                        velocidadBoss = 7; // Ajustado al ritmo original
+                        velocidadBoss = 7;
 
                         if (probabilidad < 85)
                         {
@@ -401,20 +491,20 @@ namespace JUEGO_INGENIERIA.Vistas
                             balasBoss.Add(balaMala);
                         }
 
-                        cooldownAtaqueBoss = 55; // Ajustado al ritmo original
+                        cooldownAtaqueBoss = 55;
                     }
                     else
                     {
-                        // --- ACELERAR MÚSICA AL ENTRAR A FASE 3 ---
+                        // --- CAMBIO A FASE 3 ---
                         if (faseActualMusica == 2)
                         {
-                            // Un poco más rápida, sin exagerar
-                            reproductorMusica.settings.rate = 1.15;
+                            reproductorMusicaF3.controls.currentPosition = reproductorMusicaF2.controls.currentPosition;
+                            transicionVolumen = 15;
                             faseActualMusica = 3;
                         }
 
                         fondoActual = fondoFase3;
-                        velocidadBoss = 9; // Ajustado al ritmo original
+                        velocidadBoss = 9;
 
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
@@ -426,7 +516,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                         balasBoss.Add(balaMala);
 
-                        cooldownAtaqueBoss = 40; // Ajustado al ritmo original
+                        cooldownAtaqueBoss = 40;
                     }
                 }
             }
@@ -435,7 +525,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
-                balasBoss[i].X -= 9; // Ajustado al ritmo original
+                balasBoss[i].X -= 9;
 
                 if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 3;
                 if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 3;
@@ -593,7 +683,17 @@ namespace JUEGO_INGENIERIA.Vistas
         private void DetenerJuego()
         {
             tmrGameLoop.Stop();
-            reproductorMusica.controls.stop();
+
+            // Apagamos toda la discoteca de las 3 pistas
+            reproductorMusicaF1.controls.stop();
+            reproductorMusicaF2.controls.stop();
+            reproductorMusicaF3.controls.stop();
+
+            // Apagamos los audios de la metralleta
+            sfxDisparoStart.controls.stop();
+            sfxDisparoLoop.controls.stop();
+            sfxDisparoEnd.controls.stop();
+
             pnlEscenario.Invalidate();
         }
 
