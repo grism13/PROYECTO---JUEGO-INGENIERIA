@@ -148,6 +148,10 @@
             pbPuertaNivel2 = new PictureBox();
             pictureBox103 = new PictureBox();
             rector = new PictureBox();
+            pbDireccion1 = new PictureBox();
+            pbDireccion2 = new PictureBox();
+            pbDireccion3 = new PictureBox();
+            pbDireccion4 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -258,6 +262,10 @@
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox103).BeginInit();
             ((System.ComponentModel.ISupportInitialize)rector).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion4).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -1465,6 +1473,42 @@
             rector.TabIndex = 124;
             rector.TabStop = false;
             // 
+            // pbDireccion1
+            // 
+            pbDireccion1.BackColor = Color.Transparent;
+            pbDireccion1.Location = new Point(358, 149);
+            pbDireccion1.Name = "pbDireccion1";
+            pbDireccion1.Size = new Size(19, 10);
+            pbDireccion1.TabIndex = 125;
+            pbDireccion1.TabStop = false;
+            // 
+            // pbDireccion2
+            // 
+            pbDireccion2.BackColor = Color.Transparent;
+            pbDireccion2.Location = new Point(1086, 127);
+            pbDireccion2.Name = "pbDireccion2";
+            pbDireccion2.Size = new Size(19, 10);
+            pbDireccion2.TabIndex = 126;
+            pbDireccion2.TabStop = false;
+            // 
+            // pbDireccion3
+            // 
+            pbDireccion3.BackColor = Color.Transparent;
+            pbDireccion3.Location = new Point(707, 849);
+            pbDireccion3.Name = "pbDireccion3";
+            pbDireccion3.Size = new Size(19, 10);
+            pbDireccion3.TabIndex = 127;
+            pbDireccion3.TabStop = false;
+            // 
+            // pbDireccion4
+            // 
+            pbDireccion4.BackColor = Color.Transparent;
+            pbDireccion4.Location = new Point(949, 385);
+            pbDireccion4.Name = "pbDireccion4";
+            pbDireccion4.Size = new Size(19, 10);
+            pbDireccion4.TabIndex = 128;
+            pbDireccion4.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1473,6 +1517,10 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1445, 908);
+            Controls.Add(pbDireccion4);
+            Controls.Add(pbDireccion3);
+            Controls.Add(pbDireccion2);
+            Controls.Add(pbDireccion1);
             Controls.Add(rector);
             Controls.Add(pictureBox103);
             Controls.Add(pbPuertaNivel2);
@@ -1705,6 +1753,10 @@
             ((System.ComponentModel.ISupportInitialize)pbPuertaNivel2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox103).EndInit();
             ((System.ComponentModel.ISupportInitialize)rector).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbDireccion4).EndInit();
             ResumeLayout(false);
         }
 
@@ -1828,5 +1880,9 @@
         private PictureBox pbPuertaNivel2;
         private PictureBox pictureBox103;
         private PictureBox rector;
+        private PictureBox pbDireccion1;
+        private PictureBox pbDireccion2;
+        private PictureBox pbDireccion3;
+        private PictureBox pbDireccion4;
     }
 }
