@@ -7,6 +7,6 @@ namespace JUEGO_INGENIERIA.Vistas
 {
     public static class DatosJuego
     {
-        public static string PersonajeElegido = "Eliezer"; // Por defecto, por si acaso
+        public static string PersonajeElegido = "Gris"; // Por defecto, por si acaso
     }
 }

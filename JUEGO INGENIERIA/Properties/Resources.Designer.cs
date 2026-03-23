@@ -329,6 +329,15 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream decanato_musica {
+            get {
+                return ResourceManager.GetStream("decanato_musica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap descargar {
@@ -1126,6 +1135,26 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap gacielita {
             get {
                 object obj = ResourceManager.GetObject("gacielita", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap geyzer1 {
+            get {
+                object obj = ResourceManager.GetObject("geyzer1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap geyzer2 {
+            get {
+                object obj = ResourceManager.GetObject("geyzer2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1961,6 +1990,15 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream ono_musica {
+            get {
+                return ResourceManager.GetStream("ono_musica", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream OST_nivel_3 {
             get {
                 return ResourceManager.GetStream("OST nivel 3", resourceCulture);
@@ -2127,11 +2165,118 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_loop_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_loop_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_loop_01_end_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_loop_01_end_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_plane_weapon_fire_start_01 {
+            get {
+                return ResourceManager.GetStream("player_plane_weapon_fire_start_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap primera_imagen_de_la_intro {
             get {
                 object obj = ResourceManager.GetObject("primera imagen de la intro", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_atras1 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-atras1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_atras2 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-atras2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_centro1 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-centro1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_centro2 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-centro2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_derecha1 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-derecha1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_derecha2 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-derecha2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_izquierda1 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-izquierda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rector_caminando_izquierda2 {
+            get {
+                object obj = ResourceManager.GetObject("rector-caminando-izquierda2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -2602,6 +2747,15 @@ namespace JUEGO_INGENIERIA.Properties {
             get {
                 object obj = ResourceManager.GetObject("titulo DEL JUEGO", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream trabajo_musica {
+            get {
+                return ResourceManager.GetStream("trabajo_musica", resourceCulture);
             }
         }
         

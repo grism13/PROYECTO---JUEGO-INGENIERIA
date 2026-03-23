@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -26,6 +26,22 @@ namespace JUEGO_INGENIERIA.Vistas
         int force = 0;
         int gravity = 2;
         int groundY;
+
+        // === ANIMACIONES DEL JUGADOR CACHEADA ===
+        Image[] framesSaltoDer = new Image[5];
+        Image[] framesSaltoIzq = new Image[5];
+        Image[] framesCaminarDer = new Image[4]; // Ciclo de caminata de 4 pasos
+        Image[] framesCaminarIzq = new Image[4];
+        Image frameIdleDer;
+        Image frameIdleIzq;
+        Image frameDisparoMedioDer;
+        Image frameDisparoMedioIzq;
+        Image frameActualSprite;
+        int frameSaltoActual = 0;
+        int frameCaminarActual = 0;
+        int contadorAnimacionJugador = 0;
+        int velocidadAnimacionJugador = 2; // Ajustable para dar el efecto de salto
+        int velocidadCaminarJugador = 4; // Velocidad del ciclo de caminata
 
         // === DASH ===
         bool isDashing = false;
@@ -106,23 +122,192 @@ namespace JUEGO_INGENIERIA.Vistas
             // LA ZANAHORIA AHORA ES COLOSAL (500 de pura altura) Y EMPIEZA MÁS ARRIBA
             bossZanahoria = new Rectangle(centroPantallaX + 25, groundY - 450, 150, 500);
 
+            CargarSpritesJugador(); // Cargar animaciones
+
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
             tmrGameLoop.Start();
         }
 
-        private Bitmap OptimizarImagen(Image img, int width, int height)
+        private void CargarSpritesJugador()
+        {
+            try
+            {
+                // Obtenemos el nombre del personaje de DatosJuego (eliezer, roand o gris)
+                string p = "gris"; // Por defecto
+                if (!string.IsNullOrEmpty(DatosJuego.PersonajeElegido))
+                {
+                    p = DatosJuego.PersonajeElegido.ToLower();
+                }
+
+                int w = 60; // Ancho del personaje (player.Width)
+                int h = 80; // Alto del personaje (player.Height)
+
+                // === VARIABLES DE CALIBRACIÓN DEL SALTO POR PERSONAJE ===
+                float saltoEscala = 1.0f;
+                int saltoElevar = 0;
+
+                if (p == "gris")
+                {
+                    saltoEscala = 0.78f; // Ajusta si Gris se ve gigante al saltar (ej. 0.80f o 0.90f)
+                    saltoElevar = 10;     // Ajusta si sus pies quedan hundidos o flotando
+                }
+                else if (p == "roand")
+                {
+                    saltoEscala = 1.0f;
+                    saltoElevar = 0;
+                }
+                else if (p == "eliezer")
+                {
+                    saltoEscala = 1.0f;
+                    saltoElevar = 0;
+                }
+                // ===========================================
+
+                // Cargar fotogramas de salto
+                for (int i = 0; i < 5; i++)
+                {
+                    object objSalto = Properties.Resources.ResourceManager.GetObject($"{p}-saltando{i + 1}");
+                    if (objSalto == null) objSalto = Properties.Resources.ResourceManager.GetObject($"{p}_saltando{i + 1}");
+                    if (objSalto == null) objSalto = Properties.Resources.ResourceManager.GetObject($"gris-saltando{i + 1}");
+                    
+                    // Optimizar y cachear para lado Derecho
+                    framesSaltoDer[i] = OptimizarImagen((Image)objSalto, h, saltoEscala, saltoElevar, 0, 0);
+                    
+                    // Crear clon, voltearlo y cachear para lado Izquierdo
+                    Image imgIzq = (Image)framesSaltoDer[i].Clone();
+                    imgIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                    framesSaltoIzq[i] = imgIzq;
+                }
+
+                // Cargar fotogramas de caminar (son 3, hacemos ciclo de 4: 1->2->3->2)
+                for (int i = 0; i < 3; i++)
+                {
+                    object objCamina = Properties.Resources.ResourceManager.GetObject($"{p}_ladoderecho{i + 1}");
+                    if (objCamina == null) objCamina = Properties.Resources.ResourceManager.GetObject($"gris_ladoderecho{i + 1}");
+                    
+                    Image optimizadaDer = OptimizarImagen((Image)objCamina, h);
+                    Image optimizadaIzq = (Image)optimizadaDer.Clone();
+                    optimizadaIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
+
+                    if (i == 0) // ladoderecho1
+                    {
+                        framesCaminarDer[0] = optimizadaDer;
+                        framesCaminarIzq[0] = optimizadaIzq;
+                    }
+                    else if (i == 1) // ladoderecho2
+                    {
+                        framesCaminarDer[1] = optimizadaDer;
+                        framesCaminarIzq[1] = optimizadaIzq;
+                        framesCaminarDer[3] = optimizadaDer; // Para el ciclo 1-2-3-2
+                        framesCaminarIzq[3] = optimizadaIzq;
+                    }
+                    else if (i == 2) // ladoderecho3
+                    {
+                        framesCaminarDer[2] = optimizadaDer;
+                        framesCaminarIzq[2] = optimizadaIzq;
+                    }
+                }
+
+                // Cargar frame estático/idle
+                object objIdle = Properties.Resources.ResourceManager.GetObject($"{p}_ladoderecho1");
+                if (objIdle == null) objIdle = Properties.Resources.ResourceManager.GetObject("gris_ladoderecho1");
+                
+                frameIdleDer = OptimizarImagen((Image)objIdle, h);
+                
+                Image idleIzq = (Image)frameIdleDer.Clone();
+                idleIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                frameIdleIzq = idleIzq;
+
+                // Cargar frame de disparo medio
+                object objDisparoMedio = Properties.Resources.ResourceManager.GetObject($"{p}-disparo-medio-derecha");
+                if (objDisparoMedio == null) objDisparoMedio = Properties.Resources.ResourceManager.GetObject($"{p}_disparo_medio_derecha");
+                if (objDisparoMedio == null) objDisparoMedio = Properties.Resources.ResourceManager.GetObject("gris-disparo-medio-derecha");
+                if (objDisparoMedio == null) objDisparoMedio = Properties.Resources.ResourceManager.GetObject("gris_disparo_medio_derecha");
+
+                if (objDisparoMedio != null)
+                {
+                    // === VARIABLES DE CALIBRACIÓN DEL DISPARO POR PERSONAJE ===
+                    float disparoEscala = 1.0f;
+                    int disparoElevar = 0;
+                    int disparoIzq = 0;
+                    int disparoDer = 0;
+
+                    if (p == "eliezer")
+                    {
+                        disparoEscala = 0.84f;
+                        disparoElevar = 7;
+                        disparoIzq = 7;
+                        disparoDer = 0;
+                    }
+                    else if (p == "roand")
+                    {
+                        // Modifica estos valores para calibrar a roand
+                        disparoEscala = 0.90f;
+                        disparoElevar = 4;
+                        disparoIzq = 15;
+                        disparoDer = 0;
+                    }
+                    else // "gris" o cualquier otro
+                    {
+                        // Modifica estos valores para calibrar a gris
+                        disparoEscala = 0.75f;
+                        disparoElevar = 11;
+                        disparoIzq = 13;
+                        disparoDer = 0;
+                    }
+                    // ===========================================
+
+                    frameDisparoMedioDer = OptimizarImagen((Image)objDisparoMedio, h, disparoEscala, disparoElevar, disparoIzq, disparoDer);
+                    Image disparoIzqImg = (Image)frameDisparoMedioDer.Clone();
+                    disparoIzqImg.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                    frameDisparoMedioIzq = disparoIzqImg;
+                }
+                else
+                {
+                    // Fallback para evitar crashear si borraste la imagen en Properties
+                    frameDisparoMedioDer = frameIdleDer;
+                    frameDisparoMedioIzq = frameIdleIzq;
+                }
+
+                frameActualSprite = frameIdleDer;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando sprites: " + ex.Message);
+            }
+        }
+
+        private Bitmap OptimizarImagen(Image img, int targetHeight, float contentScale = 1.0f, int paddingBottom = 0, int paddingLeft = 0, int paddingRight = 0)
         {
             if (img == null) return null;
-            Bitmap bmp = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            
+            float ratio = (float)img.Width / img.Height;
+            
+            // Tamaño real del dibujo dentro de la tela
+            int contentHeight = (int)(targetHeight * contentScale);
+            int contentWidth = (int)(contentHeight * ratio);
+
+            // La tela final siempre es del targetHeight (80) 
+            // Su anchura crecerá si agregamos padding para obligar a que el "centro" cambie
+            int canvasHeight = targetHeight;
+            int canvasWidth = contentWidth + paddingLeft + paddingRight;
+
+            Bitmap bmp = new Bitmap(canvasWidth, canvasHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
                 g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-                g.DrawImage(img, 0, 0, width, height);
+                
+                // Alineado abajo (suelo) menos el espacio vacío inferior que imita a los otros sprites
+                // El X inicia después del paddingLeft definido
+                int paintY = canvasHeight - contentHeight - paddingBottom;
+                int paintX = paddingLeft;
+                
+                g.DrawImage(img, paintX, paintY, contentWidth, contentHeight);
             }
             return bmp;
         }
@@ -136,6 +321,8 @@ namespace JUEGO_INGENIERIA.Vistas
             bool keyJump = (GetAsyncKeyState(Keys.Z) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
             bool keyShoot = (GetAsyncKeyState(Keys.X) & 0x8000) != 0;
             bool keyDash = (GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0;
+
+            bool isMovingLeftOrRight = false; // Nos dirá si el jugador se está moviendo lateralmente
 
             if (dashCooldown > 0) dashCooldown--;
             if (cooldownDisparo > 0) cooldownDisparo--;
@@ -158,11 +345,12 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 if (player.X < 0) player.X = 0;
                 if (player.X > pnlEscenario.Width - player.Width) player.X = pnlEscenario.Width - player.Width;
+                isMovingLeftOrRight = true;
             }
             else
             {
-                if (goLeft && player.X > 0) { player.X -= playerSpeed; facingDirection = -1; }
-                if (goRight && player.X < pnlEscenario.Width - player.Width) { player.X += playerSpeed; facingDirection = 1; }
+                if (goLeft && player.X > 0) { player.X -= playerSpeed; facingDirection = -1; isMovingLeftOrRight = true; }
+                if (goRight && player.X < pnlEscenario.Width - player.Width) { player.X += playerSpeed; facingDirection = 1; isMovingLeftOrRight = true; }
             }
 
             if (keyJump && !isJumping && player.Y + player.Height >= groundY)
@@ -170,8 +358,69 @@ namespace JUEGO_INGENIERIA.Vistas
                 isJumping = true; force = 22;
             }
 
-            if (isJumping) { jumpSpeed = -force; force -= 1; }
-            else { jumpSpeed = gravity * 4; }
+            if (isJumping) 
+            { 
+                jumpSpeed = -force; force -= 1; 
+
+                // --- LÓGICA DE ANIMACIÓN DE SALTO BASADA EN FÍSICAS ---
+                if (force > 15) // Fase de Impulso (al inicio del salto)
+                {
+                    frameSaltoActual = 0;
+                }
+                else if (jumpSpeed < -4) // Fase de Subida
+                {
+                    frameSaltoActual = 1;
+                }
+                else if (jumpSpeed >= -4 && jumpSpeed <= 6) // Fase de Vuelo (en el tope)
+                {
+                    frameSaltoActual = 2;
+                }
+                else // Fase de Caída
+                {
+                    // Si estamos a punto de tocar el piso, mostramos el aterrizaje
+                    if (player.Y + player.Height >= groundY - 40)
+                    {
+                        frameSaltoActual = 4; // Abajo completamente / aterrizando
+                    }
+                    else
+                    {
+                        frameSaltoActual = 3; // Cayendo
+                    }
+                }
+                // Asignar el fotograma cacheado dependiendo de la dirección
+                frameActualSprite = (facingDirection == 1) ? framesSaltoDer[frameSaltoActual] : framesSaltoIzq[frameSaltoActual];
+            }
+            else 
+            { 
+                jumpSpeed = gravity * 4; 
+                
+                // --- LÓGICA DE ANIMACIÓN DE CAMINAR ---
+                if (isMovingLeftOrRight)
+                {
+                    contadorAnimacionJugador++;
+                    if (contadorAnimacionJugador >= velocidadCaminarJugador)
+                    {
+                        contadorAnimacionJugador = 0;
+                        frameCaminarActual++;
+                        if (frameCaminarActual >= 4) frameCaminarActual = 0;
+                    }
+                    frameActualSprite = (facingDirection == 1) ? framesCaminarDer[frameCaminarActual] : framesCaminarIzq[frameCaminarActual];
+                }
+                else
+                {
+                    // Asignar idle cacheado dependiendo de la dirección
+                    frameCaminarActual = 0;
+                    contadorAnimacionJugador = 0;
+                    frameActualSprite = (facingDirection == 1) ? frameIdleDer : frameIdleIzq;
+                }
+            }
+
+            // --- OVERRIDE DE ANIMACIÓN DE DISPARO ---
+            // Si el jugador acaba de disparar (los primeros 12 ticks del cooldown), mostramos el sprite de disparo
+            if (cooldownDisparo > 8)
+            {
+                frameActualSprite = (facingDirection == 1) ? frameDisparoMedioDer : frameDisparoMedioIzq;
+            }
 
             player.Y += jumpSpeed;
             if (player.Y + player.Height >= groundY) { player.Y = groundY - player.Height; isJumping = false; }
@@ -515,11 +764,36 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
-            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0) { }
+            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0) 
+            { 
+                // Parpadeo: no dibujar
+            }
             else
             {
-                Brush colorJugador = isDashing ? Brushes.Cyan : Brushes.Blue;
-                e.Graphics.FillRectangle(colorJugador, player);
+                if (frameActualSprite != null)
+                {
+                    // Centramos la imagen de forma dinámica basada en su anchura real (proporción conservada)
+                    int drawX = player.X + (player.Width / 2) - (frameActualSprite.Width / 2);
+                    int drawY = player.Y + player.Height - frameActualSprite.Height;
+
+                    if (isDashing) // Efecto visual simple extra para el dash
+                    {
+                        // Dibujar rápido desde caché sin escalado
+                        e.Graphics.DrawImageUnscaled(frameActualSprite, drawX, drawY);
+                        // Estela azul claro para el dash
+                        e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Cyan)), player);
+                    }
+                    else
+                    {
+                        e.Graphics.DrawImageUnscaled(frameActualSprite, drawX, drawY);
+                    }
+                }
+                else
+                {
+                    // Fallback a cuadro si no cargó el sprite
+                    Brush colorJugador = isDashing ? Brushes.Cyan : Brushes.Blue;
+                    e.Graphics.FillRectangle(colorJugador, player);
+                }
             }
 
             foreach (BalaTesis bala in balasJugador)

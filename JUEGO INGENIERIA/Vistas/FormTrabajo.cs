@@ -6,6 +6,7 @@ using System.IO;
 using System.Text.Json;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -27,6 +28,9 @@ namespace JUEGO_INGENIERIA.Vistas
         private Dictionary<Control, Image> cacheImagenes = new Dictionary<Control, Image>();
         private List<Control> objetosZOrder = new List<Control>();
 
+        // --- AUDIO ---
+        private WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+
         // Recibimos al jugador en el constructor igual que en FormNivel1
         public FormTrabajo(Jugador jugadorRecibido)
         {
@@ -42,6 +46,17 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // Guardamos los datos del jugador
             this.jugadorActual = jugadorRecibido;
+
+            // --- INICIAR MÚSICA ---
+            try
+            {
+                string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "trabajo_musica.mp3");
+                reproductorMusica.URL = rutaAudio;
+                reproductorMusica.settings.setMode("loop", true);
+                reproductorMusica.settings.volume = 20; // Volumen moderado
+                reproductorMusica.controls.play();
+            }
+            catch { }
 
             // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
             if (this.BackgroundImage != null)
@@ -113,6 +128,7 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 timer1.Stop();
                 movimientoJugador.Stop();
+                if (reproductorMusica != null) reproductorMusica.controls.stop();
 
                 // --- LÓGICA DE GANANCIAS ---
                 int dineroGanado = documentosEntregados * 10;
@@ -175,6 +191,11 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 e.Cancel = true;
                 MessageBox.Show("¡No puedes abandonar tu puesto hasta que termine el turno!", "¡A trabajar!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (!e.Cancel && reproductorMusica != null)
+            {
+                reproductorMusica.controls.stop();
             }
         }
 
@@ -263,6 +284,7 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 timer1.Stop();
                 movimientoJugador.Stop();
+                if (reproductorMusica != null) reproductorMusica.controls.stop();
 
                 // --- LÓGICA DE GANANCIAS ---
                 int dineroGanado = documentosEntregados * 10;
@@ -276,6 +298,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 this.Close();
             }
         }
+
         private void AplicarFuente()
         {
             try

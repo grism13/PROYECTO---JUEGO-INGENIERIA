@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormOno : Form
     {
         private Random generadorAleatorio = new Random();
+
+        // --- AUDIO ---
+        private WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
 
         // --- VARIABLES PARA LA ANIMACIÓN ---
         private Dictionary<PictureBox, Point> posicionesOriginales = new Dictionary<PictureBox, Point>();
@@ -31,6 +35,24 @@ namespace JUEGO_INGENIERIA.Vistas
             InitializeComponent();
             AplicarFuente();
             this.DoubleBuffered = true;
+
+            // --- INICIAR MÚSICA ---
+            try
+            {
+                string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "ono_musica.mp3");
+                reproductorMusica.URL = rutaAudio;
+                reproductorMusica.settings.setMode("loop", true);
+                reproductorMusica.settings.volume = 20; // Volumen moderado
+                reproductorMusica.controls.play();
+            }
+            catch { }
+
+            this.FormClosing += (s, ev) => {
+                if (reproductorMusica != null)
+                {
+                    reproductorMusica.controls.stop();
+                }
+            };
 
             // Configurar la navegación 2D para las cartas, las flechas y la X de salir
             NavegacionConsola.Configurar(this, pictureBox1, pictureBox2, pictureBox3, pictureBox4, pictureBox5, pictureBox6, pbFlechaIzq, pbFlechaDer, pictureBox9);
@@ -264,7 +286,8 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void pictureBox9_Click(object sender, EventArgs e)
         {
-            this.Close();    
+            if (reproductorMusica != null) reproductorMusica.controls.stop();
+            this.Close();
         }
     }
 }
