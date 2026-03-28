@@ -27,6 +27,11 @@ public partial class FormDecanato : Form
     private Image imgFlavioTranquilo;
     private Image imgFlavioActual;
 
+    private Image imgCesar1;
+    private Image imgCesar2;
+    private Image imgCesar3;
+    private Image imgCesarActual;
+
     // NUEVA variable para que no te atrape infinitamente
     private bool menuAperturaBloqueada = false;
 
@@ -81,8 +86,14 @@ public partial class FormDecanato : Form
         imgFlavioHablando3 = Properties.Resources.flavioHablando3;
         imgFlavioTranquilo = Properties.Resources.flavioTranquilo;
         imgFlavioActual = imgFlavioHablando2;
+        
+        imgCesar1 = Properties.Resources.cesar1;
+        imgCesar2 = Properties.Resources.cesar2;
+        imgCesar3 = Properties.Resources.cesar3;
+        imgCesarActual = imgCesar1;
 
         pictureBox1.Visible = false;
+        pictureBox16.Visible = false;
         timer1.Start();
 
         if (pbPersonaje == null)
@@ -99,7 +110,7 @@ public partial class FormDecanato : Form
         // ESCONDER NATIVAMENTE LAS DECORACIONES PARA CORTAR EL "INVALIDATE COSTOSO"
         foreach (Control control in this.Controls)
         {
-            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox2 && x != pictureBox3 && x != pictureBox4)
+            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox2 && x != pictureBox3 && x != pictureBox4 && x != pictureBox16)
             {
                 if (x.Name.StartsWith("pictureBox"))
                 {
@@ -156,6 +167,10 @@ public partial class FormDecanato : Form
         {
             e.Graphics.DrawImage(imgFlavioActual, pictureBox1.Bounds);
         }
+        if (imgCesarActual != null)
+        {
+            e.Graphics.DrawImage(imgCesarActual, pictureBox16.Bounds);
+        }
 
         // Dividido en Frente y Fondo para Z-Index, como en Form1 puro
         List<PictureBox> capaFondo = new List<PictureBox>();
@@ -163,7 +178,7 @@ public partial class FormDecanato : Form
 
         foreach (Control control in this.Controls)
         {
-            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra)
+            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox16)
             {
                 // Solo renderizamos si NO tiene la tag que indica que estaba oculto a propósito antes en el designer
                 if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && (string)x.Tag != "oculto_intencional")
@@ -218,12 +233,25 @@ public partial class FormDecanato : Form
         }
         switch (pasoAnimacion)
         {
-            case 0: imgFlavioActual = imgFlavioHablando1; break;
-            case 1: imgFlavioActual = imgFlavioHablando2; break;
-            case 2: imgFlavioActual = imgFlavioHablando3; break;
-            case 3: imgFlavioActual = imgFlavioTranquilo; break;
+            case 0: 
+                imgFlavioActual = imgFlavioHablando1; 
+                imgCesarActual = imgCesar1;
+                break;
+            case 1: 
+                imgFlavioActual = imgFlavioHablando2; 
+                imgCesarActual = imgCesar2;
+                break;
+            case 2: 
+                imgFlavioActual = imgFlavioHablando3; 
+                imgCesarActual = imgCesar3;
+                break;
+            case 3: 
+                imgFlavioActual = imgFlavioTranquilo; 
+                imgCesarActual = imgCesar2;
+                break;
         }
         Invalidate(pictureBox1.Bounds);
+        Invalidate(pictureBox16.Bounds);
     }
 
     private void tmrRevisarZonas_Tick(object sender, EventArgs e)

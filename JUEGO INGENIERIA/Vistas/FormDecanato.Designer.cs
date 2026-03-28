@@ -90,7 +90,7 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.flavioHablando2;
-            pictureBox1.Location = new Point(839, 257);
+            pictureBox1.Location = new Point(829, 230);
             pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(158, 253);
@@ -434,10 +434,10 @@
             // 
             pictureBox16.BackColor = Color.Transparent;
             pictureBox16.Image = Properties.Resources.cesar1;
-            pictureBox16.Location = new Point(265, 549);
+            pictureBox16.Location = new Point(177, 463);
             pictureBox16.Margin = new Padding(3, 4, 3, 4);
             pictureBox16.Name = "pictureBox16";
-            pictureBox16.Size = new Size(111, 206);
+            pictureBox16.Size = new Size(198, 292);
             pictureBox16.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox16.TabIndex = 24;
             pictureBox16.TabStop = false;
