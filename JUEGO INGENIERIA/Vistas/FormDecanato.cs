@@ -44,13 +44,24 @@ public partial class FormDecanato : Form
         try
         {
             string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "decanato_musica.mp3");
+
+            // Trampa: Revisamos si el archivo existe realmente en esa ruta
+            if (!System.IO.File.Exists(rutaAudio))
+            {
+                MessageBox.Show("¡Alerta! Steam no encuentra el archivo en esta ruta:\n" + rutaAudio);
+                return; // Cortamos aquí para que no intente reproducir la nada
+            }
+
+            // Si pasa la trampa, el archivo sí existe. Intentamos reproducir.
             reproductorMusica.URL = rutaAudio;
             reproductorMusica.settings.setMode("loop", true);
-            reproductorMusica.settings.volume = 20; // Volumen moderado
+            reproductorMusica.settings.volume = 20;
             reproductorMusica.controls.play();
         }
-        catch { }
-
+        catch (Exception ex)
+        {
+            MessageBox.Show("El archivo existe, pero WMPLib falló: " + ex.Message);
+        }
         // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
         if (this.BackgroundImage != null)
         {
