@@ -107,20 +107,6 @@ public partial class FormDecanato : Form
             this.Controls.Add(pbPersonaje);
         }
 
-        // ESCONDER NATIVAMENTE LAS DECORACIONES PARA CORTAR EL "INVALIDATE COSTOSO"
-        foreach (Control control in this.Controls)
-        {
-            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox2 && x != pictureBox3 && x != pictureBox4 && x != pictureBox16)
-            {
-                if (x.Name.StartsWith("pictureBox"))
-                {
-                    // Guardamos una tag mental por si queremos saber si "debería" haber sido visible
-                    x.Tag = x.Visible ? x.Tag : "oculto_intencional";
-                    x.Visible = false;
-                }
-            }
-        }
-
         DoubleBuffered = true;
         motorMovimiento = new FormMovimiento(this, pbPersonaje);
         motorMovimiento.ColisionConObjeto += MotorMovimiento_ColisionConObjeto;
@@ -172,44 +158,10 @@ public partial class FormDecanato : Form
             e.Graphics.DrawImage(imgCesarActual, pictureBox16.Bounds);
         }
 
-        // Dividido en Frente y Fondo para Z-Index, como en Form1 puro
-        List<PictureBox> capaFondo = new List<PictureBox>();
-        List<PictureBox> capaFrente = new List<PictureBox>();
-
-        foreach (Control control in this.Controls)
-        {
-            if (control is PictureBox x && x != pictureBox1 && x != pbPersonaje && x != pbPizarra && x != pictureBox16)
-            {
-                // Solo renderizamos si NO tiene la tag que indica que estaba oculto a propósito antes en el designer
-                if ((string)x.Tag != "muro" && x.Name.StartsWith("pictureBox") && (string)x.Tag != "oculto_intencional")
-                {
-                    if (x.Image != null)
-                    {
-                        if (x.Bottom <= pbPersonaje.Bottom)
-                            capaFondo.Add(x);
-                        else
-                            capaFrente.Add(x);
-                    }
-                }
-            }
-        }
-
-        // Dibujar lo que va atrás
-        foreach (var pFondo in capaFondo)
-        {
-            e.Graphics.DrawImage(pFondo.Image, pFondo.Left, pFondo.Top, pFondo.Width, pFondo.Height);
-        }
-
         // Dibujar personaje
         if (motorMovimiento != null)
         {
             motorMovimiento.DibujarPersonaje(e.Graphics);
-        }
-
-        // Dibujar cosas frente
-        foreach (var pFrente in capaFrente)
-        {
-            e.Graphics.DrawImage(pFrente.Image, pFrente.Left, pFrente.Top, pFrente.Width, pFrente.Height);
         }
     }
 
