@@ -32,6 +32,27 @@ namespace JUEGO_INGENIERIA
         private Image geyzer1;
         private Image geyzer2;
 
+        // Variables para los postes
+        private System.Windows.Forms.Timer timerPostes;
+        private int estadoPostes = 0;
+
+        // Variables para pibMantenimiento
+        private System.Windows.Forms.Timer timerMantenimiento;
+        private int mantenimientoDestino = 1;
+        private Queue<Point> mantenimientoWaypoints = new Queue<Point>();
+        private int mantenimientoSpeed = 2; // Misma velocidad del Rector
+        private List<Image> mAnimAbajo = new List<Image>();
+        private List<Image> mAnimArriba = new List<Image>();
+        private List<Image> mAnimIzquierda = new List<Image>();
+        private List<Image> mAnimDerecha = new List<Image>();
+        private List<Image> mUltimaAnimacion;
+        private int mFrameActual = 0;
+        private int mContadorLentitud = 0;
+        private int mPausaMantenimiento = 0;
+
+        // Lista cacheada para optimizar OnPaint
+        private List<PictureBox> objetosADibujarCache = new List<PictureBox>();
+
         // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
         private int nivelSeleccionado = 0;
 
@@ -106,6 +127,35 @@ namespace JUEGO_INGENIERIA
             timerGeyzer.Tick += TimerGeyzer_Tick;
             timerGeyzer.Start();
 
+            // Inicializar timer para animación de los postes
+            timerPostes = new System.Windows.Forms.Timer();
+            timerPostes.Interval = 40000; // 40 segundos
+            timerPostes.Tick += TimerPostes_Tick;
+            timerPostes.Start();
+
+            // Inicializar animaciones de mantenimiento (Paso 1)
+            mAnimAbajo.Add(Properties.Resources.mantenimiento_frente1);
+            mAnimAbajo.Add(Properties.Resources.mantenimiento_frente2);
+            mAnimArriba.Add(Properties.Resources.mantenimiento_espalda1);
+            mAnimArriba.Add(Properties.Resources.mantenimiento_espalda2); 
+            mAnimIzquierda.Add(Properties.Resources.mantenimiento_izquierda1);
+            mAnimIzquierda.Add(Properties.Resources.mantenimiento_izquierda2);
+            mAnimDerecha.Add(Properties.Resources.mantenimiento_derecha1);
+            mAnimDerecha.Add(Properties.Resources.mantenimiento_derecha2);
+
+            // Utilizamos el pibMantenimiento del Designer. Lo forzamos a nacer en el Poste 1
+            mUltimaAnimacion = mAnimAbajo;
+            pibMantenimiento.Visible = false; // Sera dibujado invisiblemente en el OnPaint (Z-Sort)
+            pibMantenimiento.Location = new Point(190, 330);
+
+            // Inicializamos destino actual en el Poste 1
+            mantenimientoDestino = 1;
+
+            timerMantenimiento = new System.Windows.Forms.Timer();
+            timerMantenimiento.Interval = 30;
+            timerMantenimiento.Tick += TimerMantenimiento_Tick;
+            timerMantenimiento.Start();
+
             // Ocultamos el panel universal por defecto
             pnlConfirmacionNivel1.Visible = false;
 
@@ -120,10 +170,23 @@ namespace JUEGO_INGENIERIA
             {
                 if (control is PictureBox x && x != pbPersonaje)
                 {
-                    if ((x.Name.StartsWith("pictureBox") || x.Name == "rector") && x.BackColor == Color.Transparent)
+                    // Excluimos geyzer (manual). Obligamos al rector y demás a ocultarse para Z-Sort.
+                    if (x.Name != "geyzer" && x.BackColor == Color.Transparent && x.Image != null)
                     {
-                        // En lugar de matarlos, apagamos su dibujado nativo
                         x.Visible = false;
+                    }
+                }
+            }
+
+            // Pre-cargamos la lista de objetos para evitar lag en cada OnPaint
+            foreach (Control control in this.Controls)
+            {
+                if (control is PictureBox x && x != pbPersonaje)
+                {
+                    // Excluimos geyzer. Todo lo demás (incluido el rector) entra al Z-Sort OnPaint.
+                    if ((string)x.Tag != "muro" && x.Name != "geyzer" && x.Image != null)
+                    {
+                        objetosADibujarCache.Add(x);
                     }
                 }
             }
@@ -140,18 +203,8 @@ namespace JUEGO_INGENIERIA
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-            // 1. Recolectamos todos los PictureBoxes (Árboles, etc) que antes eran visibles
-            List<PictureBox> objetosADibujar = new List<PictureBox>();
-            foreach (Control control in this.Controls)
-            {
-                if (control is PictureBox x && x != pbPersonaje)
-                {
-                    if ((string)x.Tag != "muro" && (x.Name.StartsWith("pictureBox") || x.Name == "rector") && x.Image != null)
-                    {
-                        objetosADibujar.Add(x);
-                    }
-                }
-            }
+            // 1. Usamos la lista cacheada en lugar de iterar por todos los controles de nuevo
+            List<PictureBox> objetosADibujar = objetosADibujarCache;
 
             // 2. Separamos y ordenamos para el efecto 3D: Los que están "detrás" del jugador se dibujan antes.
             // Los que están "delante" del jugador se dibujan después de él para taparlo.
@@ -183,7 +236,8 @@ namespace JUEGO_INGENIERIA
             // 2. Dibujamos Nivel de Fondo (Detrás del Jugador)
             foreach (var fondo in capaFondo)
             {
-                e.Graphics.DrawImage(fondo.Image, fondo.Left, fondo.Top, fondo.Width, fondo.Height);
+                if (fondo.Image != null)
+                    e.Graphics.DrawImage(fondo.Image, fondo.Left, fondo.Top, fondo.Width, fondo.Height);
             }
 
             // 3. Dibujamos al Personaje en el medio
@@ -195,7 +249,8 @@ namespace JUEGO_INGENIERIA
             // 4. Dibujamos Nivel de Frente (Delante del Jugador)
             foreach (var frente in capaFrente)
             {
-                e.Graphics.DrawImage(frente.Image, frente.Left, frente.Top, frente.Width, frente.Height);
+                if (frente.Image != null)
+                    e.Graphics.DrawImage(frente.Image, frente.Left, frente.Top, frente.Width, frente.Height);
             }
 
             // 5. Dibujamos el Geyzer si está delante de todo (tapa al jugador y a los objetos)
@@ -333,6 +388,9 @@ namespace JUEGO_INGENIERIA
                 return;
             }
 
+            int oldX = rector.Left;
+            int oldY = rector.Top;
+
             // Moverse estrictamente UN EJE A LA VEZ (Elimina el zigzag)
             if (Math.Abs(dx) > 0)
             {
@@ -345,10 +403,11 @@ namespace JUEGO_INGENIERIA
                 rectorDirection = dy > 0 ? "centro" : "atras"; // centro es hacia abajo
             }
 
-            // Repintar el área anterior y nueva
-            Rectangle moveArea = rector.Bounds;
-            moveArea.Inflate(rectorSpeed * 4, rectorSpeed * 4);
-            this.Invalidate(moveArea);
+            // Repintar limpia y exactamente las áreas afectada por el rector (sin inflar tanto)
+            Rectangle oldArea = new Rectangle(oldX, oldY, rector.Width, rector.Height);
+            Rectangle newArea = rector.Bounds;
+            this.Invalidate(oldArea);
+            this.Invalidate(newArea);
         }
 
         private void TimerRectorAnimacion_Tick(object sender, EventArgs e)
@@ -394,6 +453,204 @@ namespace JUEGO_INGENIERIA
                     // Si están lejos, solo redibujamos la zona de Geyzer (ahorra recursos)
                     this.Invalidate(areaGeyzer);
                 }
+            }
+        }
+
+        private void TimerMantenimiento_Tick(object sender, EventArgs e)
+        {
+            if (pibMantenimiento == null) return;
+
+            if (mPausaMantenimiento > 0)
+            {
+                mPausaMantenimiento--;
+                if (mPausaMantenimiento > 0) return; // Sigue esperando en el sitio
+                
+                // Ya pasaron 5 segundos, reanudar y recalcular la ruta.
+                mPausaMantenimiento = -1; // -1 significa que acaba de terminar la pausa y puede moverse libremente
+            }
+            else if (mantenimientoWaypoints.Count > 0)
+            {
+                // Solo animar marcos normales si está moviéndose y no estaba en pausa
+                mContadorLentitud++;
+                if (mContadorLentitud > 6)
+                {
+                    mFrameActual++;
+                    if (mFrameActual >= mUltimaAnimacion.Count) mFrameActual = 0;
+                    pibMantenimiento.Image = mUltimaAnimacion[mFrameActual];
+                    mContadorLentitud = 0;
+                    this.Invalidate(pibMantenimiento.Bounds);
+                }
+            }
+
+            if (mantenimientoWaypoints.Count == 0)
+            {
+                // Acabamos de llegar a un destino o estamos iniciando el juego.
+                // Si mPausaMantenimiento es 0, significa que acabamos de aterrizar y AÚN no hemos pausado.
+                if (mPausaMantenimiento == 0) 
+                {
+                    mPausaMantenimiento = 166; // 5 segundos (166 * 30ms)
+                    
+                    // Forzar frame estático (simulando reparación u observación)
+                    if (mantenimientoDestino == 1 || mantenimientoDestino == 2) {
+                        pibMantenimiento.Image = Properties.Resources.mantenimiento_izquierda2;
+                    } else if (mantenimientoDestino == 3) {
+                        pibMantenimiento.Image = Properties.Resources.mantenimiento_derecha2;
+                    }
+                    this.Invalidate(pibMantenimiento.Bounds);
+                    return; // Salimos sin asignar nuevo destino. El loop de pausa en la cima se encargará de esperar.
+                }
+                
+                // Si llegamos aquí, mPausaMantenimiento es -1 (acaba de terminar la pausa)
+                // Reseteamos a 0 para que en su próxima llegada vuelva a activarse la pausa
+                mPausaMantenimiento = 0;
+                
+                int origen = mantenimientoDestino;
+                Random rnd = new Random();
+                int nextDest = rnd.Next(1, 4);
+                while(nextDest == origen) nextDest = rnd.Next(1, 4);
+                mantenimientoDestino = nextDest;
+
+                // --- LECTURA DINÁMICA DE TUS CAJAS VERDES (pb1, pb2, pb3) ---
+                Control[] c1 = this.Controls.Find("pb1", true);
+                Control[] c2 = this.Controls.Find("pb2", true);
+                Control[] c3 = this.Controls.Find("pb3", true);
+
+                // Desplazamiento para que LOS PIES (parte inferior central) caigan exactamente sobre tu cajita verde, 
+                // en vez de usar la cabeza (esquina superior izquierda) y aparentar ir hacia abajo.
+                int mWidth = pibMantenimiento.Width;
+                int mHeight = pibMantenimiento.Height;
+
+                Point P1_Pole = c1.Length > 0 ? new Point(c1[0].Left + (c1[0].Width/2) - (mWidth/2), c1[0].Bottom - mHeight) : new Point(200, 320);
+                Point P2_Pole = c2.Length > 0 ? new Point(c2[0].Left + (c2[0].Width/2) - (mWidth/2), c2[0].Bottom - mHeight) : new Point(200, 90);
+                Point P3_Pole = c3.Length > 0 ? new Point(c3[0].Left + (c3[0].Width/2) - (mWidth/2), c3[0].Bottom - mHeight) : new Point(1090, 230);
+
+                // --- LA ESPINA DORSAL CON ESCALÓN PARA ESQUIVAR PLANTAS DERECHAS ---
+                int EJE_X_IZQ = P2_Pole.X; // Bajada recta natural desde pb2 hacia abajo
+                int EJE_Y_MAIN_IZQ = 300;  // Recta horizontal izquierda (debajo del jugador principal)
+                
+                int EJE_X_SUBIDA = 600;    // Punto donde el camino sube formando un escalón
+                int EJE_Y_MAIN_DER = 270;  // Recta horizontal derecha (más arriba para no pisar plantas de la esquina derecha)
+                
+                int EJE_X_DER = 900;       // La subida recta hacia pb3 por la derecha
+                // ------------------------------------------------------------
+
+                Point CruceIzq = new Point(EJE_X_IZQ, EJE_Y_MAIN_IZQ);
+                Point CruceMid_Abajo = new Point(EJE_X_SUBIDA, EJE_Y_MAIN_IZQ);
+                Point CruceMid_Arriba = new Point(EJE_X_SUBIDA, EJE_Y_MAIN_DER);
+                Point CruceDer = new Point(EJE_X_DER, EJE_Y_MAIN_DER);
+
+                // 1. ESCAPAR DEL ORIGEN a la calle primaria correspondiente
+                if (origen == 1) {
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_IZQ, P1_Pole.Y)); // Horizontal desde pb1 al eje izquierdo
+                    mantenimientoWaypoints.Enqueue(CruceIzq); 
+                } else if (origen == 2) {
+                    mantenimientoWaypoints.Enqueue(CruceIzq); 
+                } else if (origen == 3) {
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_DER, P3_Pole.Y)); // Horizontal desde pb3 al eje derecho
+                    mantenimientoWaypoints.Enqueue(CruceDer); 
+                }
+
+                // 2. CONEXIÓN (Atravesando el escalón intermedio hacia arriba o hacia abajo)
+                if ((origen == 1 || origen == 2) && mantenimientoDestino == 3) {
+                    mantenimientoWaypoints.Enqueue(CruceMid_Abajo);
+                    mantenimientoWaypoints.Enqueue(CruceMid_Arriba);
+                    mantenimientoWaypoints.Enqueue(CruceDer);
+                } else if (origen == 3 && (mantenimientoDestino == 1 || mantenimientoDestino == 2)) {
+                    mantenimientoWaypoints.Enqueue(CruceMid_Arriba);
+                    mantenimientoWaypoints.Enqueue(CruceMid_Abajo);
+                    mantenimientoWaypoints.Enqueue(CruceIzq);
+                }
+
+                // 3. ATERRIZAJE DIRECTO EN EL DESTINO DESDE SU EJE
+                if (mantenimientoDestino == 1) {
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_IZQ, P1_Pole.Y));
+                    mantenimientoWaypoints.Enqueue(P1_Pole);
+                } else if (mantenimientoDestino == 2) {
+                    mantenimientoWaypoints.Enqueue(P2_Pole); 
+                } else if (mantenimientoDestino == 3) {
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_DER, P3_Pole.Y));
+                    mantenimientoWaypoints.Enqueue(P3_Pole);
+                }
+                return;
+            }
+
+            Point objetivo = mantenimientoWaypoints.Peek();
+            int oldX = pibMantenimiento.Left;
+            int oldY = pibMantenimiento.Top;
+            
+            int dx = objetivo.X - oldX;
+            int dy = objetivo.Y - oldY;
+
+            if (Math.Abs(dx) <= mantenimientoSpeed && Math.Abs(dy) <= mantenimientoSpeed)
+            {
+                pibMantenimiento.Location = objetivo;
+                mantenimientoWaypoints.Dequeue();
+            }
+            else
+            {
+                // Mover primero en X o primero en Y dependiendo de la ruta:
+                // Para cruces, como es un camino, nos movemos puramente en una direccion a la vez hacia el waypoint.
+                if (Math.Abs(dx) > 0)
+                {
+                    int step = Math.Min(mantenimientoSpeed, Math.Abs(dx));
+                    pibMantenimiento.Left += Math.Sign(dx) * step;
+                    if (mUltimaAnimacion != (dx > 0 ? mAnimDerecha : mAnimIzquierda))
+                    {
+                        mUltimaAnimacion = dx > 0 ? mAnimDerecha : mAnimIzquierda;
+                        mFrameActual = 0;
+                    }
+                }
+                else if (Math.Abs(dy) > 0)
+                {
+                    int step = Math.Min(mantenimientoSpeed, Math.Abs(dy));
+                    pibMantenimiento.Top += Math.Sign(dy) * step;
+                    if (mUltimaAnimacion != (dy > 0 ? mAnimAbajo : mAnimArriba))
+                    {
+                        mUltimaAnimacion = dy > 0 ? mAnimAbajo : mAnimArriba;
+                        mFrameActual = 0;
+                    }
+                }
+            }
+            
+            Rectangle oldArea = new Rectangle(oldX, oldY, pibMantenimiento.Width, pibMantenimiento.Height);
+            Rectangle newArea = pibMantenimiento.Bounds;
+            this.Invalidate(oldArea);
+            this.Invalidate(newArea);
+        }
+
+        private void TimerPostes_Tick(object sender, EventArgs e)
+        {
+            estadoPostes++;
+
+            if (estadoPostes == 1)
+            {
+                Control[] postes = this.Controls.Find("pbPoste1", true);
+                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                {
+                    pb.Image = Properties.Resources.poste_luz_malo;
+                    this.Invalidate(pb.Bounds);
+                }
+            }
+            else if (estadoPostes == 2)
+            {
+                Control[] postes = this.Controls.Find("pbPoste3", true);
+                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                {
+                    pb.Image = Properties.Resources.poste_luz_malo2;
+                    this.Invalidate(pb.Bounds);
+                }
+            }
+            else if (estadoPostes == 3)
+            {
+                Control[] postes = this.Controls.Find("pbPoste2", true);
+                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                {
+                    pb.Image = Properties.Resources.poste_luz_malo;
+                    this.Invalidate(pb.Bounds);
+                }
+                
+                // Si la secuencia termina aquí, detenemos el timer.
+                timerPostes.Stop();
             }
         }
 
@@ -517,6 +774,11 @@ namespace JUEGO_INGENIERIA
             {
                 timerGeyzer.Stop();
                 timerGeyzer.Dispose();
+            }
+            if (timerPostes != null)
+            {
+                timerPostes.Stop();
+                timerPostes.Dispose();
             }
             if (musicaFondo != null)
             {

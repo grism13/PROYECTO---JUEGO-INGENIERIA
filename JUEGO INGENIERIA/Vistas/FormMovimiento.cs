@@ -24,6 +24,10 @@ namespace JUEGO_INGENIERIA.Vistas
         int frameActual = 0;
         int contadorLentitud = 0;
         List<Image> ultimaAnimacion = null;
+        
+        private List<PictureBox> listaMuros = new List<PictureBox>();
+        private List<PictureBox> listaObjetos = new List<PictureBox>();
+
         public event EventHandler<Control> ColisionConObjeto;
         public bool EstaPausado { get; set; } = false;
         public bool esNivelEspacial = false;
@@ -41,6 +45,18 @@ namespace JUEGO_INGENIERIA.Vistas
             tmrMovimiento.Tick += TmrMovimiento_Tick;
             frm.KeyDown += Frm_KeyDown;
             frm.KeyUp += Frm_KeyUp;
+
+            // Cache de controles para optimizar el lag en el Tick
+            foreach (Control ctrl in frm.Controls)
+            {
+                if (ctrl is PictureBox pb && pb != pbPersonaje)
+                {
+                    if ((string)pb.Tag == "muro")
+                        listaMuros.Add(pb);
+                    else
+                        listaObjetos.Add(pb);
+                }
+            }
         }
         public void Start()
         {
@@ -219,22 +235,19 @@ namespace JUEGO_INGENIERIA.Vistas
             {
                 if (pbPersonaje.Left + pbPersonaje.Width < limiteAncho) { pbPersonaje.Left += vNormal; Animar(animDerecha); seMueve = true; }
             }
-            foreach (Control x in frm.Controls)
+            foreach (PictureBox muro in listaMuros)
             {
-                if (x is PictureBox && (string)x.Tag == "muro")
+                if (pbPersonaje.Bounds.IntersectsWith(muro.Bounds))
                 {
-                    if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
-                    {
-                        pbPersonaje.Left = xAnterior;
-                        pbPersonaje.Top = yAnterior;
-                    }
+                    pbPersonaje.Left = xAnterior;
+                    pbPersonaje.Top = yAnterior;
                 }
-                else if (x is PictureBox && (string)x.Tag != "muro")
+            }
+            foreach (PictureBox obj in listaObjetos)
+            {
+                if (pbPersonaje.Bounds.IntersectsWith(obj.Bounds))
                 {
-                    if (pbPersonaje.Bounds.IntersectsWith(x.Bounds))
-                    {
-                        ColisionConObjeto?.Invoke(this, x);
-                    }
+                    ColisionConObjeto?.Invoke(this, obj);
                 }
             }
             if (seMueve == false)
@@ -255,7 +268,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 Rectangle areaAnterior = new Rectangle(xAnterior, yAnterior, pbPersonaje.Width, pbPersonaje.Height);
                 Rectangle areaNueva = new Rectangle(pbPersonaje.Left, pbPersonaje.Top, pbPersonaje.Width, pbPersonaje.Height);
                 
-                // Optimizacion: Evitar sobre-invalidar areas enteras innecesariamente si no hubo movimiento real
                 if (seMueve)
                 {
                     frm.Invalidate(areaAnterior);
@@ -274,6 +286,7 @@ namespace JUEGO_INGENIERIA.Vistas
             if (animacionNueva.Count > 0)
             {
                 contadorLentitud++;
+                // Hacemos que la transición de piernas coincida con los 5 pixeles de velocidad que avanza en cada frame.
                 if (contadorLentitud > 3)
                 {
                     frameActual++;

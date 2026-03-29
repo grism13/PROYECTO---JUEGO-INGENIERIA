@@ -1811,19 +1811,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap manteniemiento_centro_escalera2 {
+        internal static System.Drawing.Bitmap mantenimiento_centro_escalera2 {
             get {
-                object obj = ResourceManager.GetObject("manteniemiento-centro-escalera2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap manteniemiento_espalda2 {
-            get {
-                object obj = ResourceManager.GetObject("manteniemiento-espalda2", resourceCulture);
+                object obj = ResourceManager.GetObject("mantenimiento-centro-escalera2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1934,6 +1924,16 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap mantenimiento_espalda1 {
             get {
                 object obj = ResourceManager.GetObject("mantenimiento-espalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_espalda2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-espalda2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
