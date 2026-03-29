@@ -2474,6 +2474,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap poste_luz {
+            get {
+                object obj = ResourceManager.GetObject("poste-luz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap poste_luz_malo {
+            get {
+                object obj = ResourceManager.GetObject("poste-luz-malo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap primera_imagen_de_la_intro {
             get {
                 object obj = ResourceManager.GetObject("primera imagen de la intro", resourceCulture);
