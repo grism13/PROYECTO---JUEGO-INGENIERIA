@@ -53,9 +53,11 @@ namespace JUEGO_INGENIERIA
         private List<Image> mAnimEscaleraArriba = new List<Image>();
         private List<Image> mAnimEscaleraIzquierda = new List<Image>();
         private List<Image> mAnimEscaleraDerecha = new List<Image>();
+        private List<Image> mAnimArreglandoPoste = new List<Image>();
         
         private List<Image> mUltimaAnimacion;
         private int mFrameActual = 0;
+        private int mPausaFrameArreglando = 0;
         private int mContadorLentitud = 0;
         private int mPausaMantenimiento = 0;
 
@@ -161,6 +163,33 @@ namespace JUEGO_INGENIERIA
             mAnimEscaleraIzquierda.Add(Properties.Resources.mantenimiento_izquierda_escalera2);
             mAnimEscaleraDerecha.Add(Properties.Resources.mantenimiento_derecha_escalera1);
             mAnimEscaleraDerecha.Add(Properties.Resources.mantenimiento_derecha_escalera2);
+
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera1);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera2);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera3);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera4);
+
+            // Subida de la escalera
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera1);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera2);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera3);
+
+            // Mantenimiento en la cima de la escalera por 5 segundos exactos (24 iteraciones del Timer)
+            for (int i = 0; i < 24; i++)
+            {
+                mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera4);
+            }
+
+            // Bajada de la escalera (en reversa)
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera3);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera2);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_subir_escalera1);
+
+            // Guardar escalera (en reversa)
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera4);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera3);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera2);
+            mAnimArreglandoPoste.Add(Properties.Resources.mantenimiento_colocar_escalera1);
 
             // Utilizamos el pibMantenimiento del Designer. Lo forzamos a nacer en el Poste 1
             mUltimaAnimacion = mAnimAbajo;
@@ -482,6 +511,21 @@ namespace JUEGO_INGENIERIA
             if (mPausaMantenimiento > 0)
             {
                 mPausaMantenimiento--;
+                
+                // Animar colocar_escalera si está arreglando (estado 2)
+                if (estadoMantenimiento == 2)
+                {
+                    mContadorLentitud++;
+                    if (mContadorLentitud > 6)
+                    {
+                        mPausaFrameArreglando++;
+                        if (mPausaFrameArreglando >= mAnimArreglandoPoste.Count) mPausaFrameArreglando = 0;
+                        pibMantenimiento.Image = mAnimArreglandoPoste[mPausaFrameArreglando];
+                        mContadorLentitud = 0;
+                        this.Invalidate(pibMantenimiento.Bounds);
+                    }
+                }
+
                 if (mPausaMantenimiento > 0) return; // Sigue esperando en el sitio
                 
                 // Ya pasaron 5 segundos, reanudar y recalcular la ruta.
@@ -533,8 +577,8 @@ namespace JUEGO_INGENIERIA
                     }
                     else if (estadoMantenimiento == 1)
                     {
-                        // ESTADO 1: Llegó al punto SUR del mapa. Esperar 10s buscando la escalera.
-                        mPausaMantenimiento = 332; 
+                        // ESTADO 1: Llegó al punto SUR del mapa. Esperar 5s buscando la escalera.
+                        mPausaMantenimiento = 166; 
                         pibMantenimiento.Image = Properties.Resources.mantenimiento_frente2;
                         this.Invalidate(pibMantenimiento.Bounds);
                         return;
@@ -542,9 +586,11 @@ namespace JUEGO_INGENIERIA
                     else if (estadoMantenimiento == 2)
                     {
                         // ESTADO 2: Llegó de vuelta al poste con la escalera.
-                        mPausaMantenimiento = 332; // 10s reparando
-                        if (posteAReparar == 1 || posteAReparar == 2) pibMantenimiento.Image = Properties.Resources.mantenimiento_izquierda_escalera2;
-                        else pibMantenimiento.Image = Properties.Resources.mantenimiento_derecha_escalera2;
+                        mPausaMantenimiento = 266; // Tiempo exacto: 38 frames a mostrar (Desplegar, estar arriba 5s y bajar) 
+                        mPausaFrameArreglando = 0; // Iniciar loop desde cero
+                        
+                        // Forzamos directamente poner el primer frame donde empieza a sacar la escalera
+                        pibMantenimiento.Image = mAnimArreglandoPoste[0];
                         this.Invalidate(pibMantenimiento.Bounds);
                         return;
                     }
@@ -575,7 +621,7 @@ namespace JUEGO_INGENIERIA
                     }
                     else
                     {
-                        // Terminó 10s en el Sur. Sube al poste.
+                        // Terminó 5s en el Sur. Sube al poste.
                         estadoMantenimiento = 2;
                         mantenimientoDestino = posteAReparar;
                     }
@@ -752,7 +798,7 @@ namespace JUEGO_INGENIERIA
                     this.Invalidate(pb.Bounds);
                 }
             }
-            else if (estadoPostes == 3)
+            else if (estadoPostes >= 3)
             {
                 Control[] postes = this.Controls.Find("pbPoste2", true);
                 if (postes.Length > 0 && postes[0] is PictureBox pb)
@@ -762,8 +808,8 @@ namespace JUEGO_INGENIERIA
                     this.Invalidate(pb.Bounds);
                 }
                 
-                // Si la secuencia termina aquí, detenemos el timer.
-                timerPostes.Stop();
+                // Reiniciamos el ciclo para que los postes se sigan rompiendo eternamente
+                estadoPostes = 0;
             }
         }
 
