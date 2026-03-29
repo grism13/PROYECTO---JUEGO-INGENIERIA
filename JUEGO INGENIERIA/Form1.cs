@@ -45,6 +45,15 @@ namespace JUEGO_INGENIERIA
         private List<Image> mAnimArriba = new List<Image>();
         private List<Image> mAnimIzquierda = new List<Image>();
         private List<Image> mAnimDerecha = new List<Image>();
+        
+        // Variables de Lógica de Escalera y Reparación
+        private int estadoMantenimiento = 0; // 0: Patrulla normal, 1: Buscando Escalera en la U, 2: Volviendo con escalera, 3: Regresando a la facultad con la escalera reparada (o simplemente vuelve a la normalidad)
+        private int posteAReparar = 0;       // Guarda el Poste (1, 2, 3) que detonó la alarma
+        private List<Image> mAnimEscaleraAbajo = new List<Image>();
+        private List<Image> mAnimEscaleraArriba = new List<Image>();
+        private List<Image> mAnimEscaleraIzquierda = new List<Image>();
+        private List<Image> mAnimEscaleraDerecha = new List<Image>();
+        
         private List<Image> mUltimaAnimacion;
         private int mFrameActual = 0;
         private int mContadorLentitud = 0;
@@ -142,6 +151,16 @@ namespace JUEGO_INGENIERIA
             mAnimIzquierda.Add(Properties.Resources.mantenimiento_izquierda2);
             mAnimDerecha.Add(Properties.Resources.mantenimiento_derecha1);
             mAnimDerecha.Add(Properties.Resources.mantenimiento_derecha2);
+
+            // Animaciones de mantenimiento con escalera
+            mAnimEscaleraAbajo.Add(Properties.Resources.manteniemiento_centro_escalera1);
+            mAnimEscaleraAbajo.Add(Properties.Resources.mantenimiento_centro_escalera2);
+            mAnimEscaleraArriba.Add(Properties.Resources.mantenimiento_espalda_escalera1);
+            mAnimEscaleraArriba.Add(Properties.Resources.mantenimiento_espalda_escalera2);
+            mAnimEscaleraIzquierda.Add(Properties.Resources.mantenimiento_izquierda_escalera1);
+            mAnimEscaleraIzquierda.Add(Properties.Resources.mantenimiento_izquierda_escalera2);
+            mAnimEscaleraDerecha.Add(Properties.Resources.mantenimiento_derecha_escalera1);
+            mAnimEscaleraDerecha.Add(Properties.Resources.mantenimiento_derecha_escalera2);
 
             // Utilizamos el pibMantenimiento del Designer. Lo forzamos a nacer en el Poste 1
             mUltimaAnimacion = mAnimAbajo;
@@ -484,39 +503,107 @@ namespace JUEGO_INGENIERIA
 
             if (mantenimientoWaypoints.Count == 0)
             {
-                // Acabamos de llegar a un destino o estamos iniciando el juego.
-                // Si mPausaMantenimiento es 0, significa que acabamos de aterrizar y AÚN no hemos pausado.
                 if (mPausaMantenimiento == 0) 
                 {
-                    mPausaMantenimiento = 166; // 5 segundos (166 * 30ms)
-                    
-                    // Forzar frame estático (simulando reparación u observación)
-                    if (mantenimientoDestino == 1 || mantenimientoDestino == 2) {
-                        pibMantenimiento.Image = Properties.Resources.mantenimiento_izquierda2;
-                    } else if (mantenimientoDestino == 3) {
-                        pibMantenimiento.Image = Properties.Resources.mantenimiento_derecha2;
+                    // --- LLEGAMOS AL DESTINO ---
+                    if (estadoMantenimiento == 0)
+                    {
+                        // ESTADO 0: Llegamos a un poste durante patrulla.
+                        bool posteRoto = false;
+                        if (mantenimientoDestino == 1) { Control[] p = this.Controls.Find("pbPoste1", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
+                        else if (mantenimientoDestino == 2) { Control[] p = this.Controls.Find("pbPoste2", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
+                        else if (mantenimientoDestino == 3) { Control[] p = this.Controls.Find("pbPoste3", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
+                        
+                        if (posteRoto)
+                        {
+                            // Al detectar poste roto, cambiamos Inmediatamente a Buscar Escalera
+                            estadoMantenimiento = 1; 
+                            posteAReparar = mantenimientoDestino;
+                            mPausaMantenimiento = -1; // Sin pausa, sigue de largo en el tick
+                        }
+                        else
+                        {
+                            // Poste SANO. Pausa 5s normal.
+                            mPausaMantenimiento = 166; 
+                            if (mantenimientoDestino == 1 || mantenimientoDestino == 2) pibMantenimiento.Image = Properties.Resources.mantenimiento_izquierda2;
+                            else if (mantenimientoDestino == 3) pibMantenimiento.Image = Properties.Resources.mantenimiento_derecha2;
+                            this.Invalidate(pibMantenimiento.Bounds);
+                            return;
+                        }
                     }
-                    this.Invalidate(pibMantenimiento.Bounds);
-                    return; // Salimos sin asignar nuevo destino. El loop de pausa en la cima se encargará de esperar.
+                    else if (estadoMantenimiento == 1)
+                    {
+                        // ESTADO 1: Llegó al punto SUR del mapa. Esperar 10s buscando la escalera.
+                        mPausaMantenimiento = 332; 
+                        pibMantenimiento.Image = Properties.Resources.mantenimiento_frente2;
+                        this.Invalidate(pibMantenimiento.Bounds);
+                        return;
+                    }
+                    else if (estadoMantenimiento == 2)
+                    {
+                        // ESTADO 2: Llegó de vuelta al poste con la escalera.
+                        mPausaMantenimiento = 332; // 10s reparando
+                        if (posteAReparar == 1 || posteAReparar == 2) pibMantenimiento.Image = Properties.Resources.mantenimiento_izquierda_escalera2;
+                        else pibMantenimiento.Image = Properties.Resources.mantenimiento_derecha_escalera2;
+                        this.Invalidate(pibMantenimiento.Bounds);
+                        return;
+                    }
                 }
                 
-                // Si llegamos aquí, mPausaMantenimiento es -1 (acaba de terminar la pausa)
-                // Reseteamos a 0 para que en su próxima llegada vuelva a activarse la pausa
+                // --- FIN DE PAUSA (mPausa = -1) ---
                 mPausaMantenimiento = 0;
-                
                 int origen = mantenimientoDestino;
-                Random rnd = new Random();
-                int nextDest = rnd.Next(1, 4);
-                while(nextDest == origen) nextDest = rnd.Next(1, 4);
-                mantenimientoDestino = nextDest;
+                
+                if (estadoMantenimiento == 0)
+                {
+                    // Patrulla normal: ir a otro poste al azar
+                    Random rnd = new Random();
+                    int nextDest = rnd.Next(1, 4);
+                    while(nextDest == origen && origen != 0) nextDest = rnd.Next(1, 4);
+                    mantenimientoDestino = nextDest;
+                }
+                else if (estadoMantenimiento == 1)
+                {
+                    // ¿Acaba de convertirse en 1 por detectar el poste roto? Entonces va al SUR (destino 4).
+                    // ¿O acaba de terminar de esperar en el SUR y tiene que volver al poste?
+                    // Mmmm, si `origen` es un POSTE, significa que ACABA de encontrarlo roto. Va al sur.
+                    // Si `origen` es 4 (SUR), significa que terminó de esperar en el sur. Va a reparar.
+                    if (origen != 4)
+                    {
+                        // Acaba de encontrarlo. Va al Sur.
+                        mantenimientoDestino = 4;
+                    }
+                    else
+                    {
+                        // Terminó 10s en el Sur. Sube al poste.
+                        estadoMantenimiento = 2;
+                        mantenimientoDestino = posteAReparar;
+                    }
+                }
+                else if (estadoMantenimiento == 2)
+                {
+                    // Terminó de reparar el poste. Vuelve a patrulla normal
+                    estadoMantenimiento = 0; 
+                    
+                    // Restaurar visualmente el poste a "bueno" y limpiar Tag
+                    PictureBox pbRoto = null;
+                    if (posteAReparar == 1) { Control[] p = this.Controls.Find("pbPoste1", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
+                    else if (posteAReparar == 2) { Control[] p = this.Controls.Find("pbPoste2", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
+                    else if (posteAReparar == 3) { Control[] p = this.Controls.Find("pbPoste3", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz2; pbRoto.Tag = ""; } }
+                    if (pbRoto != null) this.Invalidate(pbRoto.Bounds);
+                    
+                    // Elegimos otro poste.
+                    Random rnd = new Random();
+                    int nextDest = rnd.Next(1, 4);
+                    while(nextDest == posteAReparar) nextDest = rnd.Next(1, 4);
+                    mantenimientoDestino = nextDest;
+                }
 
-                // --- LECTURA DINÁMICA DE TUS CAJAS VERDES (pb1, pb2, pb3) ---
+                // --- GENERACION DE RUTA ---
                 Control[] c1 = this.Controls.Find("pb1", true);
                 Control[] c2 = this.Controls.Find("pb2", true);
                 Control[] c3 = this.Controls.Find("pb3", true);
-
-                // Desplazamiento para que LOS PIES (parte inferior central) caigan exactamente sobre tu cajita verde, 
-                // en vez de usar la cabeza (esquina superior izquierda) y aparentar ir hacia abajo.
+                // Ya no usamos pbDireccion3, usamos el punto rojo en la zona sur inferior central
                 int mWidth = pibMantenimiento.Width;
                 int mHeight = pibMantenimiento.Height;
 
@@ -524,41 +611,53 @@ namespace JUEGO_INGENIERIA
                 Point P2_Pole = c2.Length > 0 ? new Point(c2[0].Left + (c2[0].Width/2) - (mWidth/2), c2[0].Bottom - mHeight) : new Point(200, 90);
                 Point P3_Pole = c3.Length > 0 ? new Point(c3[0].Left + (c3[0].Width/2) - (mWidth/2), c3[0].Bottom - mHeight) : new Point(1090, 230);
 
-                // --- LA ESPINA DORSAL CON ESCALÓN PARA ESQUIVAR PLANTAS DERECHAS ---
-                int EJE_X_IZQ = P2_Pole.X; // Bajada recta natural desde pb2 hacia abajo
-                int EJE_Y_MAIN_IZQ = 300;  // Recta horizontal izquierda (debajo del jugador principal)
-                
-                int EJE_X_SUBIDA = 600;    // Punto donde el camino sube formando un escalón
-                int EJE_Y_MAIN_DER = 270;  // Recta horizontal derecha (más arriba para no pisar plantas de la esquina derecha)
-                
-                int EJE_X_DER = 900;       // La subida recta hacia pb3 por la derecha
-                // ------------------------------------------------------------
+                int EJE_X_IZQ = P2_Pole.X; 
+                int EJE_Y_MAIN_IZQ = 300;  
+                int EJE_X_SUBIDA = 600;    
+                int EJE_Y_MAIN_DER = 270;  
+                int EJE_X_DER = 900;       
+
+                // El destino es el sur desde el eje de subida (Hacia el punto rojo de tu imagen)
+                Point P_UNIV = new Point(EJE_X_SUBIDA, 850); 
+                int EJE_X_UNIV = P_UNIV.X;
 
                 Point CruceIzq = new Point(EJE_X_IZQ, EJE_Y_MAIN_IZQ);
                 Point CruceMid_Abajo = new Point(EJE_X_SUBIDA, EJE_Y_MAIN_IZQ);
                 Point CruceMid_Arriba = new Point(EJE_X_SUBIDA, EJE_Y_MAIN_DER);
                 Point CruceDer = new Point(EJE_X_DER, EJE_Y_MAIN_DER);
+                Point CruceUniv = new Point(EJE_X_UNIV, EJE_Y_MAIN_IZQ);
 
                 // 1. ESCAPAR DEL ORIGEN a la calle primaria correspondiente
                 if (origen == 1) {
-                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_IZQ, P1_Pole.Y)); // Horizontal desde pb1 al eje izquierdo
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_IZQ, P1_Pole.Y));
                     mantenimientoWaypoints.Enqueue(CruceIzq); 
                 } else if (origen == 2) {
                     mantenimientoWaypoints.Enqueue(CruceIzq); 
                 } else if (origen == 3) {
-                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_DER, P3_Pole.Y)); // Horizontal desde pb3 al eje derecho
+                    mantenimientoWaypoints.Enqueue(new Point(EJE_X_DER, P3_Pole.Y));
                     mantenimientoWaypoints.Enqueue(CruceDer); 
+                } else if (origen == 4) {
+                    mantenimientoWaypoints.Enqueue(CruceUniv);
                 }
 
-                // 2. CONEXIÓN (Atravesando el escalón intermedio hacia arriba o hacia abajo)
-                if ((origen == 1 || origen == 2) && mantenimientoDestino == 3) {
+                // 2. CONEXIÓN
+                if (origen == 3 && (mantenimientoDestino == 1 || mantenimientoDestino == 2 || mantenimientoDestino == 4)) {
+                    mantenimientoWaypoints.Enqueue(CruceMid_Arriba);
+                    mantenimientoWaypoints.Enqueue(CruceMid_Abajo);
+                }
+                if (mantenimientoDestino == 3 && (origen == 1 || origen == 2 || origen == 4)) {
                     mantenimientoWaypoints.Enqueue(CruceMid_Abajo);
                     mantenimientoWaypoints.Enqueue(CruceMid_Arriba);
                     mantenimientoWaypoints.Enqueue(CruceDer);
-                } else if (origen == 3 && (mantenimientoDestino == 1 || mantenimientoDestino == 2)) {
-                    mantenimientoWaypoints.Enqueue(CruceMid_Arriba);
-                    mantenimientoWaypoints.Enqueue(CruceMid_Abajo);
+                }
+                if (mantenimientoDestino == 1 && (origen == 3 || origen == 4)) {
                     mantenimientoWaypoints.Enqueue(CruceIzq);
+                }
+                if (mantenimientoDestino == 2 && (origen == 3 || origen == 4)) {
+                    mantenimientoWaypoints.Enqueue(CruceIzq);
+                }
+                if (mantenimientoDestino == 4 && (origen == 1 || origen == 2)) {
+                    mantenimientoWaypoints.Enqueue(CruceUniv);
                 }
 
                 // 3. ATERRIZAJE DIRECTO EN EL DESTINO DESDE SU EJE
@@ -570,6 +669,9 @@ namespace JUEGO_INGENIERIA
                 } else if (mantenimientoDestino == 3) {
                     mantenimientoWaypoints.Enqueue(new Point(EJE_X_DER, P3_Pole.Y));
                     mantenimientoWaypoints.Enqueue(P3_Pole);
+                } else if (mantenimientoDestino == 4) {
+                    mantenimientoWaypoints.Enqueue(CruceUniv);
+                    mantenimientoWaypoints.Enqueue(P_UNIV);
                 }
                 return;
             }
@@ -594,9 +696,13 @@ namespace JUEGO_INGENIERIA
                 {
                     int step = Math.Min(mantenimientoSpeed, Math.Abs(dx));
                     pibMantenimiento.Left += Math.Sign(dx) * step;
-                    if (mUltimaAnimacion != (dx > 0 ? mAnimDerecha : mAnimIzquierda))
+                    List<Image> targetAnimX = dx > 0 ? 
+                        (estadoMantenimiento == 2 ? mAnimEscaleraDerecha : mAnimDerecha) : 
+                        (estadoMantenimiento == 2 ? mAnimEscaleraIzquierda : mAnimIzquierda);
+
+                    if (mUltimaAnimacion != targetAnimX)
                     {
-                        mUltimaAnimacion = dx > 0 ? mAnimDerecha : mAnimIzquierda;
+                        mUltimaAnimacion = targetAnimX;
                         mFrameActual = 0;
                     }
                 }
@@ -604,9 +710,13 @@ namespace JUEGO_INGENIERIA
                 {
                     int step = Math.Min(mantenimientoSpeed, Math.Abs(dy));
                     pibMantenimiento.Top += Math.Sign(dy) * step;
-                    if (mUltimaAnimacion != (dy > 0 ? mAnimAbajo : mAnimArriba))
+                    List<Image> targetAnimY = dy > 0 ? 
+                        (estadoMantenimiento == 2 ? mAnimEscaleraAbajo : mAnimAbajo) : 
+                        (estadoMantenimiento == 2 ? mAnimEscaleraArriba : mAnimArriba);
+
+                    if (mUltimaAnimacion != targetAnimY)
                     {
-                        mUltimaAnimacion = dy > 0 ? mAnimAbajo : mAnimArriba;
+                        mUltimaAnimacion = targetAnimY;
                         mFrameActual = 0;
                     }
                 }
@@ -628,6 +738,7 @@ namespace JUEGO_INGENIERIA
                 if (postes.Length > 0 && postes[0] is PictureBox pb)
                 {
                     pb.Image = Properties.Resources.poste_luz_malo;
+                    pb.Tag = "malo";
                     this.Invalidate(pb.Bounds);
                 }
             }
@@ -637,6 +748,7 @@ namespace JUEGO_INGENIERIA
                 if (postes.Length > 0 && postes[0] is PictureBox pb)
                 {
                     pb.Image = Properties.Resources.poste_luz_malo2;
+                    pb.Tag = "malo";
                     this.Invalidate(pb.Bounds);
                 }
             }
@@ -646,6 +758,7 @@ namespace JUEGO_INGENIERIA
                 if (postes.Length > 0 && postes[0] is PictureBox pb)
                 {
                     pb.Image = Properties.Resources.poste_luz_malo;
+                    pb.Tag = "malo";
                     this.Invalidate(pb.Bounds);
                 }
                 
