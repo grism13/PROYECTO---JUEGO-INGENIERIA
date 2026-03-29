@@ -58,8 +58,9 @@
             pictureBox13 = new PictureBox();
             pictureBox14 = new PictureBox();
             panelInfo = new Panel();
-            pbPuertaSalida = new PictureBox();
             pictureBox16 = new PictureBox();
+            pictureBox17 = new PictureBox();
+            pbPuertaSalida = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             pbMensaje.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox15).BeginInit();
@@ -82,8 +83,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).BeginInit();
             panelInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -277,7 +279,7 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(661, 628);
+            pbPersonaje.Location = new Point(656, 599);
             pbPersonaje.Margin = new Padding(3, 4, 3, 4);
             pbPersonaje.Name = "pbPersonaje";
             pbPersonaje.Size = new Size(134, 215);
@@ -348,10 +350,10 @@
             // pictureBox10
             // 
             pictureBox10.BackColor = Color.Red;
-            pictureBox10.Location = new Point(563, 628);
+            pictureBox10.Location = new Point(551, 599);
             pictureBox10.Margin = new Padding(3, 4, 3, 4);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(51, 21);
+            pictureBox10.Size = new Size(42, 10);
             pictureBox10.TabIndex = 17;
             pictureBox10.TabStop = false;
             pictureBox10.Tag = "muro";
@@ -360,10 +362,10 @@
             // pictureBox11
             // 
             pictureBox11.BackColor = Color.Red;
-            pictureBox11.Location = new Point(839, 628);
+            pictureBox11.Location = new Point(848, 599);
             pictureBox11.Margin = new Padding(3, 4, 3, 4);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(39, 21);
+            pictureBox11.Size = new Size(41, 10);
             pictureBox11.TabIndex = 18;
             pictureBox11.TabStop = false;
             pictureBox11.Tag = "muro";
@@ -419,17 +421,6 @@
             panelInfo.Size = new Size(600, 237);
             panelInfo.TabIndex = 22;
             // 
-            // pbPuertaSalida
-            // 
-            pbPuertaSalida.BackColor = Color.Transparent;
-            pbPuertaSalida.Location = new Point(367, 888);
-            pbPuertaSalida.Margin = new Padding(3, 4, 3, 4);
-            pbPuertaSalida.Name = "pbPuertaSalida";
-            pbPuertaSalida.Size = new Size(690, 31);
-            pbPuertaSalida.TabIndex = 23;
-            pbPuertaSalida.TabStop = false;
-            pbPuertaSalida.Tag = "puerta";
-            // 
             // pictureBox16
             // 
             pictureBox16.BackColor = Color.Transparent;
@@ -442,6 +433,29 @@
             pictureBox16.TabIndex = 24;
             pictureBox16.TabStop = false;
             // 
+            // pictureBox17
+            // 
+            pictureBox17.BackColor = Color.Red;
+            pictureBox17.Location = new Point(310, 552);
+            pictureBox17.Margin = new Padding(3, 4, 3, 4);
+            pictureBox17.Name = "pictureBox17";
+            pictureBox17.Size = new Size(35, 93);
+            pictureBox17.TabIndex = 25;
+            pictureBox17.TabStop = false;
+            pictureBox17.Tag = "muro";
+            pictureBox17.Visible = false;
+            // 
+            // pbPuertaSalida
+            // 
+            pbPuertaSalida.BackColor = Color.Transparent;
+            pbPuertaSalida.Location = new Point(582, 896);
+            pbPuertaSalida.Margin = new Padding(3, 4, 3, 4);
+            pbPuertaSalida.Name = "pbPuertaSalida";
+            pbPuertaSalida.Size = new Size(11, 10);
+            pbPuertaSalida.TabIndex = 23;
+            pbPuertaSalida.TabStop = false;
+            pbPuertaSalida.Tag = "puerta";
+            // 
             // FormDecanato
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -449,6 +463,7 @@
             BackgroundImage = Properties.Resources.fondodecanato;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1445, 908);
+            Controls.Add(pictureBox17);
             Controls.Add(pictureBox16);
             Controls.Add(pbPuertaSalida);
             Controls.Add(panelInfo);
@@ -498,8 +513,9 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox13).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox14).EndInit();
             panelInfo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox16).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox17).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPuertaSalida).EndInit();
             ResumeLayout(false);
         }
 
@@ -533,7 +549,8 @@
         private PictureBox pictureBox14;
         private Panel panelInfo;
         private PictureBox pictureBox15;
-        private PictureBox pbPuertaSalida;
         private PictureBox pictureBox16;
+        private PictureBox pictureBox17;
+        private PictureBox pbPuertaSalida;
     }
 }

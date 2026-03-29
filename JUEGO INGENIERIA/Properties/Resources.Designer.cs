@@ -113,6 +113,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bombillo_colocado {
+            get {
+                object obj = ResourceManager.GetObject("bombillo-colocado", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap boton_de_siguiente {
             get {
                 object obj = ResourceManager.GetObject("boton de siguiente", resourceCulture);
@@ -1784,6 +1794,246 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap macotaeliezer {
             get {
                 object obj = ResourceManager.GetObject("macotaeliezer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap manteniemiento_centro_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("manteniemiento-centro-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap manteniemiento_centro_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("manteniemiento-centro-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap manteniemiento_espalda2 {
+            get {
+                object obj = ResourceManager.GetObject("manteniemiento-espalda2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_colocar_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-colocar-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_colocar_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-colocar-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_colocar_escalera3 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-colocar-escalera3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_colocar_escalera4 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-colocar-escalera4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_derecha_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-derecha-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_derecha_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-derecha-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_derecha1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-derecha1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_derecha2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-derecha2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_espalda_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-espalda-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_espalda_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-espalda-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_espalda1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-espalda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_frente1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-frente1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_frente2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-frente2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_izquierda_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-izquierda-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_izquierda_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-izquierda-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_izquierda1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-izquierda1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_izquierda2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-izquierda2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_subir_escalera1 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-subir-escalera1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_subir_escalera2 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-subir-escalera2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_subir_escalera3 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-subir-escalera3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mantenimiento_subir_escalera4 {
+            get {
+                object obj = ResourceManager.GetObject("mantenimiento-subir-escalera4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

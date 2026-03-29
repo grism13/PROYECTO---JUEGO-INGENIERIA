@@ -8,6 +8,7 @@ namespace JUEGO_INGENIERIA
         private FormMovimiento motorMovimiento;
         public static Jugador JugadorActual { get; set; }
         private Jugador jugadorActual;
+        public static bool SaltarIntroDirecto = false;
 
         private WMPLib.WindowsMediaPlayer musicaFondo;
 
@@ -207,6 +208,11 @@ namespace JUEGO_INGENIERIA
 
         private void Form1_Shown(object sender, EventArgs e)
         {
+            if (SaltarIntroDirecto)
+            {
+                ReproducirMusicaMapa();
+                return;
+            }
             this.Hide();
 
             FormIntro intro = new FormIntro();

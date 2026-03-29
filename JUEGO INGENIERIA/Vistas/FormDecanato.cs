@@ -111,6 +111,9 @@ public partial class FormDecanato : Form
         motorMovimiento = new FormMovimiento(this, pbPersonaje);
         motorMovimiento.ColisionConObjeto += MotorMovimiento_ColisionConObjeto;
 
+        pbPuertaSalida.Height = 60; // Expandimos para evitar bugs de escala
+        pbPuertaSalida.Top = this.ClientSize.Height - pbPuertaSalida.Height;
+
         motorMovimiento.Start();
         lienzo = new Bitmap(pbPizarra.Width, pbPizarra.Height);
         dibujante = Graphics.FromImage(lienzo);
@@ -167,10 +170,11 @@ public partial class FormDecanato : Form
 
     private void MotorMovimiento_ColisionConObjeto(object sender, Control objetoColisionado)
     {
-        if (objetoColisionado == pbPuertaSalida)
+        if (objetoColisionado == pbPuertaSalida || objetoColisionado.Name == "pbPuertaSalida" || (string)objetoColisionado.Tag == "puerta")
         {
             motorMovimiento.Stop();
             if (reproductorMusica != null) reproductorMusica.controls.stop();
+
             this.Close();
         }
     }
