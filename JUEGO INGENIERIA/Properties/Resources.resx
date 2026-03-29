@@ -1033,4 +1033,10 @@
   <data name="poste-luz" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\poste-luz.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="poste-luz-malo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\poste-luz-malo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="poste-luz2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\poste-luz2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -152,6 +152,9 @@
             pbDireccion2 = new PictureBox();
             pbDireccion3 = new PictureBox();
             pbDireccion4 = new PictureBox();
+            pbPoste1 = new PictureBox();
+            pictureBox100 = new PictureBox();
+            pictureBox102 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -266,6 +269,9 @@
             ((System.ComponentModel.ISupportInitialize)pbDireccion2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbDireccion3).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbDireccion4).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbPoste1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox100).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox102).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -1509,6 +1515,39 @@
             pbDireccion4.TabIndex = 128;
             pbDireccion4.TabStop = false;
             // 
+            // pbPoste1
+            // 
+            pbPoste1.BackColor = Color.Transparent;
+            pbPoste1.Image = Properties.Resources.poste_luz;
+            pbPoste1.Location = new Point(200, 316);
+            pbPoste1.Name = "pbPoste1";
+            pbPoste1.Size = new Size(123, 160);
+            pbPoste1.SizeMode = PictureBoxSizeMode.Zoom;
+            pbPoste1.TabIndex = 129;
+            pbPoste1.TabStop = false;
+            // 
+            // pictureBox100
+            // 
+            pictureBox100.BackColor = Color.Transparent;
+            pictureBox100.Image = Properties.Resources.poste_luz;
+            pictureBox100.Location = new Point(195, 32);
+            pictureBox100.Name = "pictureBox100";
+            pictureBox100.Size = new Size(123, 160);
+            pictureBox100.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox100.TabIndex = 130;
+            pictureBox100.TabStop = false;
+            // 
+            // pictureBox102
+            // 
+            pictureBox102.BackColor = Color.Transparent;
+            pictureBox102.Image = Properties.Resources.poste_luz2;
+            pictureBox102.Location = new Point(1129, 237);
+            pictureBox102.Name = "pictureBox102";
+            pictureBox102.Size = new Size(123, 160);
+            pictureBox102.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox102.TabIndex = 131;
+            pictureBox102.TabStop = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1517,6 +1556,9 @@
             BackgroundImage = Properties.Resources.fondomapa;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(1445, 908);
+            Controls.Add(pictureBox102);
+            Controls.Add(pictureBox100);
+            Controls.Add(pbPoste1);
             Controls.Add(pbDireccion4);
             Controls.Add(pbDireccion3);
             Controls.Add(pbDireccion2);
@@ -1757,6 +1799,9 @@
             ((System.ComponentModel.ISupportInitialize)pbDireccion2).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbDireccion3).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbDireccion4).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbPoste1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox100).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox102).EndInit();
             ResumeLayout(false);
         }
 
@@ -1884,5 +1929,8 @@
         private PictureBox pbDireccion2;
         private PictureBox pbDireccion3;
         private PictureBox pbDireccion4;
+        private PictureBox pbPoste1;
+        private PictureBox pictureBox100;
+        private PictureBox pictureBox102;
     }
 }
