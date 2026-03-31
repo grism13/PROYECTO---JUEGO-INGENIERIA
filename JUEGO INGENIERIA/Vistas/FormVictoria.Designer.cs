@@ -57,6 +57,7 @@
             ClientSize = new Size(1264, 681);
             Controls.Add(lblMensaje);
             Controls.Add(btnAceptar);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormVictoria";
             Text = "FormVictoria";
             ResumeLayout(false);

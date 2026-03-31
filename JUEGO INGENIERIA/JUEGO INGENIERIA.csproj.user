@@ -13,6 +13,9 @@
     <Compile Update="Vistas\FormDecanato.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\FormDerrota.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistas\FormIntro.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -44,6 +47,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Vistas\FormTrabajo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Vistas\FormVictoria.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

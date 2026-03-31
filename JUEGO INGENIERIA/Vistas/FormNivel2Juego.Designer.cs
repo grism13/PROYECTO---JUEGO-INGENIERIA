@@ -191,7 +191,9 @@
             Controls.Add(pnlPistaBaile);
             Controls.Add(lblCuentaRegresiva);
             DoubleBuffered = true;
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormNivel2Juego";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)pbMetaIzq).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaAbajo).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMetaDer).EndInit();

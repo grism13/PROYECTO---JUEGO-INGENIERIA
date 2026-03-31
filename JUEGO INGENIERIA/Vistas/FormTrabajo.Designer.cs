@@ -85,7 +85,7 @@
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 4;
             pbPersonaje.TabStop = false;
-            pbPersonaje.Visible = false; // El motor lo dibuja manualmente
+            pbPersonaje.Visible = false;
             // 
             // pbMesa1
             // 
@@ -383,10 +383,12 @@
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox6);
+            FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormTrabajo";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormTrabajo";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMesa1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbMesa2).EndInit();

@@ -338,7 +338,7 @@
             BackColor = Color.CornflowerBlue;
             BackgroundImage = Properties.Resources.pixel_art1;
             BackgroundImageLayout = ImageLayout.Stretch;
-            ClientSize = new Size(1264, 681);
+            ClientSize = new Size(1280, 720);
             Controls.Add(pictureBox17);
             Controls.Add(pictureBox16);
             Controls.Add(pictureBox15);
@@ -360,10 +360,12 @@
             Controls.Add(pictureBox1);
             Controls.Add(gris);
             Controls.Add(pictureBox3);
+            FormBorderStyle = FormBorderStyle.None;
             Margin = new Padding(3, 2, 3, 2);
             Name = "ElegirPersonaje";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ElegirPersonaje";
+            WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)gris).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();

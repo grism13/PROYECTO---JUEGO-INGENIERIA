@@ -36,9 +36,11 @@
             // pnlEscenario
             // 
             pnlEscenario.BackColor = Color.Black;
+            pnlEscenario.BackgroundImageLayout = ImageLayout.None;
             pnlEscenario.Location = new Point(1, -3);
+            pnlEscenario.Margin = new Padding(0);
             pnlEscenario.Name = "pnlEscenario";
-            pnlEscenario.Size = new Size(1268, 694);
+            pnlEscenario.Size = new Size(1290, 725);
             pnlEscenario.TabIndex = 0;
             // 
             // tmrGameLoop
@@ -50,11 +52,14 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 681);
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1280, 720);
             Controls.Add(pnlEscenario);
+            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "FormNivel3";
             Text = "FormNivel2";
+            WindowState = FormWindowState.Maximized;
             Load += FormNivel2_Load;
             KeyDown += FormNivel2_KeyDown;
             KeyUp += FormNivel2_KeyUp;

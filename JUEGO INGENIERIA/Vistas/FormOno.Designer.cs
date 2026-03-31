@@ -260,11 +260,13 @@
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox8);
             Controls.Add(pictureBox7);
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 2, 3, 2);
             Name = "FormOno";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "JUEGO ONO";
+            WindowState = FormWindowState.Maximized;
             Load += FormOno_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();

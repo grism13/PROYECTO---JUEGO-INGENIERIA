@@ -23,6 +23,9 @@ namespace JUEGO_INGENIERIA.Vistas
             InitializeComponent();
             System.Media.SoundPlayer sonidoFondoIntro = new System.Media.SoundPlayer(Properties.Resources.intro_juegoINGENERIA__1_);
             sonidoFondoIntro.Play();
+            ResolucionPantalla.ForzarResolucionJuego();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
 
             CargarFuente();
             CargarDatos();

@@ -365,6 +365,8 @@ namespace JUEGO_INGENIERIA
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private void TimerRectorEstado_Tick(object sender, EventArgs e)
