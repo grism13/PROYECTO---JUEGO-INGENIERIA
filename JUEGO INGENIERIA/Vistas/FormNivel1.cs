@@ -384,11 +384,12 @@ namespace JUEGO_INGENIERIA.Vistas
             if (jugadorActual.Nivel == 1)
             {
                 jugadorActual.Nivel = 2;
-                MessageBox.Show($"¡FELICIDADES!\nNota: {puntos}/20", "Nivel Completado");
+                FormVictoria.Mostrar($"¡FELICIDADES!\nNota: {puntos}/20", "Nivel Completado");
+
             }
             else
             {
-                MessageBox.Show($"¡Bien hecho!", "Repaso Completado");
+                FormVictoria.Mostrar($"¡Bien hecho!", "Repaso Completado");
             }
 
             ActualizarDatos();
@@ -398,7 +399,8 @@ namespace JUEGO_INGENIERIA.Vistas
         private void PerderNivel(string motivo)
         {
             jugadorActual.Billetera -= 100;
-            MessageBox.Show($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
+            FormDerrota.Mostrar($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
+
 
             ActualizarDatos();
             this.Close();

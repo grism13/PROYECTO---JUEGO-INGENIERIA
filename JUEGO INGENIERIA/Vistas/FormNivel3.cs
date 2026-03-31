@@ -427,7 +427,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                             tmrGameLoop.Stop();
                             pnlEscenario.Invalidate();
-                            MessageBox.Show("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!");
+                            FormVictoria.Mostrar("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!");
                             this.Close();
                             return;
                         }
@@ -702,12 +702,12 @@ namespace JUEGO_INGENIERIA.Vistas
             if (jugadorActual != null)
             {
                 jugadorActual.Billetera -= 100;
-                MessageBox.Show($"{mensaje}\nMulta: $100", "¡GAME OVER!");
+                FormDerrota.Mostrar($"{mensaje}\nMulta: $100", "¡GAME OVER!");
                 ActualizarDatos();
             }
             else
             {
-                MessageBox.Show(mensaje, "¡GAME OVER!");
+                FormDerrota.Mostrar(mensaje, "¡GAME OVER!");
             }
             this.Close();
         }

@@ -325,7 +325,8 @@ namespace JUEGO_INGENIERIA.Vistas
                         reproductor.Stop();
 
                         // 2. Mostramos el mensaje de derrota
-                        MessageBox.Show("¡Te pelaste muchos pasos! Has reprobado el nivel.", "¡GAME OVER!");
+                        FormDerrota.Mostrar("¡Te pelaste muchos pasos! Has reprobado el nivel.", "¡GAME OVER!");
+
 
                         // 3. Cerramos el nivel (o puedes reiniciarlo si prefieres)
                         this.Close();
@@ -347,7 +348,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 lblCuentaRegresiva.Visible = true;
                 lblCuentaRegresiva.Text = "¡CANCION TERMINADA!";
 
-                MessageBox.Show("¡Uff, coronaste la pista de baile!", "Nivel Completado");
+                FormVictoria.Mostrar("¡Uff, coronaste la pista de baile!", "Nivel Completado");
+
 
                 // Aquí en el futuro pones la lógica para volver al menú o pasar de nivel
                 // this.Close(); 
