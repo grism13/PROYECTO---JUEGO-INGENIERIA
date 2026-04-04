@@ -24,7 +24,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private int mesaIndicada = 0;
         private Random generadorAleatorio = new Random();
 
-        // --- CACHÉ DE RENDERIZADO OPTIMIZADO ---
+        // --- CACHÃ‰ DE RENDERIZADO OPTIMIZADO ---
         private Dictionary<Control, Image> cacheImagenes = new Dictionary<Control, Image>();
         private List<Control> objetosZOrder = new List<Control>();
 
@@ -38,7 +38,7 @@ namespace JUEGO_INGENIERIA.Vistas
             AplicarFuente();
             this.DoubleBuffered = true;
 
-            // --- LÍNEAS NUEVAS AGREGADAS ---
+            // --- LÃNEAS NUEVAS AGREGADAS ---
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             this.UpdateStyles();
             this.KeyPreview = true;
@@ -47,7 +47,7 @@ namespace JUEGO_INGENIERIA.Vistas
             // Guardamos los datos del jugador
             this.jugadorActual = jugadorRecibido;
 
-            // --- INICIAR MÚSICA ---
+            // --- INICIAR MÃšSICA ---
             try
             {
                 string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "trabajo_musica.mp3");
@@ -58,15 +58,17 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             catch { }
 
-            // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
+            // --- OPTIMIZACIÃ“N EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
             if (this.BackgroundImage != null)
             {
                 this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
-                Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                int screenW = Screen.PrimaryScreen.Bounds.Width;
+            int screenH = Screen.PrimaryScreen.Bounds.Height;
+            Bitmap fondoOptimizado = new Bitmap(screenW, screenH, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
                 using (Graphics g = Graphics.FromImage(fondoOptimizado))
                 {
                     g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                    g.DrawImage(this.BackgroundImage, 0, 0, screenW, screenH);
                 }
                 this.BackgroundImage = fondoOptimizado;
             }
@@ -76,7 +78,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormTrabajo_Load(object sender, EventArgs e)
         {
-            // Ocultar objetos y pre-escalar imágenes para dibujarlos MUCHO más rápido manualmente
+            // Ocultar objetos y pre-escalar imÃ¡genes para dibujarlos MUCHO mÃ¡s rÃ¡pido manualmente
             List<Control> objetosEstaticos = new List<Control>
             {
                 pbMesa1, pbMesa2, pbMesa3, pbMesa4, pbGenerador, pictureBox5, pictureBox6
@@ -89,18 +91,18 @@ namespace JUEGO_INGENIERIA.Vistas
                 Image imgOriginal = pb.Image ?? pb.BackgroundImage;
                 if (imgOriginal != null)
                 {
-                    // Crear un bitmap pre-escalado al tamaño exacto del PictureBox
+                    // Crear un bitmap pre-escalado al tamaÃ±o exacto del PictureBox
                     Bitmap bmpEscalado = new Bitmap(pb.Width, pb.Height);
                     using (Graphics g = Graphics.FromImage(bmpEscalado))
                     {
-                        // Asegura que las imágenes no se vean borrosas
+                        // Asegura que las imÃ¡genes no se vean borrosas
                         g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                         g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
-                        // Si la imagen original usa BackgroundImageLayout.Stretch, aquí esto replica ese comportamiento
+                        // Si la imagen original usa BackgroundImageLayout.Stretch, aquÃ­ esto replica ese comportamiento
                         g.DrawImage(imgOriginal, 0, 0, pb.Width, pb.Height);
                     }
-                    // Guardamos la imagen pre-escalonada en caché
+                    // Guardamos la imagen pre-escalonada en cachÃ©
                     cacheImagenes[pb] = bmpEscalado;
                 }
             }
@@ -130,14 +132,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 movimientoJugador.Stop();
                 if (reproductorMusica != null) reproductorMusica.controls.stop();
 
-                // --- LÓGICA DE GANANCIAS ---
+                // --- LÃ“GICA DE GANANCIAS ---
                 int dineroGanado = documentosEntregados * 10;
                 jugadorActual.Billetera += dineroGanado; // Sumamos el dinero al jugador
 
                 // Guardamos en el JSON
                 ActualizarDatos();
 
-                MessageBox.Show($"¡Se acabó el turno!\nEntregaste {documentosEntregados} documentos.\n\n¡Has ganado ${dineroGanado}!", "Fin del Turno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Â¡Se acabÃ³ el turno!\nEntregaste {documentosEntregados} documentos.\n\nÂ¡Has ganado ${dineroGanado}!", "Fin del Turno", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
             }
@@ -149,7 +151,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (lblMesaDestino != null)
             {
-                lblMesaDestino.Text = $"¡Lleva el documento a la MESA {mesaIndicada}!";
+                lblMesaDestino.Text = $"Â¡Lleva el documento a la MESA {mesaIndicada}!";
             }
         }
 
@@ -190,7 +192,7 @@ namespace JUEGO_INGENIERIA.Vistas
             if (tiempoRestante > 0 && e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
-                MessageBox.Show("¡No puedes abandonar tu puesto hasta que termine el turno!", "¡A trabajar!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Â¡No puedes abandonar tu puesto hasta que termine el turno!", "Â¡A trabajar!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (!e.Cancel && reproductorMusica != null)
@@ -206,13 +208,13 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
 
             // Ordenar todos los objetos por su coordenada Y (Top)
-            // Esto hace que el personaje pueda pasar por delante o por detrás de las mesas/NPCs
+            // Esto hace que el personaje pueda pasar por delante o por detrÃ¡s de las mesas/NPCs
             objetosZOrder.Sort((a, b) => a.Top.CompareTo(b.Top));
 
             foreach (var obj in objetosZOrder)
             {
-                // Solo dibujar el objeto si intersecta con el área que se está actualizando (ClipRectangle)
-                // Esto previene redibujar el formulario completo inútilmente y gana MUCHA velocidad.
+                // Solo dibujar el objeto si intersecta con el Ã¡rea que se estÃ¡ actualizando (ClipRectangle)
+                // Esto previene redibujar el formulario completo inÃºtilmente y gana MUCHA velocidad.
                 if (e.ClipRectangle.IntersectsWith(obj.Bounds))
                 {
                     if (obj == pbPersonaje)
@@ -229,7 +231,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        // --- SISTEMA DE GUARDADO (Idéntico a FormNivel1) ---
+        // --- SISTEMA DE GUARDADO (IdÃ©ntico a FormNivel1) ---
         private void ActualizarDatos()
         {
             string rutaArchivo = "jugadores.json";
@@ -286,14 +288,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 movimientoJugador.Stop();
                 if (reproductorMusica != null) reproductorMusica.controls.stop();
 
-                // --- LÓGICA DE GANANCIAS ---
+                // --- LÃ“GICA DE GANANCIAS ---
                 int dineroGanado = documentosEntregados * 10;
                 jugadorActual.Billetera += dineroGanado; // Sumamos el dinero al jugador
 
                 // Guardamos en el JSON
                 ActualizarDatos();
 
-                MessageBox.Show($"¡Se acabó el turno!\nEntregaste {documentosEntregados} documentos.\n\n¡Has ganado ${dineroGanado}!", "Fin del Turno", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Â¡Se acabÃ³ el turno!\nEntregaste {documentosEntregados} documentos.\n\nÂ¡Has ganado ${dineroGanado}!", "Fin del Turno", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 this.Close();
             }

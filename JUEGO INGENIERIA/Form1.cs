@@ -24,7 +24,7 @@ namespace JUEGO_INGENIERIA
         private Point rectorPuntoDestino;
         private int rectorSpeed = 2;
         private Queue<Point> rectorWaypoints = new Queue<Point>();
-        private int avenidaY = 290; // Y de la calle principal (tierra horizontal)
+        private int avenidaY = 350; // Y de la calle principal (tierra horizontal)
 
         // Variables para la animación del geyser
         private System.Windows.Forms.Timer timerGeyzer;
@@ -60,6 +60,10 @@ namespace JUEGO_INGENIERIA
         private int mPausaFrameArreglando = 0;
         private int mContadorLentitud = 0;
         private int mPausaMantenimiento = 0;
+        private Queue<Point> mantenimientoDodgeWaypoints = new Queue<Point>();
+        private Queue<Point> rectorDodgeWaypoints = new Queue<Point>();
+        private int cooldownEncuentro = 0;
+        private int encuentrosContador = 0;
 
         // Lista cacheada para optimizar OnPaint
         private List<PictureBox> objetosADibujarCache = new List<PictureBox>();
@@ -74,18 +78,7 @@ namespace JUEGO_INGENIERIA
             this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
             this.UpdateStyles();
 
-            // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
-            if (this.BackgroundImage != null)
-            {
-                this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
-                Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-                using (Graphics g = Graphics.FromImage(fondoOptimizado))
-                {
-                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                    g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
-                }
-                this.BackgroundImage = fondoOptimizado;
-            }
+
 
             musicaFondo = new WMPLib.WindowsMediaPlayer();
 
@@ -367,6 +360,21 @@ namespace JUEGO_INGENIERIA
         {
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
+
+            // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
+            if (this.BackgroundImage != null)
+            {
+                this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
+                int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+                int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+                Bitmap fondoOptimizado = new Bitmap(screenWidth, screenHeight, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+                using (Graphics g = Graphics.FromImage(fondoOptimizado))
+                {
+                    g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    g.DrawImage(this.BackgroundImage, 0, 0, screenWidth, screenHeight);
+                }
+                this.BackgroundImage = fondoOptimizado;
+            }
         }
 
         private void TimerRectorEstado_Tick(object sender, EventArgs e)
@@ -421,6 +429,12 @@ namespace JUEGO_INGENIERIA
 
             if (Math.Abs(dx) == 0 && Math.Abs(dy) == 0)
             {
+                if (rectorDodgeWaypoints.Count > 0)
+                {
+                    rectorPuntoDestino = rectorDodgeWaypoints.Dequeue();
+                    return;
+                }
+
                 // Llegó al waypoint actual
                 if (rectorWaypoints.Count > 0)
                 {
@@ -660,9 +674,9 @@ namespace JUEGO_INGENIERIA
                 Point P3_Pole = c3.Length > 0 ? new Point(c3[0].Left + (c3[0].Width/2) - (mWidth/2), c3[0].Bottom - mHeight) : new Point(1090, 230);
 
                 int EJE_X_IZQ = P2_Pole.X; 
-                int EJE_Y_MAIN_IZQ = 300;  
+                int EJE_Y_MAIN_IZQ = 340;  
                 int EJE_X_SUBIDA = 600;    
-                int EJE_Y_MAIN_DER = 270;  
+                int EJE_Y_MAIN_DER = 340;  
                 int EJE_X_DER = 900;       
 
                 // El destino es el sur desde el eje de subida (Hacia el punto rojo de tu imagen)
@@ -724,7 +738,162 @@ namespace JUEGO_INGENIERIA
                 return;
             }
 
-            Point objetivo = mantenimientoWaypoints.Peek();
+            if (mantenimientoDodgeWaypoints.Count == 0 && rectorDodgeWaypoints.Count == 0 && this.Controls.ContainsKey("rector"))
+            {
+                if (cooldownEncuentro > 0) cooldownEncuentro--;
+                if (cooldownEncuentro <= 0)
+                {
+                    Control rector = this.Controls["rector"];
+                    int distSq = (rector.Left - pibMantenimiento.Left) * (rector.Left - pibMantenimiento.Left) + 
+                                 (rector.Top - pibMantenimiento.Top) * (rector.Top - pibMantenimiento.Top);
+                    if (distSq < 4225) // aprox 65 píxeles de detección
+                    {
+                        encuentrosContador++;
+
+                        if (!isRectorWalking || encuentrosContador % 2 != 0)
+                        {
+                            // MANTENIMIENTO ESQUIVA (IMPAR O RECTOR DETENIDO)
+                            Point objM = mantenimientoWaypoints.Peek();
+                            int dirX = Math.Sign(objM.X - pibMantenimiento.Left);
+                            int dirY = Math.Sign(objM.Y - pibMantenimiento.Top);
+
+                            if (Math.Abs(dirX) > 0)
+                            {
+                                Rectangle rectArriba = new Rectangle(pibMantenimiento.Left, pibMantenimiento.Top - 50, pibMantenimiento.Width, pibMantenimiento.Height);
+                                bool arribaLibre = true;
+                                Rectangle rectAbajo = new Rectangle(pibMantenimiento.Left, pibMantenimiento.Top + 50, pibMantenimiento.Width, pibMantenimiento.Height);
+                                bool abajoLibre = true;
+
+                                foreach (Control c in this.Controls) {
+                                    if (c is PictureBox pb && pb.Tag != null && pb.Tag.ToString() == "muro") {
+                                        if (pb.Bounds.IntersectsWith(rectArriba)) arribaLibre = false;
+                                        if (pb.Bounds.IntersectsWith(rectAbajo)) abajoLibre = false;
+                                    }
+                                }
+
+                                if (arribaLibre) {
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left, pibMantenimiento.Top - 50));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + (dirX * 80), pibMantenimiento.Top - 50));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + (dirX * 80), pibMantenimiento.Top));
+                                    cooldownEncuentro = 150;
+                                } else if (abajoLibre) {
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left, pibMantenimiento.Top + 50));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + (dirX * 80), pibMantenimiento.Top + 50));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + (dirX * 80), pibMantenimiento.Top));
+                                    cooldownEncuentro = 150;
+                                } else {
+                                    cooldownEncuentro = 10;
+                                    return;
+                                }
+                            }
+                            else if (Math.Abs(dirY) > 0)
+                            {
+                                Rectangle rectDcha = new Rectangle(pibMantenimiento.Left + 50, pibMantenimiento.Top, pibMantenimiento.Width, pibMantenimiento.Height);
+                                bool dchaLibre = true;
+                                Rectangle rectIzq = new Rectangle(pibMantenimiento.Left - 50, pibMantenimiento.Top, pibMantenimiento.Width, pibMantenimiento.Height);
+                                bool izqLibre = true;
+
+                                foreach (Control c in this.Controls) {
+                                    if (c is PictureBox pb && pb.Tag != null && pb.Tag.ToString() == "muro") {
+                                        if (pb.Bounds.IntersectsWith(rectDcha)) dchaLibre = false;
+                                        if (pb.Bounds.IntersectsWith(rectIzq)) izqLibre = false;
+                                    }
+                                }
+
+                                if (dchaLibre) {
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + 50, pibMantenimiento.Top));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left + 50, pibMantenimiento.Top + (dirY * 80)));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left, pibMantenimiento.Top + (dirY * 80)));
+                                    cooldownEncuentro = 150;
+                                } else if (izqLibre) {
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left - 50, pibMantenimiento.Top));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left - 50, pibMantenimiento.Top + (dirY * 80)));
+                                    mantenimientoDodgeWaypoints.Enqueue(new Point(pibMantenimiento.Left, pibMantenimiento.Top + (dirY * 80)));
+                                    cooldownEncuentro = 150;
+                                } else {
+                                    cooldownEncuentro = 10;
+                                    return;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // RECTOR ESQUIVA (PAR)
+                            int dirX = Math.Sign(rectorPuntoDestino.X - rector.Left);
+                            int dirY = Math.Sign(rectorPuntoDestino.Y - rector.Top);
+
+                            if (Math.Abs(dirX) > 0)
+                            {
+                                Rectangle rectArriba = new Rectangle(rector.Left, rector.Top - 50, rector.Width, rector.Height);
+                                bool arribaLibre = true;
+                                Rectangle rectAbajo = new Rectangle(rector.Left, rector.Top + 50, rector.Width, rector.Height);
+                                bool abajoLibre = true;
+
+                                foreach (Control c in this.Controls) {
+                                    if (c is PictureBox pb && pb.Tag != null && pb.Tag.ToString() == "muro") {
+                                        if (pb.Bounds.IntersectsWith(rectArriba)) arribaLibre = false;
+                                        if (pb.Bounds.IntersectsWith(rectAbajo)) abajoLibre = false;
+                                    }
+                                }
+
+                                if (arribaLibre) {
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left, rector.Top - 50));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + (dirX * 80), rector.Top - 50));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + (dirX * 80), rector.Top));
+                                    rectorDodgeWaypoints.Enqueue(rectorPuntoDestino);
+                                    rectorPuntoDestino = rectorDodgeWaypoints.Dequeue();
+                                    cooldownEncuentro = 150;
+                                } else if (abajoLibre) {
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left, rector.Top + 50));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + (dirX * 80), rector.Top + 50));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + (dirX * 80), rector.Top));
+                                    rectorDodgeWaypoints.Enqueue(rectorPuntoDestino);
+                                    rectorPuntoDestino = rectorDodgeWaypoints.Dequeue();
+                                    cooldownEncuentro = 150;
+                                } else {
+                                    cooldownEncuentro = 10;
+                                    return; // Rector no puede, Mantenimiento pausa en este tick para evitar avance.
+                                }
+                            }
+                            else if (Math.Abs(dirY) > 0)
+                            {
+                                Rectangle rectDcha = new Rectangle(rector.Left + 50, rector.Top, rector.Width, rector.Height);
+                                bool dchaLibre = true;
+                                Rectangle rectIzq = new Rectangle(rector.Left - 50, rector.Top, rector.Width, rector.Height);
+                                bool izqLibre = true;
+
+                                foreach (Control c in this.Controls) {
+                                    if (c is PictureBox pb && pb.Tag != null && pb.Tag.ToString() == "muro") {
+                                        if (pb.Bounds.IntersectsWith(rectDcha)) dchaLibre = false;
+                                        if (pb.Bounds.IntersectsWith(rectIzq)) izqLibre = false;
+                                    }
+                                }
+
+                                if (dchaLibre) {
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + 50, rector.Top));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left + 50, rector.Top + (dirY * 80)));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left, rector.Top + (dirY * 80)));
+                                    rectorDodgeWaypoints.Enqueue(rectorPuntoDestino);
+                                    rectorPuntoDestino = rectorDodgeWaypoints.Dequeue();
+                                    cooldownEncuentro = 150;
+                                } else if (izqLibre) {
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left - 50, rector.Top));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left - 50, rector.Top + (dirY * 80)));
+                                    rectorDodgeWaypoints.Enqueue(new Point(rector.Left, rector.Top + (dirY * 80)));
+                                    rectorDodgeWaypoints.Enqueue(rectorPuntoDestino);
+                                    rectorPuntoDestino = rectorDodgeWaypoints.Dequeue();
+                                    cooldownEncuentro = 150;
+                                } else {
+                                    cooldownEncuentro = 10;
+                                    return; // pausa
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            Point objetivo = mantenimientoDodgeWaypoints.Count > 0 ? mantenimientoDodgeWaypoints.Peek() : mantenimientoWaypoints.Peek();
             int oldX = pibMantenimiento.Left;
             int oldY = pibMantenimiento.Top;
             
@@ -734,7 +903,10 @@ namespace JUEGO_INGENIERIA
             if (Math.Abs(dx) <= mantenimientoSpeed && Math.Abs(dy) <= mantenimientoSpeed)
             {
                 pibMantenimiento.Location = objetivo;
-                mantenimientoWaypoints.Dequeue();
+                if (mantenimientoDodgeWaypoints.Count > 0)
+                    mantenimientoDodgeWaypoints.Dequeue();
+                else
+                    mantenimientoWaypoints.Dequeue();
             }
             else
             {

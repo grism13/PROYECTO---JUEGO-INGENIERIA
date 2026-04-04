@@ -71,12 +71,13 @@ public partial class FormDecanato : Form
         if (this.BackgroundImage != null)
         {
             this.BackgroundImageLayout = ImageLayout.None; // Apagamos el pesado recalculador estirado de Windows
-            Bitmap fondoOptimizado = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
+            int screenW = Screen.PrimaryScreen.Bounds.Width;
+            int screenH = Screen.PrimaryScreen.Bounds.Height;
+            Bitmap fondoOptimizado = new Bitmap(screenW, screenH, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
             using (Graphics g = Graphics.FromImage(fondoOptimizado))
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                // FormDecanato has specific bounds, let's make sure it matches the form's display size
-                g.DrawImage(this.BackgroundImage, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+                g.DrawImage(this.BackgroundImage, 0, 0, screenW, screenH);
             }
             this.BackgroundImage = fondoOptimizado;
         }
@@ -123,6 +124,10 @@ public partial class FormDecanato : Form
 
         panelInfo.Visible = false;
         pbMensaje.Visible = false;
+        
+        // Forzar a que los cuadros de diálogo siempre estén por delante de la pizarra y otros controles
+        panelInfo.BringToFront();
+        pbMensaje.BringToFront();
 
         // NUEVO: Permite salir del menú al presionar la flecha ABAJO, ESCAPE o S
         this.KeyDown += (s, ev) => {

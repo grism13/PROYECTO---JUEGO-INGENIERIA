@@ -1,4 +1,4 @@
-﻿namespace JUEGO_INGENIERIA.Vistas
+namespace JUEGO_INGENIERIA.Vistas
 {
     partial class FormDecanato
     {
@@ -92,9 +92,10 @@
             // 
             pictureBox1.BackColor = Color.Transparent;
             pictureBox1.Image = Properties.Resources.flavioHablando2;
-            pictureBox1.Location = new Point(725, 172);
+            pictureBox1.Location = new Point(848, 291);
+            pictureBox1.Margin = new Padding(3, 4, 3, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(138, 190);
+            pictureBox1.Size = new Size(158, 253);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -105,10 +106,10 @@
             btnConsejo.Cursor = Cursors.Hand;
             btnConsejo.ForeColor = Color.Gainsboro;
             btnConsejo.Image = Properties.Resources.botonazul;
-            btnConsejo.Location = new Point(39, 94);
-            btnConsejo.Margin = new Padding(21, 15, 3, 0);
+            btnConsejo.Location = new Point(45, 125);
+            btnConsejo.Margin = new Padding(24, 20, 3, 0);
             btnConsejo.Name = "btnConsejo";
-            btnConsejo.Size = new Size(143, 37);
+            btnConsejo.Size = new Size(163, 49);
             btnConsejo.TabIndex = 12;
             btnConsejo.Text = "CONSEJO";
             btnConsejo.TextAlign = ContentAlignment.MiddleCenter;
@@ -121,10 +122,10 @@
             btnOno.Cursor = Cursors.Hand;
             btnOno.ForeColor = Color.White;
             btnOno.Image = Properties.Resources.botonrosa;
-            btnOno.Location = new Point(193, 94);
-            btnOno.Margin = new Padding(21, 15, 3, 0);
+            btnOno.Location = new Point(221, 125);
+            btnOno.Margin = new Padding(24, 20, 3, 0);
             btnOno.Name = "btnOno";
-            btnOno.Size = new Size(147, 37);
+            btnOno.Size = new Size(168, 49);
             btnOno.TabIndex = 13;
             btnOno.Text = "LEER ONO";
             btnOno.TextAlign = ContentAlignment.MiddleCenter;
@@ -136,10 +137,10 @@
             btnTrabajo.Cursor = Cursors.Hand;
             btnTrabajo.ForeColor = Color.White;
             btnTrabajo.Image = Properties.Resources.botonverde1;
-            btnTrabajo.Location = new Point(348, 94);
-            btnTrabajo.Margin = new Padding(21, 15, 3, 0);
+            btnTrabajo.Location = new Point(398, 125);
+            btnTrabajo.Margin = new Padding(24, 20, 3, 0);
             btnTrabajo.Name = "btnTrabajo";
-            btnTrabajo.Size = new Size(149, 37);
+            btnTrabajo.Size = new Size(170, 49);
             btnTrabajo.TabIndex = 14;
             btnTrabajo.Text = "TRABAJO";
             btnTrabajo.TextAlign = ContentAlignment.MiddleCenter;
@@ -152,10 +153,9 @@
             pbMensaje.Controls.Add(x);
             pbMensaje.Controls.Add(lblMensaje);
             pbMensaje.Controls.Add(pictureBox6);
-            pbMensaje.Location = new Point(866, 106);
-            pbMensaje.Margin = new Padding(3, 2, 3, 2);
+            pbMensaje.Location = new Point(990, 141);
             pbMensaje.Name = "pbMensaje";
-            pbMensaje.Size = new Size(325, 184);
+            pbMensaje.Size = new Size(371, 245);
             pbMensaje.TabIndex = 10;
             pbMensaje.Visible = false;
             // 
@@ -163,9 +163,10 @@
             // 
             pictureBox15.BackColor = Color.Transparent;
             pictureBox15.Image = Properties.Resources.consejosicon;
-            pictureBox15.Location = new Point(3, 133);
+            pictureBox15.Location = new Point(3, 177);
+            pictureBox15.Margin = new Padding(3, 4, 3, 4);
             pictureBox15.Name = "pictureBox15";
-            pictureBox15.Size = new Size(30, 52);
+            pictureBox15.Size = new Size(34, 69);
             pictureBox15.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox15.TabIndex = 23;
             pictureBox15.TabStop = false;
@@ -175,10 +176,9 @@
             x.BackColor = Color.Transparent;
             x.Cursor = Cursors.Hand;
             x.Image = Properties.Resources.botondecerrar;
-            x.Location = new Point(265, 133);
-            x.Margin = new Padding(3, 2, 3, 2);
+            x.Location = new Point(303, 177);
             x.Name = "x";
-            x.Size = new Size(39, 39);
+            x.Size = new Size(45, 52);
             x.SizeMode = PictureBoxSizeMode.Zoom;
             x.TabIndex = 11;
             x.TabStop = false;
@@ -188,9 +188,9 @@
             // 
             lblMensaje.BackColor = Color.White;
             lblMensaje.ForeColor = Color.Black;
-            lblMensaje.Location = new Point(32, 30);
+            lblMensaje.Location = new Point(37, 40);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(229, 96);
+            lblMensaje.Size = new Size(262, 128);
             lblMensaje.TabIndex = 0;
             lblMensaje.Text = "label2";
             lblMensaje.TextAlign = ContentAlignment.MiddleCenter;
@@ -199,9 +199,10 @@
             // 
             pictureBox6.BackColor = Color.Transparent;
             pictureBox6.Image = Properties.Resources.nubedetexto;
-            pictureBox6.Location = new Point(-11, 0);
+            pictureBox6.Location = new Point(-13, 0);
+            pictureBox6.Margin = new Padding(3, 4, 3, 4);
             pictureBox6.Name = "pictureBox6";
-            pictureBox6.Size = new Size(315, 172);
+            pictureBox6.Size = new Size(360, 229);
             pictureBox6.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox6.TabIndex = 14;
             pictureBox6.TabStop = false;
@@ -213,9 +214,10 @@
             // 
             // pbZonaActiva
             // 
-            pbZonaActiva.Location = new Point(566, 414);
+            pbZonaActiva.Location = new Point(647, 552);
+            pbZonaActiva.Margin = new Padding(3, 4, 3, 4);
             pbZonaActiva.Name = "pbZonaActiva";
-            pbZonaActiva.Size = new Size(150, 19);
+            pbZonaActiva.Size = new Size(171, 25);
             pbZonaActiva.TabIndex = 5;
             pbZonaActiva.TabStop = false;
             pbZonaActiva.Visible = false;
@@ -229,9 +231,10 @@
             // pbPizarra
             // 
             pbPizarra.BackColor = Color.White;
-            pbPizarra.Location = new Point(343, 126);
+            pbPizarra.Location = new Point(421, 209);
+            pbPizarra.Margin = new Padding(3, 4, 3, 4);
             pbPizarra.Name = "pbPizarra";
-            pbPizarra.Size = new Size(186, 98);
+            pbPizarra.Size = new Size(197, 126);
             pbPizarra.TabIndex = 6;
             pbPizarra.TabStop = false;
             pbPizarra.Click += pbPizarra_Click;
@@ -242,9 +245,10 @@
             // pictureBox2
             // 
             pictureBox2.BackColor = Color.RoyalBlue;
-            pictureBox2.Location = new Point(356, 231);
+            pictureBox2.Location = new Point(420, 362);
+            pictureBox2.Margin = new Padding(3, 4, 3, 4);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(23, 11);
+            pictureBox2.Size = new Size(26, 15);
             pictureBox2.TabIndex = 7;
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBox2_Click;
@@ -252,9 +256,10 @@
             // pictureBox3
             // 
             pictureBox3.BackColor = Color.Gold;
-            pictureBox3.Location = new Point(411, 230);
+            pictureBox3.Location = new Point(508, 362);
+            pictureBox3.Margin = new Padding(3, 4, 3, 4);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(23, 11);
+            pictureBox3.Size = new Size(26, 15);
             pictureBox3.TabIndex = 8;
             pictureBox3.TabStop = false;
             pictureBox3.Click += pictureBox3_Click;
@@ -262,9 +267,10 @@
             // pictureBox4
             // 
             pictureBox4.BackColor = Color.Firebrick;
-            pictureBox4.Location = new Point(384, 231);
+            pictureBox4.Location = new Point(461, 362);
+            pictureBox4.Margin = new Padding(3, 4, 3, 4);
             pictureBox4.Name = "pictureBox4";
-            pictureBox4.Size = new Size(22, 11);
+            pictureBox4.Size = new Size(25, 15);
             pictureBox4.TabIndex = 9;
             pictureBox4.TabStop = false;
             pictureBox4.Click += pictureBox4_Click;
@@ -273,9 +279,10 @@
             // 
             pbPersonaje.BackColor = Color.Transparent;
             pbPersonaje.Image = Properties.Resources.gris_frente3;
-            pbPersonaje.Location = new Point(574, 449);
+            pbPersonaje.Location = new Point(656, 599);
+            pbPersonaje.Margin = new Padding(3, 4, 3, 4);
             pbPersonaje.Name = "pbPersonaje";
-            pbPersonaje.Size = new Size(117, 161);
+            pbPersonaje.Size = new Size(134, 215);
             pbPersonaje.SizeMode = PictureBoxSizeMode.StretchImage;
             pbPersonaje.TabIndex = 11;
             pbPersonaje.TabStop = false;
@@ -284,10 +291,10 @@
             // 
             luna.BackColor = Color.Transparent;
             luna.Image = Properties.Resources.lunaechada;
-            luna.Location = new Point(619, 278);
-            luna.Margin = new Padding(3, 4, 3, 4);
+            luna.Location = new Point(707, 371);
+            luna.Margin = new Padding(3, 5, 3, 5);
             luna.Name = "luna";
-            luna.Size = new Size(97, 69);
+            luna.Size = new Size(111, 92);
             luna.SizeMode = PictureBoxSizeMode.Zoom;
             luna.TabIndex = 12;
             luna.TabStop = false;
@@ -296,9 +303,10 @@
             // 
             pictureBox5.BackColor = Color.Transparent;
             pictureBox5.Image = Properties.Resources.pizarra;
-            pictureBox5.Location = new Point(287, 108);
+            pictureBox5.Location = new Point(290, 168);
+            pictureBox5.Margin = new Padding(3, 4, 3, 4);
             pictureBox5.Name = "pictureBox5";
-            pictureBox5.Size = new Size(281, 134);
+            pictureBox5.Size = new Size(423, 209);
             pictureBox5.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox5.TabIndex = 13;
             pictureBox5.TabStop = false;
@@ -306,9 +314,10 @@
             // pictureBox7
             // 
             pictureBox7.BackColor = Color.Red;
-            pictureBox7.Location = new Point(390, 367);
+            pictureBox7.Location = new Point(446, 489);
+            pictureBox7.Margin = new Padding(3, 4, 3, 4);
             pictureBox7.Name = "pictureBox7";
-            pictureBox7.Size = new Size(97, 26);
+            pictureBox7.Size = new Size(111, 35);
             pictureBox7.TabIndex = 14;
             pictureBox7.TabStop = false;
             pictureBox7.Tag = "muro";
@@ -317,9 +326,10 @@
             // pictureBox8
             // 
             pictureBox8.BackColor = Color.Red;
-            pictureBox8.Location = new Point(812, 389);
+            pictureBox8.Location = new Point(928, 519);
+            pictureBox8.Margin = new Padding(3, 4, 3, 4);
             pictureBox8.Name = "pictureBox8";
-            pictureBox8.Size = new Size(495, 26);
+            pictureBox8.Size = new Size(566, 35);
             pictureBox8.TabIndex = 15;
             pictureBox8.TabStop = false;
             pictureBox8.Tag = "muro";
@@ -328,9 +338,10 @@
             // pictureBox9
             // 
             pictureBox9.BackColor = Color.Red;
-            pictureBox9.Location = new Point(482, 382);
+            pictureBox9.Location = new Point(551, 509);
+            pictureBox9.Margin = new Padding(3, 4, 3, 4);
             pictureBox9.Name = "pictureBox9";
-            pictureBox9.Size = new Size(336, 26);
+            pictureBox9.Size = new Size(384, 35);
             pictureBox9.TabIndex = 16;
             pictureBox9.TabStop = false;
             pictureBox9.Tag = "muro";
@@ -339,9 +350,10 @@
             // pictureBox10
             // 
             pictureBox10.BackColor = Color.Red;
-            pictureBox10.Location = new Point(482, 449);
+            pictureBox10.Location = new Point(551, 599);
+            pictureBox10.Margin = new Padding(3, 4, 3, 4);
             pictureBox10.Name = "pictureBox10";
-            pictureBox10.Size = new Size(37, 8);
+            pictureBox10.Size = new Size(42, 11);
             pictureBox10.TabIndex = 17;
             pictureBox10.TabStop = false;
             pictureBox10.Tag = "muro";
@@ -350,9 +362,10 @@
             // pictureBox11
             // 
             pictureBox11.BackColor = Color.Red;
-            pictureBox11.Location = new Point(742, 449);
+            pictureBox11.Location = new Point(848, 599);
+            pictureBox11.Margin = new Padding(3, 4, 3, 4);
             pictureBox11.Name = "pictureBox11";
-            pictureBox11.Size = new Size(36, 8);
+            pictureBox11.Size = new Size(41, 11);
             pictureBox11.TabIndex = 18;
             pictureBox11.TabStop = false;
             pictureBox11.Tag = "muro";
@@ -361,9 +374,10 @@
             // pictureBox12
             // 
             pictureBox12.BackColor = Color.Red;
-            pictureBox12.Location = new Point(213, 389);
+            pictureBox12.Location = new Point(243, 519);
+            pictureBox12.Margin = new Padding(3, 4, 3, 4);
             pictureBox12.Name = "pictureBox12";
-            pictureBox12.Size = new Size(97, 26);
+            pictureBox12.Size = new Size(111, 35);
             pictureBox12.TabIndex = 19;
             pictureBox12.TabStop = false;
             pictureBox12.Tag = "muro";
@@ -372,9 +386,10 @@
             // pictureBox13
             // 
             pictureBox13.BackColor = Color.Red;
-            pictureBox13.Location = new Point(102, 314);
+            pictureBox13.Location = new Point(117, 419);
+            pictureBox13.Margin = new Padding(3, 4, 3, 4);
             pictureBox13.Name = "pictureBox13";
-            pictureBox13.Size = new Size(31, 252);
+            pictureBox13.Size = new Size(35, 336);
             pictureBox13.TabIndex = 20;
             pictureBox13.TabStop = false;
             pictureBox13.Tag = "muro";
@@ -383,9 +398,10 @@
             // pictureBox14
             // 
             pictureBox14.BackColor = Color.Red;
-            pictureBox14.Location = new Point(1168, 421);
+            pictureBox14.Location = new Point(1335, 561);
+            pictureBox14.Margin = new Padding(3, 4, 3, 4);
             pictureBox14.Name = "pictureBox14";
-            pictureBox14.Size = new Size(34, 185);
+            pictureBox14.Size = new Size(39, 247);
             pictureBox14.TabIndex = 21;
             pictureBox14.TabStop = false;
             pictureBox14.Tag = "muro";
@@ -399,18 +415,20 @@
             panelInfo.Controls.Add(btnConsejo);
             panelInfo.Controls.Add(btnTrabajo);
             panelInfo.Controls.Add(btnOno);
-            panelInfo.Location = new Point(253, 170);
+            panelInfo.Location = new Point(280, 244);
+            panelInfo.Margin = new Padding(3, 4, 3, 4);
             panelInfo.Name = "panelInfo";
-            panelInfo.Size = new Size(525, 178);
+            panelInfo.Size = new Size(600, 237);
             panelInfo.TabIndex = 22;
             // 
             // pictureBox16
             // 
             pictureBox16.BackColor = Color.Transparent;
             pictureBox16.Image = Properties.Resources.cesar1;
-            pictureBox16.Location = new Point(155, 347);
+            pictureBox16.Location = new Point(177, 463);
+            pictureBox16.Margin = new Padding(3, 4, 3, 4);
             pictureBox16.Name = "pictureBox16";
-            pictureBox16.Size = new Size(173, 219);
+            pictureBox16.Size = new Size(198, 292);
             pictureBox16.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox16.TabIndex = 24;
             pictureBox16.TabStop = false;
@@ -418,9 +436,10 @@
             // pictureBox17
             // 
             pictureBox17.BackColor = Color.Red;
-            pictureBox17.Location = new Point(271, 414);
+            pictureBox17.Location = new Point(310, 552);
+            pictureBox17.Margin = new Padding(3, 4, 3, 4);
             pictureBox17.Name = "pictureBox17";
-            pictureBox17.Size = new Size(31, 70);
+            pictureBox17.Size = new Size(35, 93);
             pictureBox17.TabIndex = 25;
             pictureBox17.TabStop = false;
             pictureBox17.Tag = "muro";
@@ -429,23 +448,25 @@
             // pbPuertaSalida
             // 
             pbPuertaSalida.BackColor = Color.Transparent;
-            pbPuertaSalida.Location = new Point(509, 672);
+            pbPuertaSalida.Location = new Point(582, 896);
+            pbPuertaSalida.Margin = new Padding(3, 4, 3, 4);
             pbPuertaSalida.Name = "pbPuertaSalida";
-            pbPuertaSalida.Size = new Size(10, 8);
+            pbPuertaSalida.Size = new Size(11, 11);
             pbPuertaSalida.TabIndex = 23;
             pbPuertaSalida.TabStop = false;
             pbPuertaSalida.Tag = "puerta";
             // 
             // FormDecanato
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.fondodecanato;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(1264, 681);
+            ClientSize = new Size(1445, 908);
             Controls.Add(pictureBox17);
             Controls.Add(pictureBox16);
             Controls.Add(pbPuertaSalida);
+            Controls.Add(pbPizarra);
             Controls.Add(panelInfo);
             Controls.Add(pictureBox14);
             Controls.Add(pictureBox13);
@@ -458,7 +479,6 @@
             Controls.Add(pictureBox4);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
-            Controls.Add(pbPizarra);
             Controls.Add(pbZonaActiva);
             Controls.Add(pbMensaje);
             Controls.Add(pictureBox1);
@@ -469,7 +489,6 @@
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            Margin = new Padding(3, 2, 3, 2);
             Name = "FormDecanato";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "DECANATO";
