@@ -1039,4 +1039,16 @@
   <data name="poste-luz2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\poste-luz2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="relojArena1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\relojArena1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="relojArena4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\relojArena4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="relojArena3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\relojArena3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="relojArena2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\relojArena2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

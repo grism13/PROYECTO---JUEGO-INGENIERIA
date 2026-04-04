@@ -1042,8 +1042,9 @@ namespace JUEGO_INGENIERIA
                 motorMovimiento.Stop();
                 motorMovimiento.EstaPausado = true;
                 musicaFondo.controls.stop();
-
-                this.Hide();
+                
+                // NO OCULTAMOS EL MAPA PRINCIPAL, PORQUE SINO SE VE EL ESCRITORIO
+                // this.Hide();
 
                 if (jugadorActual == null)
                 {
@@ -1054,9 +1055,12 @@ namespace JUEGO_INGENIERIA
                 }
 
                 FormDecanato decanato = new FormDecanato(jugadorActual);
-                decanato.ShowDialog();
+                
+                // USAMOS LA NUEVA TRANSICION ESTILO CUPHEAD (Iris)
+                IrisTransitions.Transicion(decanato);
 
-                this.Show();
+                // NO HACE FALTA MOSTRAR EL MAPA PRINCIPAL PORQUE NUNCA LO OCULTAMOS
+                // this.Show();
                 ReproducirMusicaMapa();
 
                 this.Invalidate(pbPersonaje.Bounds);
@@ -1130,29 +1134,25 @@ namespace JUEGO_INGENIERIA
             pnlConfirmacionNivel1.Visible = false;
             musicaFondo.controls.stop();
 
-            // Verificamos qué nivel estaba guardado en memoria cuando chocamos
             if (nivelSeleccionado == 1)
             {
-                FormNivel1 nivel1 = new FormNivel1(jugadorActual);
-                nivel1.ShowDialog();
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel1(jugadorActual));
+                carga.ShowDialog();
             }
             else if (nivelSeleccionado == 3)
             {
-                // Entramos al formulario Nivel3
-                FormNivel3 nivel3 = new FormNivel3(jugadorActual);
-                nivel3.ShowDialog();
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel3(jugadorActual));
+                carga.ShowDialog();
             }
             else if (nivelSeleccionado == 2)
             {
-                // Entramos al formulario Nivel2
-                FormNivel2Juego nivel2 = new FormNivel2Juego();
-                nivel2.ShowDialog();
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel2Juego());
+                carga.ShowDialog();
             }
             else if (nivelSeleccionado == 4)
             {
-                // Entramos al formulario Nivel 4 Inicio
-                FormNivel4Inicio nivel4 = new FormNivel4Inicio();
-                nivel4.ShowDialog();
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel4Inicio());
+                carga.ShowDialog();
             }
 
             // Al salir del respectivo nivel, reactivamos música y alejamos al pj de la puerta

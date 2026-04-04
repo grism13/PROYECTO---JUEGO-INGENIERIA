@@ -180,6 +180,9 @@ public partial class FormDecanato : Form
             motorMovimiento.Stop();
             if (reproductorMusica != null) reproductorMusica.controls.stop();
 
+            // USAMOS LA NUEVA TRANSICION ESTILO CUPHEAD (Iris Inverso) antes de morir
+            IrisTransitions.CerrarIrisSync();
+
             this.Close();
         }
     }
