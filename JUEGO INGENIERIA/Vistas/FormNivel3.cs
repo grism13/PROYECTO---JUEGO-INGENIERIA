@@ -558,8 +558,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                             tmrGameLoop.Stop();
                             pnlEscenario.Invalidate();
-                            FormVictoria.Mostrar("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!");
-                            this.Close();
+                            FormVictoria.Mostrar("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!", () => this.Close());
                             return;
                         }
                     }
@@ -830,17 +829,17 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void PerderNivel(string mensaje)
         {
+            Action cerrarAct = () => this.Close();
             if (jugadorActual != null)
             {
                 jugadorActual.Billetera -= 100;
-                FormDerrota.Mostrar($"{mensaje}\nMulta: $100", "¡GAME OVER!");
+                FormDerrota.Mostrar($"{mensaje}\nMulta: $100", "¡GAME OVER!", cerrarAct);
                 ActualizarDatos();
             }
             else
             {
-                FormDerrota.Mostrar(mensaje, "¡GAME OVER!");
+                FormDerrota.Mostrar(mensaje, "¡GAME OVER!", cerrarAct);
             }
-            this.Close();
         }
 
         private void ActualizarDatos()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -381,29 +381,28 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void GanarNivel()
         {
+            Action cerrarAct = () => this.Close();
             if (jugadorActual.Nivel == 1)
             {
                 jugadorActual.Nivel = 2;
-                FormVictoria.Mostrar($"¡FELICIDADES!\nNota: {puntos}/20", "Nivel Completado");
+                FormVictoria.Mostrar($"¡FELICIDADES!\nNota: {puntos}/20", "Nivel Completado", cerrarAct);
 
             }
             else
             {
-                FormVictoria.Mostrar($"¡Bien hecho!", "Repaso Completado");
+                FormVictoria.Mostrar($"¡Bien hecho!", "Repaso Completado", cerrarAct);
             }
 
             ActualizarDatos();
-            this.Close();
         }
 
         private void PerderNivel(string motivo)
         {
             jugadorActual.Billetera -= 100;
-            FormDerrota.Mostrar($"REPROBADO ({motivo}).\nMulta: $100", "Game Over");
+            FormDerrota.Mostrar($"REPROBADO ({motivo}).\nMulta: $100", "Game Over", () => this.Close());
 
 
             ActualizarDatos();
-            this.Close();
         }
 
         private void ReproducirMusicaFondo()
