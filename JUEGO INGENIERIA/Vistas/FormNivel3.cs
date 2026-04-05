@@ -66,6 +66,21 @@ namespace JUEGO_INGENIERIA.Vistas
         private int contadorAnimacionBoss = 0;
         private int velocidadAnimacionBoss = 10; // Ajustado al ritmo original
 
+        // --- SISTEMA DE DIÁLOGOS Y NARRATIVA ---
+        private int indiceFrase = 0;
+        private int indiceLetra = 0;
+        // Textos temporales para el diseñador
+        private string[] discursoMarcel = {
+            "Marcel: Hmm... Así que tú eres quien cree poder con Matemáticas 2.",
+            "Marcel: Espero que sepas integrar, porque te voy a derivar a cero.",
+            "Marcel: ¿Crees que aprobar mi materia es así de fácil? ¡Iluso!",
+            "Marcel: ¡Prepárate para la aniquilación numérica!"
+        };
+        // Las variables pnlIntro, lblMarcelText, pbMarcel, pbFondoNarrativa, btnSkipDialogo y timerEscritura
+        // deben ser creadas arrastrándolas desde el "Cuadro de herramientas" al diseñador visual.
+        private bool enDialogo = true;
+        private Image retratoMarcelDinamico;
+
         // --- AUDIO (MÚSICA DEL NIVEL MULTI-PISTA PARA EVITAR CORTES) ---
         WindowsMediaPlayer reproductorMusicaF1 = new WindowsMediaPlayer();
         WindowsMediaPlayer reproductorMusicaF2 = new WindowsMediaPlayer();
@@ -89,9 +104,6 @@ namespace JUEGO_INGENIERIA.Vistas
         private Font fuenteVidaBoss;
         private SolidBrush pincelDestello;
 
-        // --- OPTIMIZACIÓN DE MEMORIA ---
-        private int contadorGC = 0;
-
         public FormNivel3(Jugador jugadorRecibido)
         {
             InitializeComponent();
@@ -111,7 +123,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                 g.DrawImage(img, 0, 0, width, height);
             }
-            img.Dispose(); // IMPORTANTE: Libera la imagen original de la RAM después de duplicarla
             return bmp;
         }
 
@@ -157,6 +168,35 @@ namespace JUEGO_INGENIERIA.Vistas
             fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
 
+            // --- UI DEL DIÁLOGO (DISEÑADOR VISUAL) ---
+            // Sólo conectamos la lógica. Tú deberás arrastrar los paneles y controles en la ventana de Diseño.
+
+            retratoMarcelDinamico = framesFase1[0];
+            try { pbMarcel.Image = retratoMarcelDinamico; } catch { }
+
+            // Para asegurar fondo transparente real si usas el nivel 3:
+            try { pnlEscenario.Controls.Add(pnlIntro); } catch { }
+
+            try { NavegacionConsola.Configurar(this, btnSkipDialogo); } catch { }
+
+            try { timerEscritura.Interval = 50; } catch { }
+            try { timerEscritura.Tick += TimerEscritura_Tick; } catch { }
+
+            try { lblMarcelText.MouseClick += Control_ClickDialogo; } catch { }
+            try { pbMarcel.MouseClick += Control_ClickDialogo; } catch { }
+            try { pnlIntro.MouseClick += Control_ClickDialogo; } catch { }
+            this.MouseClick += Control_ClickDialogo;
+            this.KeyDown += FormNivel3_KeyDown;
+            this.KeyPreview = true;
+
+            try { btnSkipDialogo.Click -= BtnSkipDialogo_Click; } catch { } // Prevención duplicado
+            try { btnSkipDialogo.Click += BtnSkipDialogo_Click; } catch { }
+
+            try { pnlIntro.BringToFront(); } catch { }
+            enDialogo = true;
+            try { timerEscritura.Start(); } catch { }
+            try { btnSkipDialogo.Select(); btnSkipDialogo.Focus(); } catch { } // Obliga a enfocar para el mando
+
             // --- INICIAR MÚSICA Y SFX ---
             try
             {
@@ -167,19 +207,19 @@ namespace JUEGO_INGENIERIA.Vistas
                 reproductorMusicaF1.settings.setMode("loop", true);
                 reproductorMusicaF1.settings.rate = 1.0;
                 reproductorMusicaF1.settings.volume = 30; // Solo suena esta al inicio
-                reproductorMusicaF1.controls.play();
+                reproductorMusicaF1.controls.stop(); // Solo lo preparamos, comienza después del diálogo
 
                 reproductorMusicaF2.URL = rutaAudio;
                 reproductorMusicaF2.settings.setMode("loop", true);
                 reproductorMusicaF2.settings.rate = 1.08;
                 reproductorMusicaF2.settings.volume = 0; // Se carga en silencio total
-                reproductorMusicaF2.controls.play();
+                reproductorMusicaF2.controls.stop();
 
                 reproductorMusicaF3.URL = rutaAudio;
                 reproductorMusicaF3.settings.setMode("loop", true);
                 reproductorMusicaF3.settings.rate = 1.15;
                 reproductorMusicaF3.settings.volume = 0; // Se carga en silencio total
-                reproductorMusicaF3.controls.play();
+                reproductorMusicaF3.controls.stop();
 
                 // SFX DISPARO CUPHEAD (Volumen al 15 para acompañar)
                 string rutaStart = Path.Combine(Application.StartupPath, "Resources", "player_plane_weapon_fire_start_01.wav");
@@ -216,13 +256,100 @@ namespace JUEGO_INGENIERIA.Vistas
             pbJugador.Location = new Point(200, 200);
 
             movimiento = new FormMovimiento(this, pbJugador, true);
-            movimiento.Start();
+            // No iniciamos nada aún
 
             bossBaseX = pnlEscenario.Width - tamañoBoss - 50;
             bossX = bossBaseX;
 
-            tmrGameLoop.Start();
+            // Esperamos a EmpezarJuegoReal() para soltar el kraken
         }
+
+        // --- METODOS DE LA NARRATIVA ---
+
+        private void TimerEscritura_Tick(object sender, EventArgs e)
+        {
+            string fraseCompleta = discursoMarcel[indiceFrase];
+            if (indiceLetra < fraseCompleta.Length)
+            {
+                lblMarcelText.Text += fraseCompleta[indiceLetra];
+                indiceLetra++;
+            }
+            else
+            {
+                timerEscritura.Stop();
+            }
+        }
+
+        private void Control_ClickDialogo(object sender, MouseEventArgs e)
+        {
+            if (enDialogo) SaltarOContinuarDialogo();
+        }
+
+        private void FormNivel3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (enDialogo) SaltarOContinuarDialogo();
+        }
+
+        private void SaltarOContinuarDialogo()
+        {
+            if (!enDialogo) return;
+
+            if (timerEscritura.Enabled)
+            {
+                // Acelera si no había terminado
+                timerEscritura.Stop();
+                lblMarcelText.Text = discursoMarcel[indiceFrase];
+            }
+            else
+            {
+                // Pasa a la siguiente frase si ya habíamos completado
+                indiceFrase++;
+                if (indiceFrase < discursoMarcel.Length)
+                {
+                    lblMarcelText.Text = "";
+                    indiceLetra = 0;
+                    timerEscritura.Start();
+                }
+                else
+                {
+                    EmpezarJuegoReal();
+                }
+            }
+        }
+
+        private void BtnSkipDialogo_Click(object sender, EventArgs e)
+        {
+            EmpezarJuegoReal();
+        }
+
+        private void EmpezarJuegoReal()
+        {
+            if (!enDialogo) return;
+            enDialogo = false;
+
+            try { pnlIntro.Visible = false; } catch { }
+            try { pbMarcel.Visible = false; } catch { } // Se oculta por si quedó fuera del panel
+            try { lblMarcelText.Visible = false; } catch { }
+            try { btnSkipDialogo.Visible = false; } catch { }
+
+            try { timerEscritura.Stop(); } catch { }
+
+            // Iniciar variables de juego reales
+            movimiento.Start();
+            tmrGameLoop.Start();
+
+            try
+            {
+                reproductorMusicaF1.controls.play();
+                reproductorMusicaF2.controls.play();
+                reproductorMusicaF3.controls.play();
+            }
+            catch { }
+
+            this.Focus();
+        }
+
+        // --- FIN METODOS DE NARRATIVA ---
 
         protected override void WndProc(ref Message m)
         {
@@ -242,24 +369,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            bool intentandoDisparo = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
-            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
-
-            if (altPresionado && !modoConcentrado)
-            {
-                modoConcentrado = true;
-                targetTamañoJugador = 60;
-                danoJugador = 5;
-            }
-            else if (!altPresionado && modoConcentrado)
-            {
-                modoConcentrado = false;
-                targetTamañoJugador = 150;
-                danoJugador = 10;
-            }
-
-            // Aquí nos aseguramos de que el juego SOLO crea que estamos disparando si NO estamos en modo pequeño.
-            disparando = intentandoDisparo && !modoConcentrado;
+            disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
 
             // --- LÓGICA DE TRANSICIÓN DE MÚSICA FLUIDA (DJ CROSSFADE) ---
             if (transicionVolumen > 0)
@@ -301,6 +411,21 @@ namespace JUEGO_INGENIERIA.Vistas
                 sfxDisparoEnd.controls.play();
             }
             estabaDisparando = disparando;
+
+            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+
+            if (altPresionado && !modoConcentrado)
+            {
+                modoConcentrado = true;
+                targetTamañoJugador = 60;
+                danoJugador = 5;
+            }
+            else if (!altPresionado && modoConcentrado)
+            {
+                modoConcentrado = false;
+                targetTamañoJugador = 150;
+                danoJugador = 10;
+            }
 
             fondoX -= velocidadFondo;
             if (fondoX <= -pnlEscenario.Width)
@@ -601,14 +726,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
-            // --- DESTRUCTOR DE FUGAS DE MEMORIA (GARBAGE COLLECTOR) ---
-            contadorGC++;
-            if (contadorGC >= 100) // Cada ~1 segundo (porque es 100 FPS)
-            {
-                contadorGC = 0;
-                GC.Collect(0, GCCollectionMode.Optimized); // Limpieza rápida de la Generación 0 (los objetos efímeros)
-            }
-
             pnlEscenario.Invalidate();
         }
 
@@ -747,8 +864,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             var opciones = new JsonSerializerOptions { WriteIndented = true };
             string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
-    
             File.WriteAllText(rutaArchivo, nuevoJson);
         }
     }
-} 
+}
