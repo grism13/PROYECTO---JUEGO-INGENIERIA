@@ -89,6 +89,9 @@ namespace JUEGO_INGENIERIA.Vistas
         private Font fuenteVidaBoss;
         private SolidBrush pincelDestello;
 
+        // --- OPTIMIZACIÓN DE MEMORIA ---
+        private int contadorGC = 0;
+
         public FormNivel3(Jugador jugadorRecibido)
         {
             InitializeComponent();
@@ -108,6 +111,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
                 g.DrawImage(img, 0, 0, width, height);
             }
+            img.Dispose(); // IMPORTANTE: Libera la imagen original de la RAM después de duplicarla
             return bmp;
         }
 
@@ -238,7 +242,24 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            bool intentandoDisparo = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+
+            if (altPresionado && !modoConcentrado)
+            {
+                modoConcentrado = true;
+                targetTamañoJugador = 60;
+                danoJugador = 5;
+            }
+            else if (!altPresionado && modoConcentrado)
+            {
+                modoConcentrado = false;
+                targetTamañoJugador = 150;
+                danoJugador = 10;
+            }
+
+            // Aquí nos aseguramos de que el juego SOLO crea que estamos disparando si NO estamos en modo pequeño.
+            disparando = intentandoDisparo && !modoConcentrado;
 
             // --- LÓGICA DE TRANSICIÓN DE MÚSICA FLUIDA (DJ CROSSFADE) ---
             if (transicionVolumen > 0)
@@ -280,21 +301,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 sfxDisparoEnd.controls.play();
             }
             estabaDisparando = disparando;
-
-            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
-
-            if (altPresionado && !modoConcentrado)
-            {
-                modoConcentrado = true;
-                targetTamañoJugador = 60;
-                danoJugador = 5;
-            }
-            else if (!altPresionado && modoConcentrado)
-            {
-                modoConcentrado = false;
-                targetTamañoJugador = 150;
-                danoJugador = 10;
-            }
 
             fondoX -= velocidadFondo;
             if (fondoX <= -pnlEscenario.Width)
@@ -595,6 +601,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
+            // --- DESTRUCTOR DE FUGAS DE MEMORIA (GARBAGE COLLECTOR) ---
+            contadorGC++;
+            if (contadorGC >= 100) // Cada ~1 segundo (porque es 100 FPS)
+            {
+                contadorGC = 0;
+                GC.Collect(0, GCCollectionMode.Optimized); // Limpieza rápida de la Generación 0 (los objetos efímeros)
+            }
+
             pnlEscenario.Invalidate();
         }
 
@@ -733,7 +747,8 @@ namespace JUEGO_INGENIERIA.Vistas
 
             var opciones = new JsonSerializerOptions { WriteIndented = true };
             string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
+    
             File.WriteAllText(rutaArchivo, nuevoJson);
         }
     }
-}
+} 
