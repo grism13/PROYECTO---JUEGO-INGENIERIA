@@ -42,7 +42,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 string rutaAudio = Path.Combine(Application.StartupPath, "Resources", "ono_musica.mp3");
                 reproductorMusica.URL = rutaAudio;
                 reproductorMusica.settings.setMode("loop", true);
-                reproductorMusica.settings.volume = 20; // Volumen moderado
+                reproductorMusica.settings.volume = 35; // Volumen moderado
                 reproductorMusica.controls.play();
             }
             catch { }
