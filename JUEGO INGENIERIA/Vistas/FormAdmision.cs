@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -139,19 +139,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 // ¡LA MAGIA! Abrimos el candado porque le dio a jugar
                 puedeCerrar = true;
 
-                this.Close();
-            }
-            else
-            {
-                MessageBox.Show("Por favor selecciona un jugador para continuar");
-            }
-
-
-
-            if (dvJugadores.SelectedRows.Count > 0)
-            {
-                Jugador jugadorSeleccionado = (Jugador)dvJugadores.SelectedRows[0].DataBoundItem;
-                Form1.JugadorActual = jugadorSeleccionado;
+                IrisTransitions.CerrarIrisSync();
                 this.Close();
             }
             else

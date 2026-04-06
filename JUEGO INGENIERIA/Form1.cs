@@ -323,25 +323,57 @@ namespace JUEGO_INGENIERIA
             }
             this.Hide();
 
-            FormIntro intro = new FormIntro();
-            intro.ShowDialog();
-
+            // 1 y 2. Historia Inicial y Formulario de Admisión (Solapados)
             FormAdmision registro = new FormAdmision();
+            
+            // En cuanto el formulario de admisión termine de dibujarse (fondo), abrirá la Intro encima
+            registro.Shown += (s, ev) => 
+            {
+                FormIntro intro = new FormIntro();
+                intro.ShowDialog(registro); // ShowDialog bloquea la admisión y la pone de fondo hasta que termine
+            };
+
             registro.ShowDialog();
 
+            // PRE-CARGA DE PANTALLA: Instanciamos CargaDeJuegos y Selección al mismo tiempo
+            // Esto evita que cuando se cierre la selección, haya un delay de milisegundos 
+            // intentando construir el FormCargaDeJuegos (lo que causaba ver el escritorio).
+            FormCargaDeJuegos carga = new FormCargaDeJuegos();
+            carga.TopMost = true;
+
+            // 3. Selección de Personaje (Abre el Iris al entrar, la seleccion cierra de golpe al continuar)
             ElegirPersonaje seleccion = new ElegirPersonaje();
-            seleccion.ShowDialog();
+            IrisTransitions.Transicion(seleccion, null, false);
 
+            // En cuenta cierra, mandamos el Show ultra-rápido de la pantalla ya pre-cargada
+            carga.Show();
+            carga.Update(); // Forzamos que se dibuje instantáneamente sobre el fondo negro
+
+            // Ocultamos el iris negro LUEGO de mostrar la pantalla de carga, 
+            IrisTransitions.OcultarSinc();
+
+            // Mostramos silenciosamente el mapa por detrás de la pantalla de carga
+            this.Show();
+            this.Update();
+
+            // Esperamos 2.5 segundos para la carga visual
+            System.Windows.Forms.Timer tCarga = new System.Windows.Forms.Timer();
+            tCarga.Interval = 2500;
+            tCarga.Tick += (s2, e2) => {
+                tCarga.Stop();
+                carga.Close();
+                
+                // Finalmente damos control al jugador
+                this.Focus();
+                ReproducirMusicaMapa();
+            };
+            tCarga.Start();
+
+            // Inicialización del motor de juego (Mapa)
             jugadorActual = Form1.JugadorActual;
-
             motorMovimiento = new FormMovimiento(this, pbPersonaje);
             motorMovimiento.ColisionConObjeto += MotorMovimiento_ColisionConObjeto;
             motorMovimiento.Start();
-
-            this.Show();
-            this.Focus();
-
-            ReproducirMusicaMapa();
         }
 
         private void Form1_Activated(object sender, EventArgs e)

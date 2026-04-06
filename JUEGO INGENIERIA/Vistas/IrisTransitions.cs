@@ -59,21 +59,26 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        public static void Transicion(Form nextForm, Action accionIntermedia = null)
+        public static void Transicion(Form nextForm, Action accionIntermedia = null, bool revertOnClose = true)
         {
             InitCore();
-            radioApertura = maxRadio;
-            overlay.Show();
-            Application.DoEvents();
-
-            // Fase 1: Iris Out sobre la ventana actual
-            while (radioApertura > 0)
+            
+            if (!overlay.Visible || radioApertura > 0)
             {
-                radioApertura -= paso;
-                if (radioApertura < 0) radioApertura = 0;
-                overlay.Invalidate();
+                radioApertura = maxRadio;
+                overlay.Show();
+                overlay.BringToFront();
                 Application.DoEvents();
-                System.Threading.Thread.Sleep(15);
+
+                // Fase 1: Iris Out sobre la ventana actual
+                while (radioApertura > 0)
+                {
+                    radioApertura -= paso;
+                    if (radioApertura < 0) radioApertura = 0;
+                    overlay.Invalidate();
+                    Application.DoEvents();
+                    System.Threading.Thread.Sleep(15);
+                }
             }
 
             // Cuando la próxima ventana cargue por debajo y esté lista, soltamos el círculo
@@ -106,7 +111,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // Fase 3: Iris In sobre este nivel base cuando volvimos. 
             // (La ventana destino llamó antes a CerrarIrisSync, por lo tanto radioApertura es 0 y el overlay está vivo y negro)
-            if (overlay.Visible && radioApertura <= 0)
+            if (revertOnClose && overlay.Visible && radioApertura <= 0)
             {
                 while (radioApertura < maxRadio)
                 {
@@ -137,6 +142,36 @@ namespace JUEGO_INGENIERIA.Vistas
                 overlay.Invalidate();
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(15);
+            }
+        }
+
+        public static void AbrirIrisSync()
+        {
+            InitCore();
+            // Lo ponemos en negro visualmente
+            radioApertura = 0;
+            overlay.Show();
+            overlay.BringToFront();
+            Application.DoEvents();
+
+            // Iris In final
+            while (radioApertura < maxRadio)
+            {
+                radioApertura += paso;
+                if (radioApertura > maxRadio) radioApertura = maxRadio;
+                overlay.Invalidate();
+                Application.DoEvents();
+                System.Threading.Thread.Sleep(15);
+            }
+            overlay.Hide();
+        }
+
+        public static void OcultarSinc()
+        {
+            if (overlay != null)
+            {
+                overlay.Hide();
+                radioApertura = maxRadio;
             }
         }
     }
