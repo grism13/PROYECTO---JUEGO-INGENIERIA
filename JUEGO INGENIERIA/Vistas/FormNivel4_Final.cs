@@ -63,8 +63,15 @@ namespace JUEGO_INGENIERIA.Vistas
         List<BalaTesis> balasBoss = new List<BalaTesis>();
         Random rnd = new Random();
 
+        // === IMÁGENES DEL ESCENARIO Y ANIMACIÓN DEL JEFE 1 ===
+        Image imgFondoFase1;
+        Image[] framesVillanoAPA = new Image[4]; // AHORA SON 4 SPRITES
+        int frameActualVillano = 0;
+        int contadorAnimacionVillano = 0;
+        int velocidadAnimacionVillano = 10; // Ajusta para que baile más rápido o lento
+
         // ------------------------------
-        // J1: LA PAPA 
+        // J1: LA PAPA (NORMAS APA)
         // ------------------------------
         Rectangle bossPapa;
         int papaHealth = 150;
@@ -113,44 +120,80 @@ namespace JUEGO_INGENIERIA.Vistas
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
 
-            player = new Rectangle(150, groundY - 80, 60, 80);
+            player = new Rectangle(150, groundY - 120, 90, 120);
             int centroPantallaX = (this.ClientSize.Width / 2) - 100;
 
-            bossPapa = new Rectangle(1000, groundY - 250, 200, 250);
+            bossPapa = new Rectangle(900, groundY - 350, 300, 350);
             bossCebolla = new Rectangle(centroPantallaX, groundY + 10, 200, 250);
 
             // LA ZANAHORIA AHORA ES COLOSAL (500 de pura altura) Y EMPIEZA MÁS ARRIBA
             bossZanahoria = new Rectangle(centroPantallaX + 25, groundY - 450, 150, 500);
 
-            CargarSpritesJugador(); // Cargar animaciones
+            // Cargar imagen del fondo de la Fase 1
+            try
+            {
+                imgFondoFase1 = Properties.Resources.fondo_apa;
+            }
+            catch { /* Silencioso si no encuentra el fondo */ }
+
+            CargarSpritesJugador(); // Cargar animaciones del jugador
+            CargarSpritesVillanoAPA(); // Cargar animaciones del jefe 1
 
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
             tmrGameLoop.Start();
         }
 
+        private void CargarSpritesVillanoAPA()
+        {
+            try
+            {
+                // AHORA RECORRE SOLO HASTA 4
+                for (int i = 0; i < 4; i++)
+                {
+                    // Buscamos primero con guion bajo (que es lo que suele hacer Visual Studio)
+                    object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1_{i + 1}");
+
+                    // Si no lo encuentra, busca con el guion normal por si acaso
+                    if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1-{i + 1}");
+
+                    if (obj != null)
+                    {
+                        framesVillanoAPA[i] = (Image)obj;
+                    }
+                    else
+                    {
+                        // Fallback visible por si acaso falta una imagen
+                        framesVillanoAPA[i] = new Bitmap(10, 10);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error cargando sprites del villano APA: " + ex.Message);
+            }
+        }
+
         private void CargarSpritesJugador()
         {
             try
             {
-                // Obtenemos el nombre del personaje de DatosJuego (eliezer, roand o gris)
                 string p = "gris"; // Por defecto
                 if (!string.IsNullOrEmpty(DatosJuego.PersonajeElegido))
                 {
                     p = DatosJuego.PersonajeElegido.ToLower();
                 }
 
-                int w = 60; // Ancho del personaje (player.Width)
-                int h = 80; // Alto del personaje (player.Height)
+                int w = 90;
+                int h = 120;
 
-                // === VARIABLES DE CALIBRACIÓN DEL SALTO POR PERSONAJE ===
                 float saltoEscala = 1.0f;
                 int saltoElevar = 0;
 
                 if (p == "gris")
                 {
-                    saltoEscala = 0.78f; // Ajusta si Gris se ve gigante al saltar (ej. 0.80f o 0.90f)
-                    saltoElevar = 10;     // Ajusta si sus pies quedan hundidos o flotando
+                    saltoEscala = 0.78f;
+                    saltoElevar = 10;
                 }
                 else if (p == "roand")
                 {
@@ -162,64 +205,57 @@ namespace JUEGO_INGENIERIA.Vistas
                     saltoEscala = 1.0f;
                     saltoElevar = 0;
                 }
-                // ===========================================
 
-                // Cargar fotogramas de salto
                 for (int i = 0; i < 5; i++)
                 {
                     object objSalto = Properties.Resources.ResourceManager.GetObject($"{p}-saltando{i + 1}");
                     if (objSalto == null) objSalto = Properties.Resources.ResourceManager.GetObject($"{p}_saltando{i + 1}");
                     if (objSalto == null) objSalto = Properties.Resources.ResourceManager.GetObject($"gris-saltando{i + 1}");
-                    
-                    // Optimizar y cachear para lado Derecho
+
                     framesSaltoDer[i] = OptimizarImagen((Image)objSalto, h, saltoEscala, saltoElevar, 0, 0);
-                    
-                    // Crear clon, voltearlo y cachear para lado Izquierdo
+
                     Image imgIzq = (Image)framesSaltoDer[i].Clone();
                     imgIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
                     framesSaltoIzq[i] = imgIzq;
                 }
 
-                // Cargar fotogramas de caminar (son 3, hacemos ciclo de 4: 1->2->3->2)
                 for (int i = 0; i < 3; i++)
                 {
                     object objCamina = Properties.Resources.ResourceManager.GetObject($"{p}_ladoderecho{i + 1}");
                     if (objCamina == null) objCamina = Properties.Resources.ResourceManager.GetObject($"gris_ladoderecho{i + 1}");
-                    
+
                     Image optimizadaDer = OptimizarImagen((Image)objCamina, h);
                     Image optimizadaIzq = (Image)optimizadaDer.Clone();
                     optimizadaIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
 
-                    if (i == 0) // ladoderecho1
+                    if (i == 0)
                     {
                         framesCaminarDer[0] = optimizadaDer;
                         framesCaminarIzq[0] = optimizadaIzq;
                     }
-                    else if (i == 1) // ladoderecho2
+                    else if (i == 1)
                     {
                         framesCaminarDer[1] = optimizadaDer;
                         framesCaminarIzq[1] = optimizadaIzq;
-                        framesCaminarDer[3] = optimizadaDer; // Para el ciclo 1-2-3-2
+                        framesCaminarDer[3] = optimizadaDer;
                         framesCaminarIzq[3] = optimizadaIzq;
                     }
-                    else if (i == 2) // ladoderecho3
+                    else if (i == 2)
                     {
                         framesCaminarDer[2] = optimizadaDer;
                         framesCaminarIzq[2] = optimizadaIzq;
                     }
                 }
 
-                // Cargar frame estático/idle
                 object objIdle = Properties.Resources.ResourceManager.GetObject($"{p}_ladoderecho1");
                 if (objIdle == null) objIdle = Properties.Resources.ResourceManager.GetObject("gris_ladoderecho1");
-                
+
                 frameIdleDer = OptimizarImagen((Image)objIdle, h);
-                
+
                 Image idleIzq = (Image)frameIdleDer.Clone();
                 idleIzq.RotateFlip(RotateFlipType.RotateNoneFlipX);
                 frameIdleIzq = idleIzq;
 
-                // Cargar frame de disparo medio
                 object objDisparoMedio = Properties.Resources.ResourceManager.GetObject($"{p}-disparo-medio-derecha");
                 if (objDisparoMedio == null) objDisparoMedio = Properties.Resources.ResourceManager.GetObject($"{p}_disparo_medio_derecha");
                 if (objDisparoMedio == null) objDisparoMedio = Properties.Resources.ResourceManager.GetObject("gris-disparo-medio-derecha");
@@ -227,7 +263,6 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 if (objDisparoMedio != null)
                 {
-                    // === VARIABLES DE CALIBRACIÓN DEL DISPARO POR PERSONAJE ===
                     float disparoEscala = 1.0f;
                     int disparoElevar = 0;
                     int disparoIzq = 0;
@@ -242,21 +277,18 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                     else if (p == "roand")
                     {
-                        // Modifica estos valores para calibrar a roand
                         disparoEscala = 0.90f;
                         disparoElevar = 4;
                         disparoIzq = 15;
                         disparoDer = 0;
                     }
-                    else // "gris" o cualquier otro
+                    else
                     {
-                        // Modifica estos valores para calibrar a gris
                         disparoEscala = 0.75f;
                         disparoElevar = 11;
                         disparoIzq = 13;
                         disparoDer = 0;
                     }
-                    // ===========================================
 
                     frameDisparoMedioDer = OptimizarImagen((Image)objDisparoMedio, h, disparoEscala, disparoElevar, disparoIzq, disparoDer);
                     Image disparoIzqImg = (Image)frameDisparoMedioDer.Clone();
@@ -265,7 +297,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
                 else
                 {
-                    // Fallback para evitar crashear si borraste la imagen en Properties
                     frameDisparoMedioDer = frameIdleDer;
                     frameDisparoMedioIzq = frameIdleIzq;
                 }
@@ -281,15 +312,12 @@ namespace JUEGO_INGENIERIA.Vistas
         private Bitmap OptimizarImagen(Image img, int targetHeight, float contentScale = 1.0f, int paddingBottom = 0, int paddingLeft = 0, int paddingRight = 0)
         {
             if (img == null) return null;
-            
+
             float ratio = (float)img.Width / img.Height;
-            
-            // Tamaño real del dibujo dentro de la tela
+
             int contentHeight = (int)(targetHeight * contentScale);
             int contentWidth = (int)(contentHeight * ratio);
 
-            // La tela final siempre es del targetHeight (80) 
-            // Su anchura crecerá si agregamos padding para obligar a que el "centro" cambie
             int canvasHeight = targetHeight;
             int canvasWidth = contentWidth + paddingLeft + paddingRight;
 
@@ -301,12 +329,10 @@ namespace JUEGO_INGENIERIA.Vistas
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
                 g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
-                
-                // Alineado abajo (suelo) menos el espacio vacío inferior que imita a los otros sprites
-                // El X inicia después del paddingLeft definido
+
                 int paintY = canvasHeight - contentHeight - paddingBottom;
                 int paintX = paddingLeft;
-                
+
                 g.DrawImage(img, paintX, paintY, contentWidth, contentHeight);
             }
             return bmp;
@@ -322,7 +348,7 @@ namespace JUEGO_INGENIERIA.Vistas
             bool keyShoot = (GetAsyncKeyState(Keys.X) & 0x8000) != 0;
             bool keyDash = (GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0;
 
-            bool isMovingLeftOrRight = false; // Nos dirá si el jugador se está moviendo lateralmente
+            bool isMovingLeftOrRight = false;
 
             if (dashCooldown > 0) dashCooldown--;
             if (cooldownDisparo > 0) cooldownDisparo--;
@@ -355,46 +381,42 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (keyJump && !isJumping && player.Y + player.Height >= groundY)
             {
-                isJumping = true; force = 22;
+                isJumping = true; force = 16;
             }
 
-            if (isJumping) 
-            { 
-                jumpSpeed = -force; force -= 1; 
+            if (isJumping)
+            {
+                jumpSpeed = -force; force -= 1;
 
-                // --- LÓGICA DE ANIMACIÓN DE SALTO BASADA EN FÍSICAS ---
-                if (force > 15) // Fase de Impulso (al inicio del salto)
+                if (force > 15)
                 {
                     frameSaltoActual = 0;
                 }
-                else if (jumpSpeed < -4) // Fase de Subida
+                else if (jumpSpeed < -4)
                 {
                     frameSaltoActual = 1;
                 }
-                else if (jumpSpeed >= -4 && jumpSpeed <= 6) // Fase de Vuelo (en el tope)
+                else if (jumpSpeed >= -4 && jumpSpeed <= 6)
                 {
                     frameSaltoActual = 2;
                 }
-                else // Fase de Caída
+                else
                 {
-                    // Si estamos a punto de tocar el piso, mostramos el aterrizaje
                     if (player.Y + player.Height >= groundY - 40)
                     {
-                        frameSaltoActual = 4; // Abajo completamente / aterrizando
+                        frameSaltoActual = 4;
                     }
                     else
                     {
-                        frameSaltoActual = 3; // Cayendo
+                        frameSaltoActual = 3;
                     }
                 }
-                // Asignar el fotograma cacheado dependiendo de la dirección
                 frameActualSprite = (facingDirection == 1) ? framesSaltoDer[frameSaltoActual] : framesSaltoIzq[frameSaltoActual];
             }
-            else 
-            { 
-                jumpSpeed = gravity * 4; 
-                
-                // --- LÓGICA DE ANIMACIÓN DE CAMINAR ---
+            else
+            {
+                jumpSpeed = gravity * 4;
+
                 if (isMovingLeftOrRight)
                 {
                     contadorAnimacionJugador++;
@@ -408,15 +430,12 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
                 else
                 {
-                    // Asignar idle cacheado dependiendo de la dirección
                     frameCaminarActual = 0;
                     contadorAnimacionJugador = 0;
                     frameActualSprite = (facingDirection == 1) ? frameIdleDer : frameIdleIzq;
                 }
             }
 
-            // --- OVERRIDE DE ANIMACIÓN DE DISPARO ---
-            // Si el jugador acaba de disparar (los primeros 12 ticks del cooldown), mostramos el sprite de disparo
             if (cooldownDisparo > 8)
             {
                 frameActualSprite = (facingDirection == 1) ? frameDisparoMedioDer : frameDisparoMedioIzq;
@@ -452,7 +471,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         Rectangle rectMini = new Rectangle((int)balasBoss[m].X, (int)balasBoss[m].Y, 30, 30);
                         if (hitboxBala.IntersectsWith(rectMini))
                         {
-                            balasBoss.RemoveAt(m); // Tú matas secuaces
+                            balasBoss.RemoveAt(m);
                             impactoRealizado = true;
                             break;
                         }
@@ -490,8 +509,21 @@ namespace JUEGO_INGENIERIA.Vistas
             // ====================================================
             // I.A. DE LOS JEFES (POR FASES)
             // ====================================================
-            if (currentPhase == 1) // ====== LA PAPA ======
+            if (currentPhase == 1) // ====== LA PAPA (NORMAS APA) ======
             {
+                // --- ACTUALIZAR ANIMACIÓN CONTINUA DEL VILLANO ---
+                if (papaHealth > 0)
+                {
+                    contadorAnimacionVillano++;
+                    if (contadorAnimacionVillano >= velocidadAnimacionVillano)
+                    {
+                        contadorAnimacionVillano = 0;
+                        frameActualVillano++;
+                        // AHORA SE REINICIA AL LLEGAR AL FRAME 4
+                        if (frameActualVillano >= 4) frameActualVillano = 0;
+                    }
+                }
+
                 if (papaState == 0)
                 {
                     papaAttackCooldown--;
@@ -585,7 +617,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         BalaTesis rayo = new BalaTesis();
                         rayo.X = bossZanahoria.X + (bossZanahoria.Width / 2);
-                        rayo.Y = bossZanahoria.Y - 20; // Nace muchísimo más alto por el nuevo tamaño del Jefe
+                        rayo.Y = bossZanahoria.Y - 20;
                         rayo.Tag = "boss_rayo";
 
                         float dirX = (player.X + 30) - rayo.X;
@@ -606,7 +638,6 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
                         else
                         {
-                            // AQUI ESTÁ LA MAGIA: 110 Frames = Más de 1 Seg de pausa vital
                             zanahoriaRayoTimer = 110;
                         }
                     }
@@ -627,9 +658,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     zanahoriaMiniCooldown = rnd.Next(250, 400);
                 }
 
-                // -------------------------------------------------------------
-                // SISTEMA DE FUEGO AMIGO (Láser Desintegra Secuaces)
-                // -------------------------------------------------------------
                 List<BalaTesis> basuraFuegoAmigo = new List<BalaTesis>();
                 foreach (BalaTesis laser in balasBoss)
                 {
@@ -648,7 +676,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
                 foreach (BalaTesis destruida in basuraFuegoAmigo) { balasBoss.Remove(destruida); }
-                // -------------------------------------------------------------
 
                 // MOVER LOS PROYECTILES DEL JEFE 3
                 for (int i = balasBoss.Count - 1; i >= 0; i--)
@@ -660,7 +687,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         bola.X += bola.VX;
                         bola.Y += bola.VY;
-                        tamHitbox = 30; // HITBOX AMPLIADO a un bloque de 30x30 en la punta
+                        tamHitbox = 30;
                     }
                     else if (bola.Tag == "boss_minizanahoria")
                     {
@@ -713,14 +740,35 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
 
-            e.Graphics.Clear(Color.FromArgb(20, 20, 30));
-            e.Graphics.FillRectangle(Brushes.DarkOliveGreen, 0, groundY, pnlEscenario.Width, pnlEscenario.Height - groundY);
+            // 1. DIBUJAR EL FONDO DEPENDIENDO DE LA FASE
+            if (currentPhase == 1 && imgFondoFase1 != null)
+            {
+                // Dibuja el libro de las Normas APA cubriendo todo el panel
+                e.Graphics.DrawImage(imgFondoFase1, 0, 0, pnlEscenario.Width, pnlEscenario.Height);
+            }
+            else
+            {
+                e.Graphics.Clear(Color.FromArgb(20, 20, 30));
+                e.Graphics.FillRectangle(Brushes.DarkOliveGreen, 0, groundY, pnlEscenario.Width, pnlEscenario.Height - groundY);
+            }
 
+            // 2. DIBUJAR AL VILLANO DE LA FASE 1 (La Papa / Normas APA)
             if (currentPhase == 1 && papaHealth > 0)
             {
-                e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
+                Image spriteAMostrar = framesVillanoAPA[frameActualVillano];
+
+                if (spriteAMostrar != null)
+                {
+                    e.Graphics.DrawImage(spriteAMostrar, bossPapa);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
+                }
+
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
-                e.Graphics.DrawString("Papa HP: " + papaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossPapa.X, bossPapa.Y - 30);
+
+                e.Graphics.DrawString("Normas APA HP: " + papaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossPapa.X, bossPapa.Y - 30);
             }
             else if (currentPhase == 2 && cebollaHealth > 0 && cebollaState > 0)
             {
@@ -747,14 +795,12 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
                 else if (bola.Tag == "boss_rayo")
                 {
-                    // LÁSER MASIVO Y ESPECTACULAR
-                    float estela = 15.0f; // Más larga
-                    Pen laserPen = new Pen(Color.Cyan, 26); // Grosor 26
+                    float estela = 15.0f;
+                    Pen laserPen = new Pen(Color.Cyan, 26);
                     laserPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                     laserPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
                     e.Graphics.DrawLine(laserPen, bola.X, bola.Y, bola.X - (bola.VX * estela), bola.Y - (bola.VY * estela));
 
-                    // Núcleo Blanco Puro (Destello en la punta)
                     e.Graphics.FillEllipse(Brushes.White, bola.X - 12, bola.Y - 12, 24, 24);
                 }
                 else if (bola.Tag == "boss_minizanahoria")
@@ -764,23 +810,19 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
-            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0) 
-            { 
-                // Parpadeo: no dibujar
+            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0)
+            {
             }
             else
             {
                 if (frameActualSprite != null)
                 {
-                    // Centramos la imagen de forma dinámica basada en su anchura real (proporción conservada)
                     int drawX = player.X + (player.Width / 2) - (frameActualSprite.Width / 2);
                     int drawY = player.Y + player.Height - frameActualSprite.Height;
 
-                    if (isDashing) // Efecto visual simple extra para el dash
+                    if (isDashing)
                     {
-                        // Dibujar rápido desde caché sin escalado
                         e.Graphics.DrawImageUnscaled(frameActualSprite, drawX, drawY);
-                        // Estela azul claro para el dash
                         e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(100, Color.Cyan)), player);
                     }
                     else
@@ -790,7 +832,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
                 else
                 {
-                    // Fallback a cuadro si no cargó el sprite
                     Brush colorJugador = isDashing ? Brushes.Cyan : Brushes.Blue;
                     e.Graphics.FillRectangle(colorJugador, player);
                 }

@@ -251,6 +251,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap capaArbolesFrente {
+            get {
+                object obj = ResourceManager.GetObject("capaArbolesFrente", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap carta {
             get {
                 object obj = ResourceManager.GetObject("carta", resourceCulture);
@@ -1011,6 +1021,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap fondo_apa {
+            get {
+                object obj = ResourceManager.GetObject("fondo_apa", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap fondo_imagen_para_registro {
             get {
                 object obj = ResourceManager.GetObject("fondo imagen para registro", resourceCulture);
@@ -1111,9 +1131,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap fondonivel1 {
+        internal static System.Drawing.Bitmap fondomundo__1_ {
             get {
-                object obj = ResourceManager.GetObject("fondonivel1", resourceCulture);
+                object obj = ResourceManager.GetObject("fondomundo (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1141,30 +1161,9 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap FondoNivel3 {
-            get {
-                object obj = ResourceManager.GetObject("FondoNivel3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap fondoOno {
             get {
                 object obj = ResourceManager.GetObject("fondoOno", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap From_KlickPin_CF_Sonic_The_Hedgehog_Tails_GIF___Sonic_The_Hedgehog_Tails_Knuckles___Descubre_y_comparte_GIF___Classic_sonic_Dancing_gif_Sonic_funny__1_ {
-            get {
-                object obj = ResourceManager.GetObject("From KlickPin CF Sonic The Hedgehog Tails GIF - Sonic The Hedgehog Tails Knuckles" +
-                        " - Descubre y comparte GIF _ Classic sonic Dancing gif Sonic funny (1)", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1195,16 +1194,6 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap geyzer2 {
             get {
                 object obj = ResourceManager.GetObject("geyzer2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap gris_cabeza {
-            get {
-                object obj = ResourceManager.GetObject("gris-cabeza", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -1714,6 +1703,36 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.Drawing.Bitmap kirbinojaogris {
             get {
                 object obj = ResourceManager.GetObject("kirbinojaogris", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap letreronivel2 {
+            get {
+                object obj = ResourceManager.GetObject("letreronivel2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap letreronivel3 {
+            get {
+                object obj = ResourceManager.GetObject("letreronivel3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap letreronivel4 {
+            get {
+                object obj = ResourceManager.GetObject("letreronivel4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -3097,6 +3116,46 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.IO.UnmanagedMemoryStream SONIDO_DE_CAJA_COBRANDO {
             get {
                 return ResourceManager.GetStream("SONIDO_DE_CAJA_COBRANDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tesis_f1_1 {
+            get {
+                object obj = ResourceManager.GetObject("tesis_f1-1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tesis_f1_2 {
+            get {
+                object obj = ResourceManager.GetObject("tesis_f1-2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tesis_f1_3 {
+            get {
+                object obj = ResourceManager.GetObject("tesis_f1-3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap tesis_f1_4 {
+            get {
+                object obj = ResourceManager.GetObject("tesis_f1-4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

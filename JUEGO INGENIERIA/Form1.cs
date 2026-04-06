@@ -1151,7 +1151,7 @@ namespace JUEGO_INGENIERIA
             }
             else if (nivelSeleccionado == 4)
             {
-                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel4Inicio());
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel4_Final());
                 carga.ShowDialog();
             }
 
