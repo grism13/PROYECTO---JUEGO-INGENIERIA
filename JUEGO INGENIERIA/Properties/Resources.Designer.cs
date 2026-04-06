@@ -1211,6 +1211,26 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap gifDerrota {
+            get {
+                object obj = ResourceManager.GetObject("gifDerrota", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gifVictoria {
+            get {
+                object obj = ResourceManager.GetObject("gifVictoria", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap gris_disparo_diagonal_abajo_derecha {
             get {
                 object obj = ResourceManager.GetObject("gris-disparo-diagonal-abajo-derecha", resourceCulture);

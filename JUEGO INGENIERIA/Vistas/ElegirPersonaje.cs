@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +15,8 @@ namespace JUEGO_INGENIERIA.Vistas
         public ElegirPersonaje()
         {
             InitializeComponent();
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
             NavegacionConsola.Configurar(this, ElegirEliezer, ElegirGris, ElegirRoand);
         }
 
