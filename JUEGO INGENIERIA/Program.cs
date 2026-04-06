@@ -16,7 +16,7 @@ namespace JUEGO_INGENIERIA
             ResolucionPantalla.ForzarResolucionJuego();
 
             // 2. EL JUEGO SE EJECUTA NORMALMENTE
-            Application.Run(new Form1());
+            Application.Run(new FormFinal());
 
             // 3. CUANDO EL JUGADOR CIERRA EL JUEGO: Todo vuelve a la normalidad automáticamente
             ResolucionPantalla.RestaurarResolucion();

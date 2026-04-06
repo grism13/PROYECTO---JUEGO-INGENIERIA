@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1077,5 +1077,23 @@
   </data>
   <data name="gifVictoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gifVictoria.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal2_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal2_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="fondoFinal5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\fondoFinal5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
