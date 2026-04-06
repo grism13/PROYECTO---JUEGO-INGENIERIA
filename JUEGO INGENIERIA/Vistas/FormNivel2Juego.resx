@@ -157,7 +157,7 @@
     <value>Flat</value>
   </data>
   <data name="btnEmpezar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>908, 579</value>
+    <value>908, 607</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="btnEmpezar.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
@@ -407,7 +407,7 @@
     <value>3</value>
   </data>
   <data name="pbJoseJesus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>943, 238</value>
+    <value>728, 268</value>
   </data>
   <data name="pbJoseJesus.Size" type="System.Drawing.Size, System.Drawing">
     <value>219, 330</value>

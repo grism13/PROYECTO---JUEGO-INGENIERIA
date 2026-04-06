@@ -34,33 +34,38 @@
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(664, 605);
-            btnAceptar.Margin = new Padding(3, 4, 3, 4);
+            btnAceptar.BackColor = Color.Transparent;
+            btnAceptar.FlatAppearance.BorderSize = 0;
+            btnAceptar.FlatStyle = FlatStyle.Flat;
+            btnAceptar.ForeColor = Color.White;
+            btnAceptar.Image = Properties.Resources.botonazul;
+            btnAceptar.Location = new Point(554, 264);
             btnAceptar.Name = "btnAceptar";
-            btnAceptar.Size = new Size(86, 31);
+            btnAceptar.Size = new Size(167, 47);
             btnAceptar.TabIndex = 0;
             btnAceptar.Text = "button1";
-            btnAceptar.UseVisualStyleBackColor = true;
+            btnAceptar.UseVisualStyleBackColor = false;
             // 
             // lblMensaje
             // 
             lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(685, 542);
+            lblMensaje.Location = new Point(615, 206);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(50, 20);
+            lblMensaje.Size = new Size(38, 15);
             lblMensaje.TabIndex = 1;
             lblMensaje.Text = "label1";
             // 
             // FormDerrota
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1473, 926);
+            ClientSize = new Size(1280, 720);
             Controls.Add(lblMensaje);
             Controls.Add(btnAceptar);
+            ForeColor = Color.Black;
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FormDerrota";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormDerrota";
             ResumeLayout(false);
             PerformLayout();
