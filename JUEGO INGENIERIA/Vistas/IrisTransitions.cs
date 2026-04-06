@@ -58,7 +58,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-        public static void Transicion(Form nextForm)
+        public static void Transicion(Form nextForm, Action accionIntermedia = null)
         {
             InitCore();
             radioApertura = maxRadio;
@@ -98,6 +98,8 @@ namespace JUEGO_INGENIERIA.Vistas
 
             // Fase 2: Mostrar el nuevo Formulario (Bloqueará el hilo principal pero correrán los Timers)
             nextForm.ShowDialog();
+
+            accionIntermedia?.Invoke();
 
             // Fase 3: Iris In sobre este nivel base cuando volvimos. 
             // (La ventana destino llamó antes a CerrarIrisSync, por lo tanto radioApertura es 0 y el overlay está vivo y negro)

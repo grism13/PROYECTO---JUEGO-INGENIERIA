@@ -34,9 +34,10 @@
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(308, 301);
+            btnAceptar.Location = new Point(664, 605);
+            btnAceptar.Margin = new Padding(3, 4, 3, 4);
             btnAceptar.Name = "btnAceptar";
-            btnAceptar.Size = new Size(75, 23);
+            btnAceptar.Size = new Size(86, 31);
             btnAceptar.TabIndex = 0;
             btnAceptar.Text = "button1";
             btnAceptar.UseVisualStyleBackColor = true;
@@ -44,20 +45,21 @@
             // lblMensaje
             // 
             lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(381, 187);
+            lblMensaje.Location = new Point(685, 542);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(38, 15);
+            lblMensaje.Size = new Size(50, 20);
             lblMensaje.TabIndex = 1;
             lblMensaje.Text = "label1";
             // 
             // FormDerrota
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 681);
+            ClientSize = new Size(1473, 926);
             Controls.Add(lblMensaje);
             Controls.Add(btnAceptar);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 4, 3, 4);
             Name = "FormDerrota";
             Text = "FormDerrota";
             ResumeLayout(false);
