@@ -71,6 +71,9 @@ namespace JUEGO_INGENIERIA
         // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
         private int nivelSeleccionado = 0;
 
+        // Aquí guardaremos la capa transparente de los árboles
+        Image capaArboles;
+
         public Form1()
         {
             InitializeComponent();
@@ -300,7 +303,16 @@ namespace JUEGO_INGENIERIA
                 Image frameActual = isGeyzerFrame1 ? geyzer1 : geyzer2;
                 if (frameActual != null) e.Graphics.DrawImage(frameActual, g.Left, g.Top, g.Width, g.Height);
             }
-        }
+            // === 6. NUEVO: DIBUJAMOS LOS ÁRBOLES DEL FRENTE ===
+            // Al colocarlo de último, garantizamos que las hojas tapen al jugador, 
+            // al rector y al personal de mantenimiento cuando pasen por debajo.
+            if (capaArboles != null)
+            {
+                e.Graphics.DrawImage(capaArboles, 0, 0, this.ClientSize.Width, this.ClientSize.Height);
+            }
+        } // Fin del método OnPaint
+        
+
 
         private void Form1_Shown(object sender, EventArgs e)
         {
@@ -358,6 +370,7 @@ namespace JUEGO_INGENIERIA
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            capaArboles = Properties.Resources.fondoCapaArboles;
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
 
