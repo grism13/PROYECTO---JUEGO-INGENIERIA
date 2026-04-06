@@ -43,7 +43,6 @@
             btnAceptar.FlatStyle = FlatStyle.Flat;
             btnAceptar.ForeColor = Color.White;
             btnAceptar.Image = Properties.Resources.botonazul;
-            btnAceptar.Location = new Point(554, 264);
             btnAceptar.Location = new Point(751, 852);
             btnAceptar.Margin = new Padding(3, 4, 3, 4);
             btnAceptar.Name = "btnAceptar";
@@ -55,15 +54,13 @@
             // lblMensaje
             // 
             lblMensaje.AutoSize = true;
-            lblMensaje.Location = new Point(615, 206);
             lblMensaje.BackColor = Color.Black;
             lblMensaje.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblMensaje.ForeColor = SystemColors.ButtonHighlight;
             lblMensaje.ImageAlign = ContentAlignment.TopCenter;
-            lblMensaje.Location = new Point(696, 40);
+            lblMensaje.Location = new Point(607, 37);
             lblMensaje.Name = "lblMensaje";
-            lblMensaje.Size = new Size(38, 15);
-            lblMensaje.Size = new Size(104, 41);
+            lblMensaje.Size = new Size(83, 32);
             lblMensaje.TabIndex = 1;
             lblMensaje.Text = "label1";
             lblMensaje.TextAlign = ContentAlignment.TopCenter;
@@ -93,9 +90,9 @@
             ClientSize = new Size(1280, 720);
             Controls.Add(lblMensaje);
             Controls.Add(btnAceptar);
-            ForeColor = Color.Black;
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox2);
+            ForeColor = Color.Black;
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormDerrota";
             StartPosition = FormStartPosition.CenterScreen;

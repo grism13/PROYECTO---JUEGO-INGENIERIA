@@ -63,19 +63,34 @@ namespace JUEGO_INGENIERIA.Vistas
         List<BalaTesis> balasBoss = new List<BalaTesis>();
         Random rnd = new Random();
 
-        // === IMÁGENES DEL ESCENARIO Y ANIMACIÓN DEL JEFE 1 ===
+        // === IMÁGENES DE LOS ESCENARIOS (FONDOS) ===
         Image imgFondoFase1;
-        Image[] framesVillanoAPA = new Image[4]; // AHORA SON 4 SPRITES
+        Image imgFondoFase2;
+        Image imgFondoFase3;
+
+        Image[] framesVillanoAPA = new Image[4]; // SPRITES FASE 1
         int frameActualVillano = 0;
         int contadorAnimacionVillano = 0;
-        int velocidadAnimacionVillano = 10; // Ajusta para que baile más rápido o lento
+        int velocidadAnimacionVillano = 10;
+
+        // === ANIMACIÓN DEL JEFE 2 (CEBOLLA / MARCO TEÓRICO) ===
+        Image[] framesCebolla = new Image[4];
+        int frameActualCebolla = 0;
+        int contadorAnimacionCebolla = 0;
+        int velocidadAnimacionCebolla = 10;
+
+        // === ANIMACIÓN DEL JEFE 3 (ZANAHORIA / JURADO) ===
+        Image[] framesZanahoria = new Image[4];
+        int frameActualZanahoria = 0;
+        int contadorAnimacionZanahoria = 0;
+        int velocidadAnimacionZanahoria = 10;
 
         // ------------------------------
         // J1: LA PAPA (NORMAS APA)
         // ------------------------------
         Rectangle bossPapa;
         int papaHealth = 150;
-        int papaState = 0;
+        int papaState = -1; // -1 significa que está emergiendo del suelo
         int papaAttackCooldown = 80;
         int papaSpitCounter = 0;
         int papaSpitTimer = 0;
@@ -109,6 +124,8 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
+
+            // EL SUELO DEL ESTUDIANTE VUELVE A SER LA TIERRA VISUAL
             groundY = pnlEscenario.Height - 150;
 
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -123,54 +140,59 @@ namespace JUEGO_INGENIERIA.Vistas
             player = new Rectangle(150, groundY - 120, 90, 120);
             int centroPantallaX = (this.ClientSize.Width / 2) - 100;
 
-            bossPapa = new Rectangle(900, groundY - 350, 300, 350);
-            bossCebolla = new Rectangle(centroPantallaX, groundY + 10, 200, 250);
+            // TODOS LOS JEFES NACEN EN pnlEscenario.Height (OCULTOS BAJO LA PANTALLA)
+            bossPapa = new Rectangle(900, pnlEscenario.Height, 300, 350);
+            // Le restamos 150 píxeles a la posición original. 
+            // Mientras más grande sea el número que resta, más a la izquierda se irá.
+            bossCebolla = new Rectangle(centroPantallaX - 150, pnlEscenario.Height, 450, 400);
 
-            // LA ZANAHORIA AHORA ES COLOSAL (500 de pura altura) Y EMPIEZA MÁS ARRIBA
-            bossZanahoria = new Rectangle(centroPantallaX + 25, groundY - 450, 150, 500);
-
-            // Cargar imagen del fondo de la Fase 1
-            try
-            {
-                imgFondoFase1 = Properties.Resources.fondo_apa;
-            }
-            catch { /* Silencioso si no encuentra el fondo */ }
+            int carrotX = (this.ClientSize.Width / 2) - 200;
+            bossZanahoria = new Rectangle(carrotX, pnlEscenario.Height, 400, 600);
 
             CargarSpritesJugador(); // Cargar animaciones del jugador
-            CargarSpritesVillanoAPA(); // Cargar animaciones del jefe 1
+            CargarSpritesJefes(); // Cargar animaciones de los jefes y fondos
 
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
             tmrGameLoop.Start();
         }
 
-        private void CargarSpritesVillanoAPA()
+        private void CargarSpritesJefes()
         {
             try
             {
-                // AHORA RECORRE SOLO HASTA 4
+                // Cargar los 3 escenarios de fondo
+                imgFondoFase1 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa");
+                imgFondoFase2 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa2");
+                imgFondoFase3 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa3");
+
+                // Cargar Sprites Fase 1
                 for (int i = 0; i < 4; i++)
                 {
-                    // Buscamos primero con guion bajo (que es lo que suele hacer Visual Studio)
-                    object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1_{i + 1}");
+                    object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1-{i + 1}");
+                    if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1_{i + 1}");
+                    framesVillanoAPA[i] = (Image)obj ?? new Bitmap(10, 10);
+                }
 
-                    // Si no lo encuentra, busca con el guion normal por si acaso
-                    if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1-{i + 1}");
+                // Cargar Sprites Fase 2
+                for (int i = 0; i < 4; i++)
+                {
+                    object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f2-{i + 1}");
+                    if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"tesis_f2_{i + 1}");
+                    framesCebolla[i] = (Image)obj ?? new Bitmap(10, 10);
+                }
 
-                    if (obj != null)
-                    {
-                        framesVillanoAPA[i] = (Image)obj;
-                    }
-                    else
-                    {
-                        // Fallback visible por si acaso falta una imagen
-                        framesVillanoAPA[i] = new Bitmap(10, 10);
-                    }
+                // Cargar Sprites Fase 3
+                for (int i = 0; i < 4; i++)
+                {
+                    object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f3-{i + 1}");
+                    if (obj == null) obj = Properties.Resources.ResourceManager.GetObject($"tesis_f3_{i + 1}");
+                    framesZanahoria[i] = (Image)obj ?? new Bitmap(10, 10);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error cargando sprites del villano APA: " + ex.Message);
+                MessageBox.Show("Error cargando imágenes: " + ex.Message);
             }
         }
 
@@ -483,12 +505,24 @@ namespace JUEGO_INGENIERIA.Vistas
                 if (currentPhase == 1 && hitboxBala.IntersectsWith(bossPapa) && papaHealth > 0)
                 {
                     papaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
-                    if (papaHealth <= 0) { currentPhase = 2; cebollaState = 1; balasBoss.Clear(); }
+                    if (papaHealth <= 0)
+                    {
+                        currentPhase = 2;
+                        cebollaState = 1;
+                        bossCebolla.Y = pnlEscenario.Height; // Aseguramos que empiece abajo
+                        balasBoss.Clear();
+                    }
                 }
                 else if (currentPhase == 2 && cebollaState == 2 && hitboxBala.IntersectsWith(bossCebolla) && cebollaHealth > 0)
                 {
                     cebollaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
-                    if (cebollaHealth <= 0) { currentPhase = 3; balasBoss.Clear(); }
+                    if (cebollaHealth <= 0)
+                    {
+                        currentPhase = 3;
+                        zanahoriaState = -1; // Activamos animación de salida para zanahoria
+                        bossZanahoria.Y = pnlEscenario.Height; // Aseguramos que empiece abajo
+                        balasBoss.Clear();
+                    }
                 }
                 else if (currentPhase == 3 && hitboxBala.IntersectsWith(bossZanahoria) && zanahoriaHealth > 0)
                 {
@@ -511,7 +545,6 @@ namespace JUEGO_INGENIERIA.Vistas
             // ====================================================
             if (currentPhase == 1) // ====== LA PAPA (NORMAS APA) ======
             {
-                // --- ACTUALIZAR ANIMACIÓN CONTINUA DEL VILLANO ---
                 if (papaHealth > 0)
                 {
                     contadorAnimacionVillano++;
@@ -519,12 +552,21 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         contadorAnimacionVillano = 0;
                         frameActualVillano++;
-                        // AHORA SE REINICIA AL LLEGAR AL FRAME 4
                         if (frameActualVillano >= 4) frameActualVillano = 0;
                     }
                 }
 
-                if (papaState == 0)
+                // Animación inicial de subida
+                if (papaState == -1)
+                {
+                    bossPapa.Y -= 3;
+                    if (bossPapa.Y <= groundY - 350)
+                    {
+                        bossPapa.Y = groundY - 350;
+                        papaState = 0;
+                    }
+                }
+                else if (papaState == 0)
                 {
                     papaAttackCooldown--;
                     if (papaAttackCooldown <= 0) { papaState = 1; papaSpitCounter = 0; papaSpitTimer = 0; }
@@ -558,12 +600,18 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (currentPhase == 2) // ====== LA CEBOLLA ======
             {
-                if (player.IntersectsWith(bossCebolla) && playerInvulnerability <= 0 && cebollaState > 0)
+                if (cebollaHealth > 0)
                 {
-                    RecibirDano(); if (playerHealth <= 0) return;
+                    contadorAnimacionCebolla++;
+                    if (contadorAnimacionCebolla >= velocidadAnimacionCebolla)
+                    {
+                        contadorAnimacionCebolla = 0;
+                        frameActualCebolla++;
+                        if (frameActualCebolla >= 4) frameActualCebolla = 0;
+                    }
                 }
 
-                if (cebollaState == 1)
+                if (cebollaState == 1) // Animación de subida
                 {
                     bossCebolla.Y -= 3;
                     if (bossCebolla.Y <= groundY - 250)
@@ -599,8 +647,28 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (currentPhase == 3) // ====== ZANAHORIA GIGANTE ======
             {
-                // 1. EL LÁSER MASIVO Y RETRASADO
-                if (zanahoriaState == 0) // Reposo muy largo
+                if (zanahoriaHealth > 0)
+                {
+                    contadorAnimacionZanahoria++;
+                    if (contadorAnimacionZanahoria >= velocidadAnimacionZanahoria)
+                    {
+                        contadorAnimacionZanahoria = 0;
+                        frameActualZanahoria++;
+                        if (frameActualZanahoria >= 4) frameActualZanahoria = 0;
+                    }
+                }
+
+                if (zanahoriaState == -1) // Animación de subida
+                {
+                    bossZanahoria.Y -= 4; // Sube más rápido porque es más grande
+                    if (bossZanahoria.Y <= groundY - 400)
+                    {
+                        bossZanahoria.Y = groundY - 400;
+                        zanahoriaState = 0;
+                        zanahoriaAttackCooldown = 150;
+                    }
+                }
+                else if (zanahoriaState == 0) // Reposo muy largo
                 {
                     zanahoriaAttackCooldown--;
                     if (zanahoriaAttackCooldown <= 0)
@@ -740,47 +808,45 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
 
-            // 1. DIBUJAR EL FONDO DEPENDIENDO DE LA FASE
+            // 1. DIBUJAR EL FONDO
             if (currentPhase == 1 && imgFondoFase1 != null)
-            {
-                // Dibuja el libro de las Normas APA cubriendo todo el panel
                 e.Graphics.DrawImage(imgFondoFase1, 0, 0, pnlEscenario.Width, pnlEscenario.Height);
-            }
+            else if (currentPhase == 2 && imgFondoFase2 != null)
+                e.Graphics.DrawImage(imgFondoFase2, 0, 0, pnlEscenario.Width, pnlEscenario.Height);
+            else if (currentPhase == 3 && imgFondoFase3 != null)
+                e.Graphics.DrawImage(imgFondoFase3, 0, 0, pnlEscenario.Width, pnlEscenario.Height);
             else
-            {
                 e.Graphics.Clear(Color.FromArgb(20, 20, 30));
-                e.Graphics.FillRectangle(Brushes.DarkOliveGreen, 0, groundY, pnlEscenario.Width, pnlEscenario.Height - groundY);
-            }
 
             // 2. DIBUJAR AL VILLANO DE LA FASE 1 (La Papa / Normas APA)
             if (currentPhase == 1 && papaHealth > 0)
             {
                 Image spriteAMostrar = framesVillanoAPA[frameActualVillano];
-
-                if (spriteAMostrar != null)
-                {
-                    e.Graphics.DrawImage(spriteAMostrar, bossPapa);
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
-                }
+                if (spriteAMostrar != null) e.Graphics.DrawImage(spriteAMostrar, bossPapa);
+                else e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
-
                 e.Graphics.DrawString("Normas APA HP: " + papaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossPapa.X, bossPapa.Y - 30);
             }
-            else if (currentPhase == 2 && cebollaHealth > 0 && cebollaState > 0)
+            // 3. DIBUJAR A LA CEBOLLA (Fase 2)
+            else if (currentPhase == 2 && cebollaHealth > 0)
             {
-                e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
+                Image spriteCebolla = framesCebolla[frameActualCebolla];
+                if (spriteCebolla != null) e.Graphics.DrawImage(spriteCebolla, bossCebolla);
+                else e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
+
                 if (flashBoss > 0 && cebollaState == 2) e.Graphics.FillRectangle(pincelDestello, bossCebolla);
-                if (cebollaState == 2) e.Graphics.DrawString("Cebolla (Marco) HP: " + cebollaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
+                if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
             }
+            // 4. DIBUJAR A LA ZANAHORIA (Fase 3)
             else if (currentPhase == 3 && zanahoriaHealth > 0)
             {
-                e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
+                Image spriteZanahoria = framesZanahoria[frameActualZanahoria];
+                if (spriteZanahoria != null) e.Graphics.DrawImage(spriteZanahoria, bossZanahoria);
+                else e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
+
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossZanahoria);
-                e.Graphics.DrawString("Zanahoria (Jurado) HP: " + zanahoriaHealth, new Font("Arial", 20, FontStyle.Bold), Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
+                e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, new Font("Arial", 20, FontStyle.Bold), Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
             }
 
             foreach (BalaTesis bola in balasBoss)
@@ -810,10 +876,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
-            if (playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0)
-            {
-            }
-            else
+            if (!(playerInvulnerability > 0 && (playerInvulnerability / 5) % 2 == 0))
             {
                 if (frameActualSprite != null)
                 {
