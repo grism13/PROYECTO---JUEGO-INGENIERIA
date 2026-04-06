@@ -11,6 +11,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private static float radioApertura;
         private static int maxRadio;
         private static float paso;
+        public static Action OnIrisAbierto;
 
         private static void InitCore()
         {
@@ -62,7 +63,7 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             InitCore();
             radioApertura = maxRadio;
-            overlay.Show(); 
+            overlay.Show();
             Application.DoEvents();
 
             // Fase 1: Iris Out sobre la ventana actual
@@ -76,7 +77,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
 
             // Cuando la próxima ventana cargue por debajo y esté lista, soltamos el círculo
-            nextForm.Shown += (s, e) => 
+            nextForm.Shown += (s, e) =>
             {
                 System.Windows.Forms.Timer abrirTimer = new System.Windows.Forms.Timer();
                 abrirTimer.Interval = 20;
@@ -86,7 +87,9 @@ namespace JUEGO_INGENIERIA.Vistas
                     if (radioApertura >= maxRadio)
                     {
                         abrirTimer.Stop();
-                        overlay.Hide(); 
+                        overlay.Hide();
+                        OnIrisAbierto?.Invoke();
+                        OnIrisAbierto = null;
                     }
                     else
                     {
@@ -122,7 +125,7 @@ namespace JUEGO_INGENIERIA.Vistas
             InitCore();
             // Evitamos saltos, lo ponemos en máximo para empezar a cerrar visualmente
             radioApertura = maxRadio;
-            overlay.Show(); 
+            overlay.Show();
             overlay.BringToFront();
             Application.DoEvents();
 
