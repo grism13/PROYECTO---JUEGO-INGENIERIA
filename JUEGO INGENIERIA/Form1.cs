@@ -1115,6 +1115,31 @@ namespace JUEGO_INGENIERIA
                 motorMovimiento.Start();
                 motorMovimiento.EstaPausado = false;
             }
+            else if (x.Name == "pnFinal")
+            {
+                motorMovimiento.Stop();
+                motorMovimiento.EstaPausado = true;
+                musicaFondo.controls.stop();
+
+                FormFinal formFinal = new FormFinal();
+                IrisTransitions.Transicion(formFinal);
+
+                string videoPath = System.IO.Path.Combine(Application.StartupPath, "Resources", "creditos.mp4");
+                if (System.IO.File.Exists(videoPath))
+                {
+                    System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
+                    {
+                        FileName = videoPath,
+                        UseShellExecute = true
+                    });
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró el video de los créditos en: " + videoPath, "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                Application.Exit();
+            }
         }
 
         // --- HACER INVISIBLES LOS MUROS ---
@@ -1122,7 +1147,7 @@ namespace JUEGO_INGENIERIA
         {
             foreach (Control x in this.Controls)
             {
-                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel2" || x.Name == "pbPuertaNivel3" || x.Name == "pbPuertaNivel4")
+                if (x is PictureBox && (string)x.Tag == "muro" || x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel2" || x.Name == "pbPuertaNivel3" || x.Name == "pbPuertaNivel4" || x.Name == "pnFinal")
                 {
                     x.BackColor = Color.Transparent;
                 }

@@ -379,6 +379,16 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] creditos {
+            get {
+                object obj = ResourceManager.GetObject("creditos", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap cuphedeliezer {

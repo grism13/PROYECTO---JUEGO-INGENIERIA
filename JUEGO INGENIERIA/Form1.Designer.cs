@@ -107,7 +107,7 @@
             pictureBox45 = new PictureBox();
             pictureBox46 = new PictureBox();
             pictureBox47 = new PictureBox();
-            btnTitulo = new PictureBox();
+            pnFinal = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pbPersonaje).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -177,7 +177,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox45).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox46).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox47).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)btnTitulo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pnFinal).BeginInit();
             SuspendLayout();
             // 
             // lblNombreJugador
@@ -985,15 +985,13 @@
             pictureBox47.TabStop = false;
             pictureBox47.Tag = "muro";
             // 
-            // btnTitulo
+            // pnFinal
             // 
-            btnTitulo.BackColor = Color.Transparent;
-            btnTitulo.Image = Properties.Resources.btnTitulo;
-            btnTitulo.Location = new Point(1352, 781);
-            btnTitulo.Name = "btnTitulo";
-            btnTitulo.Size = new Size(105, 103);
-            btnTitulo.TabIndex = 154;
-            btnTitulo.TabStop = false;
+            pnFinal.Location = new Point(742, 920);
+            pnFinal.Name = "pnFinal";
+            pnFinal.Size = new Size(30, 11);
+            pnFinal.TabIndex = 155;
+            pnFinal.TabStop = false;
             // 
             // Form1
             // 
@@ -1003,7 +1001,7 @@
             BackgroundImage = Properties.Resources.fondomundo__1_;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1463, 960);
-            Controls.Add(btnTitulo);
+            Controls.Add(pnFinal);
             Controls.Add(pictureBox47);
             Controls.Add(pictureBox46);
             Controls.Add(pictureBox45);
@@ -1156,7 +1154,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox45).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox46).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox47).EndInit();
-            ((System.ComponentModel.ISupportInitialize)btnTitulo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pnFinal).EndInit();
             ResumeLayout(false);
         }
 
@@ -1239,6 +1237,6 @@
         private PictureBox pictureBox45;
         private PictureBox pictureBox46;
         private PictureBox pictureBox47;
-        private PictureBox btnTitulo;
+        private PictureBox pnFinal;
     }
 }
