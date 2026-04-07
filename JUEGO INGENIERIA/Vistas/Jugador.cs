@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,7 +17,7 @@ namespace JUEGO_INGENIERIA.Vistas
         public Jugador(string nombreRecibido)
         {
             Nombre = nombreRecibido;
-            Nivel = 1;
+            Nivel = 0;
             Billetera = 1000;
 
 

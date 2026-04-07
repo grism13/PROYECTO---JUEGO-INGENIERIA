@@ -6,6 +6,8 @@ using System.IO;
 using System.Media;
 using System.Windows.Forms;
 using System.Drawing.Text;
+using System.Text.Json;
+using JUEGO_INGENIERIA.Modelos;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -78,10 +80,19 @@ namespace JUEGO_INGENIERIA.Vistas
         private int conteo = 3;
         private int puntuacion = 0;
         private int faltas = 0;
+        private Jugador jugadorActual;
 
-        public FormNivel2Juego()
+        public FormNivel2Juego(Jugador jugadorRecibido)
         {
             InitializeComponent();
+            this.jugadorActual = jugadorRecibido;
+
+            if (jugadorActual != null && jugadorActual.Billetera < 100)
+            {
+                MessageBox.Show("No tienes los $100 necesarios.", "Sin Fondos");
+                this.Close();
+                return;
+            }
 
             // Evitar parpadeos al dibujar manualmente sobre el panel
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -324,8 +335,14 @@ namespace JUEGO_INGENIERIA.Vistas
                         cronometro.Stop();
                         reproductor.Stop();
 
+                        if (jugadorActual != null)
+                        {
+                            jugadorActual.Billetera -= 100;
+                            ActualizarDatos();
+                        }
+
                         // 2. Mostramos el mensaje de derrota
-                        FormDerrota.Mostrar("¡Te pelaste muchos pasos! Has reprobado el nivel.", "¡GAME OVER!", () => this.Close());
+                        FormDerrota.Mostrar("¡Te pelaste muchos pasos! Has reprobado el nivel.\nMulta: $100", "¡GAME OVER!", () => this.Close());
 
                         // 4. IMPORTANTE: Salimos del método para que no siga calculando nada más
                         return;
@@ -343,6 +360,12 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 lblCuentaRegresiva.Visible = true;
                 lblCuentaRegresiva.Text = "¡CANCION TERMINADA!";
+
+                if (jugadorActual != null && jugadorActual.Nivel < 2)
+                {
+                    jugadorActual.Nivel = 2;
+                }
+                ActualizarDatos();
 
                 FormVictoria.Mostrar("¡Uff, coronaste la pista de baile!", "Nivel Completado", () => this.Close());
 
@@ -558,6 +581,30 @@ namespace JUEGO_INGENIERIA.Vistas
                     IniciarJuegoDesdeIntro();
                 }
             }
+        }
+
+        private void ActualizarDatos()
+        {
+            string rutaArchivo = "jugadores.json";
+
+            if (!File.Exists(rutaArchivo)) return;
+
+            string TextoJson = File.ReadAllText(rutaArchivo);
+            List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
+
+            for (int i = 0; i < listaDeJugadores.Count; i++)
+            {
+                if (listaDeJugadores[i].IdJugador == jugadorActual.IdJugador)
+                {
+                    listaDeJugadores[i].Nivel = jugadorActual.Nivel;
+                    listaDeJugadores[i].Billetera = jugadorActual.Billetera;
+                    break;
+                }
+            }
+
+            var opciones = new JsonSerializerOptions { WriteIndented = true };
+            string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
+            File.WriteAllText(rutaArchivo, nuevoJson);
         }
     }
 }

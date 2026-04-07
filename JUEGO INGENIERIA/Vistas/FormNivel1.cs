@@ -382,9 +382,9 @@ namespace JUEGO_INGENIERIA.Vistas
         private void GanarNivel()
         {
             Action cerrarAct = () => this.Close();
-            if (jugadorActual.Nivel == 1)
+            if (jugadorActual.Nivel < 1)
             {
-                jugadorActual.Nivel = 2;
+                jugadorActual.Nivel = 1;
                 FormVictoria.Mostrar($"¡FELICIDADES!\nNota: {puntos}/20", "Nivel Completado", cerrarAct);
 
             }
