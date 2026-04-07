@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Text; // IMPORTANTE PARA LA FUENTE
-using System.IO; // IMPORTANTE PARA LAS RUTAS
+using System.Drawing.Text;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WMPLib;
@@ -63,6 +63,9 @@ namespace JUEGO_INGENIERIA.Vistas
         bool disparando = false;
         bool estabaDisparando = false;
 
+        // === MÚSICA DE FONDO ===
+        WindowsMediaPlayer bgmMusicaTesis = new WindowsMediaPlayer();
+
         // ============================================
         // SISTEMA DE FASES Y JEFES
         // ============================================
@@ -114,7 +117,6 @@ namespace JUEGO_INGENIERIA.Vistas
         // === SISTEMA NARRATIVO Y MÁQUINA DE ESCRIBIR ===
         int estadoDialogo = 0;
 
-        // CORRECCIÓN CS0104: Especificamos de qué librería es el Timer
         System.Windows.Forms.Timer tmrMaquinaEscribir;
 
         string textoCompletoDialogo = "";
@@ -163,7 +165,6 @@ namespace JUEGO_INGENIERIA.Vistas
             }
 
             // --- 2. CONFIGURAR TIMER MÁQUINA DE ESCRIBIR ---
-            // CORRECCIÓN CS0104: Instanciamos usando el nombre completo
             tmrMaquinaEscribir = new System.Windows.Forms.Timer();
             tmrMaquinaEscribir.Interval = 30; // Velocidad de la escritura (30ms por letra)
             tmrMaquinaEscribir.Tick += TmrMaquinaEscribir_Tick;
@@ -220,6 +221,13 @@ namespace JUEGO_INGENIERIA.Vistas
                 sfxDisparoLoop.settings.setMode("loop", true);
                 sfxDisparoLoop.settings.volume = 15;
                 sfxDisparoLoop.controls.stop();
+
+                // MÚSICA FONDO
+                string rutaMusica = Path.Combine(Application.StartupPath, "Resources", "musicaTesis.mp3");
+                bgmMusicaTesis.URL = rutaMusica;
+                bgmMusicaTesis.settings.setMode("loop", true);
+                bgmMusicaTesis.settings.volume = 20; // Volumen moderado
+                bgmMusicaTesis.controls.stop(); // Empezara despues del dialogo
             }
             catch { }
 
@@ -290,6 +298,7 @@ namespace JUEGO_INGENIERIA.Vistas
             tmrGameLoop.Stop();
             if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
             if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
+            if (bgmMusicaTesis != null) bgmMusicaTesis.controls.stop();
         }
 
         // ============================================
@@ -374,6 +383,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (estadoDialogo == 0)
             {
+                if (bgmMusicaTesis != null) bgmMusicaTesis.controls.play();
                 tmrGameLoop.Start();
             }
             else if (estadoDialogo == 1)
@@ -401,7 +411,6 @@ namespace JUEGO_INGENIERIA.Vistas
 
             this.Focus();
         }
-
 
         private void CargarSpritesJefes()
         {
@@ -1065,7 +1074,6 @@ namespace JUEGO_INGENIERIA.Vistas
             }
         }
 
-
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
@@ -1093,7 +1101,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
-                // OCULTADO: e.Graphics.DrawString("Normas APA HP: " + papaHealth, fUI, Brushes.White, bossPapa.X, bossPapa.Y - 30);
             }
             else if (currentPhase == 2 && cebollaHealth > 0)
             {
@@ -1102,7 +1109,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
 
                 if (flashBoss > 0 && cebollaState == 2) e.Graphics.FillRectangle(pincelDestello, bossCebolla);
-                // OCULTADO: if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, fUI, Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
             }
             else if (currentPhase == 3 && zanahoriaHealth > 0)
             {
@@ -1111,7 +1117,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossZanahoria);
-                // OCULTADO: e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, fUI_big, Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
             }
 
             foreach (BalaTesis bola in balasBoss)
@@ -1172,7 +1177,6 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.DrawString("Vidas Estudiante: " + playerHealth, fUI_big, Brushes.LightPink, 20, 20);
         }
 
-        // CORRECCIÓN CS0103: Dejamos el método vacío para que el diseñador no reclame
         private void pnlDialogo_Paint(object sender, PaintEventArgs e)
         {
         }
