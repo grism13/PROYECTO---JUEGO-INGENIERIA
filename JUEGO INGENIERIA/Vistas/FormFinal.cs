@@ -13,7 +13,7 @@ namespace JUEGO_INGENIERIA.Vistas
     public partial class FormFinal : Form
     {
         List<string> textos = new List<string>();
-        List<string> imagenes = new List<string>();
+        List<Image> imagenes = new List<Image>();
         int posicion = 0;
 
         PrivateFontCollection pfc = new PrivateFontCollection();
@@ -58,23 +58,23 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             // Escena 1
             textos.Add("El silencio inundó el auditorio tras el último eco de sus voces. Los temibles jurados se miraron, cerraron sus libretas y asintieron. ¡Habían derrotado al jefe final y aprobado con la máxima nota!!");
-            imagenes.Add("fondoFinal.png");
+            imagenes.Add(Properties.Resources.fondoFinal1);
 
             // Escena 2
             textos.Add("La inmensa mazmorra de la UNIMAR y sus trampas quedaron atrás. Con sus togas y títulos, el viento de Margarita los recibió como héroes. El inmenso peso del mundo por fin había desaparecido de sus hombros.");
-            imagenes.Add("fondoFinal2_2.png");
+            imagenes.Add(Properties.Resources.fondoFinal2_2);
 
             // Escena 3
             textos.Add("Gris, Roand y Eliezer se detuvieron en la plaza central. Juntos, levantaron la mirada hacia el cielo despejado. Allí recordaron la leyenda que los impulsó desde el inicio.");
-            imagenes.Add("fondoFinal3.png");
+            imagenes.Add(Properties.Resources.fondoFinal3);
 
             // Escena 4
             textos.Add("Sabían que el gran Flavio habitaba en una dimensión inalcanzable. No eran dioses, pero al ver el atardecer, sonrieron con satisfacción. Habían superado la prueba, dando el primer paso para seguir su ejemplo.");
-            imagenes.Add("fondoFinal4.png");
+            imagenes.Add(Properties.Resources.fondoFinal4);
 
             // Escena 5
             textos.Add("La larga y exigente etapa del tutorial había llegado a su fin. Ahora, con el título equipado en sus manos, estaban listos. La verdadera aventura de construir su propio mundo acababa de comenzar.");
-            imagenes.Add("fondoFinal5.png");
+            imagenes.Add(Properties.Resources.fondoFinal5);
         }
 
         private void ActualizarPantalla()
@@ -82,14 +82,7 @@ namespace JUEGO_INGENIERIA.Vistas
             if (posicion < textos.Count)
             {
                 lblTexto.Text = textos[posicion];
-
-                string ruta = Path.Combine(Application.StartupPath, "Vistas", "imagenes", imagenes[posicion]);
-
-                if (File.Exists(ruta))
-                {
-                    if (pbImagen.Image != null) pbImagen.Image.Dispose();
-                    pbImagen.Image = Image.FromFile(ruta);
-                }
+                pbImagen.Image = imagenes[posicion];
             }
 
             if (posicion > 4)

@@ -131,6 +131,13 @@ namespace JUEGO_INGENIERIA.Vistas
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
 
+            if (jugadorActual != null && jugadorActual.Billetera < 100)
+            {
+                MessageBox.Show("No tienes los $100 necesarios.", "Sin Fondos");
+                this.Close();
+                return;
+            }
+
             fondoFase1 = OptimizarImagen(Properties.Resources.fondoF1_marcel, 1280, 720);
             fondoFase2 = OptimizarImagen(Properties.Resources.fondoF2_marcel, 1280, 720);
             fondoFase3 = OptimizarImagen(Properties.Resources.fondoF3_marcel_a, 1280, 720);
@@ -603,6 +610,11 @@ namespace JUEGO_INGENIERIA.Vistas
                             tmrGameLoop.Stop();
                             pnlEscenario.Invalidate();
                             FormVictoria.Mostrar("¡Has derrotado al temible Profesor Marcel!\n¡Aprobaste Matemáticas 2 con éxito!", "¡NIVEL COMPLETADO!", () => this.Close());
+                            if (jugadorActual != null && jugadorActual.Nivel < 3)
+                            {
+                                jugadorActual.Nivel = 3;
+                            }
+                            ActualizarDatos();
                             return;
                         }
                     }

@@ -5,6 +5,8 @@ using System.Drawing.Text; // IMPORTANTE PARA LA FUENTE
 using System.IO; // IMPORTANTE PARA LAS RUTAS
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Text.Json;
+using JUEGO_INGENIERIA.Modelos;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -119,9 +121,12 @@ namespace JUEGO_INGENIERIA.Vistas
         Font fuenteTitulo;
         Font fuenteUI;
 
-        public FormNivel4_Final()
+        Jugador jugadorActual;
+
+        public FormNivel4_Final(Jugador jugadorRecibido)
         {
             InitializeComponent();
+            this.jugadorActual = jugadorRecibido;
             this.Load += new EventHandler(FormNivel4_Final_Load);
         }
 
@@ -129,6 +134,13 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
+
+            if (jugadorActual != null && jugadorActual.Billetera < 100)
+            {
+                MessageBox.Show("No tienes los $100 necesarios.", "Sin Fondos");
+                this.Close();
+                return;
+            }
 
             // --- 1. CARGAR FUENTES PERSONALIZADAS ---
             try
@@ -322,6 +334,11 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (estadoDialogo == 3)
             {
+                if (jugadorActual != null && jugadorActual.Nivel < 4)
+                {
+                    jugadorActual.Nivel = 4;
+                }
+                ActualizarDatos();
                 this.Close();
             }
 
@@ -950,9 +967,37 @@ namespace JUEGO_INGENIERIA.Vistas
             if (playerHealth <= 0)
             {
                 tmrGameLoop.Stop();
-                MessageBox.Show("¡La defensa de Tesis ha fracasado en manos del Jurado!\n¡Game Over!", "REPROBADO");
-                this.Close();
+                if (jugadorActual != null)
+                {
+                    jugadorActual.Billetera -= 100;
+                    ActualizarDatos();
+                }
+                FormDerrota.Mostrar("¡La defensa de Tesis ha fracasado en manos del Jurado!\nMulta: $100", "REPROBADO", () => this.Close());
             }
+        }
+
+        private void ActualizarDatos()
+        {
+            string rutaArchivo = "jugadores.json";
+
+            if (!File.Exists(rutaArchivo)) return;
+
+            string TextoJson = File.ReadAllText(rutaArchivo);
+            List<Jugador> listaDeJugadores = JsonSerializer.Deserialize<List<Jugador>>(TextoJson) ?? new List<Jugador>();
+
+            for (int i = 0; i < listaDeJugadores.Count; i++)
+            {
+                if (listaDeJugadores[i].IdJugador == jugadorActual.IdJugador)
+                {
+                    listaDeJugadores[i].Nivel = jugadorActual.Nivel;
+                    listaDeJugadores[i].Billetera = jugadorActual.Billetera;
+                    break;
+                }
+            }
+
+            var opciones = new JsonSerializerOptions { WriteIndented = true };
+            string nuevoJson = JsonSerializer.Serialize(listaDeJugadores, opciones);
+            File.WriteAllText(rutaArchivo, nuevoJson);
         }
 
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)

@@ -70,6 +70,8 @@ namespace JUEGO_INGENIERIA
 
         // Esta variable guardará a qué nivel estamos intentando entrar (1 o 3)
         private int nivelSeleccionado = 0;
+        
+        private bool accesoDenegadoPorBilletera = false;
 
         // Aquí guardaremos la capa transparente de los árboles
         Image capaArboles;
@@ -1035,6 +1037,30 @@ namespace JUEGO_INGENIERIA
         // --- MANEJO DE CHOQUES CON PUERTAS ---
         private void MotorMovimiento_ColisionConObjeto(object sender, Control x)
         {
+            if (x.Name == "pbPuertaNivel1" || x.Name == "pbPuertaNivel2" || x.Name == "pbPuertaNivel3" || x.Name == "pbPuertaNivel4")
+            {
+                accesoDenegadoPorBilletera = false;
+                if (jugadorActual != null && jugadorActual.Billetera < 100)
+                {
+                    accesoDenegadoPorBilletera = true;
+                }
+
+                if (accesoDenegadoPorBilletera)
+                {
+                    motorMovimiento.Stop();
+                    motorMovimiento.EstaPausado = true;
+                    MessageBox.Show("No tienes suficiente dinero para acceder. Necesitas $100.", "Acceso Denegado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    
+                    this.Invalidate(pbPersonaje.Bounds);
+                    pbPersonaje.Top += 40;
+                    this.Invalidate(pbPersonaje.Bounds);
+                    
+                    motorMovimiento.Start();
+                    motorMovimiento.EstaPausado = false;
+                    return;
+                }
+            }
+
             if (x.Name == "pbPuertaNivel1")
             {
                 motorMovimiento.Stop();
@@ -1095,7 +1121,7 @@ namespace JUEGO_INGENIERIA
                 {
                     jugadorActual = new Vistas.Jugador();
                     jugadorActual.Billetera = 0;
-                    jugadorActual.Nivel = 1;
+                    jugadorActual.Nivel = 0;
                     jugadorActual.Nombre = "Prueba";
                 }
 
@@ -1216,12 +1242,12 @@ namespace JUEGO_INGENIERIA
             }
             else if (nivelSeleccionado == 2)
             {
-                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel2Juego());
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel2Juego(jugadorActual));
                 carga.ShowDialog();
             }
             else if (nivelSeleccionado == 4)
             {
-                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel4_Final());
+                FormCargaDeJuegos carga = new FormCargaDeJuegos(() => new FormNivel4_Final(jugadorActual));
                 carga.ShowDialog();
             }
 
