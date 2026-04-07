@@ -1129,4 +1129,13 @@
   <data name="btnTitulo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\btnTitulo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="marcel-tranquilo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-tranquilo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marcel-fase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-fase1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marcel-fase2malvado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-fase2malvado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
