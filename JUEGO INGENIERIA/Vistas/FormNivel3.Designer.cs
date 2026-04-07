@@ -30,16 +30,16 @@
         {
             components = new System.ComponentModel.Container();
             pnlEscenario = new Panel();
-            pbMarcel = new PictureBox();
             pnlIntro = new Panel();
+            btnSkipDialogo = new Button();
             lblMarcelText = new Label();
+            pbMarcel = new PictureBox();
             pbFondoNarrativa = new PictureBox();
             tmrGameLoop = new System.Windows.Forms.Timer(components);
-            btnSkipDialogo = new Button();
             timerEscritura = new System.Windows.Forms.Timer(components);
             pnlEscenario.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbMarcel).BeginInit();
             pnlIntro.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbMarcel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbFondoNarrativa).BeginInit();
             SuspendLayout();
             // 
@@ -47,8 +47,6 @@
             // 
             pnlEscenario.BackColor = Color.Black;
             pnlEscenario.BackgroundImageLayout = ImageLayout.None;
-            pnlEscenario.Controls.Add(btnSkipDialogo);
-            pnlEscenario.Controls.Add(pbMarcel);
             pnlEscenario.Controls.Add(pnlIntro);
             pnlEscenario.Location = new Point(1, -3);
             pnlEscenario.Margin = new Padding(0);
@@ -56,39 +54,59 @@
             pnlEscenario.Size = new Size(1290, 725);
             pnlEscenario.TabIndex = 0;
             // 
-            // pbMarcel
-            // 
-            pbMarcel.BackColor = Color.DimGray;
-            pbMarcel.Location = new Point(262, 448);
-            pbMarcel.Name = "pbMarcel";
-            pbMarcel.Size = new Size(158, 198);
-            pbMarcel.TabIndex = 1;
-            pbMarcel.TabStop = false;
-            // 
             // pnlIntro
             // 
-            pnlIntro.BackColor = Color.Gray;
+            pnlIntro.BackColor = Color.Transparent;
+            pnlIntro.Controls.Add(btnSkipDialogo);
             pnlIntro.Controls.Add(lblMarcelText);
+            pnlIntro.Controls.Add(pbMarcel);
             pnlIntro.Controls.Add(pbFondoNarrativa);
-            pnlIntro.Location = new Point(386, 524);
+            pnlIntro.Location = new Point(158, 396);
             pnlIntro.Name = "pnlIntro";
-            pnlIntro.Size = new Size(200, 100);
+            pnlIntro.Size = new Size(943, 266);
             pnlIntro.TabIndex = 0;
+            // 
+            // btnSkipDialogo
+            // 
+            btnSkipDialogo.Cursor = Cursors.Hand;
+            btnSkipDialogo.FlatAppearance.BorderSize = 0;
+            btnSkipDialogo.FlatStyle = FlatStyle.Flat;
+            btnSkipDialogo.ForeColor = Color.White;
+            btnSkipDialogo.Image = Properties.Resources.botonazul;
+            btnSkipDialogo.Location = new Point(672, 213);
+            btnSkipDialogo.Name = "btnSkipDialogo";
+            btnSkipDialogo.Size = new Size(160, 46);
+            btnSkipDialogo.TabIndex = 2;
+            btnSkipDialogo.Text = "SKIP";
+            btnSkipDialogo.UseVisualStyleBackColor = true;
             // 
             // lblMarcelText
             // 
-            lblMarcelText.AutoSize = true;
-            lblMarcelText.Location = new Point(68, 31);
+            lblMarcelText.BackColor = Color.SandyBrown;
+            lblMarcelText.Location = new Point(294, 45);
             lblMarcelText.Name = "lblMarcelText";
-            lblMarcelText.Size = new Size(38, 15);
+            lblMarcelText.Size = new Size(616, 144);
             lblMarcelText.TabIndex = 1;
             lblMarcelText.Text = "label1";
+            lblMarcelText.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // pbMarcel
+            // 
+            pbMarcel.BackColor = Color.Transparent;
+            pbMarcel.Location = new Point(44, 3);
+            pbMarcel.Name = "pbMarcel";
+            pbMarcel.Size = new Size(215, 256);
+            pbMarcel.SizeMode = PictureBoxSizeMode.StretchImage;
+            pbMarcel.TabIndex = 1;
+            pbMarcel.TabStop = false;
             // 
             // pbFondoNarrativa
             // 
-            pbFondoNarrativa.Location = new Point(57, 21);
+            pbFondoNarrativa.Image = Properties.Resources.narrativa;
+            pbFondoNarrativa.Location = new Point(265, 9);
             pbFondoNarrativa.Name = "pbFondoNarrativa";
-            pbFondoNarrativa.Size = new Size(100, 50);
+            pbFondoNarrativa.Size = new Size(675, 209);
+            pbFondoNarrativa.SizeMode = PictureBoxSizeMode.StretchImage;
             pbFondoNarrativa.TabIndex = 0;
             pbFondoNarrativa.TabStop = false;
             // 
@@ -96,15 +114,6 @@
             // 
             tmrGameLoop.Interval = 20;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
-            // 
-            // btnSkipDialogo
-            // 
-            btnSkipDialogo.Location = new Point(551, 632);
-            btnSkipDialogo.Name = "btnSkipDialogo";
-            btnSkipDialogo.Size = new Size(75, 23);
-            btnSkipDialogo.TabIndex = 2;
-            btnSkipDialogo.Text = "button1";
-            btnSkipDialogo.UseVisualStyleBackColor = true;
             // 
             // FormNivel3
             // 
@@ -122,9 +131,8 @@
             KeyDown += FormNivel2_KeyDown;
             KeyUp += FormNivel2_KeyUp;
             pnlEscenario.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbMarcel).EndInit();
             pnlIntro.ResumeLayout(false);
-            pnlIntro.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbMarcel).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbFondoNarrativa).EndInit();
             ResumeLayout(false);
         }
