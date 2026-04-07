@@ -19,6 +19,9 @@
     <Compile Update="Vistas\FormDerrota.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Vistas\FormFinal.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Vistas\FormIntro.cs">
       <SubType>Form</SubType>
     </Compile>

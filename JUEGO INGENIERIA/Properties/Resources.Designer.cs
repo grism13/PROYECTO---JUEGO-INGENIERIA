@@ -2783,6 +2783,36 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap retrato_fase1 {
+            get {
+                object obj = ResourceManager.GetObject("retrato_fase1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retrato_fase2 {
+            get {
+                object obj = ResourceManager.GetObject("retrato_fase2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap retrato_fase3 {
+            get {
+                object obj = ResourceManager.GetObject("retrato_fase3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap roand_cabeza {
             get {
                 object obj = ResourceManager.GetObject("roand-cabeza", resourceCulture);

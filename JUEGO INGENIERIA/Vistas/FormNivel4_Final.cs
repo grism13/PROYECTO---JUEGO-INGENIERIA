@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text; // IMPORTANTE PARA LA FUENTE
+using System.IO; // IMPORTANTE PARA LAS RUTAS
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -30,7 +32,7 @@ namespace JUEGO_INGENIERIA.Vistas
         // === ANIMACIONES DEL JUGADOR CACHEADA ===
         Image[] framesSaltoDer = new Image[5];
         Image[] framesSaltoIzq = new Image[5];
-        Image[] framesCaminarDer = new Image[4]; // Ciclo de caminata de 4 pasos
+        Image[] framesCaminarDer = new Image[4];
         Image[] framesCaminarIzq = new Image[4];
         Image frameIdleDer;
         Image frameIdleIzq;
@@ -40,8 +42,8 @@ namespace JUEGO_INGENIERIA.Vistas
         int frameSaltoActual = 0;
         int frameCaminarActual = 0;
         int contadorAnimacionJugador = 0;
-        int velocidadAnimacionJugador = 2; // Ajustable para dar el efecto de salto
-        int velocidadCaminarJugador = 4; // Velocidad del ciclo de caminata
+        int velocidadAnimacionJugador = 2;
+        int velocidadCaminarJugador = 4;
 
         // === DASH ===
         bool isDashing = false;
@@ -63,49 +65,37 @@ namespace JUEGO_INGENIERIA.Vistas
         List<BalaTesis> balasBoss = new List<BalaTesis>();
         Random rnd = new Random();
 
-        // === IMÁGENES DE LOS ESCENARIOS (FONDOS) ===
         Image imgFondoFase1;
         Image imgFondoFase2;
         Image imgFondoFase3;
 
-        Image[] framesVillanoAPA = new Image[4]; // SPRITES FASE 1
+        Image[] framesVillanoAPA = new Image[4];
         int frameActualVillano = 0;
         int contadorAnimacionVillano = 0;
         int velocidadAnimacionVillano = 10;
 
-        // === ANIMACIÓN DEL JEFE 2 (CEBOLLA / MARCO TEÓRICO) ===
         Image[] framesCebolla = new Image[4];
         int frameActualCebolla = 0;
         int contadorAnimacionCebolla = 0;
         int velocidadAnimacionCebolla = 10;
 
-        // === ANIMACIÓN DEL JEFE 3 (ZANAHORIA / JURADO) ===
         Image[] framesZanahoria = new Image[4];
         int frameActualZanahoria = 0;
         int contadorAnimacionZanahoria = 0;
         int velocidadAnimacionZanahoria = 10;
 
-        // ------------------------------
-        // J1: LA PAPA (NORMAS APA)
-        // ------------------------------
         Rectangle bossPapa;
         int papaHealth = 150;
-        int papaState = -1; // -1 significa que está emergiendo del suelo
+        int papaState = -1;
         int papaAttackCooldown = 80;
         int papaSpitCounter = 0;
         int papaSpitTimer = 0;
 
-        // ------------------------------
-        // J2: LA CEBOLLA 
-        // ------------------------------
         Rectangle bossCebolla;
         int cebollaHealth = 250;
         int cebollaState = 0;
         int cebollaLluviaCooldown = 0;
 
-        // ------------------------------
-        // J3: LA ZANAHORIA GIGANTE
-        // ------------------------------
         Rectangle bossZanahoria;
         int zanahoriaHealth = 400;
         int zanahoriaState = 0;
@@ -113,6 +103,21 @@ namespace JUEGO_INGENIERIA.Vistas
         int zanahoriaRayoCounter = 0;
         int zanahoriaRayoTimer = 0;
         int zanahoriaMiniCooldown = 250;
+
+        // === SISTEMA NARRATIVO Y MÁQUINA DE ESCRIBIR ===
+        int estadoDialogo = 0;
+
+        // CORRECCIÓN CS0104: Especificamos de qué librería es el Timer
+        System.Windows.Forms.Timer tmrMaquinaEscribir;
+
+        string textoCompletoDialogo = "";
+        int indiceTexto = 0;
+
+        // === FUENTES PERSONALIZADAS ===
+        PrivateFontCollection pfc = new PrivateFontCollection();
+        Font fuentePixel;
+        Font fuenteTitulo;
+        Font fuenteUI;
 
         public FormNivel4_Final()
         {
@@ -125,7 +130,48 @@ namespace JUEGO_INGENIERIA.Vistas
             this.ClientSize = new Size(1280, 720);
             this.StartPosition = FormStartPosition.CenterScreen;
 
-            // EL SUELO DEL ESTUDIANTE VUELVE A SER LA TIERRA VISUAL
+            // --- 1. CARGAR FUENTES PERSONALIZADAS ---
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                if (File.Exists(rutaFuente))
+                {
+                    pfc.AddFontFile(rutaFuente);
+                    fuentePixel = new Font(pfc.Families[0], 9f);
+                    fuenteUI = new Font(pfc.Families[0], 12f);
+                    fuenteTitulo = new Font(pfc.Families[0], 16f, FontStyle.Bold);
+                }
+                else
+                {
+                    fuentePixel = new Font("Courier New", 10f);
+                    fuenteUI = new Font("Courier New", 12f);
+                    fuenteTitulo = new Font("Courier New", 16f, FontStyle.Bold);
+                }
+            }
+            catch
+            {
+                fuentePixel = new Font("Courier New", 10f);
+                fuenteUI = new Font("Courier New", 12f);
+                fuenteTitulo = new Font("Courier New", 16f, FontStyle.Bold);
+            }
+
+            // --- 2. CONFIGURAR TIMER MÁQUINA DE ESCRIBIR ---
+            // CORRECCIÓN CS0104: Instanciamos usando el nombre completo
+            tmrMaquinaEscribir = new System.Windows.Forms.Timer();
+            tmrMaquinaEscribir.Interval = 30; // Velocidad de la escritura (30ms por letra)
+            tmrMaquinaEscribir.Tick += TmrMaquinaEscribir_Tick;
+
+            // CONEXIÓN FORZADA DEL BOTÓN POR CÓDIGO
+            Control[] btns = this.Controls.Find("btnContinuar", true);
+            if (btns.Length > 0)
+            {
+                Button btn = (Button)btns[0];
+                btn.Click -= btnContinuar_Click;
+                btn.Click += new EventHandler(btnContinuar_Click);
+                if (fuentePixel != null) btn.Font = fuentePixel;
+            }
+
+            // EL SUELO DEL ESTUDIANTE
             groundY = pnlEscenario.Height - 150;
 
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -140,33 +186,156 @@ namespace JUEGO_INGENIERIA.Vistas
             player = new Rectangle(150, groundY - 120, 90, 120);
             int centroPantallaX = (this.ClientSize.Width / 2) - 100;
 
-            // TODOS LOS JEFES NACEN EN pnlEscenario.Height (OCULTOS BAJO LA PANTALLA)
+            // LOS JEFES NACEN OCULTOS
             bossPapa = new Rectangle(900, pnlEscenario.Height, 300, 350);
-            // Le restamos 150 píxeles a la posición original. 
-            // Mientras más grande sea el número que resta, más a la izquierda se irá.
             bossCebolla = new Rectangle(centroPantallaX - 150, pnlEscenario.Height, 450, 400);
 
             int carrotX = (this.ClientSize.Width / 2) - 200;
             bossZanahoria = new Rectangle(carrotX, pnlEscenario.Height, 400, 600);
 
-            CargarSpritesJugador(); // Cargar animaciones del jugador
-            CargarSpritesJefes(); // Cargar animaciones de los jefes y fondos
+            CargarSpritesJugador();
+            CargarSpritesJefes();
 
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
-            tmrGameLoop.Start();
+
+            // MOSTRAMOS LA INTRODUCCIÓN AL ABRIR LA VENTANA
+            MostrarDialogo(0);
+        }
+
+        // ============================================
+        // LÓGICA DE LA MÁQUINA DE ESCRIBIR
+        // ============================================
+        private void TmrMaquinaEscribir_Tick(object sender, EventArgs e)
+        {
+            Control[] lblTextos = this.Controls.Find("lblTextoDialogo", true);
+            if (lblTextos.Length > 0 && indiceTexto < textoCompletoDialogo.Length)
+            {
+                Label lblTexto = (Label)lblTextos[0];
+                lblTexto.Text += textoCompletoDialogo[indiceTexto];
+                indiceTexto++;
+            }
+            else
+            {
+                // Si ya terminó de escribir
+                tmrMaquinaEscribir.Stop();
+                Control[] btns = this.Controls.Find("btnContinuar", true);
+                if (btns.Length > 0)
+                {
+                    btns[0].Visible = true; // Aparece el botón de Continuar
+                }
+            }
+        }
+
+        // ============================================
+        // SISTEMA NARRATIVO Y DE TRANSICIÓN CON IMÁGENES
+        // ============================================
+        private void MostrarDialogo(int faseSiguiente)
+        {
+            tmrGameLoop.Stop();
+            estadoDialogo = faseSiguiente;
+
+            Control[] pnlControles = this.Controls.Find("pnlDialogo", true);
+            if (pnlControles.Length > 0)
+            {
+                Panel pnlDialogo = (Panel)pnlControles[0];
+                pnlDialogo.Visible = true;
+                pnlDialogo.BringToFront();
+
+                Control[] lblNombres = pnlDialogo.Controls.Find("lblNombreJefe", true);
+                Control[] lblTextos = pnlDialogo.Controls.Find("lblTextoDialogo", true);
+                Control[] pbRetratos = pnlDialogo.Controls.Find("pbRetratoJefe", true);
+                Control[] botones = pnlDialogo.Controls.Find("btnContinuar", true);
+
+                Label lblNombre = lblNombres.Length > 0 ? (Label)lblNombres[0] : null;
+                Label lblTexto = lblTextos.Length > 0 ? (Label)lblTextos[0] : null;
+                PictureBox pbRetrato = pbRetratos.Length > 0 ? (PictureBox)pbRetratos[0] : null;
+                Button btnAvanzar = botones.Length > 0 ? (Button)botones[0] : null;
+
+                // Aplicar fuentes al panel
+                if (lblNombre != null && fuenteTitulo != null) lblNombre.Font = fuenteTitulo;
+                if (lblTexto != null && fuentePixel != null) lblTexto.Font = fuentePixel;
+
+                // Ocultar botón y limpiar texto para el efecto de máquina de escribir
+                if (btnAvanzar != null) btnAvanzar.Visible = false;
+                if (lblTexto != null) lblTexto.Text = "";
+                indiceTexto = 0;
+
+                if (faseSiguiente == 0) // Intro Fase 1
+                {
+                    if (lblNombre != null) lblNombre.Text = "LA PAPA (NORMAS APA)";
+                    textoCompletoDialogo = "¡Insolente! ¿Crees que puedes entregar un trabajo de grado sin sangria francesa y con margenes desalineados? ¡Preparate para sentir el verdadero rigor del formato APA septima edicion!";
+                    if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase1");
+                }
+                else if (faseSiguiente == 1) // Transición a Fase 2
+                {
+                    if (lblNombre != null) lblNombre.Text = "LA CEBOLLA (MARCO TEORICO)";
+                    textoCompletoDialogo = "¡Has superado el formato, pero tu investigacion no tiene bases! Soy el Marco Teorico, y te hare llorar si no citas tus antecedentes correctamente. ¡Defiende tu marco conceptual!";
+                    if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase2");
+                }
+                else if (faseSiguiente == 2) // Transición a Fase 3
+                {
+                    if (lblNombre != null) lblNombre.Text = "LA ZANAHORIA GIGANTE (EL JURADO)";
+                    textoCompletoDialogo = "¡Impresionante! Has llegado lejos, estudiante... Pero ahora te enfrentas al desafio final. ¡Soy el Jurado Evaluador! Veamos si tu metodologia soporta mis cuestionamientos implacables. ¡No tendre piedad!";
+                    if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase3");
+                }
+                else if (faseSiguiente == 3) // Victoria Final
+                {
+                    if (lblNombre != null) lblNombre.Text = "¡TESIS APROBADA CON HONORES!";
+                    textoCompletoDialogo = "¡Increible! Has respondido a todas las preguntas, tu marco teorico es solido y tu formato es impecable. ¡Felicidades, colega, la defensa ha sido un exito absoluto!";
+                    if (btnAvanzar != null) btnAvanzar.Text = "Finalizar";
+                    if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_victoria");
+                }
+
+                // Iniciar la máquina de escribir
+                tmrMaquinaEscribir.Start();
+            }
+        }
+
+        private void btnContinuar_Click(object sender, EventArgs e)
+        {
+            Control[] pnlControles = this.Controls.Find("pnlDialogo", true);
+            if (pnlControles.Length > 0)
+            {
+                pnlControles[0].Visible = false;
+            }
+
+            if (estadoDialogo == 0)
+            {
+                tmrGameLoop.Start();
+            }
+            else if (estadoDialogo == 1)
+            {
+                currentPhase = 2;
+                cebollaState = 1;
+                bossCebolla.Y = pnlEscenario.Height;
+                balasBoss.Clear();
+                tmrGameLoop.Start();
+            }
+            else if (estadoDialogo == 2)
+            {
+                currentPhase = 3;
+                zanahoriaState = -1;
+                bossZanahoria.Y = pnlEscenario.Height;
+                balasBoss.Clear();
+                tmrGameLoop.Start();
+            }
+            else if (estadoDialogo == 3)
+            {
+                this.Close();
+            }
+
+            this.Focus();
         }
 
         private void CargarSpritesJefes()
         {
             try
             {
-                // Cargar los 3 escenarios de fondo
                 imgFondoFase1 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa");
                 imgFondoFase2 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa2");
                 imgFondoFase3 = (Image)Properties.Resources.ResourceManager.GetObject("fondo_apa3");
 
-                // Cargar Sprites Fase 1
                 for (int i = 0; i < 4; i++)
                 {
                     object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f1-{i + 1}");
@@ -174,7 +343,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     framesVillanoAPA[i] = (Image)obj ?? new Bitmap(10, 10);
                 }
 
-                // Cargar Sprites Fase 2
                 for (int i = 0; i < 4; i++)
                 {
                     object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f2-{i + 1}");
@@ -182,7 +350,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     framesCebolla[i] = (Image)obj ?? new Bitmap(10, 10);
                 }
 
-                // Cargar Sprites Fase 3
                 for (int i = 0; i < 4; i++)
                 {
                     object obj = Properties.Resources.ResourceManager.GetObject($"tesis_f3-{i + 1}");
@@ -200,7 +367,7 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             try
             {
-                string p = "gris"; // Por defecto
+                string p = "gris";
                 if (!string.IsNullOrEmpty(DatosJuego.PersonajeElegido))
                 {
                     p = DatosJuego.PersonajeElegido.ToLower();
@@ -507,10 +674,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     papaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
                     if (papaHealth <= 0)
                     {
-                        currentPhase = 2;
-                        cebollaState = 1;
-                        bossCebolla.Y = pnlEscenario.Height; // Aseguramos que empiece abajo
-                        balasBoss.Clear();
+                        MostrarDialogo(1);
                     }
                 }
                 else if (currentPhase == 2 && cebollaState == 2 && hitboxBala.IntersectsWith(bossCebolla) && cebollaHealth > 0)
@@ -518,10 +682,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     cebollaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
                     if (cebollaHealth <= 0)
                     {
-                        currentPhase = 3;
-                        zanahoriaState = -1; // Activamos animación de salida para zanahoria
-                        bossZanahoria.Y = pnlEscenario.Height; // Aseguramos que empiece abajo
-                        balasBoss.Clear();
+                        MostrarDialogo(2);
                     }
                 }
                 else if (currentPhase == 3 && hitboxBala.IntersectsWith(bossZanahoria) && zanahoriaHealth > 0)
@@ -529,10 +690,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     zanahoriaHealth -= playerDamage; flashBoss = 4; impactoRealizado = true;
                     if (zanahoriaHealth <= 0)
                     {
-                        tmrGameLoop.Stop();
-                        MessageBox.Show("¡HAS DEFENDIDO TU TESIS MAGISTRALMENTE Y HAS SIDO APROBADO CON HONORES!", "¡VICTORIA ABSOLUTA!");
-                        this.Close();
-                        return;
+                        MostrarDialogo(3);
                     }
                 }
 
@@ -556,7 +714,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
 
-                // Animación inicial de subida
                 if (papaState == -1)
                 {
                     bossPapa.Y -= 3;
@@ -611,12 +768,12 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
 
-                if (cebollaState == 1) // Animación de subida
+                if (cebollaState == 1)
                 {
                     bossCebolla.Y -= 3;
-                    if (bossCebolla.Y <= groundY - 250)
+                    if (bossCebolla.Y <= groundY - 400)
                     {
-                        bossCebolla.Y = groundY - 250; cebollaState = 2; cebollaLluviaCooldown = 30;
+                        bossCebolla.Y = groundY - 400; cebollaState = 2; cebollaLluviaCooldown = 30;
                     }
                 }
                 else if (cebollaState == 2)
@@ -658,9 +815,9 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
 
-                if (zanahoriaState == -1) // Animación de subida
+                if (zanahoriaState == -1)
                 {
-                    bossZanahoria.Y -= 4; // Sube más rápido porque es más grande
+                    bossZanahoria.Y -= 4;
                     if (bossZanahoria.Y <= groundY - 400)
                     {
                         bossZanahoria.Y = groundY - 400;
@@ -668,7 +825,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         zanahoriaAttackCooldown = 150;
                     }
                 }
-                else if (zanahoriaState == 0) // Reposo muy largo
+                else if (zanahoriaState == 0)
                 {
                     zanahoriaAttackCooldown--;
                     if (zanahoriaAttackCooldown <= 0)
@@ -711,7 +868,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     }
                 }
 
-                // 2. MINI ZANAHORIAS RASTREADORAS 
                 zanahoriaMiniCooldown--;
                 if (zanahoriaMiniCooldown <= 0)
                 {
@@ -745,7 +901,6 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
                 foreach (BalaTesis destruida in basuraFuegoAmigo) { balasBoss.Remove(destruida); }
 
-                // MOVER LOS PROYECTILES DEL JEFE 3
                 for (int i = balasBoss.Count - 1; i >= 0; i--)
                 {
                     BalaTesis bola = balasBoss[i];
@@ -808,7 +963,6 @@ namespace JUEGO_INGENIERIA.Vistas
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
 
-            // 1. DIBUJAR EL FONDO
             if (currentPhase == 1 && imgFondoFase1 != null)
                 e.Graphics.DrawImage(imgFondoFase1, 0, 0, pnlEscenario.Width, pnlEscenario.Height);
             else if (currentPhase == 2 && imgFondoFase2 != null)
@@ -818,7 +972,9 @@ namespace JUEGO_INGENIERIA.Vistas
             else
                 e.Graphics.Clear(Color.FromArgb(20, 20, 30));
 
-            // 2. DIBUJAR AL VILLANO DE LA FASE 1 (La Papa / Normas APA)
+            Font fUI = fuenteUI ?? new Font("Arial", 16, FontStyle.Bold);
+            Font fUI_big = fuenteTitulo ?? new Font("Arial", 20, FontStyle.Bold);
+
             if (currentPhase == 1 && papaHealth > 0)
             {
                 Image spriteAMostrar = framesVillanoAPA[frameActualVillano];
@@ -826,9 +982,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
-                e.Graphics.DrawString("Normas APA HP: " + papaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossPapa.X, bossPapa.Y - 30);
+                e.Graphics.DrawString("Normas APA HP: " + papaHealth, fUI, Brushes.White, bossPapa.X, bossPapa.Y - 30);
             }
-            // 3. DIBUJAR A LA CEBOLLA (Fase 2)
             else if (currentPhase == 2 && cebollaHealth > 0)
             {
                 Image spriteCebolla = framesCebolla[frameActualCebolla];
@@ -836,9 +991,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
 
                 if (flashBoss > 0 && cebollaState == 2) e.Graphics.FillRectangle(pincelDestello, bossCebolla);
-                if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, new Font("Arial", 16, FontStyle.Bold), Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
+                if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, fUI, Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
             }
-            // 4. DIBUJAR A LA ZANAHORIA (Fase 3)
             else if (currentPhase == 3 && zanahoriaHealth > 0)
             {
                 Image spriteZanahoria = framesZanahoria[frameActualZanahoria];
@@ -846,7 +1000,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossZanahoria);
-                e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, new Font("Arial", 20, FontStyle.Bold), Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
+                e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, fUI_big, Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
             }
 
             foreach (BalaTesis bola in balasBoss)
@@ -866,7 +1020,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     laserPen.StartCap = System.Drawing.Drawing2D.LineCap.Round;
                     laserPen.EndCap = System.Drawing.Drawing2D.LineCap.Round;
                     e.Graphics.DrawLine(laserPen, bola.X, bola.Y, bola.X - (bola.VX * estela), bola.Y - (bola.VY * estela));
-
                     e.Graphics.FillEllipse(Brushes.White, bola.X - 12, bola.Y - 12, 24, 24);
                 }
                 else if (bola.Tag == "boss_minizanahoria")
@@ -905,7 +1058,12 @@ namespace JUEGO_INGENIERIA.Vistas
                 e.Graphics.FillEllipse(Brushes.Yellow, (int)bala.X, (int)bala.Y, 20, 10);
             }
 
-            e.Graphics.DrawString("Vidas Estudiante: " + playerHealth, new Font("Arial", 18, FontStyle.Bold), Brushes.LightPink, 20, 20);
+            e.Graphics.DrawString("Vidas Estudiante: " + playerHealth, fUI_big, Brushes.LightPink, 20, 20);
+        }
+
+        // CORRECCIÓN CS0103: Dejamos el método vacío para que el diseñador no reclame
+        private void pnlDialogo_Paint(object sender, PaintEventArgs e)
+        {
         }
     }
 
