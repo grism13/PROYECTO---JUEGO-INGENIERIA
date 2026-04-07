@@ -263,26 +263,26 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 if (faseSiguiente == 0) // Intro Fase 1
                 {
-                    if (lblNombre != null) lblNombre.Text = "LA PAPA (NORMAS APA)";
-                    textoCompletoDialogo = "¡Insolente! ¿Crees que puedes entregar un trabajo de grado sin sangria francesa y con margenes desalineados? ¡Preparate para sentir el verdadero rigor del formato APA septima edicion!";
+                    if (lblNombre != null) lblNombre.Text = "INVETIGACION CIENTIFICA";
+                    textoCompletoDialogo = "Segun la profesía, si quieres alcanzar el maximo titulo, deberás vencerme a mi! Ahora estas dentro de los escritos antiguos, no olvides usar las normas APA. ¡Mucha suerte!";
                     if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase1");
                 }
                 else if (faseSiguiente == 1) // Transición a Fase 2
                 {
-                    if (lblNombre != null) lblNombre.Text = "LA CEBOLLA (MARCO TEORICO)";
-                    textoCompletoDialogo = "¡Has superado el formato, pero tu investigacion no tiene bases! Soy el Marco Teorico, y te hare llorar si no citas tus antecedentes correctamente. ¡Defiende tu marco conceptual!";
+                    if (lblNombre != null) lblNombre.Text = "INVETIGACION DE CAMPO";
+                    textoCompletoDialogo = "¿¡CÓMO ES POSIBLE QUE ESQUIVASTE MIS ATAQUES DE SUEÑO EN LA CLASE DE METODOLOGIA DE LA INVESTIGACIÓN!?";
                     if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase2");
                 }
                 else if (faseSiguiente == 2) // Transición a Fase 3
                 {
-                    if (lblNombre != null) lblNombre.Text = "LA ZANAHORIA GIGANTE (EL JURADO)";
-                    textoCompletoDialogo = "¡Impresionante! Has llegado lejos, estudiante... Pero ahora te enfrentas al desafio final. ¡Soy el Jurado Evaluador! Veamos si tu metodologia soporta mis cuestionamientos implacables. ¡No tendre piedad!";
+                    if (lblNombre != null) lblNombre.Text = "ETAPA FINAL";
+                    textoCompletoDialogo = "¡¡YA COLMASTE MI PACIENCIA!! Te daré noches de desvelos, y que cuando puedas dormir... ¡SUEÑES CONMIGO!";
                     if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_fase3");
                 }
                 else if (faseSiguiente == 3) // Victoria Final
                 {
                     if (lblNombre != null) lblNombre.Text = "¡TESIS APROBADA CON HONORES!";
-                    textoCompletoDialogo = "¡Increible! Has respondido a todas las preguntas, tu marco teorico es solido y tu formato es impecable. ¡Felicidades, colega, la defensa ha sido un exito absoluto!";
+                    textoCompletoDialogo = "Vaya... Ni tú ni yo sabemos como fue que pudiste llegar hasta aquí. Felicidades INGE, no cualquiera";
                     if (btnAvanzar != null) btnAvanzar.Text = "Finalizar";
                     if (pbRetrato != null) pbRetrato.Image = (Image)Properties.Resources.ResourceManager.GetObject("retrato_victoria");
                 }
