@@ -159,5 +159,10 @@ namespace JUEGO_INGENIERIA.Vistas
                 MessageBox.Show("¡Debes seleccionar un jugador y presionar jugar para avanzar!", "Acción bloqueada", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

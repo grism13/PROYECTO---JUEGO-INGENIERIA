@@ -191,10 +191,10 @@
             // 
             // pictureBox3
             // 
-            pictureBox3.Image = Properties.Resources.titulo_DEL_JUEGO;
-            pictureBox3.Location = new Point(769, -112);
+            pictureBox3.Image = Properties.Resources.LOGO;
+            pictureBox3.Location = new Point(856, -61);
             pictureBox3.Name = "pictureBox3";
-            pictureBox3.Size = new Size(465, 495);
+            pictureBox3.Size = new Size(328, 390);
             pictureBox3.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox3.TabIndex = 10;
             pictureBox3.TabStop = false;
@@ -223,11 +223,11 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Times New Roman", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(1121, 218);
+            label3.Location = new Point(1190, 215);
             label3.Name = "label3";
-            label3.Size = new Size(78, 27);
+            label3.Size = new Size(0, 27);
             label3.TabIndex = 14;
-            label3.Text = ".BETA";
+            label3.Click += label3_Click;
             // 
             // FormAdmision
             // 

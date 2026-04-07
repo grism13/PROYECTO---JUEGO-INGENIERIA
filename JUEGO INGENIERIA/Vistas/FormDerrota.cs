@@ -1,13 +1,33 @@
 using System;
 using System.Windows.Forms;
+using WMPLib;
+using System.IO;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormDerrota : Form
     {
+        WindowsMediaPlayer bgmDerrota = new WindowsMediaPlayer();
+
         public FormDerrota(string mensajePrincipal)
         {
             InitializeComponent();
+
+            // Cargar sonido global de derrota
+            try
+            {
+                string rutaMp3 = Path.Combine(Application.StartupPath, "Resources", "sonidoDerrota.mp3");
+                string rutaWav = Path.Combine(Application.StartupPath, "Resources", "sonidoDerrota.wav");
+
+                if (File.Exists(rutaMp3))
+                    bgmDerrota.URL = rutaMp3;
+                else if (File.Exists(rutaWav))
+                    bgmDerrota.URL = rutaWav;
+
+                if (!string.IsNullOrEmpty(bgmDerrota.URL))
+                    bgmDerrota.controls.play();
+            }
+            catch { }
 
             // Solo inyectamos el mensaje y lo centramos dinámicamente
             if (lblMensaje != null)
@@ -73,6 +93,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void CerrarPantalla()
         {
+            if (bgmDerrota != null) bgmDerrota.controls.stop(); // Calla el gemido si siguen dándole enter rápido
             NavegacionConsola.LimpiarFoco(this);
             this.DialogResult = DialogResult.OK;
 

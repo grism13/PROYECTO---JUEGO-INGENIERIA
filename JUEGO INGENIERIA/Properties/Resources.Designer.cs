@@ -1890,6 +1890,16 @@ namespace JUEGO_INGENIERIA.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap LOGO {
+            get {
+                object obj = ResourceManager.GetObject("LOGO", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LOGO_DEL_JUEGO {
             get {
                 object obj = ResourceManager.GetObject("LOGO DEL JUEGO", resourceCulture);
@@ -3333,6 +3343,15 @@ namespace JUEGO_INGENIERIA.Properties {
         internal static System.IO.UnmanagedMemoryStream SONIDO_DE_CAJA_COBRANDO {
             get {
                 return ResourceManager.GetStream("SONIDO_DE_CAJA_COBRANDO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream sonidoDerrota {
+            get {
+                return ResourceManager.GetStream("sonidoDerrota", resourceCulture);
             }
         }
         

@@ -1068,11 +1068,18 @@ namespace JUEGO_INGENIERIA.Vistas
             if (playerHealth <= 0)
             {
                 tmrGameLoop.Stop();
+
+                // MATA EL AUDIO INSTANTÁNEAMENTE PARA QUE NO SUENE DURANTE EL IRIS
+                if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
+                if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
+                if (bgmMusicaTesis != null) bgmMusicaTesis.controls.stop();
+
                 // REDIRECCIÓN A LA PANTALLA DE DERROTA CON LA TRANSICIÓN
                 Action cerrarAct = () => this.Close();
                 FormDerrota.Mostrar("¡La defensa de Tesis ha fracasado en manos del Jurado!", "¡REPROBADO!", cerrarAct);
             }
         }
+
 
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
