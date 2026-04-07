@@ -19,7 +19,7 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoFase3;
         Image fondoActual;
         int fondoX = 0;
-        int velocidadFondo = 4; // Ajustado al ritmo original (compensando FPS)
+        int velocidadFondo = 3; // Ajustado al ritmo original (compensando FPS)
 
         // --- VARIABLES DEL JUGADOR ---
         Jugador jugadorActual;
@@ -369,7 +369,12 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void tmrGameLoop_Tick(object sender, EventArgs e)
         {
-            disparando = (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            // Verificamos de inmediato si te estás achicando
+            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+
+            // Reemplazamos la tecla Space por la X (igual que en el Nivel 4)
+            // Y de paso, anulamos por completo el disparo si estás chiquito (!altPresionado)
+            disparando = ((GetAsyncKeyState(Keys.X) & 0x8000) != 0) && !altPresionado;
 
             // --- LÓGICA DE TRANSICIÓN DE MÚSICA FLUIDA (DJ CROSSFADE) ---
             if (transicionVolumen > 0)
@@ -407,12 +412,51 @@ namespace JUEGO_INGENIERIA.Vistas
                 sfxDisparoStart.controls.stop();
                 sfxDisparoLoop.controls.stop();
 
+                // Al soltar la tecla (o al achicarse a la fuerza), esto pondrá el sonido de "stop fire" :)
                 sfxDisparoEnd.controls.stop();
                 sfxDisparoEnd.controls.play();
             }
             estabaDisparando = disparando;
 
-            bool altPresionado = (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Alt) & 0x8000) != 0;
+            if (altPresionado && !modoConcentrado)
+            {
+                modoConcentrado = true;
+                targetTamañoJugador = 60;
+                danoJugador = 5;
+            }
+            else if (!altPresionado && modoConcentrado)
+            {
+                modoConcentrado = false;
+                targetTamañoJugador = 150;
+                danoJugador = 10;
+            }
+
+            fondoX -= velocidadFondo;
+
+
+
+            // --- LÓGICA DE AUDIO ESTILO CUPHEAD ---
+            if (disparando && !estabaDisparando)
+            {
+                sfxDisparoEnd.controls.stop();
+
+                sfxDisparoStart.controls.stop();
+                sfxDisparoStart.controls.play();
+
+                sfxDisparoLoop.controls.stop();
+                sfxDisparoLoop.controls.play();
+            }
+            else if (!disparando && estabaDisparando)
+            {
+                sfxDisparoStart.controls.stop();
+                sfxDisparoLoop.controls.stop();
+
+                sfxDisparoEnd.controls.stop();
+                sfxDisparoEnd.controls.play();
+            }
+            estabaDisparando = disparando;
+
+           
 
             if (altPresionado && !modoConcentrado)
             {
