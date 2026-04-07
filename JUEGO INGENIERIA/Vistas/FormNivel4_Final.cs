@@ -5,6 +5,7 @@ using System.Drawing.Text; // IMPORTANTE PARA LA FUENTE
 using System.IO; // IMPORTANTE PARA LAS RUTAS
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WMPLib;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
@@ -56,6 +57,12 @@ namespace JUEGO_INGENIERIA.Vistas
         int bulletSpeed = 18;
         int cooldownDisparo = 0;
 
+        // === AUDIO DE DISPARO ===
+        WindowsMediaPlayer sfxDisparoStart = new WindowsMediaPlayer();
+        WindowsMediaPlayer sfxDisparoLoop = new WindowsMediaPlayer();
+        bool disparando = false;
+        bool estabaDisparando = false;
+
         // ============================================
         // SISTEMA DE FASES Y JEFES
         // ============================================
@@ -85,19 +92,19 @@ namespace JUEGO_INGENIERIA.Vistas
         int velocidadAnimacionZanahoria = 10;
 
         Rectangle bossPapa;
-        int papaHealth = 150;
+        int papaHealth = 350;
         int papaState = -1;
         int papaAttackCooldown = 80;
         int papaSpitCounter = 0;
         int papaSpitTimer = 0;
 
         Rectangle bossCebolla;
-        int cebollaHealth = 250;
+        int cebollaHealth = 550;
         int cebollaState = 0;
         int cebollaLluviaCooldown = 0;
 
         Rectangle bossZanahoria;
-        int zanahoriaHealth = 400;
+        int zanahoriaHealth = 800;
         int zanahoriaState = 0;
         int zanahoriaAttackCooldown = 150;
         int zanahoriaRayoCounter = 0;
@@ -169,6 +176,9 @@ namespace JUEGO_INGENIERIA.Vistas
                 btn.Click -= btnContinuar_Click;
                 btn.Click += new EventHandler(btnContinuar_Click);
                 if (fuentePixel != null) btn.Font = fuentePixel;
+
+                // ACTIVAMOS LA NAVEGACIÓN CON FLECHITAS Y ENTER PARA EL MANDO
+                NavegacionConsola.Configurar(this, btn);
             }
 
             // EL SUELO DEL ESTUDIANTE
@@ -196,6 +206,23 @@ namespace JUEGO_INGENIERIA.Vistas
             CargarSpritesJugador();
             CargarSpritesJefes();
 
+            try
+            {
+                // SFX DISPARO CUPHEAD
+                string rutaStart = Path.Combine(Application.StartupPath, "Resources", "player_default_fire_start_01.wav");
+                string rutaLoop = Path.Combine(Application.StartupPath, "Resources", "player_default_fire_loop_01.wav");
+
+                sfxDisparoStart.URL = rutaStart;
+                sfxDisparoStart.settings.volume = 15;
+                sfxDisparoStart.controls.stop();
+
+                sfxDisparoLoop.URL = rutaLoop;
+                sfxDisparoLoop.settings.setMode("loop", true);
+                sfxDisparoLoop.settings.volume = 15;
+                sfxDisparoLoop.controls.stop();
+            }
+            catch { }
+
             tmrGameLoop.Interval = 10;
             tmrGameLoop.Tick += tmrGameLoop_Tick;
 
@@ -204,7 +231,7 @@ namespace JUEGO_INGENIERIA.Vistas
         }
 
         // ============================================
-        // LÓGICA DE LA MÁQUINA DE ESCRIBIR
+        // LÓGICA DE LA MÁQUINA DE ESCRIBIR Y SALTO DE TEXTO
         // ============================================
         private void TmrMaquinaEscribir_Tick(object sender, EventArgs e)
         {
@@ -217,14 +244,52 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else
             {
-                // Si ya terminó de escribir
-                tmrMaquinaEscribir.Stop();
-                Control[] btns = this.Controls.Find("btnContinuar", true);
-                if (btns.Length > 0)
+                TerminarEscrituraYMostrarBoton();
+            }
+        }
+
+        private void TerminarEscrituraYMostrarBoton()
+        {
+            if (tmrMaquinaEscribir != null) tmrMaquinaEscribir.Stop();
+
+            Control[] lblTextos = this.Controls.Find("lblTextoDialogo", true);
+            if (lblTextos.Length > 0)
+            {
+                Label lblTexto = (Label)lblTextos[0];
+                lblTexto.Text = textoCompletoDialogo;
+            }
+
+            Control[] btns = this.Controls.Find("btnContinuar", true);
+            if (btns.Length > 0)
+            {
+                btns[0].Visible = true;
+                btns[0].Focus(); // Fuerza a que lo gane para el Mando
+            }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            // SI ESTÁ ESCRIBIENDO Y EL JUGADOR PRESIONA UNA TECLA DE ACCIÓN (Adelantar Diálogo)
+            if (tmrMaquinaEscribir != null && tmrMaquinaEscribir.Enabled)
+            {
+                if (keyData == Keys.Enter || keyData == Keys.Space || keyData == Keys.Z || keyData == Keys.X)
                 {
-                    btns[0].Visible = true; // Aparece el botón de Continuar
+                    TerminarEscrituraYMostrarBoton();
+                    return true;
                 }
             }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        // ============================================
+        // APAGAR AUDIO AL SALIR O MORIR (Evita el Bug en Segundo Plano)
+        // ============================================
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            tmrGameLoop.Stop();
+            if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
+            if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
         }
 
         // ============================================
@@ -233,6 +298,13 @@ namespace JUEGO_INGENIERIA.Vistas
         private void MostrarDialogo(int faseSiguiente)
         {
             tmrGameLoop.Stop();
+
+            // --- CORTAR SONIDO AL INICIAR DIÁLOGO ---
+            disparando = false;
+            estabaDisparando = false;
+            if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
+            if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
+
             estadoDialogo = faseSiguiente;
 
             Control[] pnlControles = this.Controls.Find("pnlDialogo", true);
@@ -322,11 +394,14 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (estadoDialogo == 3)
             {
-                this.Close();
+                // REDIRECCIÓN A LA PANTALLA DE VICTORIA FINAL CON LA TRANSICIÓN
+                Action cerrarAct = () => this.Close();
+                FormVictoria.Mostrar("¡TESIS APROBADA CON HONORES!", "¡VICTORIA!", cerrarAct);
             }
 
             this.Focus();
         }
+
 
         private void CargarSpritesJefes()
         {
@@ -644,6 +719,25 @@ namespace JUEGO_INGENIERIA.Vistas
             }
 
             // =========================
+            // LÓGICA DE AUDIO (CUPHEAD)
+            // =========================
+            disparando = keyShoot;
+            if (disparando && !estabaDisparando)
+            {
+                sfxDisparoStart.controls.stop();
+                sfxDisparoStart.controls.play();
+
+                sfxDisparoLoop.controls.stop();
+                sfxDisparoLoop.controls.play();
+            }
+            else if (!disparando && estabaDisparando)
+            {
+                sfxDisparoStart.controls.stop();
+                sfxDisparoLoop.controls.stop();
+            }
+            estabaDisparando = disparando;
+
+            // =========================
             // COLISIONES: TUS BALAS VS MUNDO
             // =========================
             for (int i = balasJugador.Count - 1; i >= 0; i--)
@@ -939,6 +1033,21 @@ namespace JUEGO_INGENIERIA.Vistas
                 }
             }
 
+            // ====================================================
+            // COLISIONES POR CONTACTO CON EL JEFE
+            // ====================================================
+            if (playerInvulnerability <= 0)
+            {
+                if (currentPhase == 1 && papaHealth > 0 && papaState >= 0 && player.IntersectsWith(bossPapa))
+                {
+                    RecibirDano();
+                }
+                else if (currentPhase == 2 && cebollaHealth > 0 && cebollaState == 2 && player.IntersectsWith(bossCebolla))
+                {
+                    RecibirDano();
+                }
+            }
+
             pnlEscenario.Invalidate();
         }
 
@@ -950,10 +1059,12 @@ namespace JUEGO_INGENIERIA.Vistas
             if (playerHealth <= 0)
             {
                 tmrGameLoop.Stop();
-                MessageBox.Show("¡La defensa de Tesis ha fracasado en manos del Jurado!\n¡Game Over!", "REPROBADO");
-                this.Close();
+                // REDIRECCIÓN A LA PANTALLA DE DERROTA CON LA TRANSICIÓN
+                Action cerrarAct = () => this.Close();
+                FormDerrota.Mostrar("¡La defensa de Tesis ha fracasado en manos del Jurado!", "¡REPROBADO!", cerrarAct);
             }
         }
+
 
         private void pnlEscenario_Paint(object sender, PaintEventArgs e)
         {
@@ -982,7 +1093,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkRed, bossPapa);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossPapa);
-                e.Graphics.DrawString("Normas APA HP: " + papaHealth, fUI, Brushes.White, bossPapa.X, bossPapa.Y - 30);
+                // OCULTADO: e.Graphics.DrawString("Normas APA HP: " + papaHealth, fUI, Brushes.White, bossPapa.X, bossPapa.Y - 30);
             }
             else if (currentPhase == 2 && cebollaHealth > 0)
             {
@@ -991,7 +1102,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.MediumPurple, bossCebolla);
 
                 if (flashBoss > 0 && cebollaState == 2) e.Graphics.FillRectangle(pincelDestello, bossCebolla);
-                if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, fUI, Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
+                // OCULTADO: if (cebollaState == 2) e.Graphics.DrawString("Marco Teórico HP: " + cebollaHealth, fUI, Brushes.White, bossCebolla.X, bossCebolla.Y - 30);
             }
             else if (currentPhase == 3 && zanahoriaHealth > 0)
             {
@@ -1000,7 +1111,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 else e.Graphics.FillRectangle(Brushes.DarkOrange, bossZanahoria);
 
                 if (flashBoss > 0) e.Graphics.FillRectangle(pincelDestello, bossZanahoria);
-                e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, fUI_big, Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
+                // OCULTADO: e.Graphics.DrawString("El Jurado HP: " + zanahoriaHealth, fUI_big, Brushes.White, bossZanahoria.X + 15, bossZanahoria.Y - 30);
             }
 
             foreach (BalaTesis bola in balasBoss)
