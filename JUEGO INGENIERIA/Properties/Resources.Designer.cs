@@ -2387,6 +2387,15 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream musicaTesis {
+            get {
+                return ResourceManager.GetStream("musicaTesis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap naranja {
@@ -2620,6 +2629,24 @@ namespace JUEGO_INGENIERIA.Properties {
             get {
                 object obj = ResourceManager.GetObject("pizarra", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_default_fire_loop_01 {
+            get {
+                return ResourceManager.GetStream("player_default_fire_loop_01", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream player_default_fire_start_01 {
+            get {
+                return ResourceManager.GetStream("player_default_fire_start_01", resourceCulture);
             }
         }
         

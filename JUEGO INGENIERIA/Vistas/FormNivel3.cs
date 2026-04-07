@@ -3,6 +3,7 @@ using JUEGO_INGENIERIA.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Text; // IMPORTANTE PARA LA FUENTE
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Text.Json;
@@ -71,15 +72,20 @@ namespace JUEGO_INGENIERIA.Vistas
         private int indiceLetra = 0;
         // Textos temporales para el diseñador
         private string[] discursoMarcel = {
-            "Marcel: Hmm... Así que tú eres quien cree poder con Matemáticas 2.",
+            "Marcel: Hmm... Asi que tu eres quien cree poder con Matematicas 2.",
             "Marcel: Espero que sepas integrar, porque te voy a derivar a cero.",
-            "Marcel: ¿Crees que aprobar mi materia es así de fácil? ¡Iluso!",
-            "Marcel: ¡Prepárate para la aniquilación numérica!"
+            "Marcel: ¿Crees que aprobar mi materia es asi de facil? ¡Iluso!",
+            "Marcel: ¡Preparate para la aniquilacion numerica!"
         };
         // Las variables pnlIntro, lblMarcelText, pbMarcel, pbFondoNarrativa, btnSkipDialogo y timerEscritura
         // deben ser creadas arrastrándolas desde el "Cuadro de herramientas" al diseñador visual.
         private bool enDialogo = true;
         private Image retratoMarcelDinamico;
+
+        // --- VARIABLES DE FUENTES E IMÁGENES DE NARRATIVA ---
+        private PrivateFontCollection pfc = new PrivateFontCollection();
+        private Font fuentePixel;
+        private Image[] imagenesDialogo;
 
         // --- AUDIO (MÚSICA DEL NIVEL MULTI-PISTA PARA EVITAR CORTES) ---
         WindowsMediaPlayer reproductorMusicaF1 = new WindowsMediaPlayer();
@@ -175,11 +181,53 @@ namespace JUEGO_INGENIERIA.Vistas
             fuenteVidaBoss = new Font("Arial", 16, FontStyle.Bold);
             pincelDestello = new SolidBrush(Color.FromArgb(120, Color.White));
 
-            // --- UI DEL DIÁLOGO (DISEÑADOR VISUAL) ---
-            // Sólo conectamos la lógica. Tú deberás arrastrar los paneles y controles en la ventana de Diseño.
+            // --- APLICAR FUENTE PERSONALIZADA ---
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                if (File.Exists(rutaFuente))
+                {
+                    pfc.AddFontFile(rutaFuente);
+                    fuentePixel = new Font(pfc.Families[0], 10f); // Tamaño 10
+                }
+                else
+                {
+                    fuentePixel = new Font("Courier New", 12f);
+                }
+            }
+            catch
+            {
+                fuentePixel = new Font("Courier New", 12f);
+            }
 
-            retratoMarcelDinamico = framesFase1[0];
-            try { pbMarcel.Image = retratoMarcelDinamico; } catch { }
+            try { lblMarcelText.Font = fuentePixel; } catch { }
+            try { btnSkipDialogo.Font = fuentePixel; } catch { }
+
+            // --- CARGAR IMÁGENES ROTATIVAS DE LA NARRATIVA ---
+            try
+            {
+                imagenesDialogo = new Image[] {
+                    (Image)Properties.Resources.ResourceManager.GetObject("marcel-tranquilo") ?? framesFase1[0],
+                    (Image)Properties.Resources.ResourceManager.GetObject("marcel-fase1") ?? framesFase1[0],
+                    (Image)Properties.Resources.ResourceManager.GetObject("marcel-fase2malvado") ?? framesFase2[0],
+                    (Image)Properties.Resources.ResourceManager.GetObject("marcel-fase2malvado") ?? framesFase2[0]
+                };
+            }
+            catch { }
+
+
+            // --- UI DEL DIÁLOGO (DISEÑADOR VISUAL) ---
+            try
+            {
+                if (imagenesDialogo != null && imagenesDialogo.Length > 0)
+                    pbMarcel.Image = imagenesDialogo[0];
+                else
+                    pbMarcel.Image = framesFase1[0];
+            }
+            catch { }
+
+            // Limpiamos el texto para arrancar el efecto máquina de escribir limpio
+            try { lblMarcelText.Text = ""; } catch { }
 
             // Para asegurar fondo transparente real si usas el nivel 3:
             try { pnlEscenario.Controls.Add(pnlIntro); } catch { }
@@ -315,6 +363,15 @@ namespace JUEGO_INGENIERIA.Vistas
                 {
                     lblMarcelText.Text = "";
                     indiceLetra = 0;
+
+                    // --- ACTUALIZAR IMAGEN DEL JEFE ---
+                    try
+                    {
+                        if (imagenesDialogo != null && indiceFrase < imagenesDialogo.Length && imagenesDialogo[indiceFrase] != null)
+                            pbMarcel.Image = imagenesDialogo[indiceFrase];
+                    }
+                    catch { }
+
                     timerEscritura.Start();
                 }
                 else
@@ -463,7 +520,7 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             estabaDisparando = disparando;
 
-           
+
 
             if (altPresionado && !modoConcentrado)
             {
