@@ -1,13 +1,33 @@
 using System;
 using System.Windows.Forms;
+using WMPLib;
+using System.IO;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormVictoria : Form
     {
+        WindowsMediaPlayer bgmVictoria = new WindowsMediaPlayer();
+
         public FormVictoria(string mensajePrincipal)
         {
             InitializeComponent();
+
+            // Cargar sonido global de victoria
+            try
+            {
+                string rutaMp3 = Path.Combine(Application.StartupPath, "Resources", "sonidoVictoria.mp3");
+                string rutaWav = Path.Combine(Application.StartupPath, "Resources", "sonidoVictoria.wav");
+
+                if (File.Exists(rutaMp3))
+                    bgmVictoria.URL = rutaMp3;
+                else if (File.Exists(rutaWav))
+                    bgmVictoria.URL = rutaWav;
+
+                if (!string.IsNullOrEmpty(bgmVictoria.URL))
+                    bgmVictoria.controls.play();
+            }
+            catch { }
 
             // Solo inyectamos el mensaje y lo centramos dinámicamente
             if (label1 != null)
@@ -26,8 +46,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                 PictureBox pbGif = new PictureBox();
                 // Si el usuario quiere otro gif, aquí lo cambia (por ejemplo Properties.Resources.gifVictoria si existe).
-                // Por ahora se deja el que tenga disponible o el de la derrota temporalmente si no hay otro.
-                pbGif.Image = Properties.Resources.gifVictoria; 
+                pbGif.Image = Properties.Resources.gifVictoria;
                 pbGif.Dock = DockStyle.Fill;
                 pbGif.SizeMode = PictureBoxSizeMode.StretchImage;
                 this.Controls.Add(pbGif);
@@ -75,6 +94,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void CerrarPantalla()
         {
+            if (bgmVictoria != null) bgmVictoria.controls.stop(); // Corta el sonido al salir
             NavegacionConsola.LimpiarFoco(this);
             this.DialogResult = DialogResult.OK;
 

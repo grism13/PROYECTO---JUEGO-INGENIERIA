@@ -416,18 +416,18 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             else if (estadoDialogo == 3)
             {
-                if (jugadorActual != null && jugadorActual.Nivel < 4)
-                {
-                    jugadorActual.Nivel = 4;
-                }
-                ActualizarDatos();
-                this.Close();
+                // MATA EL AUDIO INSTANTÁNEAMENTE PARA QUE NO SUENE DURANTE EL IRIS
+                if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
+                if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
+                if (bgmMusicaTesis != null) bgmMusicaTesis.controls.stop();
+
                 // REDIRECCIÓN A LA PANTALLA DE VICTORIA FINAL CON LA TRANSICIÓN
                 Action cerrarAct = () => this.Close();
                 FormVictoria.Mostrar("¡TESIS APROBADA CON HONORES!", "¡VICTORIA!", cerrarAct);
             }
 
             this.Focus();
+
         }
 
         private void CargarSpritesJefes()

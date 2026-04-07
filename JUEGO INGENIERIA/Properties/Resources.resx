@@ -1165,4 +1165,7 @@
   <data name="sonidoDerrota" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\sonidoDerrota.mp3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="sonidoVictoria" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sonidoVictoria.mp3;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

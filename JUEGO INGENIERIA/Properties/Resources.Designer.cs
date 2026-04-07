@@ -3356,6 +3356,15 @@ namespace JUEGO_INGENIERIA.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream sonidoVictoria {
+            get {
+                return ResourceManager.GetStream("sonidoVictoria", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap tesis_f1_1 {
