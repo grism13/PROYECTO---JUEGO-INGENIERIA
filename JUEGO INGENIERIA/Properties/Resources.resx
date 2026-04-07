@@ -1132,4 +1132,22 @@
   <data name="creditos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\creditos.mp4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="marcel-tranquilo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-tranquilo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marcel-fase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-fase1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="marcel-fase2malvado" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\marcel-fase2malvado.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="retrato_fase1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retrato_fase1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="retrato_fase2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retrato_fase2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="retrato_fase3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\retrato_fase3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
