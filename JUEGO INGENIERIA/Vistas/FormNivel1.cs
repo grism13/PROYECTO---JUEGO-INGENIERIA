@@ -60,6 +60,14 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void FormNivel1_Load(object sender, EventArgs e)
         {
+            // 0. CARGAR IMAGEN DEL PERSONAJE ELEGIDO
+            string personaje = DatosJuego.PersonajeElegido.ToLower();
+            object imgObj = Properties.Resources.ResourceManager.GetObject($"{personaje}_espalda2");
+            if (imgObj != null)
+            {
+                pbxJugador.Image = (Image)imgObj;
+            }
+
             // 1. CARGA DE FUENTES
             string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
             PrivateFontCollection pfc = new PrivateFontCollection();

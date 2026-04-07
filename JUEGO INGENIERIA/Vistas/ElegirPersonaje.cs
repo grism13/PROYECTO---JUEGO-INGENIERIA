@@ -20,12 +20,6 @@ namespace JUEGO_INGENIERIA.Vistas
             NavegacionConsola.Configurar(this, ElegirEliezer, ElegirGris, ElegirRoand);
         }
 
-
-        public static class DatosJuego
-        {
-            public static string PersonajeElegido = "Gris";
-        }
-
         // Para elegir el personaje de Eliezer
         private void ElegirEliezer_Click(object sender, EventArgs e)
         {
