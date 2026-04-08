@@ -20,7 +20,7 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoFase3;
         Image fondoActual;
         int fondoX = 0;
-        int velocidadFondo = 6; // Ajustado al ritmo original (compensando FPS)
+        int velocidadFondo = 7; 
 
         // --- VARIABLES DEL JUGADOR ---
         Jugador jugadorActual;
@@ -31,7 +31,7 @@ namespace JUEGO_INGENIERIA.Vistas
         int tiempoInmunidad = 0;
 
         List<ObjetoJuego> balasJugador = new List<ObjetoJuego>();
-        int velocidadBala = 18; // Ajustado al ritmo original
+        int velocidadBala = 25; 
         int cooldownDisparo = 0;
         int danoJugador = 10;
         bool disparando = false;
@@ -49,11 +49,11 @@ namespace JUEGO_INGENIERIA.Vistas
         int bossY = 50;
         int tamañoBoss = 180;
         int vidaBoss = 1500;
-        int velocidadBoss = 5; // Ajustado al ritmo original
+        int velocidadBoss = 6; 
         bool bossSube = false;
         bool bossAvanza = true;
         int flashBoss = 0;
-        int cooldownAtaqueBoss = 80; // Ajustado al ritmo original
+        int cooldownAtaqueBoss = 25; 
         List<ObjetoJuego> balasBoss = new List<ObjetoJuego>();
 
         Random rnd = new Random();
@@ -65,7 +65,7 @@ namespace JUEGO_INGENIERIA.Vistas
         private Image imagenActualBoss;
         private int frameBossActual = 0;
         private int contadorAnimacionBoss = 0;
-        private int velocidadAnimacionBoss = 10; // Ajustado al ritmo original
+        private int velocidadAnimacionBoss = 6; 
 
         // --- SISTEMA DE DIÁLOGOS Y NARRATIVA ---
         private int indiceFrase = 0;
@@ -296,8 +296,8 @@ namespace JUEGO_INGENIERIA.Vistas
             }
             catch { }
 
-            // FPS A 100 FPS (10 ms por tick para que se vea súper fluido)
-            tmrGameLoop.Interval = 10;
+            // FPS ESTABLE ALTIMA (20ms = 50 FPS estables). Sincronizado perfecto con el Timer del teclado de Winforms.
+            tmrGameLoop.Interval = 20;
 
             pnlEscenario.Paint += new PaintEventHandler(pnlEscenario_Paint);
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -495,14 +495,14 @@ namespace JUEGO_INGENIERIA.Vistas
                 danoJugador = 10;
             }
 
-            fondoX -= velocidadFondo;
-
-
-
-
-            if (fondoX <= -pnlEscenario.Width)
+            if (fondoActual != null)
             {
-                fondoX = 0;
+                fondoX -= velocidadFondo;
+                // Reiniciar basada en la imagen real y sumar su ancho preserva el salto exacto (cero tartamudez al loopear)
+                if (fondoX <= -fondoActual.Width)
+                {
+                    fondoX += fondoActual.Width;
+                }
             }
 
             if (tiempoInmunidad > 0)
@@ -541,7 +541,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 nuevaBala.Tag = "bala_jugador";
                 balasJugador.Add(nuevaBala);
 
-                cooldownDisparo = 10;
+                cooldownDisparo = 6;
             }
 
             for (int i = balasJugador.Count - 1; i >= 0; i--)
@@ -660,7 +660,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         else balaMala.Tag = "bala_boss_perseguidora";
                         balasBoss.Add(balaMala);
 
-                        cooldownAtaqueBoss = 75;
+                        cooldownAtaqueBoss = 47;
                     }
                     else if (vidaBoss <= 1000 && vidaBoss > 500)
                     {
@@ -673,7 +673,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
 
                         fondoActual = fondoFase2;
-                        velocidadBoss = 7;
+                        velocidadBoss = 9;
 
                         if (probabilidad < 85)
                         {
@@ -698,7 +698,7 @@ namespace JUEGO_INGENIERIA.Vistas
                             balasBoss.Add(balaMala);
                         }
 
-                        cooldownAtaqueBoss = 55;
+                        cooldownAtaqueBoss = 35;
                     }
                     else
                     {
@@ -711,7 +711,7 @@ namespace JUEGO_INGENIERIA.Vistas
                         }
 
                         fondoActual = fondoFase3;
-                        velocidadBoss = 9;
+                        velocidadBoss = 12;
 
                         ObjetoJuego balaMala = new ObjetoJuego();
                         balaMala.X = bossX;
@@ -723,7 +723,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
                         balasBoss.Add(balaMala);
 
-                        cooldownAtaqueBoss = 40;
+                        cooldownAtaqueBoss = 25;
                     }
                 }
             }
@@ -732,29 +732,29 @@ namespace JUEGO_INGENIERIA.Vistas
 
             for (int i = balasBoss.Count - 1; i >= 0; i--)
             {
-                balasBoss[i].X -= 9;
+                balasBoss[i].X -= 14;
 
-                if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 3;
-                if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 3;
+                if (balasBoss[i].Tag == "bala_boss_arriba") balasBoss[i].Y -= 5;
+                if (balasBoss[i].Tag == "bala_boss_abajo") balasBoss[i].Y += 5;
 
                 if (balasBoss[i].Tag == "bala_boss_perseguidora")
                 {
-                    balasBoss[i].X += 2;
-                    if (balasBoss[i].Y < pbJugador.Top) balasBoss[i].Y += 2;
-                    else if (balasBoss[i].Y > pbJugador.Top) balasBoss[i].Y -= 2;
+                    balasBoss[i].X += 3;
+                    if (balasBoss[i].Y < pbJugador.Top) balasBoss[i].Y += 3;
+                    else if (balasBoss[i].Y > pbJugador.Top) balasBoss[i].Y -= 3;
                 }
 
                 if (balasBoss[i].Tag.StartsWith("bala_boss_rebotona"))
                 {
-                    balasBoss[i].X += 5;
+                    balasBoss[i].X += 8;
                     if (balasBoss[i].Tag == "bala_boss_rebotona_sube")
                     {
-                        balasBoss[i].Y -= 9;
+                        balasBoss[i].Y -= 14;
                         if (balasBoss[i].Y <= 0) balasBoss[i].Tag = "bala_boss_rebotona_baja";
                     }
                     else if (balasBoss[i].Tag == "bala_boss_rebotona_baja")
                     {
-                        balasBoss[i].Y += 9;
+                        balasBoss[i].Y += 14;
                         if (balasBoss[i].Y >= pnlEscenario.Height - 30) balasBoss[i].Tag = "bala_boss_rebotona_sube";
                     }
                 }
@@ -809,9 +809,10 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             e.Graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
             e.Graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighSpeed;
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighSpeed;
+            // Modo NearestNeighbor vital para Pixel Art (Mantiene los pixeles cuadrados sin desenfoque)
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
 
             if (fondoActual != null)
             {
