@@ -48,7 +48,7 @@
             pnlEscenario.Dock = DockStyle.Fill;
             pnlEscenario.Location = new Point(0, 0);
             pnlEscenario.Name = "pnlEscenario";
-            pnlEscenario.Size = new Size(1264, 681);
+            pnlEscenario.Size = new Size(1280, 720);
             pnlEscenario.TabIndex = 0;
             // 
             // pnlDialogo
@@ -115,8 +115,10 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1264, 681);
+            BackgroundImageLayout = ImageLayout.Stretch;
+            ClientSize = new Size(1280, 720);
             Controls.Add(pnlEscenario);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "FormNivel4_Final";
             Text = "FormNivel4_Final";
             pnlEscenario.ResumeLayout(false);

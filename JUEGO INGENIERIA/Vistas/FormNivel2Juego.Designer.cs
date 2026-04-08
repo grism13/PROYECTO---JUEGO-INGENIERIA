@@ -150,8 +150,8 @@
             // 
             pnlNarrativaIntro.BackColor = Color.Transparent;
             pnlNarrativaIntro.Controls.Add(lblTextoNarrativa);
-            pnlNarrativaIntro.Controls.Add(pbJoseJesusIntro);
             pnlNarrativaIntro.Controls.Add(pictureBox2);
+            pnlNarrativaIntro.Controls.Add(pbJoseJesusIntro);
             resources.ApplyResources(pnlNarrativaIntro, "pnlNarrativaIntro");
             pnlNarrativaIntro.Name = "pnlNarrativaIntro";
             // 
@@ -164,7 +164,8 @@
             // 
             // pbJoseJesusIntro
             // 
-            pbJoseJesusIntro.BackColor = Color.DarkGray;
+            pbJoseJesusIntro.BackColor = Color.Transparent;
+            pbJoseJesusIntro.Image = Properties.Resources.jjavatar;
             resources.ApplyResources(pbJoseJesusIntro, "pbJoseJesusIntro");
             pbJoseJesusIntro.Name = "pbJoseJesusIntro";
             pbJoseJesusIntro.TabStop = false;
