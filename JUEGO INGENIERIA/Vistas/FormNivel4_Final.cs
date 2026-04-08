@@ -1066,9 +1066,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void RecibirDano()
         {
+            if (playerHealth <= 0) return; // AGREGAR ESTA LÍNEA PARA EVITAR EL BUG
             playerHealth--;
             playerInvulnerability = 100;
-
             if (playerHealth <= 0)
             {
                 tmrGameLoop.Stop();
@@ -1077,6 +1077,11 @@ namespace JUEGO_INGENIERIA.Vistas
                     jugadorActual.Billetera -= 100;
                     ActualizarDatos();
                 }
+
+                if (sfxDisparoStart != null) sfxDisparoStart.controls.stop();
+                if (sfxDisparoLoop != null) sfxDisparoLoop.controls.stop();
+                if (bgmMusicaTesis != null) bgmMusicaTesis.controls.stop();
+
                 FormDerrota.Mostrar("¡La defensa de Tesis ha fracasado en manos del Jurado!\nMulta: $100", "REPROBADO", () => this.Close());
             }
         }

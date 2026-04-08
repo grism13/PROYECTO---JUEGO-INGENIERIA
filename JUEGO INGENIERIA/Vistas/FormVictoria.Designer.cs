@@ -38,29 +38,32 @@
             // 
             // btnAceptar
             // 
-            btnAceptar.Location = new Point(689, 843);
-            btnAceptar.Margin = new Padding(3, 4, 3, 4);
+            btnAceptar.BackColor = Color.Transparent;
+            btnAceptar.ForeColor = Color.Transparent;
+            btnAceptar.Location = new Point(1, 674);
             btnAceptar.Name = "btnAceptar";
-            btnAceptar.Size = new Size(86, 31);
+            btnAceptar.Size = new Size(10, 10);
             btnAceptar.TabIndex = 0;
-            btnAceptar.Text = "button1";
-            btnAceptar.UseVisualStyleBackColor = true;
+            btnAceptar.UseVisualStyleBackColor = false;
+            btnAceptar.Visible = false;
             // 
             // pictureBox2
             // 
             pictureBox2.BackColor = SystemColors.ActiveCaptionText;
-            pictureBox2.Location = new Point(-26, -6);
+            pictureBox2.Location = new Point(-23, -4);
+            pictureBox2.Margin = new Padding(3, 2, 3, 2);
             pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(1492, 114);
+            pictureBox2.Size = new Size(1306, 86);
             pictureBox2.TabIndex = 4;
             pictureBox2.TabStop = false;
             // 
             // pictureBox1
             // 
             pictureBox1.BackColor = SystemColors.ActiveCaptionText;
-            pictureBox1.Location = new Point(-12, 774);
+            pictureBox1.Location = new Point(-10, 580);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1478, 139);
+            pictureBox1.Size = new Size(1293, 104);
             pictureBox1.TabIndex = 5;
             pictureBox1.TabStop = false;
             // 
@@ -70,24 +73,23 @@
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonHighlight;
             label1.ImageAlign = ContentAlignment.TopCenter;
-            label1.Location = new Point(1, 31);
+            label1.Location = new Point(1, 9);
             label1.Name = "label1";
-            label1.Size = new Size(1444, 41);
+            label1.Size = new Size(1264, 31);
             label1.TabIndex = 6;
             label1.Text = "label1";
             label1.TextAlign = ContentAlignment.TopCenter;
             // 
             // FormVictoria
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1445, 908);
+            ClientSize = new Size(1264, 681);
             Controls.Add(label1);
-            Controls.Add(pictureBox2);
             Controls.Add(btnAceptar);
             Controls.Add(pictureBox1);
+            Controls.Add(pictureBox2);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 4, 3, 4);
             Name = "FormVictoria";
             Text = "FormVictoria";
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();

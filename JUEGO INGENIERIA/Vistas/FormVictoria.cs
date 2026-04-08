@@ -2,16 +2,32 @@ using System;
 using System.Windows.Forms;
 using WMPLib;
 using System.IO;
+using System.Drawing;
+using System.Drawing.Text;
 
 namespace JUEGO_INGENIERIA.Vistas
 {
     public partial class FormVictoria : Form
     {
         WindowsMediaPlayer bgmVictoria = new WindowsMediaPlayer();
+        PrivateFontCollection pfc = new PrivateFontCollection();
 
         public FormVictoria(string mensajePrincipal)
         {
             InitializeComponent();
+
+            // Cargar fuente Pokemon
+            try
+            {
+                string rutaFuente = Path.Combine(Application.StartupPath, "Vistas", "Fuentes", "Pokemon Classic.ttf");
+                if (File.Exists(rutaFuente))
+                {
+                    pfc.AddFontFile(rutaFuente);
+                    if (label1 != null) label1.Font = new Font(pfc.Families[0], 24f, FontStyle.Bold);
+                    if (btnAceptar != null) btnAceptar.Font = new Font(pfc.Families[0], 12f, FontStyle.Bold);
+                }
+            }
+            catch { }
 
             // Cargar sonido global de victoria
             try
@@ -25,7 +41,10 @@ namespace JUEGO_INGENIERIA.Vistas
                     bgmVictoria.URL = rutaWav;
 
                 if (!string.IsNullOrEmpty(bgmVictoria.URL))
-                    bgmVictoria.controls.play();
+
+                    bgmVictoria.settings.volume = 60;
+
+                bgmVictoria.controls.play();
             }
             catch { }
 
@@ -51,7 +70,8 @@ namespace JUEGO_INGENIERIA.Vistas
                 pbGif.SizeMode = PictureBoxSizeMode.StretchImage;
                 this.Controls.Add(pbGif);
                 pbGif.SendToBack(); // Que el label y botón queden encima
-
+                if (label1 != null) label1.BringToFront();
+                if (btnAceptar != null) btnAceptar.BringToFront();
                 int frames = pbGif.Image.GetFrameCount(System.Drawing.Imaging.FrameDimension.Time);
                 byte[] times = pbGif.Image.GetPropertyItem(0x5100).Value;
                 int totalDuration = 0;
@@ -110,6 +130,12 @@ namespace JUEGO_INGENIERIA.Vistas
             t.Start();
 
             this.Close();
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            pfc?.Dispose();
+            base.OnFormClosed(e);
         }
 
         // El parámetro 'tituloOpcional' está de adorno para que no te dé error al reemplazar MessageBox viejos
