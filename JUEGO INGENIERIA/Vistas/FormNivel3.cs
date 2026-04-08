@@ -20,7 +20,7 @@ namespace JUEGO_INGENIERIA.Vistas
         Image fondoFase3;
         Image fondoActual;
         int fondoX = 0;
-        int velocidadFondo = 3; // Ajustado al ritmo original (compensando FPS)
+        int velocidadFondo = 6; // Ajustado al ritmo original (compensando FPS)
 
         // --- VARIABLES DEL JUGADOR ---
         Jugador jugadorActual;
@@ -499,43 +499,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
 
 
-            // --- LÓGICA DE AUDIO ESTILO CUPHEAD ---
-            if (disparando && !estabaDisparando)
-            {
-                sfxDisparoEnd.controls.stop();
 
-                sfxDisparoStart.controls.stop();
-                sfxDisparoStart.controls.play();
-
-                sfxDisparoLoop.controls.stop();
-                sfxDisparoLoop.controls.play();
-            }
-            else if (!disparando && estabaDisparando)
-            {
-                sfxDisparoStart.controls.stop();
-                sfxDisparoLoop.controls.stop();
-
-                sfxDisparoEnd.controls.stop();
-                sfxDisparoEnd.controls.play();
-            }
-            estabaDisparando = disparando;
-
-
-
-            if (altPresionado && !modoConcentrado)
-            {
-                modoConcentrado = true;
-                targetTamañoJugador = 60;
-                danoJugador = 5;
-            }
-            else if (!altPresionado && modoConcentrado)
-            {
-                modoConcentrado = false;
-                targetTamañoJugador = 150;
-                danoJugador = 10;
-            }
-
-            fondoX -= velocidadFondo;
             if (fondoX <= -pnlEscenario.Width)
             {
                 fondoX = 0;
@@ -548,7 +512,7 @@ namespace JUEGO_INGENIERIA.Vistas
 
             if (tamañoJugador != targetTamañoJugador)
             {
-                int velocidadAnimacion = 10;
+                int velocidadAnimacion = 20;
                 int nuevoTamaño = targetTamañoJugador < tamañoJugador ? tamañoJugador - velocidadAnimacion : tamañoJugador + velocidadAnimacion;
 
                 if (targetTamañoJugador < tamañoJugador && nuevoTamaño < targetTamañoJugador) nuevoTamaño = targetTamañoJugador;

@@ -19,8 +19,6 @@ namespace JUEGO_INGENIERIA.Vistas
 
         // 2. Variables Mágicas del Gameplay
         private int tiempoAnticipacion = 1500; // La nota nace 1.5 seg antes para darle tiempo de caer
-        private int margenError = 250; // +/- 250 milisegundos de perdón para acertar la tecla
-        private int velocidadCaida = 7; // Qué tan rápido caen los cuadros (ajusta esto si caen muy lento)
         // --- ANIMACIÓN DE JOSÉ JESÚS ---
         private Image[] framesJoseJesus;
         private int frameActualJJ = 0;
@@ -149,7 +147,7 @@ namespace JUEGO_INGENIERIA.Vistas
                 btnEmpezar.Font = fuenteJuegoNormal;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Si por alguna razón no encuentra el archivo, no se crashea el juego, solo muestra un aviso
                 MessageBox.Show("Aviso: No se pudo cargar la fuente personalizada.");
@@ -377,8 +375,8 @@ namespace JUEGO_INGENIERIA.Vistas
         // EL EVENTO PAINT QUE DIBUJA TODO DE UNA SOLA VEZ
         private void PnlPistaBaile_Paint(object sender, PaintEventArgs e)
         {
-            // Opcional: mejora la calidad si las imágenes se ven pixeladas
-            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
 
             // Dibujar cada nota almacenada en la lista
             foreach (var nota in notasEnPantalla)

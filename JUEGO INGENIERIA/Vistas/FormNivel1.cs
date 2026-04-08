@@ -25,6 +25,8 @@ namespace JUEGO_INGENIERIA.Vistas
         Image lomalo;
 
         WindowsMediaPlayer reproductorMusica = new WindowsMediaPlayer();
+        SoundPlayer sfxBueno;
+        SoundPlayer sfxMalo;
 
         // --- VARIABLES INTERNAS ---
         int xIzquierda, xCentro, xDerecha;
@@ -100,7 +102,10 @@ namespace JUEGO_INGENIERIA.Vistas
             lomalo = Properties.Resources.lomalo;
 
             // --- EFECTOS DE SONIDO ---
-            // Las rutas se usarán al momento de instanciar cada reproductor (permitiendo sonidos simultáneos)
+            string pathBueno = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboBueno.wav");
+            string pathMalo = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboMalo.wav");
+            if(File.Exists(pathBueno)) { sfxBueno = new SoundPlayer(pathBueno); sfxBueno.LoadAsync(); }
+            if(File.Exists(pathMalo)) { sfxMalo = new SoundPlayer(pathMalo); sfxMalo.LoadAsync(); }
 
             tmrGameLoop.Interval = 20;
             tmrGenerador.Interval = 700;
@@ -186,7 +191,6 @@ namespace JUEGO_INGENIERIA.Vistas
             }
 
             objetosLogicos.Add(nuevo);
-            pnlEscenario.Invalidate();
         }
 
         private void tmrGameLoop_Tick(object sender, EventArgs e)
@@ -202,10 +206,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         try
                         {
-                            // Instanciamos un nuevo reproductor para permitir que suenen varios a la vez
-                            WindowsMediaPlayer reproductorTemporal = new WindowsMediaPlayer();
-                            reproductorTemporal.URL = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboBueno.wav");
-                            reproductorTemporal.controls.play();
+                            sfxBueno?.Play();
                         }
                         catch { }
 
@@ -219,10 +220,7 @@ namespace JUEGO_INGENIERIA.Vistas
                     {
                         try
                         {
-                            // Instanciamos un nuevo reproductor para permitir que suenen varios a la vez
-                            WindowsMediaPlayer reproductorTemporal = new WindowsMediaPlayer();
-                            reproductorTemporal.URL = Path.Combine(Application.StartupPath, "Resources", "musica nivel 1", "sonidoCuboMalo.wav");
-                            reproductorTemporal.controls.play();
+                            sfxMalo?.Play();
                         }
                         catch { }
 

@@ -76,6 +76,15 @@ namespace JUEGO_INGENIERIA
         // Aquí guardaremos la capa transparente de los árboles
         Image capaArboles;
 
+        // Cache de controles (evitar Controls.Find en timers)
+        private PictureBox pbAvenidaCache;
+        private PictureBox pbPoste1Cache;
+        private PictureBox pbPoste2Cache;
+        private PictureBox pbPoste3Cache;
+        private PictureBox pb1Cache;
+        private PictureBox pb2Cache;
+        private PictureBox pb3Cache;
+
         public Form1()
         {
             InitializeComponent();
@@ -408,6 +417,18 @@ namespace JUEGO_INGENIERIA
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
 
+            // Llenar cachés estáticos al cargar
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == "pbAvenida") pbAvenidaCache = c as PictureBox;
+                if (c.Name == "pbPoste1") pbPoste1Cache = c as PictureBox;
+                if (c.Name == "pbPoste2") pbPoste2Cache = c as PictureBox;
+                if (c.Name == "pbPoste3") pbPoste3Cache = c as PictureBox;
+                if (c.Name == "pb1") pb1Cache = c as PictureBox;
+                if (c.Name == "pb2") pb2Cache = c as PictureBox;
+                if (c.Name == "pb3") pb3Cache = c as PictureBox;
+            }
+
             // --- OPTIMIZACIÓN EXTREMA DE FONDO (BYPASS STRETCH LAG) ---
             if (this.BackgroundImage != null)
             {
@@ -440,8 +461,7 @@ namespace JUEGO_INGENIERIA
 
                 // Busca dinámica de la avenida principal (si existe pbAvenida en tu diseño)
                 int rutaY = avenidaY; // Default = 290
-                Control[] avCtrls = this.Controls.Find("pbAvenida", true);
-                if (avCtrls.Length > 0) rutaY = avCtrls[0].Top;
+                if (pbAvenidaCache != null) rutaY = pbAvenidaCache.Top;
 
                 // Ruteo Ortogonal (Solo Caminos de Tierra)
                 // 1. Ir a la avenida horizontal desde la posición actual (bajar o subir)
@@ -617,9 +637,9 @@ namespace JUEGO_INGENIERIA
                     {
                         // ESTADO 0: Llegamos a un poste durante patrulla.
                         bool posteRoto = false;
-                        if (mantenimientoDestino == 1) { Control[] p = this.Controls.Find("pbPoste1", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
-                        else if (mantenimientoDestino == 2) { Control[] p = this.Controls.Find("pbPoste2", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
-                        else if (mantenimientoDestino == 3) { Control[] p = this.Controls.Find("pbPoste3", true); if(p.Length > 0 && p[0].Tag != null && p[0].Tag.ToString() == "malo") posteRoto = true; }
+                        if (mantenimientoDestino == 1) { if (pbPoste1Cache != null && pbPoste1Cache.Tag != null && pbPoste1Cache.Tag.ToString() == "malo") posteRoto = true; }
+                        else if (mantenimientoDestino == 2) { if (pbPoste2Cache != null && pbPoste2Cache.Tag != null && pbPoste2Cache.Tag.ToString() == "malo") posteRoto = true; }
+                        else if (mantenimientoDestino == 3) { if (pbPoste3Cache != null && pbPoste3Cache.Tag != null && pbPoste3Cache.Tag.ToString() == "malo") posteRoto = true; }
                         
                         if (posteRoto)
                         {
@@ -694,12 +714,15 @@ namespace JUEGO_INGENIERIA
                     // Terminó de reparar el poste. Vuelve a patrulla normal
                     estadoMantenimiento = 0; 
                     
-                    // Restaurar visualmente el poste a "bueno" y limpiar Tag
                     PictureBox pbRoto = null;
-                    if (posteAReparar == 1) { Control[] p = this.Controls.Find("pbPoste1", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
-                    else if (posteAReparar == 2) { Control[] p = this.Controls.Find("pbPoste2", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
-                    else if (posteAReparar == 3) { Control[] p = this.Controls.Find("pbPoste3", true); if(p.Length>0) pbRoto = p[0] as PictureBox; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz2; pbRoto.Tag = ""; } }
+                    if (posteAReparar == 1) { pbRoto = pbPoste1Cache; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
+                    else if (posteAReparar == 2) { pbRoto = pbPoste2Cache; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz; pbRoto.Tag = ""; } }
+                    else if (posteAReparar == 3) { pbRoto = pbPoste3Cache; if(pbRoto!=null) { pbRoto.Image = Properties.Resources.poste_luz2; pbRoto.Tag = ""; } }
                     if (pbRoto != null) this.Invalidate(pbRoto.Bounds);
+                    
+                    if (posteAReparar == 1 && pb1Cache != null) pb1Cache.Visible = false;
+                    if (posteAReparar == 2 && pb2Cache != null) pb2Cache.Visible = false;
+                    if (posteAReparar == 3 && pb3Cache != null) pb3Cache.Visible = false;
                     
                     // Elegimos otro poste.
                     Random rnd = new Random();
@@ -709,16 +732,12 @@ namespace JUEGO_INGENIERIA
                 }
 
                 // --- GENERACION DE RUTA ---
-                Control[] c1 = this.Controls.Find("pb1", true);
-                Control[] c2 = this.Controls.Find("pb2", true);
-                Control[] c3 = this.Controls.Find("pb3", true);
-                // Ya no usamos pbDireccion3, usamos el punto rojo en la zona sur inferior central
                 int mWidth = pibMantenimiento.Width;
                 int mHeight = pibMantenimiento.Height;
 
-                Point P1_Pole = c1.Length > 0 ? new Point(c1[0].Left + (c1[0].Width/2) - (mWidth/2), c1[0].Bottom - mHeight) : new Point(200, 320);
-                Point P2_Pole = c2.Length > 0 ? new Point(c2[0].Left + (c2[0].Width/2) - (mWidth/2), c2[0].Bottom - mHeight) : new Point(200, 90);
-                Point P3_Pole = c3.Length > 0 ? new Point(c3[0].Left + (c3[0].Width/2) - (mWidth/2), c3[0].Bottom - mHeight) : new Point(1090, 230);
+                Point P1_Pole = pb1Cache != null ? new Point(pb1Cache.Left + (pb1Cache.Width/2) - (mWidth/2), pb1Cache.Bottom - mHeight) : new Point(200, 320);
+                Point P2_Pole = pb2Cache != null ? new Point(pb2Cache.Left + (pb2Cache.Width/2) - (mWidth/2), pb2Cache.Bottom - mHeight) : new Point(200, 90);
+                Point P3_Pole = pb3Cache != null ? new Point(pb3Cache.Left + (pb3Cache.Width/2) - (mWidth/2), pb3Cache.Bottom - mHeight) : new Point(1090, 230);
 
                 int EJE_X_IZQ = P2_Pole.X; 
                 int EJE_Y_MAIN_IZQ = 340;  
@@ -1001,32 +1020,29 @@ namespace JUEGO_INGENIERIA
 
             if (estadoPostes == 1)
             {
-                Control[] postes = this.Controls.Find("pbPoste1", true);
-                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                if (pbPoste1Cache != null)
                 {
-                    pb.Image = Properties.Resources.poste_luz_malo;
-                    pb.Tag = "malo";
-                    this.Invalidate(pb.Bounds);
+                    pbPoste1Cache.Image = Properties.Resources.poste_luz_malo;
+                    pbPoste1Cache.Tag = "malo";
+                    this.Invalidate(pbPoste1Cache.Bounds);
                 }
             }
             else if (estadoPostes == 2)
             {
-                Control[] postes = this.Controls.Find("pbPoste3", true);
-                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                if (pbPoste3Cache != null)
                 {
-                    pb.Image = Properties.Resources.poste_luz_malo2;
-                    pb.Tag = "malo";
-                    this.Invalidate(pb.Bounds);
+                    pbPoste3Cache.Image = Properties.Resources.poste_luz_malo2;
+                    pbPoste3Cache.Tag = "malo";
+                    this.Invalidate(pbPoste3Cache.Bounds);
                 }
             }
             else if (estadoPostes >= 3)
             {
-                Control[] postes = this.Controls.Find("pbPoste2", true);
-                if (postes.Length > 0 && postes[0] is PictureBox pb)
+                if (pbPoste2Cache != null)
                 {
-                    pb.Image = Properties.Resources.poste_luz_malo;
-                    pb.Tag = "malo";
-                    this.Invalidate(pb.Bounds);
+                    pbPoste2Cache.Image = Properties.Resources.poste_luz_malo;
+                    pbPoste2Cache.Tag = "malo";
+                    this.Invalidate(pbPoste2Cache.Bounds);
                 }
                 
                 // Reiniciamos el ciclo para que los postes se sigan rompiendo eternamente

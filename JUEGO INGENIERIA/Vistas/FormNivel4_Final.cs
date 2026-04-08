@@ -45,7 +45,6 @@ namespace JUEGO_INGENIERIA.Vistas
         int frameSaltoActual = 0;
         int frameCaminarActual = 0;
         int contadorAnimacionJugador = 0;
-        int velocidadAnimacionJugador = 2;
         int velocidadCaminarJugador = 4;
 
         // === DASH ===
@@ -182,10 +181,9 @@ namespace JUEGO_INGENIERIA.Vistas
             tmrMaquinaEscribir.Tick += TmrMaquinaEscribir_Tick;
 
             // CONEXIÓN FORZADA DEL BOTÓN POR CÓDIGO
-            Control[] btns = this.Controls.Find("btnContinuar", true);
-            if (btns.Length > 0)
+            if (this.btnContinuar != null)
             {
-                Button btn = (Button)btns[0];
+                Button btn = this.btnContinuar;
                 btn.Click -= btnContinuar_Click;
                 btn.Click += new EventHandler(btnContinuar_Click);
                 if (fuentePixel != null) btn.Font = fuentePixel;
@@ -255,11 +253,9 @@ namespace JUEGO_INGENIERIA.Vistas
         // ============================================
         private void TmrMaquinaEscribir_Tick(object sender, EventArgs e)
         {
-            Control[] lblTextos = this.Controls.Find("lblTextoDialogo", true);
-            if (lblTextos.Length > 0 && indiceTexto < textoCompletoDialogo.Length)
+            if (this.lblTextoDialogo != null && indiceTexto < textoCompletoDialogo.Length)
             {
-                Label lblTexto = (Label)lblTextos[0];
-                lblTexto.Text += textoCompletoDialogo[indiceTexto];
+                this.lblTextoDialogo.Text += textoCompletoDialogo[indiceTexto];
                 indiceTexto++;
             }
             else
@@ -272,18 +268,15 @@ namespace JUEGO_INGENIERIA.Vistas
         {
             if (tmrMaquinaEscribir != null) tmrMaquinaEscribir.Stop();
 
-            Control[] lblTextos = this.Controls.Find("lblTextoDialogo", true);
-            if (lblTextos.Length > 0)
+            if (this.lblTextoDialogo != null)
             {
-                Label lblTexto = (Label)lblTextos[0];
-                lblTexto.Text = textoCompletoDialogo;
+                this.lblTextoDialogo.Text = textoCompletoDialogo;
             }
 
-            Control[] btns = this.Controls.Find("btnContinuar", true);
-            if (btns.Length > 0)
+            if (this.btnContinuar != null)
             {
-                btns[0].Visible = true;
-                btns[0].Focus(); // Fuerza a que lo gane para el Mando
+                this.btnContinuar.Visible = true;
+                this.btnContinuar.Focus(); // Fuerza a que lo gane para el Mando
             }
         }
 
@@ -328,22 +321,17 @@ namespace JUEGO_INGENIERIA.Vistas
 
             estadoDialogo = faseSiguiente;
 
-            Control[] pnlControles = this.Controls.Find("pnlDialogo", true);
-            if (pnlControles.Length > 0)
+            if (this.pnlDialogo != null)
             {
-                Panel pnlDialogo = (Panel)pnlControles[0];
-                pnlDialogo.Visible = true;
-                pnlDialogo.BringToFront();
+                this.pnlDialogo.Visible = true;
+                this.pnlDialogo.BringToFront();
 
-                Control[] lblNombres = pnlDialogo.Controls.Find("lblNombreJefe", true);
-                Control[] lblTextos = pnlDialogo.Controls.Find("lblTextoDialogo", true);
-                Control[] pbRetratos = pnlDialogo.Controls.Find("pbRetratoJefe", true);
-                Control[] botones = pnlDialogo.Controls.Find("btnContinuar", true);
+                Control[] arrNombres = this.pnlDialogo.Controls.Find("lblNombreJefe", true);
+                Label lblNombre = arrNombres.Length > 0 ? (Label)arrNombres[0] : null;
 
-                Label lblNombre = lblNombres.Length > 0 ? (Label)lblNombres[0] : null;
-                Label lblTexto = lblTextos.Length > 0 ? (Label)lblTextos[0] : null;
-                PictureBox pbRetrato = pbRetratos.Length > 0 ? (PictureBox)pbRetratos[0] : null;
-                Button btnAvanzar = botones.Length > 0 ? (Button)botones[0] : null;
+                Label lblTexto = this.lblTextoDialogo;
+                PictureBox pbRetrato = this.pbRetratoJefe;
+                Button btnAvanzar = this.btnContinuar;
 
                 // Aplicar fuentes al panel
                 if (lblNombre != null && fuenteTitulo != null) lblNombre.Font = fuenteTitulo;
@@ -387,10 +375,9 @@ namespace JUEGO_INGENIERIA.Vistas
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            Control[] pnlControles = this.Controls.Find("pnlDialogo", true);
-            if (pnlControles.Length > 0)
+            if (this.pnlDialogo != null)
             {
-                pnlControles[0].Visible = false;
+                this.pnlDialogo.Visible = false;
             }
 
             if (estadoDialogo == 0)
@@ -475,7 +462,6 @@ namespace JUEGO_INGENIERIA.Vistas
                     p = DatosJuego.PersonajeElegido.ToLower();
                 }
 
-                int w = 90;
                 int h = 120;
 
                 float saltoEscala = 1.0f;
@@ -635,7 +621,7 @@ namespace JUEGO_INGENIERIA.Vistas
             // === LECTURA DE CONTROLES ===
             bool goLeft = (GetAsyncKeyState(Keys.Left) & 0x8000) != 0;
             bool goRight = (GetAsyncKeyState(Keys.Right) & 0x8000) != 0;
-            bool keyJump = (GetAsyncKeyState(Keys.Z) & 0x8000) != 0 || (GetAsyncKeyState(Keys.Space) & 0x8000) != 0;
+            bool keyJump = (GetAsyncKeyState(Keys.Z) & 0x8000) != 0;
             bool keyShoot = (GetAsyncKeyState(Keys.X) & 0x8000) != 0;
             bool keyDash = (GetAsyncKeyState(Keys.ShiftKey) & 0x8000) != 0;
 
